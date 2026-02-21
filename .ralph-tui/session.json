@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "sessionId": "ff1463b2-ee87-499e-a090-208865a7d2b9",
+  "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
-  "startedAt": "2026-02-21T13:26:03.854Z",
-  "updatedAt": "2026-02-21T13:31:13.816Z",
-  "currentIteration": 2,
+  "startedAt": "2026-02-21T13:55:53.389Z",
+  "updatedAt": "2026-02-21T13:57:06.841Z",
+  "currentIteration": 0,
   "maxIterations": 0,
-  "tasksCompleted": 2,
+  "tasksCompleted": 0,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -18,18 +18,18 @@
         "id": "US-001",
         "title": "Set up monorepo structure with pnpm workspaces",
         "status": "completed",
-        "completedInSession": true
+        "completedInSession": false
       },
       {
         "id": "US-002",
         "title": "Define TypeScript types and interfaces",
         "status": "completed",
-        "completedInSession": true
+        "completedInSession": false
       },
       {
         "id": "US-003",
         "title": "Create defineProjects config helper",
-        "status": "open",
+        "status": "completed",
         "completedInSession": false
       },
       {
@@ -82,28 +82,7 @@
       }
     ]
   },
-  "iterations": [
-    {
-      "iteration": 1,
-      "status": "completed",
-      "taskId": "US-001",
-      "taskTitle": "Set up monorepo structure with pnpm workspaces",
-      "taskCompleted": true,
-      "durationMs": 116258,
-      "startedAt": "2026-02-21T13:27:11.082Z",
-      "endedAt": "2026-02-21T13:29:07.340Z"
-    },
-    {
-      "iteration": 2,
-      "status": "completed",
-      "taskId": "US-002",
-      "taskTitle": "Define TypeScript types and interfaces",
-      "taskCompleted": true,
-      "durationMs": 43812,
-      "startedAt": "2026-02-21T13:29:08.407Z",
-      "endedAt": "2026-02-21T13:29:52.219Z"
-    }
-  ],
+  "iterations": [],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [],
