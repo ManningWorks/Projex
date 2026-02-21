@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T14:00:46.862Z",
-  "currentIteration": 2,
+  "updatedAt": "2026-02-21T14:02:25.570Z",
+  "currentIteration": 3,
   "maxIterations": 0,
-  "tasksCompleted": 2,
+  "tasksCompleted": 3,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -47,8 +47,8 @@
       {
         "id": "US-006",
         "title": "Create ProjectCard compound components",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-007",
@@ -102,6 +102,16 @@
       "durationMs": 74816,
       "startedAt": "2026-02-21T13:57:07.910Z",
       "endedAt": "2026-02-21T13:58:22.726Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-006",
+      "taskTitle": "Create ProjectCard compound components",
+      "taskCompleted": true,
+      "durationMs": 143122,
+      "startedAt": "2026-02-21T13:58:23.737Z",
+      "endedAt": "2026-02-21T14:00:46.859Z"
     }
   ],
   "skippedTaskIds": [],
