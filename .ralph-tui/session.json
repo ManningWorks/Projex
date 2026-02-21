@@ -3,10 +3,10 @@
   "sessionId": "ff1463b2-ee87-499e-a090-208865a7d2b9",
   "status": "running",
   "startedAt": "2026-02-21T13:26:03.854Z",
-  "updatedAt": "2026-02-21T13:29:07.344Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-02-21T13:29:52.222Z",
+  "currentIteration": 1,
   "maxIterations": 0,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -17,8 +17,8 @@
       {
         "id": "US-001",
         "title": "Set up monorepo structure with pnpm workspaces",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-002",
@@ -82,7 +82,18 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-001",
+      "taskTitle": "Set up monorepo structure with pnpm workspaces",
+      "taskCompleted": true,
+      "durationMs": 116258,
+      "startedAt": "2026-02-21T13:27:11.082Z",
+      "endedAt": "2026-02-21T13:29:07.340Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [],
