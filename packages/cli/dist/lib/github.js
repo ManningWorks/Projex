@@ -11,11 +11,20 @@ export async function fetchGitHubRepos(username) {
         const response = await fetch(url, {
             headers,
         });
+        const rateLimitRemaining = response.headers.get('X-RateLimit-Remaining')
+            ? parseInt(response.headers.get('X-RateLimit-Remaining'))
+            : null;
+        if (response.status === 403) {
+            return { data: null, error: 'rate_limit', rateLimitRemaining };
+        }
+        if (response.status === 404) {
+            return { data: null, error: 'not_found', rateLimitRemaining };
+        }
         if (!response.ok) {
-            return null;
+            return { data: null, error: 'other', rateLimitRemaining };
         }
         const data = await response.json();
-        return data.map((repo) => ({
+        const repos = data.map((repo) => ({
             name: repo.name,
             description: repo.description,
             stargazers_count: repo.stargazers_count,
@@ -24,10 +33,13 @@ export async function fetchGitHubRepos(username) {
             topics: repo.topics || [],
             html_url: repo.html_url,
             homepage: repo.homepage,
+            fork: repo.fork,
+            archived: repo.archived,
         }));
+        return { data: repos, error: null, rateLimitRemaining };
     }
     catch {
-        return null;
+        return { data: null, error: 'network', rateLimitRemaining: null };
     }
 }
 //# sourceMappingURL=github.js.map

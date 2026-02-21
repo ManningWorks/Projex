@@ -3,10 +3,10 @@
   "sessionId": "18869545-059d-41ad-9ef2-d85725d04313",
   "status": "running",
   "startedAt": "2026-02-21T23:13:33.896Z",
-  "updatedAt": "2026-02-21T23:18:50.831Z",
-  "currentIteration": 2,
+  "updatedAt": "2026-02-21T23:20:57.517Z",
+  "currentIteration": 3,
   "maxIterations": 0,
-  "tasksCompleted": 2,
+  "tasksCompleted": 3,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -29,8 +29,8 @@
       {
         "id": "US-002a",
         "title": "folio init Command - Basic Scaffold",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-002b",
@@ -72,6 +72,16 @@
       "durationMs": 42853,
       "startedAt": "2026-02-21T23:17:07.336Z",
       "endedAt": "2026-02-21T23:17:50.189Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-002a",
+      "taskTitle": "folio init Command - Basic Scaffold",
+      "taskCompleted": true,
+      "durationMs": 59565,
+      "startedAt": "2026-02-21T23:17:51.261Z",
+      "endedAt": "2026-02-21T23:18:50.826Z"
     }
   ],
   "skippedTaskIds": [],

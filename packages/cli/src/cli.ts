@@ -13,6 +13,7 @@ program
 program
   .command('init')
   .description('Initialize a new Folio project')
+  .option('--github', 'Auto-detect projects from GitHub repos')
   .action(init)
 
 program.parse()
