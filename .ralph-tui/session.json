@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T14:06:42.180Z",
-  "currentIteration": 4,
+  "updatedAt": "2026-02-21T14:10:13.074Z",
+  "currentIteration": 5,
   "maxIterations": 0,
-  "tasksCompleted": 4,
+  "tasksCompleted": 5,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -59,8 +59,8 @@
       {
         "id": "US-008",
         "title": "Set up demo app configuration and data",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-009",
@@ -122,6 +122,16 @@
       "durationMs": 97645,
       "startedAt": "2026-02-21T14:00:47.922Z",
       "endedAt": "2026-02-21T14:02:25.567Z"
+    },
+    {
+      "iteration": 5,
+      "status": "completed",
+      "taskId": "US-008",
+      "taskTitle": "Set up demo app configuration and data",
+      "taskCompleted": true,
+      "durationMs": 255546,
+      "startedAt": "2026-02-21T14:02:26.631Z",
+      "endedAt": "2026-02-21T14:06:42.177Z"
     }
   ],
   "skippedTaskIds": [],
