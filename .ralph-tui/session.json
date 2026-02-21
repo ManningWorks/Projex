@@ -1,159 +1,58 @@
 {
   "version": 1,
-  "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
+  "sessionId": "18869545-059d-41ad-9ef2-d85725d04313",
   "status": "running",
-  "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T14:14:50.434Z",
-  "currentIteration": 7,
+  "startedAt": "2026-02-21T23:13:33.896Z",
+  "updatedAt": "2026-02-21T23:17:06.269Z",
+  "currentIteration": 0,
   "maxIterations": 0,
-  "tasksCompleted": 7,
+  "tasksCompleted": 0,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
     "plugin": "json",
-    "prdPath": "project_docs/tasks/prd.json",
-    "totalTasks": 11,
+    "prdPath": "./project_docs/tasks/prd-v0.2.json",
+    "totalTasks": 6,
     "tasks": [
       {
         "id": "US-001",
-        "title": "Set up monorepo structure with pnpm workspaces",
-        "status": "completed",
+        "title": "CLI Package Structure",
+        "status": "open",
         "completedInSession": false
       },
       {
-        "id": "US-002",
-        "title": "Define TypeScript types and interfaces",
-        "status": "completed",
+        "id": "US-005",
+        "title": "Runtime GitHub API Client for CLI",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-002a",
+        "title": "folio init Command - Basic Scaffold",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-002b",
+        "title": "folio init Command - GitHub Auto-Detection",
+        "status": "open",
         "completedInSession": false
       },
       {
         "id": "US-003",
-        "title": "Create defineProjects config helper",
-        "status": "completed",
+        "title": "folio add project-card Command",
+        "status": "open",
         "completedInSession": false
       },
       {
         "id": "US-004",
-        "title": "Implement GitHub API fetching utility",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-005",
-        "title": "Implement project normalisation utility",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-006",
-        "title": "Create ProjectCard compound components",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-007",
-        "title": "Create ProjectView compound components",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-008",
-        "title": "Set up demo app configuration and data",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-009",
-        "title": "Build demo app grid view with ProjectCard",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-010",
-        "title": "Build demo app detail view with ProjectView",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-011",
-        "title": "Write comprehensive README documentation",
+        "title": "folio add project-view Command",
         "status": "open",
         "completedInSession": false
       }
     ]
   },
-  "iterations": [
-    {
-      "iteration": 1,
-      "status": "completed",
-      "taskId": "US-004",
-      "taskTitle": "Implement GitHub API fetching utility",
-      "taskCompleted": true,
-      "durationMs": 70845,
-      "startedAt": "2026-02-21T13:55:55.993Z",
-      "endedAt": "2026-02-21T13:57:06.838Z"
-    },
-    {
-      "iteration": 2,
-      "status": "completed",
-      "taskId": "US-005",
-      "taskTitle": "Implement project normalisation utility",
-      "taskCompleted": true,
-      "durationMs": 74816,
-      "startedAt": "2026-02-21T13:57:07.910Z",
-      "endedAt": "2026-02-21T13:58:22.726Z"
-    },
-    {
-      "iteration": 3,
-      "status": "completed",
-      "taskId": "US-006",
-      "taskTitle": "Create ProjectCard compound components",
-      "taskCompleted": true,
-      "durationMs": 143122,
-      "startedAt": "2026-02-21T13:58:23.737Z",
-      "endedAt": "2026-02-21T14:00:46.859Z"
-    },
-    {
-      "iteration": 4,
-      "status": "completed",
-      "taskId": "US-007",
-      "taskTitle": "Create ProjectView compound components",
-      "taskCompleted": true,
-      "durationMs": 97645,
-      "startedAt": "2026-02-21T14:00:47.922Z",
-      "endedAt": "2026-02-21T14:02:25.567Z"
-    },
-    {
-      "iteration": 5,
-      "status": "completed",
-      "taskId": "US-008",
-      "taskTitle": "Set up demo app configuration and data",
-      "taskCompleted": true,
-      "durationMs": 255546,
-      "startedAt": "2026-02-21T14:02:26.631Z",
-      "endedAt": "2026-02-21T14:06:42.177Z"
-    },
-    {
-      "iteration": 6,
-      "status": "completed",
-      "taskId": "US-009",
-      "taskTitle": "Build demo app grid view with ProjectCard",
-      "taskCompleted": true,
-      "durationMs": 209832,
-      "startedAt": "2026-02-21T14:06:43.237Z",
-      "endedAt": "2026-02-21T14:10:13.069Z"
-    },
-    {
-      "iteration": 7,
-      "status": "completed",
-      "taskId": "US-010",
-      "taskTitle": "Build demo app detail view with ProjectView",
-      "taskCompleted": true,
-      "durationMs": 178806,
-      "startedAt": "2026-02-21T14:10:14.133Z",
-      "endedAt": "2026-02-21T14:13:12.939Z"
-    }
-  ],
+  "iterations": [],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [],

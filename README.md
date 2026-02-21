@@ -30,10 +30,22 @@ export const projects = defineProjects([
 
 ```tsx
 import { ProjectCard } from '@folio/core'
+import type { FolioProject } from '@folio/core'
 
-export function ProjectsGrid() {
+export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
   return (
-    <ProjectCard.Header project={project} />
+    <div>
+      {projects.map((project) => (
+        <ProjectCard key={project.id}>
+          <ProjectCard.Header project={project} />
+          <ProjectCard.Description project={project} />
+          <ProjectCard.Tags project={project} />
+          <ProjectCard.Stats project={project} />
+          <ProjectCard.Status project={project} />
+          <ProjectCard.Links project={project} />
+        </ProjectCard>
+      ))}
+    </div>
   )
 }
 ```

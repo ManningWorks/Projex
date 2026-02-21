@@ -37,3 +37,4 @@ next-env.d.ts
 
 # project docs
 project_docs/
+.ralph-tui/
