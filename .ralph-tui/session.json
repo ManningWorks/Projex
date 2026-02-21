@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T14:13:12.942Z",
-  "currentIteration": 6,
+  "updatedAt": "2026-02-21T14:14:50.434Z",
+  "currentIteration": 7,
   "maxIterations": 0,
-  "tasksCompleted": 6,
+  "tasksCompleted": 7,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -71,8 +71,8 @@
       {
         "id": "US-010",
         "title": "Build demo app detail view with ProjectView",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-011",
@@ -142,6 +142,16 @@
       "durationMs": 209832,
       "startedAt": "2026-02-21T14:06:43.237Z",
       "endedAt": "2026-02-21T14:10:13.069Z"
+    },
+    {
+      "iteration": 7,
+      "status": "completed",
+      "taskId": "US-010",
+      "taskTitle": "Build demo app detail view with ProjectView",
+      "taskCompleted": true,
+      "durationMs": 178806,
+      "startedAt": "2026-02-21T14:10:14.133Z",
+      "endedAt": "2026-02-21T14:13:12.939Z"
     }
   ],
   "skippedTaskIds": [],
