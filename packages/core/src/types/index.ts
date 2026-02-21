@@ -46,6 +46,8 @@ export interface FolioProjectInput {
   timeline?: ProjectTimelineEntry[]
   posts?: ProjectPost[]
   techStack?: string[]
+  language?: string
+  languageColor?: string
 }
 
 export interface FolioProject {
@@ -62,4 +64,6 @@ export interface FolioProject {
   timeline: ProjectTimelineEntry[]
   posts: ProjectPost[]
   techStack: string[]
+  language: string | null
+  languageColor: string | null
 }

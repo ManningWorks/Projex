@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T13:57:06.841Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-02-21T13:57:07.931Z",
+  "currentIteration": 1,
   "maxIterations": 0,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -35,8 +35,8 @@
       {
         "id": "US-004",
         "title": "Implement GitHub API fetching utility",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-005",
@@ -82,9 +82,22 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-004",
+      "taskTitle": "Implement GitHub API fetching utility",
+      "taskCompleted": true,
+      "durationMs": 70845,
+      "startedAt": "2026-02-21T13:55:55.993Z",
+      "endedAt": "2026-02-21T13:57:06.838Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
-  "activeTaskIds": [],
+  "activeTaskIds": [
+    "US-005"
+  ],
   "subagentPanelVisible": false
 }
