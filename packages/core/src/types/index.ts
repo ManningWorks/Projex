@@ -45,6 +45,12 @@ export interface ProductHuntStats {
 
 export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats
 
+export interface NormalizedStat {
+  label: string
+  value: string | number
+  unit?: string
+}
+
 export interface BaseProjectInput {
   id: string
   status: ProjectStatus

@@ -1,5 +1,5 @@
 import { fetchGitHubRepo, LANGUAGE_COLORS } from './github'
-import type { FolioProject, FolioProjectInput } from '../types'
+import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectType } from '../types'
 
 export async function normalise(input: FolioProjectInput): Promise<FolioProject> {
   const {
@@ -122,4 +122,83 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     language: finalLanguage,
     languageColor: finalLanguageColor,
   }
+}
+
+function formatNumber(value: number): string {
+  if (value >= 1000000) {
+    return (value / 1000000).toFixed(1) + 'M'
+  }
+  if (value >= 1000) {
+    return (value / 1000).toFixed(1) + 'K'
+  }
+  return value.toString()
+}
+
+function formatDate(value: string | number): string {
+  try {
+    const date = new Date(value)
+    if (isNaN(date.getTime())) {
+      return String(value)
+    }
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  } catch {
+    return String(value)
+  }
+}
+
+export function normalizeStats(stats: Record<string, unknown>, _type: ProjectType): NormalizedStat[] {
+  const result: NormalizedStat[] = []
+
+  if (stats.stars !== undefined && stats.stars !== null) {
+    const value = Number(stats.stars)
+    if (!isNaN(value)) {
+      result.push({ label: 'Stars', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.forks !== undefined && stats.forks !== null) {
+    const value = Number(stats.forks)
+    if (!isNaN(value)) {
+      result.push({ label: 'Forks', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.downloads !== undefined && stats.downloads !== null) {
+    const value = Number(stats.downloads)
+    if (!isNaN(value)) {
+      result.push({ label: 'Downloads', value: formatNumber(value), unit: 'month' })
+    }
+  }
+
+  if (stats.version !== undefined && stats.version !== null) {
+    let version = String(stats.version)
+    if (version && !version.startsWith('v')) {
+      version = 'v' + version
+    }
+    result.push({ label: 'Version', value: version })
+  }
+
+  if (stats.upvotes !== undefined && stats.upvotes !== null) {
+    const value = Number(stats.upvotes)
+    if (!isNaN(value)) {
+      result.push({ label: 'Upvotes', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.comments !== undefined && stats.comments !== null) {
+    const value = Number(stats.comments)
+    if (!isNaN(value)) {
+      result.push({ label: 'Comments', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.launchDate !== undefined && stats.launchDate !== null) {
+    result.push({ label: 'Launched', value: formatDate(String(stats.launchDate)) })
+  }
+
+  return result
 }

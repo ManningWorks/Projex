@@ -3,10 +3,10 @@
   "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
   "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-21T23:45:59.078Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-02-21T23:48:01.990Z",
+  "currentIteration": 1,
   "maxIterations": 0,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -17,8 +17,8 @@
       {
         "id": "US-001",
         "title": "Enhanced Type System for Multi-Platform Projects",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-002",
@@ -82,11 +82,22 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-001",
+      "taskTitle": "Enhanced Type System for Multi-Platform Projects",
+      "taskCompleted": true,
+      "durationMs": 121947,
+      "startedAt": "2026-02-21T23:45:59.019Z",
+      "endedAt": "2026-02-21T23:48:00.966Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [
-    "US-001"
+    "US-007"
   ],
   "subagentPanelVisible": false
 }
