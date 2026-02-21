@@ -3,10 +3,10 @@
   "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
   "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-21T23:48:01.990Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-02-21T23:50:37.230Z",
+  "currentIteration": 2,
   "maxIterations": 0,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -77,8 +77,8 @@
       {
         "id": "US-007",
         "title": "Data Normalization for Multi-Platform Stats",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       }
     ]
   },
@@ -92,12 +92,20 @@
       "durationMs": 121947,
       "startedAt": "2026-02-21T23:45:59.019Z",
       "endedAt": "2026-02-21T23:48:00.966Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-007",
+      "taskTitle": "Data Normalization for Multi-Platform Stats",
+      "taskCompleted": true,
+      "durationMs": 66265,
+      "startedAt": "2026-02-21T23:48:01.981Z",
+      "endedAt": "2026-02-21T23:49:08.246Z"
     }
   ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
-  "activeTaskIds": [
-    "US-007"
-  ],
+  "activeTaskIds": [],
   "subagentPanelVisible": false
 }
