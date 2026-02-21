@@ -103,6 +103,8 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     finalLanguageColor = null
   }
 
+  const npmPackage = 'package' in input ? input.package : undefined
+
   return {
     id,
     type,
@@ -121,6 +123,9 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     stats: finalStats,
     language: finalLanguage,
     languageColor: finalLanguageColor,
+    repo,
+    package: npmPackage,
+    slug: 'slug' in input ? input.slug : undefined,
   }
 }
 
