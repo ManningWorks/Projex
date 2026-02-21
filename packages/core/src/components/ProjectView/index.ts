@@ -1,2 +1,1 @@
-export { ProjectCard } from './ProjectCard'
 export { ProjectView } from './ProjectView'
