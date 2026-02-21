@@ -1,12 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import { ProjectCard } from '@folio/core'
 import type { FolioProject } from '@folio/core'
 
-export function ProjectGrid({ projects }: { projects: FolioProject[] }) {
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-
+export function ProjectGrid({ projects, onSelect }: { projects: FolioProject[]; onSelect: (id: string) => void }) {
   return (
     <div
       style={{
@@ -19,13 +16,13 @@ export function ProjectGrid({ projects }: { projects: FolioProject[] }) {
       {projects.map((project) => (
         <div
           key={project.id}
-          onClick={() => setSelectedId(project.id)}
+          onClick={() => onSelect(project.id)}
           style={{
             padding: '1.5rem',
-            border: selectedId === project.id ? '2px solid #3b82f6' : '1px solid #e5e7eb',
+            border: '1px solid #e5e7eb',
             borderRadius: '0.5rem',
             cursor: 'pointer',
-            backgroundColor: selectedId === project.id ? '#eff6ff' : 'white',
+            backgroundColor: 'white',
             transition: 'all 0.2s'
           }}
         >
