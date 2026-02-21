@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T13:57:07.931Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-02-21T14:00:46.862Z",
+  "currentIteration": 2,
   "maxIterations": 0,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -41,8 +41,8 @@
       {
         "id": "US-005",
         "title": "Implement project normalisation utility",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-006",
@@ -92,12 +92,20 @@
       "durationMs": 70845,
       "startedAt": "2026-02-21T13:55:55.993Z",
       "endedAt": "2026-02-21T13:57:06.838Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-005",
+      "taskTitle": "Implement project normalisation utility",
+      "taskCompleted": true,
+      "durationMs": 74816,
+      "startedAt": "2026-02-21T13:57:07.910Z",
+      "endedAt": "2026-02-21T13:58:22.726Z"
     }
   ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
-  "activeTaskIds": [
-    "US-005"
-  ],
+  "activeTaskIds": [],
   "subagentPanelVisible": false
 }
