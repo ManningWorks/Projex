@@ -1,0 +1,72 @@
+function ProjectView({ project, onBack, children }) {
+    return (<div data-folio-view>
+      {onBack && <button onClick={onBack}>Back</button>}
+      <h2>{project.name}</h2>
+      {children}
+    </div>);
+}
+ProjectView.Section = function ProjectViewSection({ project, name }) {
+    const sectionData = project[name];
+    if (!sectionData)
+        return null;
+    return (<div data-folio-view-section data-folio-view-section-name={name}>
+      {typeof sectionData === 'string' && <>{sectionData}</>}
+      {Array.isArray(sectionData) &&
+            sectionData.map((item, index) => {
+                if (typeof item === 'string') {
+                    return <span key={index} data-folio-tag>{item}</span>;
+                }
+                if ('type' in item && 'text' in item) {
+                    const struggle = item;
+                    return (<div key={index} data-folio-struggle data-folio-struggle-type={struggle.type}>
+                {struggle.text}
+              </div>);
+                }
+                if ('date' in item && ('note' in item || 'title' in item)) {
+                    if ('note' in item) {
+                        const timeline = item;
+                        return (<div key={index}>
+                  <span data-folio-timeline-date>{timeline.date}</span>
+                  <span data-folio-timeline-note>{timeline.note}</span>
+                </div>);
+                    }
+                    if ('title' in item) {
+                        const post = item;
+                        return (<div key={index}>
+                  <span data-folio-post-title>{post.title}</span>
+                  <span data-folio-post-date>{post.date}</span>
+                  {post.url && (<a href={post.url} data-folio-post-link>
+                      Link
+                    </a>)}
+                </div>);
+                    }
+                }
+                return null;
+            })}
+    </div>);
+};
+ProjectView.Links = function ProjectViewLinks({ project }) {
+    const links = project.links;
+    if (!links.github && !links.live && !links.npm && !links.appStore && !links.playStore) {
+        return null;
+    }
+    return (<div data-folio-view-links>
+      {links.github && (<a href={links.github} data-folio-link data-folio-link-type="github">
+          GitHub
+        </a>)}
+      {links.live && (<a href={links.live} data-folio-link data-folio-link-type="live">
+          Live
+        </a>)}
+      {links.npm && (<a href={links.npm} data-folio-link data-folio-link-type="npm">
+          npm
+        </a>)}
+      {links.appStore && (<a href={links.appStore} data-folio-link data-folio-link-type="app-store">
+          App Store
+        </a>)}
+      {links.playStore && (<a href={links.playStore} data-folio-link data-folio-link-type="play-store">
+          Play Store
+        </a>)}
+    </div>);
+};
+export { ProjectView };
+//# sourceMappingURL=ProjectView.js.map
