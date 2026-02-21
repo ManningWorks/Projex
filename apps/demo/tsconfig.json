@@ -31,6 +31,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@folio/core": [
+        "../../packages/core/src"
       ]
     },
     "isolatedModules": true
