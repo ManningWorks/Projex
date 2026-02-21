@@ -3,10 +3,10 @@
   "sessionId": "18869545-059d-41ad-9ef2-d85725d04313",
   "status": "running",
   "startedAt": "2026-02-21T23:13:33.896Z",
-  "updatedAt": "2026-02-21T23:17:06.269Z",
-  "currentIteration": 0,
+  "updatedAt": "2026-02-21T23:17:50.193Z",
+  "currentIteration": 1,
   "maxIterations": 0,
-  "tasksCompleted": 0,
+  "tasksCompleted": 1,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -17,8 +17,8 @@
       {
         "id": "US-001",
         "title": "CLI Package Structure",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-005",
@@ -52,7 +52,18 @@
       }
     ]
   },
-  "iterations": [],
+  "iterations": [
+    {
+      "iteration": 1,
+      "status": "completed",
+      "taskId": "US-001",
+      "taskTitle": "CLI Package Structure",
+      "taskCompleted": true,
+      "durationMs": 201686,
+      "startedAt": "2026-02-21T23:13:44.577Z",
+      "endedAt": "2026-02-21T23:17:06.263Z"
+    }
+  ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [],
