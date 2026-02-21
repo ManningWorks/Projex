@@ -1,4 +1,4 @@
-export type ProjectType = 'github' | 'manual' | 'npm' | 'hybrid'
+export type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'hybrid'
 
 export type ProjectStatus = 'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'archived' | 'for-sale'
 
@@ -24,24 +24,31 @@ export interface ProjectLinks {
   npm?: string
   appStore?: string
   playStore?: string
+  productHunt?: string
 }
 
-export interface ProjectStats {
+export interface GitHubStats {
   stars?: number
   forks?: number
-  downloads?: string
 }
 
-export interface FolioProjectInput {
+export interface NpmStats {
+  downloads?: string
+  version?: string
+}
+
+export interface ProductHuntStats {
+  upvotes?: number
+  comments?: number
+  launchDate?: string
+}
+
+export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats
+
+export interface BaseProjectInput {
   id: string
-  type: ProjectType
   status: ProjectStatus
   featured?: boolean
-
-  // GitHub-specific — required when type is 'github' or 'hybrid'
-  repo?: string
-
-  // Content fields — required for manual, optional overrides for github/hybrid
   name?: string
   tagline?: string
   description?: string
@@ -53,14 +60,52 @@ export interface FolioProjectInput {
   stack?: string[]
   links?: ProjectLinks
   stats?: ProjectStats
-
-  // Override — use to mask or replace data fetched from GitHub API
   override?: {
     name?: string
     tagline?: string
     description?: string
     stack?: string[]
   }
+}
+
+export interface GitHubProjectInput extends BaseProjectInput {
+  type: 'github'
+  repo: string
+}
+
+export interface ManualProjectInput extends BaseProjectInput {
+  type: 'manual'
+}
+
+export interface NpmProjectInput extends BaseProjectInput {
+  type: 'npm'
+  package: string
+}
+
+export interface ProductHuntProjectInput extends BaseProjectInput {
+  type: 'product-hunt'
+  slug: string
+}
+
+export interface HybridProjectInput extends BaseProjectInput {
+  type: 'hybrid'
+  repo: string
+  package: string
+}
+
+export type FolioProjectInput =
+  | GitHubProjectInput
+  | ManualProjectInput
+  | NpmProjectInput
+  | ProductHuntProjectInput
+  | HybridProjectInput
+
+export type FolioProjectInputCompat = Omit<BaseProjectInput, 'id'> & {
+  id: string
+  type?: ProjectType
+  repo?: string
+  package?: string
+  slug?: string
 }
 
 export interface FolioProject {
@@ -81,4 +126,7 @@ export interface FolioProject {
   stats: ProjectStats | null
   language: string | null
   languageColor: string | null
+  repo?: string
+  package?: string
+  slug?: string
 }

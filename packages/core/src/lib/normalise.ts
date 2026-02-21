@@ -7,7 +7,6 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     type,
     status,
     featured,
-    repo,
     name: inputName,
     tagline: inputTagline,
     description: inputDescription,
@@ -21,6 +20,8 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     posts: inputPosts,
     override,
   } = input
+
+  const repo = 'repo' in input ? input.repo : undefined
 
   let githubData = null
 

@@ -1,14 +1,14 @@
 {
-  "id": "18869545-059d-41ad-9ef2-d85725d04313",
+  "id": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
-  "startedAt": "2026-02-21T23:13:33.143Z",
-  "updatedAt": "2026-02-21T23:23:35.060Z",
+  "startedAt": "2026-02-21T23:45:56.281Z",
+  "updatedAt": "2026-02-21T23:45:56.281Z",
   "agentPlugin": "opencode",
   "trackerPlugin": "json",
-  "prdPath": "./project_docs/tasks/prd-v0.2.json",
-  "currentIteration": 5,
+  "prdPath": "./project_docs/tasks/prd-v0.3.json",
+  "currentIteration": 0,
   "maxIterations": 0,
   "totalTasks": 0,
-  "tasksCompleted": 5,
+  "tasksCompleted": 0,
   "cwd": "/home/luke/workspace/Folio"
 }

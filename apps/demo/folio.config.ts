@@ -162,6 +162,7 @@ export const projects = defineProjects([
   {
     id: 'react-utilities',
     type: 'npm',
+    package: 'react-utilities',
     status: 'active',
     name: 'React Utilities',
     tagline: 'Collection of utility functions',
@@ -187,8 +188,9 @@ export const projects = defineProjects([
   {
     id: 'analytics-dashboard',
     type: 'hybrid',
-    status: 'active',
     repo: 'user/analytics-dashboard',
+    package: 'analytics-dashboard',
+    status: 'active',
     links: {
       github: 'https://github.com/user/analytics-dashboard',
       live: 'https://analytics.dev'
