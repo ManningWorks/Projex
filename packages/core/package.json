@@ -1,0 +1,25 @@
+{
+  "name": "@folio/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'Linting not configured yet'"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "react": "^19.0.0"
+  }
+}

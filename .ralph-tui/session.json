@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "sessionId": "ff1463b2-ee87-499e-a090-208865a7d2b9",
+  "status": "running",
+  "startedAt": "2026-02-21T13:26:03.854Z",
+  "updatedAt": "2026-02-21T13:27:11.089Z",
+  "currentIteration": 0,
+  "maxIterations": 0,
+  "tasksCompleted": 0,
+  "isPaused": false,
+  "agentPlugin": "opencode",
+  "trackerState": {
+    "plugin": "json",
+    "prdPath": "project_docs/tasks/prd.json",
+    "totalTasks": 11,
+    "tasks": [
+      {
+        "id": "US-001",
+        "title": "Set up monorepo structure with pnpm workspaces",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-002",
+        "title": "Define TypeScript types and interfaces",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-003",
+        "title": "Create defineProjects config helper",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-004",
+        "title": "Implement GitHub API fetching utility",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-005",
+        "title": "Implement project normalisation utility",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-006",
+        "title": "Create ProjectCard compound components",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-007",
+        "title": "Create ProjectView compound components",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-008",
+        "title": "Set up demo app configuration and data",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-009",
+        "title": "Build demo app grid view with ProjectCard",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-010",
+        "title": "Build demo app detail view with ProjectView",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-011",
+        "title": "Write comprehensive README documentation",
+        "status": "open",
+        "completedInSession": false
+      }
+    ]
+  },
+  "iterations": [],
+  "skippedTaskIds": [],
+  "cwd": "/home/luke/workspace/Folio",
+  "activeTaskIds": [
+    "US-001"
+  ],
+  "subagentPanelVisible": false
+}

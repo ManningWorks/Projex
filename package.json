@@ -1,0 +1,19 @@
+{
+  "name": "folio",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter @folio/core build",
+    "typecheck": "pnpm --filter './**' typecheck",
+    "lint": "pnpm --filter './**' lint",
+    "test": "pnpm --filter './**' test"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
