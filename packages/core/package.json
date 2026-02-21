@@ -17,6 +17,7 @@
     "lint": "echo 'Linting not configured yet'"
   },
   "devDependencies": {
+    "@types/node": "^22.10.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
