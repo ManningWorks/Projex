@@ -3,10 +3,10 @@
   "sessionId": "18869545-059d-41ad-9ef2-d85725d04313",
   "status": "running",
   "startedAt": "2026-02-21T23:13:33.896Z",
-  "updatedAt": "2026-02-21T23:23:35.003Z",
-  "currentIteration": 4,
+  "updatedAt": "2026-02-21T23:25:05.614Z",
+  "currentIteration": 5,
   "maxIterations": 0,
-  "tasksCompleted": 4,
+  "tasksCompleted": 5,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -41,8 +41,8 @@
       {
         "id": "US-003",
         "title": "folio add project-card Command",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-004",
@@ -92,6 +92,16 @@
       "durationMs": 125616,
       "startedAt": "2026-02-21T23:18:51.898Z",
       "endedAt": "2026-02-21T23:20:57.514Z"
+    },
+    {
+      "iteration": 5,
+      "status": "completed",
+      "taskId": "US-003",
+      "taskTitle": "folio add project-card Command",
+      "taskCompleted": true,
+      "durationMs": 156451,
+      "startedAt": "2026-02-21T23:20:58.546Z",
+      "endedAt": "2026-02-21T23:23:34.997Z"
     }
   ],
   "skippedTaskIds": [],
