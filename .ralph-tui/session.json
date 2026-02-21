@@ -3,10 +3,10 @@
   "sessionId": "5f41da8e-f081-4fd9-a1f0-7fa7d679a726",
   "status": "running",
   "startedAt": "2026-02-21T13:55:53.389Z",
-  "updatedAt": "2026-02-21T14:10:13.074Z",
-  "currentIteration": 5,
+  "updatedAt": "2026-02-21T14:13:12.942Z",
+  "currentIteration": 6,
   "maxIterations": 0,
-  "tasksCompleted": 5,
+  "tasksCompleted": 6,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -65,8 +65,8 @@
       {
         "id": "US-009",
         "title": "Build demo app grid view with ProjectCard",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-010",
@@ -132,6 +132,16 @@
       "durationMs": 255546,
       "startedAt": "2026-02-21T14:02:26.631Z",
       "endedAt": "2026-02-21T14:06:42.177Z"
+    },
+    {
+      "iteration": 6,
+      "status": "completed",
+      "taskId": "US-009",
+      "taskTitle": "Build demo app grid view with ProjectCard",
+      "taskCompleted": true,
+      "durationMs": 209832,
+      "startedAt": "2026-02-21T14:06:43.237Z",
+      "endedAt": "2026-02-21T14:10:13.069Z"
     }
   ],
   "skippedTaskIds": [],
