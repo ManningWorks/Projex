@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter @folio/core build",
+    "build": "pnpm --filter './packages/**' build",
     "typecheck": "pnpm --filter './**' typecheck",
     "lint": "pnpm --filter './**' lint",
     "test": "pnpm --filter './**' test"
