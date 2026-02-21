@@ -3,10 +3,10 @@
   "sessionId": "ff1463b2-ee87-499e-a090-208865a7d2b9",
   "status": "running",
   "startedAt": "2026-02-21T13:26:03.854Z",
-  "updatedAt": "2026-02-21T13:29:52.222Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-02-21T13:31:13.816Z",
+  "currentIteration": 2,
   "maxIterations": 0,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-002",
         "title": "Define TypeScript types and interfaces",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-003",
@@ -92,6 +92,16 @@
       "durationMs": 116258,
       "startedAt": "2026-02-21T13:27:11.082Z",
       "endedAt": "2026-02-21T13:29:07.340Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-002",
+      "taskTitle": "Define TypeScript types and interfaces",
+      "taskCompleted": true,
+      "durationMs": 43812,
+      "startedAt": "2026-02-21T13:29:08.407Z",
+      "endedAt": "2026-02-21T13:29:52.219Z"
     }
   ],
   "skippedTaskIds": [],
