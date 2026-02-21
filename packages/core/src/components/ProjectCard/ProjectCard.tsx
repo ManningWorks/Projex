@@ -21,10 +21,10 @@ ProjectCard.Description = function ProjectCardDescription({ project }: { project
 }
 
 ProjectCard.Tags = function ProjectCardTags({ project }: { project: FolioProject }) {
-  if (!project.tags || project.tags.length === 0) return null
+  if (!project.stack || project.stack.length === 0) return null
   return (
     <div data-folio-card-tags>
-      {project.tags.map((tag) => (
+      {project.stack.map((tag) => (
         <span key={tag} data-folio-tag>
           {tag}
         </span>

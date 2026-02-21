@@ -10,11 +10,9 @@ function ProjectView({
   children: React.ReactNode
 }) {
   return (
-    <div data-folio-view data-folio-project-id={project.id}>
-      <div data-folio-view-header>
-        {onBack && <button onClick={onBack}>Back</button>}
-        <h2 data-folio-view-title>{project.name}</h2>
-      </div>
+    <div data-folio-view>
+      {onBack && <button onClick={onBack}>Back</button>}
+      <h2>{project.name}</h2>
       {children}
     </div>
   )

@@ -56,21 +56,25 @@ All fields are optional except where noted.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `id` | `string` (required) | Unique identifier for the project |
-| `name` | `string` (required) | Display name |
-| `description` | `string` (required) | Short description |
+| `id` | `string` (required) | Unique identifier for project |
 | `type` | `'github' \| 'manual' \| 'npm' \| 'hybrid'` (required) | Project type |
 | `status` | `'active' \| 'shipped' \| 'in-progress' \| 'coming-soon' \| 'archived' \| 'for-sale'` (required) | Current status |
-| `links` | `ProjectLinks` | URLs to project resources |
-| `tags` | `string[]` | Custom tags (replaces deprecated `stack`) |
-| `stats` | `ProjectStats` | GitHub/npm stats |
+| `featured` | `boolean` | Whether project is featured |
+| `repo` | `string` | GitHub repo in "username/repo" format (required for github/hybrid) |
+| `name` | `string` | Display name (optional for github, required for manual/npm) |
+| `tagline` | `string` | Short tagline |
+| `description` | `string` | Short description (optional for github, required for manual/npm) |
 | `background` | `string` | Project background story |
+| `why` | `string` | Why you built this project |
 | `struggles` | `ProjectStruggle[]` | Current challenges |
 | `timeline` | `ProjectTimelineEntry[]` | Project milestones |
 | `posts` | `ProjectPost[]` | Related blog posts |
-| `techStack` | `string[]` | Technologies used (deprecated, use `tags`) |
+| `stack` | `string[]` | Technologies used |
+| `links` | `ProjectLinks` | URLs to project resources |
+| `stats` | `ProjectStats` | GitHub/npm stats |
 | `language` | `string` | Primary programming language |
 | `languageColor` | `string` | Hex color for language badge |
+| `override` | `object` | Override GitHub API data |
 
 ### ProjectLinks
 
@@ -86,8 +90,8 @@ All fields are optional except where noted.
 
 | Field | Type |
 |-------|------|
-| `stars` | `string` |
-| `forks` | `string` |
+| `stars` | `number` |
+| `forks` | `number` |
 | `downloads` | `string` |
 
 ### ProjectStruggle
@@ -136,7 +140,7 @@ Compound component for expanded project detail view.
 ```tsx
 <ProjectView project={project} onBack={() => setSelected(null)}>
   <ProjectView.Section project={project} name="background" />
-  <ProjectView.Section project={project} name="techStack" />
+  <ProjectView.Section project={project} name="stack" />
   <ProjectView.Section project={project} name="struggles" />
   <ProjectView.Section project={project} name="timeline" />
   <ProjectView.Section project={project} name="posts" />
@@ -168,9 +172,7 @@ Every rendered element has a `data-folio-*` attribute for styling.
 
 | Element | Attribute |
 |---------|-----------|
-| View container | `data-folio-view`, `data-folio-project-id` |
-| Header | `data-folio-view-header` |
-| Title | `data-folio-view-title` |
+| View container | `data-folio-view` |
 | Section | `data-folio-view-section`, `data-folio-view-section-name` |
 | Timeline date | `data-folio-timeline-date` |
 | Timeline note | `data-folio-timeline-note` |

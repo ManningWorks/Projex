@@ -27,43 +27,58 @@ export interface ProjectLinks {
 }
 
 export interface ProjectStats {
-  stars?: string
-  forks?: string
+  stars?: number
+  forks?: number
   downloads?: string
 }
 
 export interface FolioProjectInput {
   id: string
-  name: string
-  description: string
   type: ProjectType
   status: ProjectStatus
-  links?: ProjectLinks
-  tags?: string[]
-  stats?: ProjectStats
+  featured?: boolean
+
+  // GitHub-specific — required when type is 'github' or 'hybrid'
+  repo?: string
+
+  // Content fields — required for manual, optional overrides for github/hybrid
+  name?: string
+  tagline?: string
+  description?: string
   background?: string
+  why?: string
   struggles?: ProjectStruggle[]
   timeline?: ProjectTimelineEntry[]
   posts?: ProjectPost[]
-  techStack?: string[]
-  language?: string
-  languageColor?: string
+  stack?: string[]
+  links?: ProjectLinks
+  stats?: ProjectStats
+
+  // Override — use to mask or replace data fetched from GitHub API
+  override?: {
+    name?: string
+    tagline?: string
+    description?: string
+    stack?: string[]
+  }
 }
 
 export interface FolioProject {
   id: string
-  name: string
-  description: string
   type: ProjectType
   status: ProjectStatus
-  links: ProjectLinks
-  tags: string[]
-  stats: ProjectStats
+  featured: boolean
+  name: string
+  tagline: string
+  description: string
   background: string | null
+  why: string | null
   struggles: ProjectStruggle[]
   timeline: ProjectTimelineEntry[]
   posts: ProjectPost[]
-  techStack: string[]
+  stack: string[]
+  links: ProjectLinks
+  stats: ProjectStats | null
   language: string | null
   languageColor: string | null
 }
