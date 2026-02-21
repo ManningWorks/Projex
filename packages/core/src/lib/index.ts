@@ -1,6 +1,8 @@
 export { defineProjects } from './defineProjects'
 export { fetchGitHubRepo, LANGUAGE_COLORS } from './github'
 export { fetchNpmPackage } from './npm'
+export { fetchProductHuntPost } from './product-hunt'
 export { normalise } from './normalise'
 export type { GitHubRepoData } from './github'
 export type { NpmPackageData } from './npm'
+export type { ProductHuntPostData } from './product-hunt'
