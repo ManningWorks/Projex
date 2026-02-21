@@ -3,10 +3,10 @@
   "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
   "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-21T23:50:37.230Z",
-  "currentIteration": 2,
+  "updatedAt": "2026-02-21T23:52:33.143Z",
+  "currentIteration": 3,
   "maxIterations": 0,
-  "tasksCompleted": 2,
+  "tasksCompleted": 3,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-002",
         "title": "NPM Registry API Client",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-003",
@@ -102,6 +102,16 @@
       "durationMs": 66265,
       "startedAt": "2026-02-21T23:48:01.981Z",
       "endedAt": "2026-02-21T23:49:08.246Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-002",
+      "taskTitle": "NPM Registry API Client",
+      "taskCompleted": true,
+      "durationMs": 87952,
+      "startedAt": "2026-02-21T23:49:09.276Z",
+      "endedAt": "2026-02-21T23:50:37.228Z"
     }
   ],
   "skippedTaskIds": [],
