@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -107,76 +107,76 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface NpmPackageData {
   name: string
   version: string
   downloads: number
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export async function fetchNpmPackage(packageName: string): Promise&lt;NpmPackageData | null&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-<span class="cstat-no" title="statement not covered" >    const downloadsUrl = `https://api.npmjs.org/downloads/point/last-month/${packageName}`</span>
-<span class="cstat-no" title="statement not covered" >    const registryUrl = `https://registry.npmjs.org/${packageName}`</span>
+export async function fetchNpmPackage(packageName: string): Promise&lt;NpmPackageData | null&gt; {
+  try {
+    const downloadsUrl = `https://api.npmjs.org/downloads/point/last-month/${packageName}`
+    const registryUrl = `https://registry.npmjs.org/${packageName}`
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    const [downloadsResponse, registryResponse] = await Promise.all([</span>
-<span class="cstat-no" title="statement not covered" >      fetch(downloadsUrl, { cache: 'force-cache' }),</span>
-<span class="cstat-no" title="statement not covered" >      fetch(registryUrl, { cache: 'force-cache' }),</span>
-<span class="cstat-no" title="statement not covered" >    ])</span>
+    const [downloadsResponse, registryResponse] = await Promise.all([
+      fetch(downloadsUrl, { cache: 'force-cache' }),
+      fetch(registryUrl, { cache: 'force-cache' }),
+    ])
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!downloadsResponse.ok || !registryResponse.ok) {</span>
-<span class="cstat-no" title="statement not covered" >      return null</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    if (!downloadsResponse.ok || !registryResponse.ok) {
+      return null
+    }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    const downloadsData = await downloadsResponse.json()</span>
-<span class="cstat-no" title="statement not covered" >    const registryData = await registryResponse.json()</span>
+    const downloadsData = await downloadsResponse.json()
+    const registryData = await registryResponse.json()
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    const version = registryData['dist-tags']?.latest</span>
+    const version = registryData['dist-tags']?.latest
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!version) {</span>
-<span class="cstat-no" title="statement not covered" >      return null</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    if (!version) {
+      return null
+    }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return {</span>
-<span class="cstat-no" title="statement not covered" >      name: downloadsData.package || packageName,</span>
-<span class="cstat-no" title="statement not covered" >      version,</span>
-<span class="cstat-no" title="statement not covered" >      downloads: downloadsData.downloads || 0,</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  } catch {</span>
-<span class="cstat-no" title="statement not covered" >    return null</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+    return {
+      name: downloadsData.package || packageName,
+      version,
+      downloads: downloadsData.downloads || 0,
+    }
+  } catch {
+    return null
+  }
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -184,7 +184,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-22T09:31:57.015Z
+                at 2026-02-22T09:38:40.281Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
