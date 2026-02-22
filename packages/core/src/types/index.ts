@@ -60,6 +60,7 @@ export interface BaseProjectInput {
   description?: string
   background?: string
   why?: string
+  image?: string
   struggles?: ProjectStruggle[]
   timeline?: ProjectTimelineEntry[]
   posts?: ProjectPost[]
@@ -124,6 +125,7 @@ export interface FolioProject {
   description: string
   background: string | null
   why: string | null
+  image: string | null
   struggles: ProjectStruggle[]
   timeline: ProjectTimelineEntry[]
   posts: ProjectPost[]
