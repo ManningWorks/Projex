@@ -1,6 +1,5 @@
 {
-  "framework": "vitepress",
-  "buildCommand": "pnpm build",
-  "installCommand": "pnpm install",
-  "outputDirectory": ".vitepress/dist/src"
+  "outputDirectory": ".vitepress/dist/src",
+  "cleanUrls": true,
+  "trailingSlash": false
 }

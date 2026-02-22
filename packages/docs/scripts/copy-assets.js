@@ -6,19 +6,17 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = join(__filename, '..', '..')
 const distDir = join(__dirname, '.vitepress', 'dist')
 const srcDir = join(distDir, 'src')
-const assetsSource = join(distDir, 'assets')
-const assetsDest = join(srcDir, 'assets')
-const vpIconsSource = join(distDir, 'vp-icons.css')
-const vpIconsDest = join(srcDir, 'vp-icons.css')
 
-if (existsSync(assetsDest)) {
-  rmSync(assetsDest, { recursive: true })
-}
+const filesToCopy = ['404.html', 'hashmap.json', 'vp-icons.css', 'assets']
 
-if (existsSync(assetsSource)) {
-  cpSync(assetsSource, assetsDest, { recursive: true })
-}
-
-if (existsSync(vpIconsSource)) {
-  cpSync(vpIconsSource, vpIconsDest)
+for (const item of filesToCopy) {
+  const sourcePath = join(distDir, item)
+  const destPath = join(srcDir, item)
+  
+  if (existsSync(sourcePath)) {
+    if (existsSync(destPath)) {
+      rmSync(destPath, { recursive: true })
+    }
+    cpSync(sourcePath, destPath, { recursive: true })
+  }
 }
