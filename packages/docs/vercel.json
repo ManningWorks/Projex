@@ -1,5 +1,3 @@
 {
-  "outputDirectory": ".vitepress/dist/src",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "outputDirectory": ".vitepress/dist"
 }
