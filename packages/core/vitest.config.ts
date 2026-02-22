@@ -10,5 +10,16 @@ export default defineConfig({
     benchmark: {
       include: ['src/__tests__/benchmarks/**/*.bench.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     },
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'json-summary', 'html'],
+      reportsDirectory: './coverage',
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
+      },
+    },
   },
 })
