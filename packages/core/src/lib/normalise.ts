@@ -92,6 +92,9 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
       finalLinks.github = finalLinks.github || githubData.html_url
       finalLinks.live = finalLinks.live || githubData.homepage || undefined
     }
+    if (npmData && npmPackage) {
+      finalLinks.npm = finalLinks.npm || `https://npmjs.com/package/${npmPackage}`
+    }
   } else {
     finalLinks = inputLinks || {}
   }
