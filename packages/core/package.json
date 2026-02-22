@@ -17,7 +17,8 @@
     "lint": "eslint src --max-warnings 0",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:components": "vitest run --config vitest.config.ts src/components"
+    "test:components": "vitest run --config vitest.config.ts src/components",
+    "benchmark": "vitest bench --config vitest.config.ts"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

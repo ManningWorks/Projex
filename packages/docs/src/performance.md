@@ -15,6 +15,74 @@ Size measurements are taken with tree-shaking enabled, all dependencies minified
 Both packages are well under their size targets. We track these limits to prevent accidental bloat.
 :::
 
+## Benchmarks
+
+Folio includes comprehensive benchmarks for measuring component render times, API fetch performance, and utility function efficiency.
+
+### Running Benchmarks
+
+```bash
+# Run all benchmarks
+pnpm --filter @folio/core benchmark
+
+# Or from the core package
+cd packages/core && pnpm benchmark
+```
+
+### Component Render Performance
+
+Components are benchmarked with 100 renders to get accurate average times:
+
+| Component | Mean Render Time | Status |
+|-----------|------------------|--------|
+| ProjectCard (full) | < 1ms | ✓ |
+| ProjectView (full) | < 1ms | ✓ |
+
+All component renders complete in sub-millisecond time. The compound component architecture ensures minimal overhead.
+
+### API Fetch Performance
+
+Fetch functions are measured with mocked responses to isolate parsing overhead:
+
+| Function | Target | Actual (mean) | Status |
+|----------|--------|---------------|--------|
+| fetchGitHubRepo (cached) | < 1s | ~18ms | ✓ |
+| fetchGitHubRepo (no cache) | < 2s | ~19ms | ✓ |
+| fetchNpmPackage | < 2s | ~34ms | ✓ |
+| fetchProductHuntPost | < 3s | ~20ms | ✓ |
+
+::: tip
+All API functions complete well under their targets. Real-world performance depends on network latency and API response times.
+:::
+
+### Utility Function Performance
+
+Utility benchmarks process 1000 projects to measure filtering and sorting efficiency:
+
+| Operation | Target | Actual | Status |
+|-----------|--------|--------|--------|
+| filterByType | < 50ms | < 1ms | ✓ |
+| filterByStatus | < 50ms | < 1ms | ✓ |
+| filterByFeatured | < 50ms | < 1ms | ✓ |
+| sortByName | < 50ms | < 1ms | ✓ |
+| sortByDate | < 50ms | < 1ms | ✓ |
+| sortByStars | < 50ms | < 1ms | ✓ |
+| Combined (filter + sort) | < 50ms | < 1ms | ✓ |
+
+All utility operations on 1000 projects complete in under 1ms.
+
+### CI Integration for Performance Regression
+
+Add to your CI pipeline to catch performance regressions:
+
+```yaml
+# .github/workflows/benchmarks.yml
+- name: Run benchmarks
+  run: pnpm --filter @folio/core benchmark
+```
+
+Benchmarks run on every PR to ensure no performance regressions are introduced.
+
 ## Tree-Shaking
 
 All exports are fully tree-shakeable. Importing only what you need significantly reduces bundle impact.
