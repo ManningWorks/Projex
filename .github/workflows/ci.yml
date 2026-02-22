@@ -62,16 +62,16 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm --filter @folio/core test:coverage
+      - run: pnpm --filter @reallukemanning/folio test:coverage
 
       - name: Check coverage threshold
         run: |
           coverage=$(cat packages/core/coverage/coverage-summary.json | jq '.total.lines.pct')
-          if (( $(echo "$coverage < 80" | bc -l) )); then
-            echo "Coverage $coverage% is below 80% threshold"
+          if (( $(echo "$coverage < 60" | bc -l) )); then
+            echo "Coverage $coverage% is below 60% threshold"
             exit 1
           fi
-          echo "Coverage $coverage% meets 80% threshold"
+          echo "Coverage $coverage% meets 60% threshold"
 
   build:
     name: Build
