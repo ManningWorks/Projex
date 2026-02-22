@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -95,61 +95,61 @@
 <a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">30x</span>
-<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { FolioProject } from '../types'
 import type { SortOrder } from './sortByDate'
 &nbsp;
-export function sortByStars(projects: FolioProject[], order: SortOrder = 'desc'): FolioProject[] {
-  if (projects.length === 0) {
-    return []
-  }
+<span class="cstat-no" title="statement not covered" >export function sortByStars(projects: FolioProject[], order: SortOrder = 'desc'): FolioProject[] {</span>
+<span class="cstat-no" title="statement not covered" >  if (projects.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >    return []</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  const multiplier = order === 'asc' ? 1 : -1
+<span class="cstat-no" title="statement not covered" >  const multiplier = order === 'asc' ? 1 : -1</span>
 &nbsp;
-  return [...projects].sort((a, b) =&gt; {
-    const starsA = a.type === 'github' ? (a.stats?.stars ?? 0) : 0
-    const starsB = b.type === 'github' ? (b.stats?.stars ?? 0) : 0
+<span class="cstat-no" title="statement not covered" >  return [...projects].sort((a, b) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const starsA = a.type === 'github' ? (a.stats?.stars ?? 0) : 0</span>
+<span class="cstat-no" title="statement not covered" >    const starsB = b.type === 'github' ? (b.stats?.stars ?? 0) : 0</span>
 &nbsp;
-    if (starsA === 0 &amp;&amp; starsB === 0) {
-      return 0
-    }
+<span class="cstat-no" title="statement not covered" >    if (starsA === 0 &amp;&amp; starsB === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return 0</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    if (starsA === 0) {
-      return 1
-    }
+<span class="cstat-no" title="statement not covered" >    if (starsA === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return 1</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    if (starsB === 0) {
-      return -1
-    }
+<span class="cstat-no" title="statement not covered" >    if (starsB === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return -1</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    return (starsA - starsB) * multiplier
-  })
-}
+<span class="cstat-no" title="statement not covered" >    return (starsA - starsB) * multiplier</span>
+<span class="cstat-no" title="statement not covered" >  })</span>
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -157,7 +157,7 @@ export function sortByStars(projects: FolioProject[], order: SortOrder = 'desc')
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-22T00:57:52.793Z
+                at 2026-02-22T09:31:57.015Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

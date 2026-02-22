@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/26</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/26</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -107,76 +107,76 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface NpmPackageData {
   name: string
   version: string
   downloads: number
 }
 &nbsp;
-export async function fetchNpmPackage(packageName: string): Promise&lt;NpmPackageData | null&gt; {
-  try {
-    const downloadsUrl = `https://api.npmjs.org/downloads/point/last-month/${packageName}`
-    const registryUrl = `https://registry.npmjs.org/${packageName}`
+<span class="cstat-no" title="statement not covered" >export async function fetchNpmPackage(packageName: string): Promise&lt;NpmPackageData | null&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const downloadsUrl = `https://api.npmjs.org/downloads/point/last-month/${packageName}`</span>
+<span class="cstat-no" title="statement not covered" >    const registryUrl = `https://registry.npmjs.org/${packageName}`</span>
 &nbsp;
-    const [downloadsResponse, registryResponse] = await Promise.all([
-      fetch(downloadsUrl, { cache: 'force-cache' }),
-      fetch(registryUrl, { cache: 'force-cache' }),
-    ])
+<span class="cstat-no" title="statement not covered" >    const [downloadsResponse, registryResponse] = await Promise.all([</span>
+<span class="cstat-no" title="statement not covered" >      fetch(downloadsUrl, { cache: 'force-cache' }),</span>
+<span class="cstat-no" title="statement not covered" >      fetch(registryUrl, { cache: 'force-cache' }),</span>
+<span class="cstat-no" title="statement not covered" >    ])</span>
 &nbsp;
-    if (!downloadsResponse.ok || !registryResponse.ok) {
-      return null
-    }
-&nbsp;
-    const downloadsData = await downloadsResponse.json()
-    const registryData = await registryResponse.json()
-&nbsp;
-    const version = registryData['dist-tags']?.latest
-&nbsp;
-    if (!version) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    if (!downloadsResponse.ok || !registryResponse.ok) {</span>
 <span class="cstat-no" title="statement not covered" >      return null</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    return {
-      name: downloadsData.<span class="branch-0 cbranch-no" title="branch not covered" >package || packageName,</span>
-      version,
-      downloads: downloadsData.<span class="branch-0 cbranch-no" title="branch not covered" >downloads || 0,</span>
-    }
-<span class="branch-0 cbranch-no" title="branch not covered" >  } catch {</span>
+<span class="cstat-no" title="statement not covered" >    const downloadsData = await downloadsResponse.json()</span>
+<span class="cstat-no" title="statement not covered" >    const registryData = await registryResponse.json()</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    const version = registryData['dist-tags']?.latest</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!version) {</span>
+<span class="cstat-no" title="statement not covered" >      return null</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >      name: downloadsData.package || packageName,</span>
+<span class="cstat-no" title="statement not covered" >      version,</span>
+<span class="cstat-no" title="statement not covered" >      downloads: downloadsData.downloads || 0,</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  } catch {</span>
 <span class="cstat-no" title="statement not covered" >    return null</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-}
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -184,7 +184,7 @@ export async function fetchNpmPackage(packageName: string): Promise&lt;NpmPackag
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-22T00:57:52.793Z
+                at 2026-02-22T09:31:57.015Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
