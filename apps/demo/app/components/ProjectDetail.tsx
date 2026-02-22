@@ -1,7 +1,7 @@
 'use client'
 
-import { ProjectView } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { ProjectView } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 
 export function ProjectDetail({ project, onBack }: { project: FolioProject; onBack: () => void }) {
   return (

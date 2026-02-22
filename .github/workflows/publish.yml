@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    name: Publish Packages
+    name: Publish Package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,16 +30,11 @@ jobs:
 
       - run: pnpm lint
 
-      - run: pnpm --filter @folio/core test:coverage
+      - run: pnpm --filter @reallukemanning/folio test:coverage
 
       - run: pnpm build
 
-      - name: Publish @folio/core
-        run: pnpm --filter @folio/core publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @folio/cli
-        run: pnpm --filter @folio/cli publish --no-git-checks --access public
+      - name: Publish @reallukemanning/folio
+        run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,7 +1,7 @@
 'use client'
 
-import { ProjectCard } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 
 export function ProjectGrid({ projects, onSelect }: { projects: FolioProject[]; onSelect: (id: string) => void }) {
   return (

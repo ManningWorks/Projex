@@ -16,23 +16,23 @@ const __dirname = dirname(__filename)
 
 const COMPONENTS: ComponentMapping = {
   'project-card': {
-    sourcePath: resolve(__dirname, '../components/ProjectCard'),
+    sourcePath: resolve(__dirname, '../cli-components/ProjectCard'),
     destName: 'ProjectCard',
   },
   'project-view': {
-    sourcePath: resolve(__dirname, '../components/ProjectView'),
+    sourcePath: resolve(__dirname, '../cli-components/ProjectView'),
     destName: 'ProjectView',
   },
   'project-grid': {
-    sourcePath: resolve(__dirname, '../components/ProjectGrid'),
+    sourcePath: resolve(__dirname, '../cli-components/ProjectGrid'),
     destName: 'ProjectGrid',
   },
   'project-list': {
-    sourcePath: resolve(__dirname, '../components/ProjectList'),
+    sourcePath: resolve(__dirname, '../cli-components/ProjectList'),
     destName: 'ProjectList',
   },
   'featured-project': {
-    sourcePath: resolve(__dirname, '../components/FeaturedProject'),
+    sourcePath: resolve(__dirname, '../cli-components/FeaturedProject'),
     destName: 'FeaturedProject',
   },
 }
@@ -95,7 +95,7 @@ export async function add(componentName: string): Promise<void> {
     await createDirectory(destDir)
     await copyFiles(sourceFiles, destDir)
 
-    const typesSource = resolve(__dirname, '../components/types.ts')
+    const typesSource = resolve(__dirname, '../cli-components/types.ts')
     const typesDest = resolve(folioDir, 'types.ts')
     const typesExist = await checkTypeFileExists(typesDest)
 

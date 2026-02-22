@@ -110,7 +110,7 @@ async function detectNextJs(workingDir: string): Promise<boolean> {
 }
 
 function generateConfigTemplate(): string {
-  return `import { defineProjects } from '@folio/core'
+  return `import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {
@@ -251,7 +251,7 @@ async function generateGitHubConfig(): Promise<string> {
     )
     .join('\n')
 
-  return `import { defineProjects } from '@folio/core'
+  return `import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
 ${repoEntries}

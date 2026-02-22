@@ -1,5 +1,5 @@
-import { normalise } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { normalise } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 import { projects as projectInputs } from '../folio.config'
 import { ProjectContainer } from './components/ProjectContainer'
 

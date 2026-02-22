@@ -5,9 +5,6 @@ import { fileURLToPath } from 'node:url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const srcDir = join(__dirname, 'src/components')
-const dstDir = join(__dirname, 'dist/components')
-
 async function copyDirectory(src, dst) {
   await mkdir(dst, { recursive: true })
 
@@ -27,7 +24,8 @@ async function copyDirectory(src, dst) {
 }
 
 async function main() {
-  await copyDirectory(srcDir, dstDir)
+  await copyDirectory(join(__dirname, 'src/components'), join(__dirname, 'dist/components'))
+  await copyDirectory(join(__dirname, 'src/cli-components'), join(__dirname, 'dist/cli-components'))
 }
 
 main().catch(console.error)

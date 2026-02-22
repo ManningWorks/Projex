@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ProjectGrid } from './ProjectGrid'
 import { ProjectDetail } from './ProjectDetail'
-import type { FolioProject } from '@folio/core'
+import type { FolioProject } from '@reallukemanning/folio'
 
 export function ProjectContainer({ projects }: { projects: FolioProject[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null)

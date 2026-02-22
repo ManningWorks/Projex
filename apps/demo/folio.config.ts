@@ -1,4 +1,4 @@
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {

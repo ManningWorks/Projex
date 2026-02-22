@@ -23,5 +23,11 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'no-console': ['warn', { allow: ['warn'] }]
     }
+  },
+  {
+    files: ['src/commands/**/*.ts'],
+    rules: {
+      'no-console': 'off'
+    }
   }
 ]

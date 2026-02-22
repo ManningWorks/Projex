@@ -13,22 +13,13 @@ Every developer eventually builds a projects page, and almost every developer bu
 
 ## Quick Start
 
-### Option 1: CLI (Recommended)
-
 ```bash
-npx folio init
-npx folio add project-card
-```
-
-### Option 2: Install as Package
-
-```bash
-pnpm add @folio/core
+pnpm add @reallukemanning/folio
 ```
 
 ```ts
 // folio.config.ts
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {
@@ -43,8 +34,8 @@ export const projects = defineProjects([
 ```
 
 ```tsx
-import { ProjectCard } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 
 export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
   return (
@@ -62,6 +53,19 @@ export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
     </div>
   )
 }
+```
+
+## CLI
+
+Folio includes a CLI for copying components into your project (shadcn-style):
+
+```bash
+# Initialize config
+npx folio init
+
+# Copy components to your project
+npx folio add project-card
+npx folio add project-view
 ```
 
 ## folio.config.ts Reference

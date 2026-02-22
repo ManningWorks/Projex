@@ -7,9 +7,8 @@
     "typecheck": "pnpm --filter './packages/**' typecheck",
     "lint": "pnpm --filter './packages/**' lint",
     "test": "pnpm --filter './packages/**' test",
-    "benchmark": "pnpm --filter @folio/core benchmark",
-    "bundle-size": "tsx scripts/bundle-size.ts",
-    "release": "pnpm build && pnpm --filter '@folio/core' publish && pnpm --filter '@folio/cli' publish"
+    "benchmark": "pnpm --filter @reallukemanning/folio benchmark",
+    "bundle-size": "tsx scripts/bundle-size.ts"
   },
   "devDependencies": {
     "@size-limit/esbuild": "^12.0.0",
