@@ -2,6 +2,11 @@
 
 Folio is a shadcn-style component library for developers and solopreneurs who want a flexible, data-driven project showcase on their personal site.
 
+## Links
+
+- **Documentation:** https://folio-guide.vercel.app
+- **Demo:** https://folio-demo.vercel.app
+
 ## Problem
 
 Every developer eventually builds a projects page, and almost every developer builds it from scratch. They wire up GitHub APIs, handle rate limiting, design cards, handle edge cases for private repos and non-GitHub projects, and end up with bespoke solutions that help nobody else.
