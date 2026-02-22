@@ -1,193 +1,86 @@
 {
   "version": 1,
-  "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
+  "sessionId": "646cd48f-ece8-4ecb-bf61-563b823a0b32",
   "status": "running",
-  "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-22T00:05:35.491Z",
-  "currentIteration": 10,
+  "startedAt": "2026-02-22T00:10:00.896Z",
+  "updatedAt": "2026-02-22T00:10:02.982Z",
+  "currentIteration": 0,
   "maxIterations": 0,
-  "tasksCompleted": 10,
+  "tasksCompleted": 0,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
     "plugin": "json",
-    "prdPath": "./project_docs/tasks/prd-v0.3.json",
-    "totalTasks": 11,
+    "prdPath": "./project_docs/tasks/prd-v0.4.json",
+    "totalTasks": 10,
     "tasks": [
       {
         "id": "US-001",
-        "title": "Enhanced Type System for Multi-Platform Projects",
-        "status": "completed",
-        "completedInSession": true
+        "title": "ProjectGrid Layout Component",
+        "status": "open",
+        "completedInSession": false
       },
       {
         "id": "US-002",
-        "title": "NPM Registry API Client",
-        "status": "completed",
-        "completedInSession": true
+        "title": "ProjectList Layout Component",
+        "status": "open",
+        "completedInSession": false
       },
       {
         "id": "US-003",
-        "title": "Product Hunt API Client",
-        "status": "completed",
-        "completedInSession": true
+        "title": "FeaturedProject Component",
+        "status": "open",
+        "completedInSession": false
       },
       {
         "id": "US-004",
-        "title": "NPM Config Recognition",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-004b",
-        "title": "NPM Data Fetching Integration",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-004c",
-        "title": "NPM Rendering",
-        "status": "completed",
-        "completedInSession": true
+        "title": "filterByStatus Utility",
+        "status": "open",
+        "completedInSession": false
       },
       {
         "id": "US-005",
-        "title": "Product Hunt Config Recognition",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-005b",
-        "title": "Product Hunt Data Fetching Integration",
-        "status": "completed",
-        "completedInSession": true
-      },
-      {
-        "id": "US-005c",
-        "title": "Product Hunt Rendering",
-        "status": "completed",
-        "completedInSession": true
+        "title": "filterByType Utility",
+        "status": "open",
+        "completedInSession": false
       },
       {
         "id": "US-006",
-        "title": "Hybrid Project Support (npm + GitHub)",
+        "title": "filterByFeatured Utility",
         "status": "open",
         "completedInSession": false
       },
       {
         "id": "US-007",
-        "title": "Data Normalization for Multi-Platform Stats",
-        "status": "completed",
-        "completedInSession": true
+        "title": "sortByDate Utility",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-008",
+        "title": "sortByStars Utility",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-009",
+        "title": "sortByName Utility",
+        "status": "open",
+        "completedInSession": false
+      },
+      {
+        "id": "US-010",
+        "title": "CLI add Commands for Layout Components",
+        "status": "open",
+        "completedInSession": false
       }
     ]
   },
-  "iterations": [
-    {
-      "iteration": 1,
-      "status": "completed",
-      "taskId": "US-001",
-      "taskTitle": "Enhanced Type System for Multi-Platform Projects",
-      "taskCompleted": true,
-      "durationMs": 121947,
-      "startedAt": "2026-02-21T23:45:59.019Z",
-      "endedAt": "2026-02-21T23:48:00.966Z"
-    },
-    {
-      "iteration": 2,
-      "status": "completed",
-      "taskId": "US-007",
-      "taskTitle": "Data Normalization for Multi-Platform Stats",
-      "taskCompleted": true,
-      "durationMs": 66265,
-      "startedAt": "2026-02-21T23:48:01.981Z",
-      "endedAt": "2026-02-21T23:49:08.246Z"
-    },
-    {
-      "iteration": 3,
-      "status": "completed",
-      "taskId": "US-002",
-      "taskTitle": "NPM Registry API Client",
-      "taskCompleted": true,
-      "durationMs": 87952,
-      "startedAt": "2026-02-21T23:49:09.276Z",
-      "endedAt": "2026-02-21T23:50:37.228Z"
-    },
-    {
-      "iteration": 4,
-      "status": "completed",
-      "taskId": "US-003",
-      "taskTitle": "Product Hunt API Client",
-      "taskCompleted": true,
-      "durationMs": 114878,
-      "startedAt": "2026-02-21T23:50:38.263Z",
-      "endedAt": "2026-02-21T23:52:33.141Z"
-    },
-    {
-      "iteration": 5,
-      "status": "completed",
-      "taskId": "US-004",
-      "taskTitle": "NPM Config Recognition",
-      "taskCompleted": true,
-      "durationMs": 399118,
-      "startedAt": "2026-02-21T23:52:34.192Z",
-      "endedAt": "2026-02-21T23:59:13.310Z"
-    },
-    {
-      "iteration": 6,
-      "status": "completed",
-      "taskId": "US-004b",
-      "taskTitle": "NPM Data Fetching Integration",
-      "taskCompleted": true,
-      "durationMs": 111115,
-      "startedAt": "2026-02-21T23:59:14.412Z",
-      "endedAt": "2026-02-22T00:01:05.527Z"
-    },
-    {
-      "iteration": 7,
-      "status": "completed",
-      "taskId": "US-004c",
-      "taskTitle": "NPM Rendering",
-      "taskCompleted": true,
-      "durationMs": 55426,
-      "startedAt": "2026-02-22T00:01:06.617Z",
-      "endedAt": "2026-02-22T00:02:02.043Z"
-    },
-    {
-      "iteration": 8,
-      "status": "completed",
-      "taskId": "US-005",
-      "taskTitle": "Product Hunt Config Recognition",
-      "taskCompleted": true,
-      "durationMs": 54836,
-      "startedAt": "2026-02-22T00:02:03.077Z",
-      "endedAt": "2026-02-22T00:02:57.913Z"
-    },
-    {
-      "iteration": 9,
-      "status": "completed",
-      "taskId": "US-005b",
-      "taskTitle": "Product Hunt Data Fetching Integration",
-      "taskCompleted": true,
-      "durationMs": 97417,
-      "startedAt": "2026-02-22T00:02:59.013Z",
-      "endedAt": "2026-02-22T00:04:36.430Z"
-    },
-    {
-      "iteration": 10,
-      "status": "completed",
-      "taskId": "US-005c",
-      "taskTitle": "Product Hunt Rendering",
-      "taskCompleted": true,
-      "durationMs": 56846,
-      "startedAt": "2026-02-22T00:04:37.519Z",
-      "endedAt": "2026-02-22T00:05:34.365Z"
-    }
-  ],
+  "iterations": [],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
   "activeTaskIds": [
-    "US-006"
+    "US-001"
   ],
   "subagentPanelVisible": false
 }
