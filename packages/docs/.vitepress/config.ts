@@ -1,14 +1,11 @@
 import { defineConfig } from 'vitepress'
-import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   title: 'Folio',
   description: 'A shadcn-style component library for project showcase pages',
+  srcDir: 'src',
   cleanUrls: true,
   base: '/',
-  vite: {
-    plugins: [react()]
-  },
   themeConfig: {
     nav: [
       { text: 'Getting Started', link: '/' },
