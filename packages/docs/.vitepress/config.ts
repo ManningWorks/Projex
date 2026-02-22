@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   title: 'Folio',
   description: 'A shadcn-style component library for project showcase pages',
-  cleanUrls: true,
   vite: {
     plugins: [react()]
   },

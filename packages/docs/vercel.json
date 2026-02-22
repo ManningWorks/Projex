@@ -3,18 +3,5 @@
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
   "outputDirectory": ".vitepress/dist",
-  "rewrites": [
-    {
-      "source": "/vp-icons.css",
-      "destination": "/vp-icons.css"
-    },
-    {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/src/$1"
-    }
-  ]
+  "cleanUrls": true
 }
