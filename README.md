@@ -282,28 +282,24 @@ Folio ships with zero styling. Use the data attributes to style components howev
 
 ## Roadmap
 
-### v0.1 (Current)
-- Core component library
-- GitHub API integration
-- ProjectCard and ProjectView components
-- Demo application
-
-### v0.2
+### v1.0 (Current)
+- Core component library (ProjectCard, ProjectView, ProjectList, FeaturedProject)
+- GitHub, npm, and Product Hunt API integration
+- Build-time data fetching with caching
+- Filtering and sorting utilities
 - CLI tooling (`npx folio init`, `npx folio add`)
-- Normalisation utility for automatic data fetching
-
-### v0.3
-- npm registry integration for download stats
-- Product Hunt integration
-
-### v0.4
-- Layout components (ProjectGrid, ProjectList, FeaturedProject)
-- Advanced filtering and sorting utilities
-
-### v1.0
-- Stabilized API
 - Comprehensive documentation
 - Full test coverage
+- Bundle size optimization (< 3 KB gzipped)
+- Performance benchmarks
+
+### v1.1
+- Additional layout components
+- More filtering options
+- Enhanced CLI features
+
+### v2.0 (Future)
+- Breaking changes if needed based on user feedback
 
 ## Contributing
 
