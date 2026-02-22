@@ -193,6 +193,35 @@ Every rendered element has a `data-folio-*` attribute for styling.
 | Post link | `data-folio-post-link` |
 | Struggle | `data-folio-struggle`, `data-folio-struggle-type` |
 
+## Bundle Size
+
+Folio is optimized for minimal bundle impact. Size measurements are taken with tree-shaking enabled and all dependencies minified.
+
+| Package | Target | Actual (gzipped) | Status |
+|---------|--------|------------------|--------|
+| @folio/core | < 10 KB | **2.74 KB** | ✓ |
+| @folio/cli | < 50 KB | **7.49 KB** | ✓ |
+
+### Tree-Shaking
+
+Folio exports are fully tree-shakeable. Importing only what you need significantly reduces bundle size:
+
+```tsx
+// Import only the component you need
+import { ProjectCard } from '@folio/core'  // ~320 B gzipped
+
+// Or import everything
+import * as Folio from '@folio/core'  // ~2.74 KB gzipped
+```
+
+### Measuring Bundle Size
+
+```bash
+pnpm bundle-size
+```
+
+This command measures both packages and saves results to `.bundle-size.json` for tracking over time.
+
 ## GitHub API Setup
 
 Folio fetches GitHub repo data at build time for projects with `type: 'github'` or `type: 'hybrid'`.

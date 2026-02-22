@@ -18,6 +18,10 @@ export default defineConfig({
         {
           text: 'Getting Started',
           link: '/'
+        },
+        {
+          text: 'Performance',
+          link: '/performance'
         }
       ],
       '/api/': [

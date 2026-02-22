@@ -38,3 +38,6 @@ next-env.d.ts
 # project docs
 project_docs/
 .ralph-tui/
+
+# bundle size tracking
+.bundle-size.json

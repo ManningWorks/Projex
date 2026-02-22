@@ -6,9 +6,15 @@
     "build": "pnpm --filter './packages/**' build",
     "typecheck": "pnpm --filter './**' typecheck",
     "lint": "pnpm --filter './**' lint",
-    "test": "pnpm --filter './**' test"
+    "test": "pnpm --filter './**' test",
+    "bundle-size": "tsx scripts/bundle-size.ts"
   },
   "devDependencies": {
+    "@size-limit/esbuild": "^12.0.0",
+    "@size-limit/file": "^12.0.0",
+    "@size-limit/preset-small-lib": "^12.0.0",
+    "size-limit": "^12.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.3"
   },
   "engines": {
