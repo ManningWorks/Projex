@@ -3,10 +3,10 @@
   "sessionId": "646cd48f-ece8-4ecb-bf61-563b823a0b32",
   "status": "running",
   "startedAt": "2026-02-22T00:10:00.896Z",
-  "updatedAt": "2026-02-22T00:13:34.739Z",
-  "currentIteration": 2,
+  "updatedAt": "2026-02-22T00:14:23.610Z",
+  "currentIteration": 3,
   "maxIterations": 0,
-  "tasksCompleted": 2,
+  "tasksCompleted": 3,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -29,8 +29,8 @@
       {
         "id": "US-003",
         "title": "FeaturedProject Component",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-004",
@@ -96,6 +96,16 @@
       "durationMs": 43420,
       "startedAt": "2026-02-22T00:10:56.246Z",
       "endedAt": "2026-02-22T00:11:39.666Z"
+    },
+    {
+      "iteration": 3,
+      "status": "completed",
+      "taskId": "US-003",
+      "taskTitle": "FeaturedProject Component",
+      "taskCompleted": true,
+      "durationMs": 114042,
+      "startedAt": "2026-02-22T00:11:40.694Z",
+      "endedAt": "2026-02-22T00:13:34.736Z"
     }
   ],
   "skippedTaskIds": [],
