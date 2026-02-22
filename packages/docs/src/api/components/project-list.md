@@ -2,6 +2,10 @@
 
 Container component for displaying projects in a list layout.
 
+## Preview
+
+<ProjectListPreview />
+
 ## Import
 
 ```tsx

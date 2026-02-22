@@ -2,6 +2,10 @@
 
 Card component for displaying individual project summaries. Uses the compound component pattern for flexible composition.
 
+## Preview
+
+<ProjectCardPreview />
+
 ## Import
 
 ```tsx
