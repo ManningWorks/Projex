@@ -23,6 +23,18 @@ const COMPONENTS: ComponentMapping = {
     sourcePath: resolve(__dirname, '../components/ProjectView'),
     destName: 'ProjectView',
   },
+  'project-grid': {
+    sourcePath: resolve(__dirname, '../components/ProjectGrid'),
+    destName: 'ProjectGrid',
+  },
+  'project-list': {
+    sourcePath: resolve(__dirname, '../components/ProjectList'),
+    destName: 'ProjectList',
+  },
+  'featured-project': {
+    sourcePath: resolve(__dirname, '../components/FeaturedProject'),
+    destName: 'FeaturedProject',
+  },
 }
 
 export async function add(componentName: string): Promise<void> {

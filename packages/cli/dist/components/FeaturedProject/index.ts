@@ -1,0 +1,1 @@
+export { FeaturedProject } from './FeaturedProject'
