@@ -3,10 +3,10 @@
   "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
   "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-22T00:02:57.928Z",
-  "currentIteration": 7,
+  "updatedAt": "2026-02-22T00:02:59.054Z",
+  "currentIteration": 8,
   "maxIterations": 0,
-  "tasksCompleted": 7,
+  "tasksCompleted": 8,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -53,8 +53,8 @@
       {
         "id": "US-005",
         "title": "Product Hunt Config Recognition",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-005b",
@@ -152,10 +152,22 @@
       "durationMs": 55426,
       "startedAt": "2026-02-22T00:01:06.617Z",
       "endedAt": "2026-02-22T00:02:02.043Z"
+    },
+    {
+      "iteration": 8,
+      "status": "completed",
+      "taskId": "US-005",
+      "taskTitle": "Product Hunt Config Recognition",
+      "taskCompleted": true,
+      "durationMs": 54836,
+      "startedAt": "2026-02-22T00:02:03.077Z",
+      "endedAt": "2026-02-22T00:02:57.913Z"
     }
   ],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
-  "activeTaskIds": [],
+  "activeTaskIds": [
+    "US-005b"
+  ],
   "subagentPanelVisible": false
 }

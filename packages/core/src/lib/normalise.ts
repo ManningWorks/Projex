@@ -1,5 +1,6 @@
 import { fetchGitHubRepo, LANGUAGE_COLORS } from './github'
 import { fetchNpmPackage } from './npm'
+import { fetchProductHuntPost } from './product-hunt'
 import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectType } from '../types'
 
 export async function normalise(input: FolioProjectInput): Promise<FolioProject> {
@@ -39,6 +40,16 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
   if (type === 'npm' || type === 'hybrid') {
     if (npmPackage) {
       npmData = await fetchNpmPackage(npmPackage)
+    }
+  }
+
+  const slug = 'slug' in input ? input.slug : undefined
+
+  let productHuntData = null
+
+  if (type === 'product-hunt') {
+    if (slug) {
+      productHuntData = await fetchProductHuntPost(slug)
     }
   }
 
@@ -86,7 +97,7 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
   }
 
   let finalStats: FolioProject['stats'] | null = null
-  if (type === 'github' || type === 'hybrid' || type === 'npm') {
+  if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt') {
     if (githubData) {
       finalStats = {
         stars: githubData.stargazers_count,
@@ -98,6 +109,14 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
         ...finalStats,
         downloads: String(npmData.downloads),
         version: npmData.version,
+      }
+    }
+    if (productHuntData) {
+      finalStats = {
+        ...finalStats,
+        upvotes: productHuntData.votes_count,
+        comments: productHuntData.comments_count,
+        launchDate: productHuntData.featured_at || undefined,
       }
     }
     if (inputStats) {
