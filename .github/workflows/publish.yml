@@ -22,6 +22,9 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm typecheck
@@ -34,10 +37,6 @@ jobs:
 
       - name: Publish @folio/core
         run: pnpm --filter @folio/core publish --no-git-checks --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @folio/cli
         run: pnpm --filter @folio/cli publish --no-git-checks --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
