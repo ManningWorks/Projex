@@ -3,10 +3,10 @@
   "sessionId": "8bcbdf78-0530-4ea7-98e9-67b429b77d08",
   "status": "running",
   "startedAt": "2026-02-21T23:45:56.984Z",
-  "updatedAt": "2026-02-21T23:59:13.315Z",
-  "currentIteration": 4,
+  "updatedAt": "2026-02-22T00:01:05.533Z",
+  "currentIteration": 5,
   "maxIterations": 0,
-  "tasksCompleted": 4,
+  "tasksCompleted": 5,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -35,8 +35,8 @@
       {
         "id": "US-004",
         "title": "NPM Config Recognition",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-004b",
@@ -122,6 +122,16 @@
       "durationMs": 114878,
       "startedAt": "2026-02-21T23:50:38.263Z",
       "endedAt": "2026-02-21T23:52:33.141Z"
+    },
+    {
+      "iteration": 5,
+      "status": "completed",
+      "taskId": "US-004",
+      "taskTitle": "NPM Config Recognition",
+      "taskCompleted": true,
+      "durationMs": 399118,
+      "startedAt": "2026-02-21T23:52:34.192Z",
+      "endedAt": "2026-02-21T23:59:13.310Z"
     }
   ],
   "skippedTaskIds": [],
