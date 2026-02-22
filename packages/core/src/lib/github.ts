@@ -7,6 +7,8 @@ export interface GitHubRepoData {
   topics: string[]
   html_url: string
   homepage: string | null
+  created_at: string
+  updated_at: string
 }
 
 export const LANGUAGE_COLORS: Record<string, string> = {
@@ -67,6 +69,8 @@ export async function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | nu
       topics: data.topics || [],
       html_url: data.html_url,
       homepage: data.homepage,
+      created_at: data.created_at,
+      updated_at: data.updated_at,
     }
   } catch {
     return null

@@ -67,6 +67,8 @@ export interface BaseProjectInput {
   stack?: string[]
   links?: ProjectLinks
   stats?: ProjectStats
+  createdAt?: string
+  updatedAt?: string
   override?: {
     name?: string
     tagline?: string
@@ -134,6 +136,8 @@ export interface FolioProject {
   stats: ProjectStats | null
   language: string | null
   languageColor: string | null
+  createdAt: string | null
+  updatedAt: string | null
   repo?: string
   package?: string
   slug?: string

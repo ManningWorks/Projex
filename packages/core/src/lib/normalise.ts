@@ -21,6 +21,8 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     struggles: inputStruggles,
     timeline: inputTimeline,
     posts: inputPosts,
+    createdAt: inputCreatedAt,
+    updatedAt: inputUpdatedAt,
     override,
   } = input
 
@@ -132,16 +134,24 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
 
   let finalLanguage: FolioProject['language'] = null
   let finalLanguageColor: FolioProject['languageColor'] = null
+  let finalCreatedAt: FolioProject['createdAt'] = null
+  let finalUpdatedAt: FolioProject['updatedAt'] = null
 
   if (type === 'github') {
     finalLanguage = githubData?.language || null
     finalLanguageColor = githubData?.language ? LANGUAGE_COLORS[githubData.language] || null : null
+    finalCreatedAt = githubData?.created_at || inputCreatedAt || null
+    finalUpdatedAt = githubData?.updated_at || inputUpdatedAt || null
   } else if (type === 'hybrid') {
     finalLanguage = githubData?.language || null
     finalLanguageColor = githubData?.language ? LANGUAGE_COLORS[githubData.language] || null : null
+    finalCreatedAt = githubData?.created_at || inputCreatedAt || null
+    finalUpdatedAt = githubData?.updated_at || inputUpdatedAt || null
   } else {
     finalLanguage = null
     finalLanguageColor = null
+    finalCreatedAt = inputCreatedAt || null
+    finalUpdatedAt = inputUpdatedAt || null
   }
 
   return {
@@ -163,6 +173,8 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     stats: finalStats,
     language: finalLanguage,
     languageColor: finalLanguageColor,
+    createdAt: finalCreatedAt,
+    updatedAt: finalUpdatedAt,
     repo,
     package: npmPackage,
     slug: 'slug' in input ? input.slug : undefined,
