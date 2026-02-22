@@ -9,7 +9,7 @@ Featured project hero section for highlighting a single project.
 ## Import
 
 ```tsx
-import { FeaturedProject } from '@folio/core'
+import { FeaturedProject } from '@reallukemanning/folio'
 ```
 
 ## Usage
@@ -36,7 +36,7 @@ Returns `null` if `project` is null or undefined.
 ## Example
 
 ```tsx
-import { FeaturedProject, filterByFeatured } from '@folio/core'
+import { FeaturedProject, filterByFeatured } from '@reallukemanning/folio'
 
 function HomePage({ projects }) {
   const featured = filterByFeatured(projects, true)[0]

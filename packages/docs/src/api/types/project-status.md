@@ -22,8 +22,8 @@ type ProjectStatus = 'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'arc
 ## Usage
 
 ```tsx
-import type { ProjectStatus } from '@folio/core'
-import { filterByStatus } from '@folio/core'
+import type { ProjectStatus } from '@reallukemanning/folio'
+import { filterByStatus } from '@reallukemanning/folio'
 
 // Filter by single status
 const active = filterByStatus(projects, 'active')

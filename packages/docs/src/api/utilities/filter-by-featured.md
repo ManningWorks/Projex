@@ -31,7 +31,7 @@ function filterByFeatured(
 ## Example
 
 ```tsx
-import { filterByFeatured } from '@folio/core'
+import { filterByFeatured } from '@reallukemanning/folio'
 
 // Featured projects only
 const featuredProjects = filterByFeatured(projects, true)

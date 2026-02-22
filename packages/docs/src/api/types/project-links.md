@@ -29,7 +29,7 @@ interface ProjectLinks {
 ## Usage
 
 ```tsx
-import type { FolioProject } from '@folio/core'
+import type { FolioProject } from '@reallukemanning/folio'
 
 function renderLinks(project: FolioProject) {
   const links = project.links

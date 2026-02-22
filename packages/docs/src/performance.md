@@ -8,11 +8,10 @@ Size measurements are taken with tree-shaking enabled, all dependencies minified
 
 | Package | Target | Actual (gzipped) | Status |
 |---------|--------|------------------|--------|
-| @folio/core | < 10 KB | **2.74 KB** | ✓ |
-| @folio/cli | < 50 KB | **7.49 KB** | ✓ |
+| @reallukemanning/folio | < 10 KB | **2.74 KB** | ✓ |
 
 ::: tip
-Both packages are well under their size targets. We track these limits to prevent accidental bloat.
+The package is well under its size target. We track this limit to prevent accidental bloat.
 :::
 
 ## Benchmarks
@@ -23,7 +22,7 @@ Folio includes comprehensive benchmarks for measuring component render times, AP
 
 ```bash
 # Run all benchmarks
-pnpm --filter @folio/core benchmark
+pnpm --filter @reallukemanning/folio benchmark
 
 # Or from the core package
 cd packages/core && pnpm benchmark
@@ -78,7 +77,7 @@ Add to your CI pipeline to catch performance regressions:
 ```yaml
 # .github/workflows/benchmarks.yml
 - name: Run benchmarks
-  run: pnpm --filter @folio/core benchmark
+  run: pnpm --filter @reallukemanning/folio benchmark
 ```
 
 Benchmarks run on every PR to ensure no performance regressions are introduced.
@@ -91,20 +90,20 @@ All exports are fully tree-shakeable. Importing only what you need significantly
 
 ```tsx
 // Import only ProjectCard (~320 B gzipped)
-import { ProjectCard } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
 
 // Import multiple components (only used ones are included)
-import { ProjectCard, ProjectView } from '@folio/core'
+import { ProjectCard, ProjectView } from '@reallukemanning/folio'
 ```
 
 ### Utility Imports
 
 ```tsx
 // Import only what you need
-import { defineProjects, sortByStars } from '@folio/core'
+import { defineProjects, sortByStars } from '@reallukemanning/folio'
 
 // Type imports have zero runtime cost
-import type { FolioProject, ProjectType } from '@folio/core'
+import type { FolioProject, ProjectType } from '@reallukemanning/folio'
 ```
 
 ### What Gets Tree-Shaken
@@ -132,18 +131,16 @@ This means:
 
 ## External Dependencies
 
-### @folio/core
+### @reallukemanning/folio
 
-Folio core has **zero runtime dependencies** beyond React (which you already have):
+Folio has **zero runtime dependencies** beyond React (which you already have):
 
 ```
 react        - peer dependency (you provide)
 react-dom    - peer dependency (you provide)
 ```
 
-### @folio/cli
-
-The CLI tool has minimal dependencies for its functionality:
+The CLI is included in the same package and has minimal dependencies for its functionality:
 
 ```
 commander    - CLI framework (~20 KB)
@@ -151,7 +148,7 @@ inquirer     - Interactive prompts (~30 KB)
 chalk        - Terminal colors (~10 KB)
 ```
 
-These are dev dependencies only - they don't impact your production bundle.
+These CLI dependencies are only used when running `npx folio` commands - they don't impact your production bundle.
 
 ## Measuring Bundle Size
 
@@ -179,21 +176,21 @@ Add to your CI pipeline to catch size regressions:
 
 ```tsx
 // Good: Zero runtime cost
-import type { FolioProject } from '@folio/core'
+import type { FolioProject } from '@reallukemanning/folio'
 
 // Works the same but doesn't hint tree-shaking
-import { FolioProject } from '@folio/core'
+import { FolioProject } from '@reallukemanning/folio'
 ```
 
 ### 2. Import Components Individually
 
 ```tsx
 // Good: Tree-shakes unused components
-import { ProjectCard } from '@folio/core'
-import { ProjectView } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
+import { ProjectView } from '@reallukemanning/folio'
 
 // Avoid: Prevents tree-shaking analysis
-import * as Folio from '@folio/core'
+import * as Folio from '@reallukemanning/folio'
 ```
 
 ### 3. Use Data Attributes for Styling
@@ -215,15 +212,9 @@ Current baseline (as of measurement):
   "timestamp": "2026-02-22T00:00:00.000Z",
   "packages": [
     {
-      "name": "@folio/core",
+      "name": "@reallukemanning/folio",
       "target": "< 10 KB gzipped",
       "gzipped": 2805,
-      "passes": true
-    },
-    {
-      "name": "@folio/cli", 
-      "target": "< 50 KB gzipped",
-      "gzipped": 7666,
       "passes": true
     }
   ]

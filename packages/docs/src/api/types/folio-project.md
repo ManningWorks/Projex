@@ -65,7 +65,7 @@ interface FolioProject {
 `FolioProject` objects are created by the `normalise` function:
 
 ```tsx
-import { normalise } from '@folio/core'
+import { normalise } from '@reallukemanning/folio'
 
 const project = await normalise({
   id: 'my-project',
@@ -78,7 +78,7 @@ const project = await normalise({
 ## Usage with Components
 
 ```tsx
-import { ProjectCard, ProjectView } from '@folio/core'
+import { ProjectCard, ProjectView } from '@reallukemanning/folio'
 
 function ProjectPage({ project }: { project: FolioProject }) {
   return (

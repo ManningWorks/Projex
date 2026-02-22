@@ -9,7 +9,7 @@ Container component for displaying projects in a list layout.
 ## Import
 
 ```tsx
-import { ProjectList } from '@folio/core'
+import { ProjectList } from '@reallukemanning/folio'
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ Returns `null` if `children` is falsy.
 ## Example
 
 ```tsx
-import { ProjectList, ProjectCard } from '@folio/core'
+import { ProjectList, ProjectCard } from '@reallukemanning/folio'
 
 function ProjectsList({ projects }) {
   return (

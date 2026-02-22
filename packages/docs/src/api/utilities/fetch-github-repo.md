@@ -57,7 +57,7 @@ interface GitHubRepoData {
 ## Example
 
 ```tsx
-import { fetchGitHubRepo } from '@folio/core'
+import { fetchGitHubRepo } from '@reallukemanning/folio'
 
 const data = await fetchGitHubRepo('facebook/react')
 

@@ -35,23 +35,21 @@ The CLI copies components to `components/folio/` and includes all necessary type
 ### Option 2: Install as Package
 
 ```bash
-pnpm add @folio/core
+pnpm add @reallukemanning/folio
 ```
 
 Or with npm:
 
 ```bash
-npx folio add project-card
+npm install @reallukemanning/folio
 ```
 
-Available components:
-- `project-card` - Card component for project summaries
-- `project-view` - Expanded project detail view
-- `project-grid` - Grid layout container
-- `project-list` - List layout container
-- `featured-project` - Featured project highlight
+Then import components directly:
 
-The CLI copies components to `components/folio/` and includes all necessary type definitions.
+```tsx
+import { ProjectCard, normalise } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
+```
 
 ## CLI Commands
 
@@ -97,18 +95,6 @@ npx folio add featured-project
 
 The command copies component files to `components/folio/<ComponentName>/` and includes a shared `types.ts` file with all necessary type definitions.
 
-### Option 2: Install as Package
-
-```bash
-pnpm add @folio/core
-```
-
-Or with npm:
-
-```bash
-npm install @folio/core
-```
-
 ## Quick Start
 
 ### 1. Create Your Config
@@ -116,7 +102,7 @@ npm install @folio/core
 Create `folio.config.ts` in your project root:
 
 ```ts
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {
@@ -134,8 +120,8 @@ export const projects = defineProjects([
 In your page component, use `normalise` to fetch remote data and build `FolioProject` objects:
 
 ```tsx
-import { normalise } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { normalise } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 import { projects as projectInputs } from '../folio.config'
 
 async function getProjects(): Promise<FolioProject[]> {
@@ -166,7 +152,7 @@ export default async function ProjectsPage() {
 Compose your layout with compound components:
 
 ```tsx
-import { ProjectCard } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
 
 export default async function ProjectsPage() {
   const projects = await getProjects()
@@ -467,7 +453,7 @@ For mission-critical data:
 
 **Solutions:**
 - Using CLI: Components are copied to `components/folio/<ComponentName>/` with types in `components/folio/types.ts`
-- Using npm package: Import from `@folio/core` package
+- Using npm package: Import from `@reallukemanning/folio` package
 - Check TypeScript config includes component directory
 
 ### Build Not Updating Data
@@ -485,7 +471,7 @@ For mission-critical data:
 
 **Solutions:**
 - Use `npx folio <command>` - no installation required
-- Or install globally: `npm install -g @folio/cli`
+- Or install globally: `npm install -g @reallukemanning/folio`
 - Check Node.js version: `node --version` (requires 18+)
 
 ## Complete Example
@@ -495,7 +481,7 @@ Here's a full setup for a Next.js App Router project:
 ### folio.config.ts
 
 ```ts
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {
@@ -532,8 +518,8 @@ export const projects = defineProjects([
 ### app/projects/page.tsx
 
 ```tsx
-import { normalise, ProjectCard } from '@folio/core'
-import type { FolioProject } from '@folio/core'
+import { normalise, ProjectCard } from '@reallukemanning/folio'
+import type { FolioProject } from '@reallukemanning/folio'
 import { projects as projectInputs } from '../../folio.config'
 
 async function getProjects(): Promise<FolioProject[]> {

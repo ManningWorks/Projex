@@ -9,7 +9,7 @@ Full page view for displaying detailed project information. Uses the compound co
 ## Import
 
 ```tsx
-import { ProjectView } from '@folio/core'
+import { ProjectView } from '@reallukemanning/folio'
 ```
 
 ## Usage
@@ -86,7 +86,7 @@ Returns `null` if no links are available.
 ## Example
 
 ```tsx
-import { ProjectView } from '@folio/core'
+import { ProjectView } from '@reallukemanning/folio'
 import { useRouter } from 'next/navigation'
 
 function ProjectPage({ project }) {

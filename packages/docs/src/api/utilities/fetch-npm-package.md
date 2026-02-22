@@ -37,7 +37,7 @@ interface NpmPackageData {
 ## Example
 
 ```tsx
-import { fetchNpmPackage } from '@folio/core'
+import { fetchNpmPackage } from '@reallukemanning/folio'
 
 const data = await fetchNpmPackage('react')
 

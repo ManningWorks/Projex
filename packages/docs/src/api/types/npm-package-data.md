@@ -23,8 +23,8 @@ interface NpmPackageData {
 ## Usage
 
 ```tsx
-import { fetchNpmPackage } from '@folio/core'
-import type { NpmPackageData } from '@folio/core'
+import { fetchNpmPackage } from '@reallukemanning/folio'
+import type { NpmPackageData } from '@reallukemanning/folio'
 
 const data: NpmPackageData | null = await fetchNpmPackage('react')
 
@@ -37,7 +37,7 @@ if (data) {
 ## Export
 
 ```tsx
-import type { NpmPackageData } from '@folio/core'
+import type { NpmPackageData } from '@reallukemanning/folio'
 ```
 
 ## API Sources

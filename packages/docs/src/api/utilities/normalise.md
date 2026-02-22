@@ -48,7 +48,7 @@ The function handles fetch failures gracefully:
 ## Example
 
 ```tsx
-import { normalise, defineProjects } from '@folio/core'
+import { normalise, defineProjects } from '@reallukemanning/folio'
 
 // Single project
 const project = await normalise({

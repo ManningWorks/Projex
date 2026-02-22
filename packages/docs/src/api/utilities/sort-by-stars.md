@@ -37,7 +37,7 @@ type SortOrder = 'asc' | 'desc'
 ## Example
 
 ```tsx
-import { sortByStars } from '@folio/core'
+import { sortByStars } from '@reallukemanning/folio'
 
 // Most starred first (default)
 const popularFirst = sortByStars(projects)

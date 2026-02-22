@@ -39,7 +39,7 @@ type ProjectStats = GitHubStats & NpmStats & ProductHuntStats
 ## Usage
 
 ```tsx
-import type { FolioProject } from '@folio/core'
+import type { FolioProject } from '@reallukemanning/folio'
 
 function formatStats(project: FolioProject): string[] {
   const stats: string[] = []
@@ -71,7 +71,7 @@ if (project.stats) {
 Use `normalizeStats` to format stats for display:
 
 ```tsx
-import { normalizeStats } from '@folio/core'
+import { normalizeStats } from '@reallukemanning/folio'
 
 const formattedStats = normalizeStats(project.stats || {}, project.type)
 // [{ label: 'Stars', value: '1.2K' }, ...]

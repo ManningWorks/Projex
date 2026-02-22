@@ -37,8 +37,8 @@ interface GitHubRepoData {
 ## Usage
 
 ```tsx
-import { fetchGitHubRepo } from '@folio/core'
-import type { GitHubRepoData } from '@folio/core'
+import { fetchGitHubRepo } from '@reallukemanning/folio'
+import type { GitHubRepoData } from '@reallukemanning/folio'
 
 const data: GitHubRepoData | null = await fetchGitHubRepo('facebook/react')
 
@@ -51,5 +51,5 @@ if (data) {
 ## Export
 
 ```tsx
-import type { GitHubRepoData } from '@folio/core'
+import type { GitHubRepoData } from '@reallukemanning/folio'
 ```

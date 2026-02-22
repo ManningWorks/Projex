@@ -25,7 +25,7 @@ This is an identity function that provides TypeScript type inference and autocom
 ## Example
 
 ```tsx
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   {
@@ -68,7 +68,7 @@ export const projects = defineProjects([
 
 ```tsx
 // folio.config.ts
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 export const projects = defineProjects([
   // ...projects
@@ -76,7 +76,7 @@ export const projects = defineProjects([
 
 // lib/projects.ts
 import { projects } from '@/folio.config'
-import { normalise } from '@folio/core'
+import { normalise } from '@reallukemanning/folio'
 
 export async function getProjects() {
   return Promise.all(projects.map(normalise))

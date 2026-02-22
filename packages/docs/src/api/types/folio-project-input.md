@@ -96,7 +96,7 @@ interface ManualProjectInput extends BaseProjectInput {
 ## Example
 
 ```tsx
-import { defineProjects } from '@folio/core'
+import { defineProjects } from '@reallukemanning/folio'
 
 const projects = defineProjects([
   // GitHub project

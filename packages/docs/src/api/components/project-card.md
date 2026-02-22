@@ -9,7 +9,7 @@ Card component for displaying individual project summaries. Uses the compound co
 ## Import
 
 ```tsx
-import { ProjectCard } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
 ```
 
 ## Usage
@@ -99,7 +99,7 @@ Returns `null` if no links are available.
 ## Example
 
 ```tsx
-import { ProjectCard } from '@folio/core'
+import { ProjectCard } from '@reallukemanning/folio'
 
 function ProjectShowcase({ projects }) {
   return (

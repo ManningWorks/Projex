@@ -33,8 +33,8 @@ interface ProductHuntPostData {
 ## Usage
 
 ```tsx
-import { fetchProductHuntPost } from '@folio/core'
-import type { ProductHuntPostData } from '@folio/core'
+import { fetchProductHuntPost } from '@reallukemanning/folio'
+import type { ProductHuntPostData } from '@reallukemanning/folio'
 
 const data: ProductHuntPostData | null = await fetchProductHuntPost('my-product')
 
@@ -47,7 +47,7 @@ if (data) {
 ## Export
 
 ```tsx
-import type { ProductHuntPostData } from '@folio/core'
+import type { ProductHuntPostData } from '@reallukemanning/folio'
 ```
 
 ## Authentication

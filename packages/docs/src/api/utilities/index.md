@@ -57,7 +57,7 @@ import {
   fetchGitHubRepo,
   fetchNpmPackage,
   fetchProductHuntPost
-} from '@folio/core'
+} from '@reallukemanning/folio'
 ```
 
 ## Common Patterns
@@ -65,7 +65,7 @@ import {
 ### Chaining Filters and Sorts
 
 ```tsx
-import { filterByStatus, filterByFeatured, sortByDate } from '@folio/core'
+import { filterByStatus, filterByFeatured, sortByDate } from '@reallukemanning/folio'
 
 const activeProjects = filterByStatus(projects, 'active')
 const featuredActive = filterByFeatured(activeProjects, true)
@@ -75,7 +75,7 @@ const sorted = sortByDate(featuredActive, 'desc')
 ### Build-Time Data Preparation
 
 ```tsx
-import { defineProjects, normalise, sortByStars } from '@folio/core'
+import { defineProjects, normalise, sortByStars } from '@reallukemanning/folio'
 
 export const projects = await Promise.all(
   defineProjects([

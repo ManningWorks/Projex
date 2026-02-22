@@ -48,7 +48,7 @@ import type {
   FolioProjectInput, 
   ProjectType, 
   ProjectStatus 
-} from '@folio/core'
+} from '@reallukemanning/folio'
 ```
 
 ## Type Relationships

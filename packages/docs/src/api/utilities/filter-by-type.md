@@ -31,7 +31,7 @@ function filterByType(
 ## Example
 
 ```tsx
-import { filterByType } from '@folio/core'
+import { filterByType } from '@reallukemanning/folio'
 
 // Single type
 const githubProjects = filterByType(projects, 'github')

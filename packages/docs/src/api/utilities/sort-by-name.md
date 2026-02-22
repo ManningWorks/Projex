@@ -37,7 +37,7 @@ type SortOrder = 'asc' | 'desc'
 ## Example
 
 ```tsx
-import { sortByName } from '@folio/core'
+import { sortByName } from '@reallukemanning/folio'
 
 // A-Z (default)
 const alphabetical = sortByName(projects)

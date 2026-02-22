@@ -32,7 +32,7 @@ function filterByStatus(
 ## Example
 
 ```tsx
-import { filterByStatus } from '@folio/core'
+import { filterByStatus } from '@reallukemanning/folio'
 
 // Single status
 const activeProjects = filterByStatus(projects, 'active')

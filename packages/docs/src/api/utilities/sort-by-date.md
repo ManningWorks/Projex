@@ -37,7 +37,7 @@ type SortOrder = 'asc' | 'desc'
 ## Example
 
 ```tsx
-import { sortByDate } from '@folio/core'
+import { sortByDate } from '@reallukemanning/folio'
 
 // Most recent first (default)
 const recentFirst = sortByDate(projects)

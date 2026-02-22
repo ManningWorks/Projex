@@ -49,7 +49,7 @@ Transforms raw stats into display-friendly format:
 ## Example
 
 ```tsx
-import { normalizeStats } from '@folio/core'
+import { normalizeStats } from '@reallukemanning/folio'
 
 const stats = normalizeStats(
   { 
@@ -73,7 +73,7 @@ const stats = normalizeStats(
 ## Usage with Components
 
 ```tsx
-import { normalizeStats } from '@folio/core'
+import { normalizeStats } from '@reallukemanning/folio'
 
 function StatList({ project }) {
   const stats = normalizeStats(project.stats || {}, project.type)

@@ -9,7 +9,7 @@ Container component for displaying projects in a grid layout.
 ## Import
 
 ```tsx
-import { ProjectGrid } from '@folio/core'
+import { ProjectGrid } from '@reallukemanning/folio'
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ Returns `null` if `children` is falsy.
 ## Example
 
 ```tsx
-import { ProjectGrid, ProjectCard } from '@folio/core'
+import { ProjectGrid, ProjectCard } from '@reallukemanning/folio'
 
 function ProjectsGrid({ projects }) {
   return (
