@@ -3,10 +3,10 @@
   "sessionId": "646cd48f-ece8-4ecb-bf61-563b823a0b32",
   "status": "running",
   "startedAt": "2026-02-22T00:10:00.896Z",
-  "updatedAt": "2026-02-22T00:11:39.669Z",
-  "currentIteration": 1,
+  "updatedAt": "2026-02-22T00:13:34.739Z",
+  "currentIteration": 2,
   "maxIterations": 0,
-  "tasksCompleted": 1,
+  "tasksCompleted": 2,
   "isPaused": false,
   "agentPlugin": "opencode",
   "trackerState": {
@@ -23,8 +23,8 @@
       {
         "id": "US-002",
         "title": "ProjectList Layout Component",
-        "status": "open",
-        "completedInSession": false
+        "status": "completed",
+        "completedInSession": true
       },
       {
         "id": "US-003",
@@ -86,6 +86,16 @@
       "durationMs": 52257,
       "startedAt": "2026-02-22T00:10:02.955Z",
       "endedAt": "2026-02-22T00:10:55.212Z"
+    },
+    {
+      "iteration": 2,
+      "status": "completed",
+      "taskId": "US-002",
+      "taskTitle": "ProjectList Layout Component",
+      "taskCompleted": true,
+      "durationMs": 43420,
+      "startedAt": "2026-02-22T00:10:56.246Z",
+      "endedAt": "2026-02-22T00:11:39.666Z"
     }
   ],
   "skippedTaskIds": [],
