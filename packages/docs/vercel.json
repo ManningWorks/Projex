@@ -5,6 +5,10 @@
   "outputDirectory": ".vitepress/dist",
   "rewrites": [
     {
+      "source": "/vp-icons.css",
+      "destination": "/vp-icons.css"
+    },
+    {
       "source": "/assets/(.*)",
       "destination": "/assets/$1"
     },
