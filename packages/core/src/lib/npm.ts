@@ -1,52 +1,36 @@
 export interface NpmPackageData {
   name: string
   version: string
-  description: string | null
-  keywords: string[]
-  homepage: string | null
-  repository: string | null
-  downloadsLastWeek: number | null
+  downloads: number
 }
 
 export async function fetchNpmPackage(packageName: string): Promise<NpmPackageData | null> {
   try {
-    const url = `https://registry.npmjs.org/${packageName}`
+    const downloadsUrl = `https://api.npmjs.org/downloads/point/last-month/${packageName}`
+    const registryUrl = `https://registry.npmjs.org/${packageName}`
 
-    const response = await fetch(url, {
-      cache: 'force-cache',
-    })
+    const [downloadsResponse, registryResponse] = await Promise.all([
+      fetch(downloadsUrl, { cache: 'force-cache' }),
+      fetch(registryUrl, { cache: 'force-cache' }),
+    ])
 
-    if (!response.ok) {
+    if (!downloadsResponse.ok || !registryResponse.ok) {
       return null
     }
 
-    const data = await response.json()
+    const downloadsData = await downloadsResponse.json()
+    const registryData = await registryResponse.json()
 
-    let downloadsLastWeek = null
+    const version = registryData['dist-tags']?.latest
 
-    try {
-      const period = 'last-week'
-      const downloadsUrl = `https://api.npmjs.org/downloads/point/${period}/${packageName}`
-      const downloadsResponse = await fetch(downloadsUrl, {
-        cache: 'force-cache',
-      })
-
-      if (downloadsResponse.ok) {
-        const downloadsData = await downloadsResponse.json()
-        downloadsLastWeek = downloadsData.downloads || null
-      }
-    } catch {
-      console.warn(`Failed to fetch downloads for ${packageName}`)
+    if (!version) {
+      return null
     }
 
     return {
-      name: data.name,
-      version: data['dist-tags']?.latest || '',
-      description: data.description || null,
-      keywords: data.keywords || [],
-      homepage: data.homepage || null,
-      repository: data.repository?.url || null,
-      downloadsLastWeek,
+      name: downloadsData.package || packageName,
+      version,
+      downloads: downloadsData.downloads || 0,
     }
   } catch {
     return null

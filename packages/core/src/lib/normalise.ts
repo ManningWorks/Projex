@@ -1,4 +1,5 @@
 import { fetchGitHubRepo, LANGUAGE_COLORS } from './github'
+import { fetchNpmPackage } from './npm'
 import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectType } from '../types'
 
 export async function normalise(input: FolioProjectInput): Promise<FolioProject> {
@@ -28,6 +29,16 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
   if (type === 'github' || type === 'hybrid') {
     if (repo) {
       githubData = await fetchGitHubRepo(repo)
+    }
+  }
+
+  const npmPackage = 'package' in input ? input.package : undefined
+
+  let npmData = null
+
+  if (type === 'npm' || type === 'hybrid') {
+    if (npmPackage) {
+      npmData = await fetchNpmPackage(npmPackage)
     }
   }
 
@@ -75,11 +86,18 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
   }
 
   let finalStats: FolioProject['stats'] | null = null
-  if (type === 'github' || type === 'hybrid') {
+  if (type === 'github' || type === 'hybrid' || type === 'npm') {
     if (githubData) {
       finalStats = {
         stars: githubData.stargazers_count,
         forks: githubData.forks_count,
+      }
+    }
+    if (npmData) {
+      finalStats = {
+        ...finalStats,
+        downloads: String(npmData.downloads),
+        version: npmData.version,
       }
     }
     if (inputStats) {
@@ -102,8 +120,6 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     finalLanguage = null
     finalLanguageColor = null
   }
-
-  const npmPackage = 'package' in input ? input.package : undefined
 
   return {
     id,
