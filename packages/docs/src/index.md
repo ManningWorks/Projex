@@ -4,23 +4,21 @@ Get your project showcase up and running in under 10 minutes.
 
 ## Installation
 
-Folio is a shadcn-style component library. You copy components into your project rather than installing as an npm package.
+### Quick Start with CLI
 
-### Option 1: CLI (Recommended)
-
-The fastest way to get started with Folio is using the CLI tool.
+The fastest way to get started is using the CLI:
 
 ```bash
-npx folio init
+npx @reallukemanning/folio init
 ```
 
-This creates a `folio.config.ts` file in your project root with your projects.
+This creates a `folio.config.ts` file in your project root.
 
 To add components:
 
 ```bash
-npx folio add project-card
-npx folio add project-view
+npx @reallukemanning/folio add project-card
+npx @reallukemanning/folio add project-view
 ```
 
 Available components:
@@ -32,19 +30,22 @@ Available components:
 
 The CLI copies components to `components/folio/` and includes all necessary type definitions.
 
-### Option 2: Install as Package
+### Install as Package
+
+Alternatively, install the package first for shorter commands:
 
 ```bash
 pnpm add @reallukemanning/folio
 ```
 
-Or with npm:
+Now you can use the CLI without the full package name:
 
 ```bash
-npm install @reallukemanning/folio
+npx folio init
+npx folio add project-card
 ```
 
-Then import components directly:
+And import components directly in your code:
 
 ```tsx
 import { ProjectCard, normalise } from '@reallukemanning/folio'
@@ -53,14 +54,14 @@ import type { FolioProject } from '@reallukemanning/folio'
 
 ## CLI Commands
 
-### `npx folio init`
+### `npx @reallukemanning/folio init`
 
 Initialize a new Folio project in your current directory.
 
 **Basic setup:**
 
 ```bash
-npx folio init
+npx @reallukemanning/folio init
 ```
 
 This creates a minimal `folio.config.ts` template.
@@ -68,7 +69,7 @@ This creates a minimal `folio.config.ts` template.
 **Auto-detect GitHub repositories:**
 
 ```bash
-npx folio init --github
+npx @reallukemanning/folio init --github
 ```
 
 This prompts for your GitHub username and automatically fetches your public repositories, generating a config with all your projects.
@@ -76,21 +77,21 @@ This prompts for your GitHub username and automatically fetches your public repo
 **With GitHub token:**
 
 ```bash
-GITHUB_TOKEN=ghp_xxx npx folio init --github
+GITHUB_TOKEN=ghp_xxx npx @reallukemanning/folio init --github
 ```
 
 Using a GitHub token increases the rate limit from 60 requests/hour to 5,000 requests/hour, allowing you to fetch more repositories.
 
-### `npx folio add <component>`
+### `npx @reallukemanning/folio add <component>`
 
 Add a Folio component to your project.
 
 ```bash
-npx folio add project-card
-npx folio add project-view
-npx folio add project-grid
-npx folio add project-list
-npx folio add featured-project
+npx @reallukemanning/folio add project-card
+npx @reallukemanning/folio add project-view
+npx @reallukemanning/folio add project-grid
+npx @reallukemanning/folio add project-list
+npx @reallukemanning/folio add featured-project
 ```
 
 The command copies component files to `components/folio/<ComponentName>/` and includes a shared `types.ts` file with all necessary type definitions.
@@ -470,7 +471,8 @@ For mission-critical data:
 **Symptom:** `folio: command not found`
 
 **Solutions:**
-- Use `npx folio <command>` - no installation required
+- Use `npx @reallukemanning/folio <command>` - no installation required
+- Or install the package first: `pnpm add @reallukemanning/folio` then use `npx folio <command>`
 - Or install globally: `npm install -g @reallukemanning/folio`
 - Check Node.js version: `node --version` (requires 18+)
 
