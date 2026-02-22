@@ -2,5 +2,15 @@
   "framework": "vitepress",
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "outputDirectory": ".vitepress/dist/src"
+  "outputDirectory": ".vitepress/dist",
+  "rewrites": [
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/src/$1"
+    }
+  ]
 }

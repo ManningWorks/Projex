@@ -42,7 +42,7 @@ next-env.d.ts
 # project docs
 project_docs/
 .ralph-tui/
-packages/docs/.vitepress/dist/
+
 
 
 # bundle size tracking
