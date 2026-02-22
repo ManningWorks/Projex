@@ -8,6 +8,8 @@ const distDir = join(__dirname, '.vitepress', 'dist')
 const srcDir = join(distDir, 'src')
 const assetsSource = join(distDir, 'assets')
 const assetsDest = join(srcDir, 'assets')
+const vpIconsSource = join(distDir, 'vp-icons.css')
+const vpIconsDest = join(srcDir, 'vp-icons.css')
 
 if (existsSync(assetsDest)) {
   rmSync(assetsDest, { recursive: true })
@@ -15,4 +17,8 @@ if (existsSync(assetsDest)) {
 
 if (existsSync(assetsSource)) {
   cpSync(assetsSource, assetsDest, { recursive: true })
+}
+
+if (existsSync(vpIconsSource)) {
+  cpSync(vpIconsSource, vpIconsDest)
 }
