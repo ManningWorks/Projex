@@ -42,6 +42,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: 'https://example.com',
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -74,6 +76,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: 'https://example.com',
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -110,6 +114,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: 'https://example.com',
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue(null)
@@ -165,6 +171,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -197,6 +205,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -233,6 +243,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -266,6 +278,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -306,6 +320,8 @@ describe('hybrid config recognition', () => {
       topics: ['react', 'nextjs'],
       html_url: 'https://github.com/user/repo',
       homepage: 'https://example.com',
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
@@ -370,6 +386,8 @@ describe('hybrid config recognition', () => {
       topics: [],
       html_url: 'https://github.com/user/repo',
       homepage: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-06-01T00:00:00Z',
     })
 
     mockedFetchNpmPackage.mockResolvedValue({
