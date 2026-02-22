@@ -34,7 +34,10 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project: FolioProject
 }
 
 ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProject }) {
-  if (!project.stats || (!project.stats.stars && !project.stats.forks && !project.stats.downloads)) {
+  if (
+    !project.stats ||
+    (!project.stats.stars && !project.stats.forks && !project.stats.downloads && !project.stats.version)
+  ) {
     return null
   }
   return (
@@ -44,6 +47,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       {project.stats.downloads && (
         <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
       )}
+      {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
     </div>
   )
 }

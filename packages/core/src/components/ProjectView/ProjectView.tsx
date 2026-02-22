@@ -114,4 +114,28 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProje
   )
 }
 
+ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProject }) {
+  if (!project.stats) {
+    return null
+  }
+
+  const hasStats =
+    project.stats.stars || project.stats.forks || project.stats.downloads || project.stats.version
+
+  if (!hasStats) {
+    return null
+  }
+
+  return (
+    <div data-folio-view-stats>
+      {project.stats.stars && <span data-folio-stat="stars">{project.stats.stars} stars</span>}
+      {project.stats.forks && <span data-folio-stat="forks">{project.stats.forks} forks</span>}
+      {project.stats.downloads && (
+        <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
+      )}
+      {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
+    </div>
+  )
+}
+
 export { ProjectView }
