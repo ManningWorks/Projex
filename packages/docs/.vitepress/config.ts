@@ -10,10 +10,16 @@ export default defineConfig({
   },
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
+      { text: 'Getting Started', link: '/' },
       { text: 'API Reference', link: '/api/components/' }
     ],
     sidebar: {
+      '/': [
+        {
+          text: 'Getting Started',
+          link: '/'
+        }
+      ],
       '/api/': [
         {
           text: 'API Reference',
