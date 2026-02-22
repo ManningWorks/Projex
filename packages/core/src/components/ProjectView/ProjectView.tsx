@@ -79,7 +79,14 @@ ProjectView.Section = function ProjectViewSection({
 ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProject }) {
   const links = project.links
 
-  if (!links.github && !links.live && !links.npm && !links.appStore && !links.playStore) {
+  if (
+    !links.github &&
+    !links.live &&
+    !links.npm &&
+    !links.appStore &&
+    !links.playStore &&
+    !links.productHunt
+  ) {
     return null
   }
 
@@ -110,6 +117,11 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProje
           Play Store
         </a>
       )}
+      {links.productHunt && (
+        <a href={links.productHunt} data-folio-link data-folio-link-type="product-hunt">
+          Product Hunt
+        </a>
+      )}
     </div>
   )
 }
@@ -120,7 +132,12 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
   }
 
   const hasStats =
-    project.stats.stars || project.stats.forks || project.stats.downloads || project.stats.version
+    project.stats.stars ||
+    project.stats.forks ||
+    project.stats.downloads ||
+    project.stats.version ||
+    project.stats.upvotes ||
+    project.stats.comments
 
   if (!hasStats) {
     return null
@@ -134,6 +151,8 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
         <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
       )}
       {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
+      {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
+      {project.stats.comments && <span data-folio-stat="comments">{project.stats.comments} comments</span>}
     </div>
   )
 }
