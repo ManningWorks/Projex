@@ -3,7 +3,7 @@
   "sessionId": "646cd48f-ece8-4ecb-bf61-563b823a0b32",
   "status": "running",
   "startedAt": "2026-02-22T00:10:00.896Z",
-  "updatedAt": "2026-02-22T00:10:02.982Z",
+  "updatedAt": "2026-02-22T00:10:55.216Z",
   "currentIteration": 0,
   "maxIterations": 0,
   "tasksCompleted": 0,
@@ -79,8 +79,6 @@
   "iterations": [],
   "skippedTaskIds": [],
   "cwd": "/home/luke/workspace/Folio",
-  "activeTaskIds": [
-    "US-001"
-  ],
+  "activeTaskIds": [],
   "subagentPanelVisible": false
 }
