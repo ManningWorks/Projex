@@ -8,6 +8,15 @@ Every developer eventually builds a projects page, and almost every developer bu
 
 ## Quick Start
 
+### Option 1: CLI (Recommended)
+
+```bash
+npx folio init
+npx folio add project-card
+```
+
+### Option 2: Install as Package
+
 ```bash
 pnpm add @folio/core
 ```

@@ -130,6 +130,20 @@ export const projects = defineProjects([
 `
 }
 
+// Optional fields to add context to your project:
+// background: The story behind the project - what problem does it solve?
+// why: Your motivation for building it - why does this matter to you?
+// struggles: Current challenges or technical hurdles faced
+//   - type: 'warn' (minor issues) or 'error' (blockers)
+//   - text: Description of the challenge
+// timeline: Milestones and important dates in the project's journey
+//   - date: Formatted date string (e.g., '2025-01-15')
+//   - note: What happened on this date
+// posts: Related blog posts, announcements, or documentation
+//   - title: Post title
+//   - date: Publication date
+//   - url: Link to the post (optional)
+
 async function generateGitHubConfig(): Promise<string> {
   const { username } = await inquirer.prompt([
     {

@@ -15,9 +15,9 @@ export default async function HomePage() {
   const projects = await getProjects()
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Folio Demo</h1>
-      <p style={{ color: '#6b7280', marginBottom: '2rem' }}>Welcome to the Folio component library demo</p>
+    <div className="page-container">
+      <h1 className="page-title">Folio Demo</h1>
+      <p className="page-subtitle">Welcome to the Folio component library demo</p>
       <ProjectContainer projects={projects} />
     </div>
   )

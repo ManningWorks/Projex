@@ -59,7 +59,7 @@ describe('add command', () => {
         expect.stringContaining('components/folio/ProjectCard'),
         { recursive: true }
       )
-      expect(mockFs.copyFile).toHaveBeenCalledTimes(2)
+      expect(mockFs.copyFile).toHaveBeenCalledTimes(3)
     })
 
     it('should show success message after copy', async () => {
@@ -273,7 +273,7 @@ describe('add command', () => {
 
       await add('project-card')
 
-      expect(mockFs.copyFile).toHaveBeenCalledTimes(2)
+      expect(mockFs.copyFile).toHaveBeenCalledTimes(3)
     })
   })
 })

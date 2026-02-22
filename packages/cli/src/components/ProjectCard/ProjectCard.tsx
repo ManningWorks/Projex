@@ -1,4 +1,4 @@
-import type { FolioProject } from '../../types'
+import type { FolioProject } from '../types.js'
 
 function ProjectCard({ children }: { children: React.ReactNode }) {
   return <div data-folio-card>{children}</div>
@@ -34,7 +34,7 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project: FolioProject
 }
 
 ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProject }) {
-  if (!project.stats || (!project.stats.stars && !project.stats.forks && !project.stats.downloads)) {
+  if (!project.stats || (!project.stats.stars && !project.stats.forks && !project.stats.downloads && !project.stats.version && !project.stats.upvotes && !project.stats.comments)) {
     return null
   }
   return (
@@ -44,6 +44,9 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       {project.stats.downloads && (
         <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
       )}
+      {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
+      {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
+      {project.stats.comments && <span data-folio-stat="comments">{project.stats.comments} comments</span>}
     </div>
   )
 }
@@ -57,7 +60,7 @@ ProjectCard.Status = function ProjectCardStatus({ project }: { project: FolioPro
 }
 
 ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProject }) {
-  if (!project.links.github && !project.links.live && !project.links.npm) return null
+  if (!project.links.github && !project.links.live && !project.links.npm && !project.links.productHunt) return null
   return (
     <div data-folio-card-links>
       {project.links.github && (
@@ -73,6 +76,11 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProje
       {project.links.npm && (
         <a href={project.links.npm} data-folio-link data-folio-link-type="npm">
           npm
+        </a>
+      )}
+      {project.links.productHunt && (
+        <a href={project.links.productHunt} data-folio-link data-folio-link-type="product-hunt">
+          Product Hunt
         </a>
       )}
     </div>

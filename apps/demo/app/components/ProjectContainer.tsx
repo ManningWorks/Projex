@@ -15,7 +15,7 @@ export function ProjectContainer({ projects }: { projects: FolioProject[] }) {
 
   return (
     <div>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: '600' }}>Projects ({projects.length})</h2>
+      <h2 className="projects-count">Projects ({projects.length})</h2>
       <ProjectGrid projects={projects} onSelect={setSelectedId} />
     </div>
   )

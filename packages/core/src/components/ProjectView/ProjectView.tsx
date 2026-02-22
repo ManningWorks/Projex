@@ -1,5 +1,11 @@
 import type { FolioProject } from '../../types'
 
+type SectionName = keyof Pick<FolioProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts'>
+
+function isValidSectionName(name: string): name is SectionName {
+  return ['description', 'background', 'why', 'stack', 'struggles', 'timeline', 'posts'].includes(name)
+}
+
 function ProjectView({
   project,
   onBack,
@@ -25,7 +31,9 @@ ProjectView.Section = function ProjectViewSection({
   project: FolioProject
   name: string
 }) {
-  const sectionData = project[name as keyof FolioProject]
+  if (!isValidSectionName(name)) return null
+
+  const sectionData = project[name]
 
   if (!sectionData) return null
 

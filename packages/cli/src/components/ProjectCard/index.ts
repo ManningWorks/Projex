@@ -1,1 +1,2 @@
-export { ProjectCard } from './ProjectCard'
+export { ProjectCard } from './ProjectCard.js'
+export type { FolioProject } from '../../types.js'

@@ -1,4 +1,4 @@
-import type { FolioProject } from '../../types'
+import type { FolioProject } from '../types.js'
 
 function ProjectView({
   project,

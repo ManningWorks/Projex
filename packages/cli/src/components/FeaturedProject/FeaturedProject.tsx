@@ -1,4 +1,4 @@
-import type { FolioProject } from '../../types'
+import type { FolioProject } from '../types.js'
 
 function FeaturedProject({ project }: { project: FolioProject | null | undefined }) {
   if (!project) {

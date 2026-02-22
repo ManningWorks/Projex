@@ -6,14 +6,96 @@ Get your project showcase up and running in under 10 minutes.
 
 Folio is a shadcn-style component library. You copy components into your project rather than installing as an npm package.
 
-### Option 1: Copy Components (Recommended)
+### Option 1: CLI (Recommended)
 
-Copy the components you need from `packages/core/src/components/` into your project:
+The fastest way to get started with Folio is using the CLI tool.
 
 ```bash
-mkdir -p src/components/folio
-cp -r node_modules/@folio/core/src/components/* src/components/folio/
+npx folio init
 ```
+
+This creates a `folio.config.ts` file in your project root with your projects.
+
+To add components:
+
+```bash
+npx folio add project-card
+npx folio add project-view
+```
+
+Available components:
+- `project-card` - Card component for project summaries
+- `project-view` - Expanded project detail view
+- `project-grid` - Grid layout container
+- `project-list` - List layout container
+- `featured-project` - Featured project highlight
+
+The CLI copies components to `components/folio/` and includes all necessary type definitions.
+
+### Option 2: Install as Package
+
+```bash
+pnpm add @folio/core
+```
+
+Or with npm:
+
+```bash
+npx folio add project-card
+```
+
+Available components:
+- `project-card` - Card component for project summaries
+- `project-view` - Expanded project detail view
+- `project-grid` - Grid layout container
+- `project-list` - List layout container
+- `featured-project` - Featured project highlight
+
+The CLI copies components to `components/folio/` and includes all necessary type definitions.
+
+## CLI Commands
+
+### `npx folio init`
+
+Initialize a new Folio project in your current directory.
+
+**Basic setup:**
+
+```bash
+npx folio init
+```
+
+This creates a minimal `folio.config.ts` template.
+
+**Auto-detect GitHub repositories:**
+
+```bash
+npx folio init --github
+```
+
+This prompts for your GitHub username and automatically fetches your public repositories, generating a config with all your projects.
+
+**With GitHub token:**
+
+```bash
+GITHUB_TOKEN=ghp_xxx npx folio init --github
+```
+
+Using a GitHub token increases the rate limit from 60 requests/hour to 5,000 requests/hour, allowing you to fetch more repositories.
+
+### `npx folio add <component>`
+
+Add a Folio component to your project.
+
+```bash
+npx folio add project-card
+npx folio add project-view
+npx folio add project-grid
+npx folio add project-list
+npx folio add featured-project
+```
+
+The command copies component files to `components/folio/<ComponentName>/` and includes a shared `types.ts` file with all necessary type definitions.
 
 ### Option 2: Install as Package
 
@@ -224,6 +306,187 @@ Create a token at [github.com/settings/tokens](https://github.com/settings/token
 ### Caching
 
 The `normalise` function uses `cache: 'force-cache'` which caches responses for the build duration. For fresh data, rebuild your site.
+
+## Error Handling
+
+Folio is designed to handle errors gracefully. Here's what to expect and how to handle common issues.
+
+### GitHub API Rate Limits
+
+The GitHub API has rate limits that affect data fetching:
+
+- **Unauthenticated**: 60 requests/hour
+- **Authenticated**: 5,000 requests/hour
+
+**Symptoms:**
+```
+GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit)
+```
+Projects with `type: 'github'` or `type: 'hybrid'` will return with empty stats (stars, forks).
+
+**Solution:**
+
+Set a GitHub token as an environment variable:
+
+```bash
+# .env.local
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxx
+```
+
+Create a token at [github.com/settings/tokens](https://github.com/settings/tokens) (no special permissions needed for public repos).
+
+```bash
+# Build with token
+pnpm build
+```
+
+### Failed API Fetches
+
+If GitHub, npm, or Product Hunt API requests fail, Folio handles it gracefully:
+
+- The `normalise` function returns a project with `stats: null`
+- Components with missing stats won't render the stats section
+- Your site will still build and render other project data
+
+**Debugging:**
+
+Check build output for warning messages:
+
+```bash
+pnpm build
+```
+
+Common failures:
+- GitHub: Repository not found, private repo without token, rate limit exceeded
+- npm: Package not found on registry
+- Product Hunt: Invalid slug, missing token
+
+### Private Repositories
+
+Private GitHub repositories require authentication:
+
+```bash
+GITHUB_TOKEN=ghp_xxx pnpm build
+```
+
+The token must have `read` permissions for the repository.
+
+**Without authentication:**
+- Private repos return `null` from `fetchGitHubRepo`
+- Project stats will be empty
+- Other project data (name, description from config) still renders
+
+### Missing Environment Variables
+
+Folio fetches data at build time using environment variables:
+
+| Variable | Purpose | Required |
+|----------|-----------|------------|
+| `GITHUB_TOKEN` | GitHub API authentication | Optional (recommended) |
+| `PRODUCT_HUNT_TOKEN` | Product Hunt API access | Optional (if using product-hunt type) |
+
+**Missing variables:**
+- Folio logs a warning
+- Falls back to unauthenticated requests
+- Continues to build (may hit rate limits)
+
+### Build Failures
+
+If your build fails:
+
+1. **Check environment variables:**
+   ```bash
+   echo $GITHUB_TOKEN
+   ```
+
+2. **Verify project config:**
+   - Check repo format: `username/repo`
+   - Check package name exists on npm
+   - Verify GitHub repos are public (or you have a token)
+
+3. **Review build logs:**
+   - Look for rate limit warnings
+   - Check for network errors
+   - Verify all projects have required fields
+
+4. **Test individual projects:**
+   Create a minimal config with one project to isolate the issue:
+   ```ts
+   export const projects = defineProjects([
+     { id: 'test', type: 'github', repo: 'username/repo', status: 'active' }
+   ])
+   ```
+
+### Fallback Strategies
+
+For mission-critical data:
+
+**Override API data:**
+
+```ts
+{
+  id: 'my-project',
+  type: 'github',
+  repo: 'username/repo',
+  status: 'active',
+  override: {
+    name: 'Custom Name',
+    description: 'Custom description',
+    stats: { stars: 1000, forks: 50 }
+  }
+}
+```
+
+**Use manual type for full control:**
+
+```ts
+{
+  id: 'manual-project',
+  type: 'manual',
+  status: 'shipped',
+  name: 'My Project',
+  description: 'Full control over data',
+  stats: { stars: 999, forks: 42 }
+}
+```
+
+## Troubleshooting
+
+### Component Not Rendering
+
+**Symptom:** Component renders nothing
+
+**Solutions:**
+- Check if `project.description` is empty - `ProjectCard.Description` returns null
+- Verify `project.stack` has values - `ProjectCard.Tags` returns null if empty
+- Ensure `project.stats` has values - `ProjectCard.Stats` returns null if empty
+
+### Types Not Found
+
+**Symptom:** TypeScript error "Cannot find module" or "Cannot find name"
+
+**Solutions:**
+- Using CLI: Components are copied to `components/folio/<ComponentName>/` with types in `components/folio/types.ts`
+- Using npm package: Import from `@folio/core` package
+- Check TypeScript config includes component directory
+
+### Build Not Updating Data
+
+**Symptom:** Changes to project config don't appear on site
+
+**Solutions:**
+- GitHub/npm data is cached at build time - rebuild site to refresh
+- Clear build cache: `rm -rf .next` (Next.js) then rebuild
+- Check environment variables are set for build: `GITHUB_TOKEN=xxx pnpm build`
+
+### CLI Command Not Found
+
+**Symptom:** `folio: command not found`
+
+**Solutions:**
+- Use `npx folio <command>` - no installation required
+- Or install globally: `npm install -g @folio/cli`
+- Check Node.js version: `node --version` (requires 18+)
 
 ## Complete Example
 

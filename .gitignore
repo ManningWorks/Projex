@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+packages/*/coverage/
+node_modules/.vite/
 
 # next.js
 /.next/
@@ -14,6 +16,8 @@
 
 # production
 /build
+packages/*/dist/
+
 
 # misc
 .DS_Store
@@ -38,6 +42,8 @@ next-env.d.ts
 # project docs
 project_docs/
 .ralph-tui/
+packages/docs/.vitepress/dist/
+
 
 # bundle size tracking
 .bundle-size.json

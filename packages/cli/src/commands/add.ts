@@ -54,6 +54,7 @@ export async function add(componentName: string): Promise<void> {
   }
 
   const destDir = resolve(workingDir, 'components', 'folio', component.destName)
+  const folioDir = resolve(workingDir, 'components', 'folio')
 
   console.log(chalk.bold(`📦 Adding ${componentName}...`))
   console.log()
@@ -93,6 +94,15 @@ export async function add(componentName: string): Promise<void> {
 
     await createDirectory(destDir)
     await copyFiles(sourceFiles, destDir)
+
+    const typesSource = resolve(__dirname, '../components/types.ts')
+    const typesDest = resolve(folioDir, 'types.ts')
+    const typesExist = await checkTypeFileExists(typesDest)
+
+    if (!typesExist) {
+      await copyFile(typesSource, typesDest)
+      console.log(chalk.gray('  ✓ Added types.ts'))
+    }
 
     console.log(chalk.green(`✓ ${componentName} added successfully`))
     console.log()
@@ -151,6 +161,15 @@ async function checkExistingFiles(destDir: string, sourceFiles: string[]): Promi
   }
 
   return existing
+}
+
+async function checkTypeFileExists(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath)
+    return true
+  } catch {
+    return false
+  }
 }
 
 async function createDirectory(dirPath: string): Promise<void> {
