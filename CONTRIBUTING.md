@@ -30,12 +30,11 @@ pnpm build
 ```
 folio/
 ├── packages/
-│   ├── core/          # Main component library
-│   ├── cli/           # CLI tooling
+│   ├── core/          # Main component library (includes CLI)
 │   └── docs/          # VitePress documentation
 ├── apps/
 │   └── demo/          # Next.js demo application
-├── project_docs/       # Internal documentation (PRDs, briefings)
+├── project_docs/      # Internal documentation (PRDs, briefings)
 └── scripts/           # Utility scripts
 ```
 
@@ -150,8 +149,7 @@ pnpm bundle-size
 ```
 
 Bundle size limits:
-- `@folio/core`: < 10 KB (target: < 3 KB)
-- `@folio/cli`: < 50 KB
+- `@reallukemanning/folio`: < 10 KB (target: < 3 KB)
 
 ## Documentation
 

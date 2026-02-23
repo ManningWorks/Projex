@@ -217,8 +217,7 @@ Folio is optimized for minimal bundle impact. Size measurements are taken with t
 
 | Package | Target | Actual (gzipped) | Status |
 |---------|--------|------------------|--------|
-| @folio/core | < 10 KB | **2.74 KB** | ✓ |
-| @folio/cli | < 50 KB | **7.49 KB** | ✓ |
+| @reallukemanning/folio | < 10 KB | **2.74 KB** | ✓ |
 
 ### Tree-Shaking
 
@@ -226,10 +225,10 @@ Folio exports are fully tree-shakeable. Importing only what you need significant
 
 ```tsx
 // Import only the component you need
-import { ProjectCard } from '@folio/core'  // ~320 B gzipped
+import { ProjectCard } from '@reallukemanning/folio'  // ~320 B gzipped
 
 // Or import everything
-import * as Folio from '@folio/core'  // ~2.74 KB gzipped
+import * as Folio from '@reallukemanning/folio'  // ~2.74 KB gzipped
 ```
 
 ### Measuring Bundle Size

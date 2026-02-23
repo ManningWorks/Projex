@@ -55,4 +55,9 @@ export interface FolioProject {
   stats: ProjectStats | null
   language: string | null
   languageColor: string | null
+  createdAt: string | null
+  updatedAt: string | null
+  repo?: string
+  package?: string
+  slug?: string
 }

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-02-23
+
+### Fixed
+
+- Export `normalizeStats` utility (was documented but not exported)
+- Export `NormalizedStat` type alongside `normalizeStats`
+- Fix README package name references (`@folio/core` → `@reallukemanning/folio`)
+- Add `ProjectView.Stats` subcomponent to CLI-copied components
+- Add `productHunt` link support to CLI `ProjectView.Links`
+- Add missing fields to CLI types (`createdAt`, `updatedAt`, `repo`, `package`, `slug`)
+- Fix AGENTS.md monorepo structure to reflect actual layout
+- Add missing data attributes to AGENTS.md documentation
+- Fix CONTRIBUTING.md package structure (removed non-existent `packages/cli/`)
+
+---
+
 ## [1.0.0] - 2026-02-22
 
 ### Added
@@ -51,7 +67,7 @@ The following exports are considered part of the stable public API and will not 
 
 **Components:**
 - `ProjectCard` (and subcomponents: `ProjectCard.Header`, `ProjectCard.Description`, `ProjectCard.Tags`, `ProjectCard.Stats`, `ProjectCard.Status`, `ProjectCard.Links`)
-- `ProjectView` (and subcomponents: `ProjectView.Section`, `ProjectView.Links`)
+- `ProjectView` (and subcomponents: `ProjectView.Section`, `ProjectView.Links`, `ProjectView.Stats`)
 - `ProjectList`
 - `FeaturedProject`
 
@@ -61,6 +77,7 @@ The following exports are considered part of the stable public API and will not 
 - `fetchNpmPackage`
 - `fetchProductHuntPost`
 - `normalise`
+- `normalizeStats`
 - `filterByType`
 - `filterByStatus`
 - `filterByFeatured`

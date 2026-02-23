@@ -44,15 +44,18 @@ pnpm --filter @folio/demo dev
 ```
 folio/
 ├── packages/
-│   └── core/           # Main component library
-│       ├── src/
-│       │   ├── components/   # React components
-│       │   ├── lib/          # Utilities (github.ts, normalise.ts, defineProjects.ts)
-│       │   ├── types/        # TypeScript interfaces
-│       │   └── index.ts      # Public API exports
-│       └── package.json
+│   ├── core/              # Main component library (includes CLI)
+│   │   ├── src/
+│   │   │   ├── components/      # React components
+│   │   │   ├── cli-components/  # Components copied by CLI
+│   │   │   ├── commands/        # CLI command implementations
+│   │   │   ├── lib/             # Utilities (github.ts, normalise.ts, defineProjects.ts)
+│   │   │   ├── types/           # TypeScript interfaces
+│   │   │   └── index.ts         # Public API exports
+│   │   └── package.json
+│   └── docs/              # VitePress documentation
 ├── apps/
-│   └── demo/           # Next.js demo app
+│   └── demo/              # Next.js demo app
 │       ├── app/
 │       ├── folio.config.ts
 │       └── package.json
@@ -142,6 +145,11 @@ data-folio-card-links
 data-folio-view
 data-folio-view-section
 data-folio-view-links
+data-folio-view-stats
+data-folio-featured
+data-folio-featured-image
+data-folio-grid
+data-folio-list
 data-folio-status
 data-folio-status-value="active"
 data-folio-type
@@ -151,6 +159,12 @@ data-folio-struggle-type="warn"
 data-folio-tag
 data-folio-link
 data-folio-link-type="github"
+data-folio-stat="stars|forks|downloads|version|upvotes|comments"
+data-folio-timeline-date
+data-folio-timeline-note
+data-folio-post-title
+data-folio-post-date
+data-folio-post-link
 ```
 
 ### Error Handling
