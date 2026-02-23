@@ -32,3 +32,17 @@ export default defineConfig({
   // ...
 })
 ```
+
+## Exclude Source and Sourcemaps from npm Package — 2026-02-23
+
+**Decision**
+Exclude `src/`, `*.js.map`, `*.d.ts.map`, `eslint.config.js`, `tsconfig.json`, and `copy-components.js` from npm package. Publish only `dist/` (compiled code) and `package.json`.
+
+**Why**
+Consumers only need compiled code - TypeScript source files and sourcemaps double the package size with no runtime benefit. Reducing package size improves install time and bandwidth for all consumers.
+
+**Rejected**
+Keep sourcemaps (`*.js.map`, `*.d.ts.map`) - considered for better debugging experience, but the 60% size reduction (167→74 files, 197KB→77.5KB) outweighs marginal debugging utility for an npm library.
+
+**Consequences**
+Package size reduced from 40.6 KB to 17.5 KB. Consumers cannot debug into compiled source files, but they can reference the GitHub repo for source code if needed.
