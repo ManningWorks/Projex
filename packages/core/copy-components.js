@@ -25,7 +25,6 @@ async function copyDirectory(src, dst) {
 
 async function main() {
   await copyDirectory(join(__dirname, 'src/components'), join(__dirname, 'dist/components'))
-  await copyDirectory(join(__dirname, 'src/cli-components'), join(__dirname, 'dist/cli-components'))
 }
 
 main().catch(console.error)

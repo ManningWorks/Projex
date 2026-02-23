@@ -39,8 +39,7 @@ folio/
 ├── packages/
 │   ├── core/              # Main component library (includes CLI)
 │   │   └── src/
-│   │       ├── components/      # React components
-│   │       ├── cli-components/  # Components copied by CLI (separate from components/)
+│   │       ├── components/      # React components (single source for CLI copying)
 │   │       ├── commands/        # CLI command implementations
 │   │       ├── lib/             # Utilities (github.ts, normalise.ts, defineProjects.ts)
 │   │       ├── types/           # TypeScript interfaces
@@ -51,12 +50,6 @@ folio/
 ├── pnpm-workspace.yaml
 └── package.json
 ```
-
-**IMPORTANT**: When updating components, you must update BOTH:
-1. `packages/core/src/components/` - Main library components
-2. `packages/core/src/cli-components/` - CLI-copied components (separate duplicates)
-
-CLI components have their own `types.ts` file that mirrors the main types.
 
 ## Code Style Guidelines
 
@@ -166,6 +159,7 @@ mockFetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockData
 4. **Every project type is first-class** - GitHub, manual, npm, hybrid all equal
 5. **Build-time data fetching** - no runtime API calls
 6. **Compound components** - maximum flexibility for consumers
+7. **Single source of truth** - `components/` directory is only source, CLI transforms imports on copy
 
 ## Target Consumer & Documentation
 

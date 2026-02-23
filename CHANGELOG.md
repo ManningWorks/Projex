@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-23
+
+### Changed
+
+#### Architecture
+- Eliminated component duplication - removed `cli-components/` directory
+- Single source of truth: `components/` directory now serves both package and CLI
+- CLI automatically installs `@reallukemanning/folio` package as dependency
+- Copied components import types from `@reallukemanning/folio` package (via import path transformation)
+
+#### CLI
+- `init` command now auto-installs `@reallukemanning/folio` if not present
+- `add` command now auto-installs `@reallukemanning/folio` if not present
+- Removed `types.ts` file copying - components now import from package
+- Import path transformation: relative imports → npm package imports
+
+#### Build
+- Removed `cli-components/` from build output
+- Updated `vitest.config.ts` to remove deprecated exclusions
+
+#### Documentation
+- Updated AGENTS.md to reflect single-component-source architecture
+- Updated README.md to document auto-installation behavior
+- Removed outdated "IMPORTANT" warning about dual directory maintenance
+
+### Public API Surface
+
+**No breaking changes to public API** - this is a minor version bump with internal refactoring only.
+
+**Implementation Changes:**
+- Internal import transformation in CLI for copied components
+- Package manager detection (pnpm/yarn/npm) for auto-installation
+
+---
+
 ## [1.2.0] - 2026-02-23
 
 ### Added

@@ -1,8 +1,10 @@
-import { mkdir, access, copyFile, readdir } from 'node:fs/promises'
+import { mkdir, access, copyFile, readdir, readFile } from 'node:fs/promises'
 import { resolve, dirname } from 'node:path'
+import { existsSync } from 'node:fs'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
 import { fileURLToPath } from 'node:url'
+import { execSync } from 'node:child_process'
 
 interface ComponentMapping {
   [key: string]: {
@@ -16,23 +18,23 @@ const __dirname = dirname(__filename)
 
 const COMPONENTS: ComponentMapping = {
   'project-card': {
-    sourcePath: resolve(__dirname, '../cli-components/ProjectCard'),
+    sourcePath: resolve(__dirname, '../components/ProjectCard'),
     destName: 'ProjectCard',
   },
   'project-view': {
-    sourcePath: resolve(__dirname, '../cli-components/ProjectView'),
+    sourcePath: resolve(__dirname, '../components/ProjectView'),
     destName: 'ProjectView',
   },
   'project-grid': {
-    sourcePath: resolve(__dirname, '../cli-components/ProjectGrid'),
+    sourcePath: resolve(__dirname, '../components/ProjectGrid'),
     destName: 'ProjectGrid',
   },
   'project-list': {
-    sourcePath: resolve(__dirname, '../cli-components/ProjectList'),
+    sourcePath: resolve(__dirname, '../components/ProjectList'),
     destName: 'ProjectList',
   },
   'featured-project': {
-    sourcePath: resolve(__dirname, '../cli-components/FeaturedProject'),
+    sourcePath: resolve(__dirname, '../components/FeaturedProject'),
     destName: 'FeaturedProject',
   },
 }
@@ -54,10 +56,11 @@ export async function add(componentName: string): Promise<void> {
   }
 
   const destDir = resolve(workingDir, 'components', 'folio', component.destName)
-  const folioDir = resolve(workingDir, 'components', 'folio')
 
   console.log(chalk.bold(`📦 Adding ${componentName}...`))
   console.log()
+
+  await ensureFolioInstalled()
 
   try {
     const sourceFiles = await getSourceFiles(component.sourcePath)
@@ -94,15 +97,7 @@ export async function add(componentName: string): Promise<void> {
 
     await createDirectory(destDir)
     await copyFiles(sourceFiles, destDir)
-
-    const typesSource = resolve(__dirname, '../cli-components/types.ts')
-    const typesDest = resolve(folioDir, 'types.ts')
-    const typesExist = await checkTypeFileExists(typesDest)
-
-    if (!typesExist) {
-      await copyFile(typesSource, typesDest)
-      console.log(chalk.gray('  ✓ Added types.ts'))
-    }
+    await transformFiles(sourceFiles, destDir)
 
     console.log(chalk.green(`✓ ${componentName} added successfully`))
     console.log()
@@ -163,12 +158,49 @@ async function checkExistingFiles(destDir: string, sourceFiles: string[]): Promi
   return existing
 }
 
-async function checkTypeFileExists(filePath: string): Promise<boolean> {
-  try {
-    await access(filePath)
-    return true
-  } catch {
-    return false
+async function ensureFolioInstalled(): Promise<void> {
+  const packageJsonPath = resolve(process.cwd(), 'package.json')
+  const content = await readFile(packageJsonPath, 'utf-8')
+  const pkg = JSON.parse(content)
+
+  const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+  if ('@reallukemanning/folio' in deps) {
+    return
+  }
+
+  const hasPnpm = existsSync(resolve(process.cwd(), 'pnpm-lock.yaml'))
+  const hasYarn = existsSync(resolve(process.cwd(), 'yarn.lock'))
+
+  const installCmd = hasPnpm ? 'pnpm add' : hasYarn ? 'yarn add' : 'npm install'
+
+  console.log(chalk.gray(`  Installing @reallukemanning/folio...`))
+  execSync(`${installCmd} @reallukemanning/folio`, { stdio: 'inherit' })
+  console.log(chalk.gray(`  ✓ @reallukemanning/folio installed`))
+}
+
+async function transformImports(filePath: string): Promise<void> {
+  const content = await readFile(filePath, 'utf-8')
+  let transformed = content
+
+  transformed = transformed.replace(
+    /from ['"]\.\.\/types['"]/g,
+    "from '@reallukemanning/folio'"
+  )
+
+  transformed = transformed.replace(
+    /from ['"]\.\.\/\.\.\/types['"]/g,
+    "from '@reallukemanning/folio'"
+  )
+
+  const { writeFile } = await import('node:fs/promises')
+  await writeFile(filePath, transformed, 'utf-8')
+}
+
+async function transformFiles(sourceFiles: string[], destDir: string): Promise<void> {
+  for (const sourceFile of sourceFiles) {
+    const fileName = sourceFile.split('/').pop() as string
+    const destPath = resolve(destDir, fileName)
+    await transformImports(destPath)
   }
 }
 

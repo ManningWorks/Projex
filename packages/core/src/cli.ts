@@ -9,7 +9,7 @@ const program = new Command()
 program
   .name('folio')
   .description('CLI tool for Folio project showcase pages')
-  .version('0.0.0')
+  .version('1.3.0')
 
 program
   .command('init')

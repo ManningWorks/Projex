@@ -1,7 +1,9 @@
 import { readFile, writeFile, access, constants } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { existsSync } from 'node:fs'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
+import { execSync } from 'node:child_process'
 import { fetchGitHubRepos } from '../lib/github.js'
 
 const CONFIG_FILE = 'folio.config.ts'
@@ -58,6 +60,8 @@ export async function init(options: InitOptions = {}): Promise<void> {
     const configPath = resolve(workingDir, CONFIG_FILE)
 
     await writeFile(configPath, template, 'utf-8')
+
+    await ensureFolioInstalled()
 
     console.log(chalk.green(`✓ ${CONFIG_FILE} created successfully`))
     console.log()
@@ -258,4 +262,24 @@ export const projects = defineProjects([
 ${repoEntries}
 ])
 `
+}
+
+async function ensureFolioInstalled(): Promise<void> {
+  const packageJsonPath = resolve(process.cwd(), 'package.json')
+  const content = await readFile(packageJsonPath, 'utf-8')
+  const pkg = JSON.parse(content)
+
+  const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+  if ('@reallukemanning/folio' in deps) {
+    return
+  }
+
+  const hasPnpm = existsSync(resolve(process.cwd(), 'pnpm-lock.yaml'))
+  const hasYarn = existsSync(resolve(process.cwd(), 'yarn.lock'))
+
+  const installCmd = hasPnpm ? 'pnpm add' : hasYarn ? 'yarn add' : 'npm install'
+
+  console.log(chalk.gray(`  Installing @reallukemanning/folio...`))
+  execSync(`${installCmd} @reallukemanning/folio`, { stdio: 'inherit' })
+  console.log(chalk.gray(`  ✓ @reallukemanning/folio installed`))
 }

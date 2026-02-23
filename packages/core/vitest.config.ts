@@ -16,9 +16,7 @@ export default defineConfig({
       reportsDirectory: './coverage',
       exclude: [
         'src/commands/**',
-        'src/cli-components/**',
         'src/cli.ts',
-        'src/cli-types.ts',
       ],
       thresholds: {
         lines: 80,

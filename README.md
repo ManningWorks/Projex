@@ -68,6 +68,8 @@ npx folio add project-card
 npx folio add project-view
 ```
 
+The CLI automatically installs the `@reallukemanning/folio` package as a dependency, and copied components import types directly from it.
+
 ## folio.config.ts Reference
 
 ### defineProjects(projects)
