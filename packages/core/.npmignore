@@ -1,0 +1,13 @@
+coverage/
+playwright-report/
+test-results/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+vitest.config.ts
+src/__tests__/
+node_modules/
+.git/
+.github/
+.turbo/
