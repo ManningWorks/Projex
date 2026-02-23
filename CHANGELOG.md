@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-23
+
+### Added
+
+#### Components
+- `CommitList` - Component for displaying a list of project commits with message truncation
+- `ProjectView.Commits` - Compound component for displaying commits section in project view
+
+#### Data Fetching
+- `fetchGitHubCommits(repo, limit)` - Fetch commits from GitHub API at build time
+- Commits automatically fetched for GitHub and hybrid project types
+
+#### Configuration
+- Global commits configuration via `defineProjects(projects, { commits: N })`
+- Per-project override via `commits: N` on project config
+- Commits clamped to valid range [0, 100] with warning on invalid values
+
+#### Types
+- `GitHubCommitData` - Internal type for GitHub API commit response
+- `ProjectCommitAuthor` - Author type with optional name and email
+- `ProjectCommit` - Public commit type with message, date, url, and author
+
+#### Documentation
+- CommitList component reference with data attributes
+- defineProjects() options documentation with examples
+- Demo app updated with commit configuration examples
+
+### Public API Surface
+
+**New Components:**
+- `CommitList`
+
+**New Utilities:**
+- `fetchGitHubCommits(repo, limit)`
+
+**New Types:**
+- `GitHubCommitData`
+- `ProjectCommitAuthor`
+- `ProjectCommit`
+
+**Modified:**
+- `defineProjects()` - Now accepts optional `DefineProjectsOptions` parameter
+- `FolioProject` - Added optional `commits: ProjectCommit[]` field
+- `GitHubProjectInput` - Added optional `commits: number` field
+- `HybridProjectInput` - Added optional `commits: number` field
+
+**New Data Attributes (for CSS styling):**
+- `data-folio-commits` - Commits section container
+- `data-folio-commits-header` - Commits section header
+- `data-folio-commit` - Individual commit item
+- `data-folio-commit-message` - Commit message (truncated at 100 chars)
+- `data-folio-commit-date` - Commit date
+- `data-folio-commit-link` - Link to view commit
+- `data-folio-commit-author` - Commit author name
+
+---
+
 ## [1.0.1] - 2026-02-23
 
 ### Fixed

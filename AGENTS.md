@@ -163,3 +163,14 @@ mockFetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockData
 Experienced solo developers using Next.js and TypeScript. They want clean, well-typed APIs without hand-holding.
 
 The `project_docs/` directory contains design documents, agent briefings, and reference materials. Agents should store created documents (PRDs, design docs, briefings) in `project_docs/`.
+
+### CHANGELOG Updates
+
+When creating a new release tag, **always update `CHANGELOG.md`**:
+- Follow Keep a Changelog format with version, date, and change sections
+- Use semantic versioning (major.minor.patch)
+- Document all new/modified public API surfaces
+- List new data attributes for CSS styling
+- Include breaking changes if any
+
+The CHANGELOG.md file must be updated **before** creating the git tag to ensure the release notes are committed.
