@@ -300,6 +300,65 @@ describe('ProjectView Stats', () => {
   })
 })
 
+describe('ProjectView Commits', () => {
+  it('renders commits section when commits are present', () => {
+    const project = createProject({
+      commits: [
+        { message: 'First commit', date: '2024-01-01', url: 'https://github.com/test/project/commit/1' },
+        { message: 'Second commit', date: '2024-01-02', url: 'https://github.com/test/project/commit/2' },
+        { message: 'Third commit', date: '2024-01-03', url: 'https://github.com/test/project/commit/3' },
+        { message: 'Fourth commit', date: '2024-01-04', url: 'https://github.com/test/project/commit/4' },
+        { message: 'Fifth commit', date: '2024-01-05', url: 'https://github.com/test/project/commit/5' },
+      ]
+    })
+
+    const { container } = render(<ProjectView.Commits project={project} />)
+
+    expect(container.querySelector('[data-folio-commits]')).toBeInTheDocument()
+  })
+
+  it('does not render when commits is undefined', () => {
+    const project = createProject({ commits: undefined })
+
+    const { container } = render(<ProjectView.Commits project={project} />)
+
+    expect(container.querySelector('[data-folio-commits]')).not.toBeInTheDocument()
+  })
+
+  it('does not render when commits is empty array', () => {
+    const project = createProject({ commits: [] })
+
+    const { container } = render(<ProjectView.Commits project={project} />)
+
+    expect(container.querySelector('[data-folio-commits]')).not.toBeInTheDocument()
+  })
+
+  it('renders commits header', () => {
+    const project = createProject({
+      commits: [
+        { message: 'First commit', date: '2024-01-01', url: 'https://github.com/test/project/commit/1' }
+      ]
+    })
+
+    const { container } = render(<ProjectView.Commits project={project} />)
+
+    expect(container.querySelector('[data-folio-commits-header]')).toHaveTextContent('Commits')
+  })
+
+  it('uses CommitList component for rendering commits', () => {
+    const project = createProject({
+      commits: [
+        { message: 'First commit', date: '2024-01-01', url: 'https://github.com/test/project/commit/1' },
+        { message: 'Second commit', date: '2024-01-02', url: 'https://github.com/test/project/commit/2' },
+      ]
+    })
+
+    const { container } = render(<ProjectView.Commits project={project} />)
+
+    expect(container.querySelectorAll('[data-folio-commit]')).toHaveLength(2)
+  })
+})
+
 describe('ProjectView data attributes', () => {
   it('has correct data-folio-view attribute on root', () => {
     const project = createProject()

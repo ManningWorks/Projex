@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { fetchGitHubRepo, GitHubRepoData } from '../github'
+import { fetchGitHubRepo, fetchGitHubCommits, GitHubRepoData } from '../github'
 
 const mockFetch = vi.fn()
 vi.stubGlobal('fetch', mockFetch)
@@ -300,7 +300,7 @@ describe('fetchGitHubRepo', () => {
       await fetchGitHubRepo('user/warn-repo')
 
       expect(warnSpy).toHaveBeenCalledWith(
-        'GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit)'
+        'GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit). Create a fine-grained token at https://github.com/settings/personal-access-token/new'
       )
 
       warnSpy.mockRestore()
@@ -561,6 +561,290 @@ describe('fetchGitHubRepo', () => {
         created_at: '2023-01-01T00:00:00Z',
         updated_at: '2024-12-31T23:59:59Z',
       })
+    })
+  })
+})
+
+describe('fetchGitHubCommits', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    process.env = { ...originalEnv }
+    delete process.env.GITHUB_TOKEN
+  })
+
+  afterEach(() => {
+    process.env = originalEnv
+  })
+
+  describe('successful fetch', () => {
+    it('should return commits for valid repo', async () => {
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: {
+            message: 'Initial commit',
+            author: { name: 'John Doe', date: '2024-01-01T00:00:00Z' }
+          },
+          author: {
+            login: 'johndoe',
+            avatar_url: 'https://avatars.githubusercontent.com/u/1'
+          },
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        },
+        {
+          sha: 'def456',
+          commit: {
+            message: 'Second commit',
+            author: { name: 'Jane Doe', date: '2024-01-02T00:00:00Z' }
+          },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/def456'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      const result = await fetchGitHubCommits('user/repo', 10)
+
+      expect(result).toHaveLength(2)
+      expect(result?.[0]).toEqual({
+        sha: 'abc123',
+        message: 'Initial commit',
+        author: 'johndoe',
+        date: '2024-01-01T00:00:00Z',
+        avatarUrl: 'https://avatars.githubusercontent.com/u/1',
+        htmlUrl: 'https://github.com/user/repo/commit/abc123'
+      })
+      expect(result?.[1].author).toBe('Jane Doe')
+    })
+
+    it('should use commit author name when GitHub author is null', async () => {
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: {
+            message: 'Commit from CLI',
+            author: { name: 'Git User', date: '2024-01-01T00:00:00Z' }
+          },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      const result = await fetchGitHubCommits('user/repo', 5)
+
+      expect(result?.[0].author).toBe('Git User')
+    })
+
+    it('should use GitHub login over commit author name', async () => {
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: {
+            message: 'Commit message',
+            author: { name: 'Different Name', date: '2024-01-01T00:00:00Z' }
+          },
+          author: {
+            login: 'preferred-login',
+            avatar_url: 'https://avatars.githubusercontent.com/u/1'
+          },
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      const result = await fetchGitHubCommits('user/repo', 5)
+
+      expect(result?.[0].author).toBe('preferred-login')
+    })
+  })
+
+  describe('error handling', () => {
+    it('should return null for 404 not found', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+      })
+
+      const result = await fetchGitHubCommits('user/nonexistent-repo', 10)
+
+      expect(result).toBeNull()
+    })
+
+    it('should return null for 403 rate limit', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 403,
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const result = await fetchGitHubCommits('user/rate-limited-repo', 10)
+
+      expect(result).toBeNull()
+      expect(warnSpy).toHaveBeenCalledWith('GitHub API rate limit exceeded. Consider adding a GITHUB_TOKEN.')
+
+      warnSpy.mockRestore()
+    })
+
+    it('should return null for other non-ok responses', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      })
+
+      const result = await fetchGitHubCommits('user/server-error-repo', 10)
+
+      expect(result).toBeNull()
+    })
+
+    it('should return null for network error', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Network error'))
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const result = await fetchGitHubCommits('user/network-error-repo', 10)
+
+      expect(result).toBeNull()
+      expect(warnSpy).toHaveBeenCalledWith('Network error while fetching GitHub commits.')
+
+      warnSpy.mockRestore()
+    })
+
+    it('should return null for malformed JSON response', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.reject(new Error('Invalid JSON')),
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const result = await fetchGitHubCommits('user/malformed-repo', 10)
+
+      expect(result).toBeNull()
+
+      warnSpy.mockRestore()
+    })
+  })
+
+  describe('authentication', () => {
+    it('should include Authorization header when GITHUB_TOKEN is set', async () => {
+      process.env.GITHUB_TOKEN = 'ghp_test_token_12345'
+
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: { message: 'Commit', author: { name: 'User', date: '2024-01-01T00:00:00Z' } },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      await fetchGitHubCommits('user/repo', 5)
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            Authorization: 'Bearer ghp_test_token_12345',
+          }),
+        })
+      )
+    })
+
+    it('should warn when GITHUB_TOKEN is not set', async () => {
+      delete process.env.GITHUB_TOKEN
+
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: { message: 'Commit', author: { name: 'User', date: '2024-01-01T00:00:00Z' } },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      await fetchGitHubCommits('user/repo', 5)
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit). Create a fine-grained token at https://github.com/settings/personal-access-token/new'
+      )
+
+      warnSpy.mockRestore()
+    })
+  })
+
+  describe('url construction', () => {
+    it('should construct correct GitHub API commits url with limit', async () => {
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: { message: 'Commit', author: { name: 'User', date: '2024-01-01T00:00:00Z' } },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      await fetchGitHubCommits('owner/repo', 25)
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://api.github.com/repos/owner/repo/commits?per_page=25',
+        expect.any(Object)
+      )
+    })
+
+    it('should use force-cache for build-time caching', async () => {
+      const mockCommits = [
+        {
+          sha: 'abc123',
+          commit: { message: 'Commit', author: { name: 'User', date: '2024-01-01T00:00:00Z' } },
+          author: null,
+          html_url: 'https://github.com/user/repo/commit/abc123'
+        }
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockCommits),
+      })
+
+      await fetchGitHubCommits('user/repo', 5)
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          cache: 'force-cache',
+        })
+      )
     })
   })
 })

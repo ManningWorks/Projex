@@ -1,6 +1,6 @@
 import { defineProjects } from '@reallukemanning/folio'
 
-export const projects = defineProjects([
+export const { projects } = defineProjects([
   {
     id: 'folio',
     type: 'manual',
@@ -49,6 +49,7 @@ export const projects = defineProjects([
       { date: '2017-11', note: 'Initial release' },
       { date: '2023-01', note: 'v3.0 release' },
     ],
+    commits: 5,
   },
   {
     id: 'portfolio-v2',
@@ -128,7 +129,8 @@ export const projects = defineProjects([
     ],
     struggles: [
       { type: 'warn', text: 'Managing ecosystem complexity across multiple frameworks' }
-    ]
+    ],
+    commits: 3,
   },
   {
     id: 'analytics-dashboard',
@@ -154,4 +156,4 @@ export const projects = defineProjects([
       { type: 'warn', text: 'Query performance optimization for large datasets' }
     ],
   }
-])
+], { commits: 5 })

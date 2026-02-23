@@ -1,3 +1,4 @@
+export { CommitList } from './CommitList'
 export { FeaturedProject } from './FeaturedProject'
 export { ProjectCard } from './ProjectCard'
 export { ProjectList } from './ProjectList'

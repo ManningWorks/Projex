@@ -1,9 +1,13 @@
-import { fetchGitHubRepo, LANGUAGE_COLORS } from './github'
+import { fetchGitHubCommits, fetchGitHubRepo, LANGUAGE_COLORS } from './github'
 import { fetchNpmPackage } from './npm'
 import { fetchProductHuntPost } from './product-hunt'
-import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectType } from '../types'
+import type { DefineProjectsOptions } from './defineProjects'
+import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
 
-export async function normalise(input: FolioProjectInput): Promise<FolioProject> {
+export async function normalise(
+  input: FolioProjectInput,
+  options?: DefineProjectsOptions,
+): Promise<FolioProject> {
   const {
     id,
     type,
@@ -53,6 +57,41 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
   if (type === 'product-hunt') {
     if (slug) {
       productHuntData = await fetchProductHuntPost(slug)
+    }
+  }
+
+  let finalCommits: ProjectCommit[] | undefined = undefined
+
+  if (type === 'github' || type === 'hybrid') {
+    const commitsConfig = 'commits' in input ? input.commits : undefined
+    const globalCommits = options?.commits ?? 0
+    let commitsLimit: number | undefined = commitsConfig ?? globalCommits
+
+    if (commitsLimit !== undefined) {
+      if (commitsLimit < 0 || commitsLimit > 100) {
+        console.warn(
+          `Invalid commits value: ${commitsLimit}. Clamping to valid range (0-100).`,
+        )
+        commitsLimit = Math.max(0, Math.min(100, commitsLimit))
+      }
+
+      if (commitsLimit > 0 && repo) {
+        const commitsData = await fetchGitHubCommits(repo, commitsLimit)
+
+        if (commitsData === null) {
+          finalCommits = []
+          console.warn(`Failed to fetch commits for ${repo}. Setting commits to empty array.`)
+        } else {
+          finalCommits = commitsData.map((commit) => ({
+            message: commit.message,
+            date: commit.date,
+            url: commit.htmlUrl,
+            author: commit.author
+              ? { name: commit.author }
+              : undefined,
+          }))
+        }
+      }
     }
   }
 
@@ -178,6 +217,7 @@ export async function normalise(input: FolioProjectInput): Promise<FolioProject>
     repo,
     package: npmPackage,
     slug: 'slug' in input ? input.slug : undefined,
+    commits: finalCommits,
   }
 }
 

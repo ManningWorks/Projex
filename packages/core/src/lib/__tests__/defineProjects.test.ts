@@ -21,15 +21,15 @@ describe('defineProjects', () => {
 
     const result = defineProjects(projects)
 
-    expect(result).toBe(projects)
-    expect(result).toHaveLength(2)
+    expect(result.projects).toBe(projects)
+    expect(result.projects).toHaveLength(2)
   })
 
   it('should return an empty array when given an empty array', () => {
     const result = defineProjects([])
 
-    expect(result).toEqual([])
-    expect(result).toHaveLength(0)
+    expect(result.projects).toEqual([])
+    expect(result.projects).toHaveLength(0)
   })
 
   it('should handle single project', () => {
@@ -44,9 +44,9 @@ describe('defineProjects', () => {
 
     const result = defineProjects(projects)
 
-    expect(result).toHaveLength(1)
-    expect(result[0].id).toBe('single')
-    expect(result[0].type).toBe('npm')
+    expect(result.projects).toHaveLength(1)
+    expect(result.projects[0].id).toBe('single')
+    expect(result.projects[0].type).toBe('npm')
   })
 
   it('should handle all project types', () => {
@@ -60,8 +60,8 @@ describe('defineProjects', () => {
 
     const result = defineProjects(projects)
 
-    expect(result).toHaveLength(5)
-    expect(result.map(p => p.type)).toEqual(['github', 'manual', 'npm', 'product-hunt', 'hybrid'])
+    expect(result.projects).toHaveLength(5)
+    expect(result.projects.map(p => p.type)).toEqual(['github', 'manual', 'npm', 'product-hunt', 'hybrid'])
   })
 
   it('should preserve all project properties', () => {
@@ -91,7 +91,7 @@ describe('defineProjects', () => {
 
     const result = defineProjects(projects)
 
-    expect(result[0]).toEqual(projects[0])
+    expect(result.projects[0]).toEqual(projects[0])
   })
 
   it('should provide type safety for project configs', () => {
@@ -104,9 +104,37 @@ describe('defineProjects', () => {
 
     const result = defineProjects([githubProject])
 
-    expect(result[0].type).toBe('github')
-    if (result[0].type === 'github') {
-      expect(result[0].repo).toBe('user/repo')
+    expect(result.projects[0].type).toBe('github')
+    if (result.projects[0].type === 'github') {
+      expect(result.projects[0].repo).toBe('user/repo')
     }
+  })
+
+  it('should accept optional options parameter with commits config', () => {
+    const projects: FolioProjectInput[] = [
+      { id: 'test', type: 'github', repo: 'user/repo', status: 'active' },
+    ]
+
+    const result = defineProjects(projects, { commits: 10 })
+
+    expect(result.projects).toHaveLength(1)
+    expect(result.options.commits).toBe(10)
+  })
+
+  it('should default options.commits to 0 when not provided', () => {
+    const projects: FolioProjectInput[] = [
+      { id: 'test', type: 'github', repo: 'user/repo', status: 'active' },
+    ]
+
+    const result = defineProjects(projects)
+
+    expect(result.options.commits).toBe(0)
+  })
+
+  it('should return empty options when called with empty projects', () => {
+    const result = defineProjects([])
+
+    expect(result.projects).toEqual([])
+    expect(result.options.commits).toBe(0)
   })
 })

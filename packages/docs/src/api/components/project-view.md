@@ -24,6 +24,7 @@ import { ProjectView } from '@reallukemanning/folio'
   <ProjectView.Section name="posts" project={project} />
   <ProjectView.Stats project={project} />
   <ProjectView.Links project={project} />
+  <ProjectView.Commits project={project} />
 </ProjectView>
 ```
 
@@ -62,6 +63,14 @@ Returns `null` if `project.stats` is empty.
 
 Returns `null` if no links are available.
 
+### ProjectView.Commits
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| project | `FolioProject` | Yes | Project data to display |
+
+Returns `null` if `project.commits` is empty or undefined. Available for GitHub and hybrid project types only.
+
 ## Data Attributes
 
 | Attribute | Value | Description |
@@ -82,6 +91,14 @@ Returns `null` if no links are available.
 | `data-folio-link` | - | Link element |
 | `data-folio-link-type` | `github` \| `live` \| `npm` \| `app-store` \| `play-store` \| `product-hunt` | Link type |
 | `data-folio-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
+| `data-folio-commits` | - | Commits container |
+| `data-folio-commits-header` | - | Commits section header |
+| `data-folio-commit-list` | - | Commit list container |
+| `data-folio-commit` | - | Individual commit item |
+| `data-folio-commit-message` | - | Commit message |
+| `data-folio-commit-date` | - | Commit date |
+| `data-folio-commit-link` | - | Commit link |
+| `data-folio-commit-author` | - | Commit author |
 
 ## Example
 
@@ -101,6 +118,7 @@ function ProjectPage({ project }) {
       <ProjectView.Section name="timeline" project={project} />
       <ProjectView.Stats project={project} />
       <ProjectView.Links project={project} />
+      <ProjectView.Commits project={project} />
     </ProjectView>
   )
 }

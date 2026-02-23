@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { normalise, normalizeStats } from '../normalise'
 import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput } from '../../types'
-import { fetchGitHubRepo } from '../github'
+import { fetchGitHubRepo, fetchGitHubCommits } from '../github'
 import { fetchNpmPackage } from '../npm'
 import { fetchProductHuntPost } from '../product-hunt'
 
@@ -10,6 +10,7 @@ vi.mock('../npm')
 vi.mock('../product-hunt')
 
 const mockedFetchGitHubRepo = vi.mocked(fetchGitHubRepo)
+const mockedFetchGitHubCommits = vi.mocked(fetchGitHubCommits)
 const mockedFetchNpmPackage = vi.mocked(fetchNpmPackage)
 const mockedFetchProductHuntPost = vi.mocked(fetchProductHuntPost)
 
@@ -225,6 +226,258 @@ describe('normalise', () => {
 
       expect(result.links.github).toBe('https://github.com/user/repo')
       expect(result.links.npm).toBe('https://npmjs.com/package/my-pkg')
+    })
+
+    it('should use global commits default when no per-project commits config', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue([
+        {
+          sha: 'abc123',
+          message: 'Initial commit',
+          author: 'John Doe',
+          date: '2024-01-01T00:00:00Z',
+          avatarUrl: 'https://avatars.githubusercontent.com/u/1',
+          htmlUrl: 'https://github.com/user/repo/commit/abc123',
+        },
+      ])
+
+      const input: GitHubProjectInput = {
+        id: 'commits-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+      }
+
+      const result = await normalise(input, { commits: 5 })
+
+      expect(result.commits).toHaveLength(1)
+      expect(result.commits?.[0].message).toBe('Initial commit')
+      expect(mockedFetchGitHubCommits).toHaveBeenCalledWith('user/repo', 5)
+    })
+
+    it('should use per-project commits config over global default', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue([
+        {
+          sha: 'abc123',
+          message: 'Commit 1',
+          author: 'Jane',
+          date: '2024-01-01T00:00:00Z',
+          avatarUrl: 'https://avatars.githubusercontent.com/u/2',
+          htmlUrl: 'https://github.com/user/repo/commit/abc123',
+        },
+      ])
+
+      const input: GitHubProjectInput = {
+        id: 'commits-override-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        commits: 3,
+      }
+
+      const result = await normalise(input, { commits: 10 })
+
+      expect(result.commits).toHaveLength(1)
+      expect(mockedFetchGitHubCommits).toHaveBeenCalledWith('user/repo', 3)
+    })
+
+    it('should not fetch commits when global commits is 0', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'no-commits-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.commits).toBeUndefined()
+      expect(mockedFetchGitHubCommits).not.toHaveBeenCalled()
+    })
+
+    it('should clamp invalid commits config and log warning', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue([])
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const input: GitHubProjectInput = {
+        id: 'clamp-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        commits: 150,
+      }
+
+      const result = await normalise(input)
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Invalid commits value: 150. Clamping to valid range (0-100).',
+      )
+      expect(mockedFetchGitHubCommits).toHaveBeenCalledWith('user/repo', 100)
+      expect(result.commits).toEqual([])
+
+      warnSpy.mockRestore()
+    })
+
+    it('should clamp negative commits config and log warning', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue([])
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const input: GitHubProjectInput = {
+        id: 'negative-clamp-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        commits: -5,
+      }
+
+      const result = await normalise(input)
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Invalid commits value: -5. Clamping to valid range (0-100).',
+      )
+      expect(mockedFetchGitHubCommits).not.toHaveBeenCalled()
+      expect(result.commits).toBeUndefined()
+
+      warnSpy.mockRestore()
+    })
+
+    it('should handle commits fetch failure gracefully', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'test-repo',
+        description: 'Test description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue(null)
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const input: GitHubProjectInput = {
+        id: 'commits-fail-test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        commits: 5,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.commits).toEqual([])
+      expect(warnSpy).toHaveBeenCalled()
+
+      warnSpy.mockRestore()
+    })
+
+    it('should handle hybrid project commits', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'hybrid-repo',
+        description: 'Hybrid description',
+        stargazers_count: 50,
+        forks_count: 10,
+        language: 'JavaScript',
+        topics: [],
+        html_url: 'https://github.com/user/hybrid-repo',
+        homepage: 'https://hybrid.example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      mockedFetchGitHubCommits.mockResolvedValue([
+        {
+          sha: 'xyz789',
+          message: 'Hybrid commit',
+          author: 'Hybrid User',
+          date: '2024-01-10T00:00:00Z',
+          avatarUrl: 'https://avatars.githubusercontent.com/u/3',
+          htmlUrl: 'https://github.com/user/hybrid-repo/commit/xyz789',
+        },
+      ])
+
+      const input: GitHubProjectInput = {
+        id: 'hybrid-commits-test',
+        type: 'github',
+        repo: 'user/hybrid-repo',
+        status: 'active',
+        commits: 10,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.commits).toHaveLength(1)
+      expect(result.commits?.[0].message).toBe('Hybrid commit')
     })
   })
 

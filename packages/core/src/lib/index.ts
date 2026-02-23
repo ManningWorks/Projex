@@ -1,4 +1,5 @@
 export { defineProjects } from './defineProjects'
+export type { DefineProjectsOptions, DefineProjectsResult } from './defineProjects'
 export { fetchGitHubRepo, fetchGitHubRepos, LANGUAGE_COLORS } from './github'
 export type { GitHubRepoData, FetchReposResult, FetchReposError } from './github'
 export { fetchNpmPackage } from './npm'

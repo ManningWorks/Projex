@@ -18,6 +18,18 @@ export interface ProjectPost {
   url?: string
 }
 
+export interface ProjectCommitAuthor {
+  name?: string
+  email?: string
+}
+
+export interface ProjectCommit {
+  message: string
+  date: string
+  url: string
+  author?: ProjectCommitAuthor
+}
+
 export interface ProjectLinks {
   github?: string
   live?: string
@@ -80,6 +92,7 @@ export interface BaseProjectInput {
 export interface GitHubProjectInput extends BaseProjectInput {
   type: 'github'
   repo: string
+  commits?: number
 }
 
 export interface ManualProjectInput extends BaseProjectInput {
@@ -100,6 +113,7 @@ export interface HybridProjectInput extends BaseProjectInput {
   type: 'hybrid'
   repo: string
   package: string
+  commits?: number
 }
 
 export type FolioProjectInput =
@@ -141,4 +155,5 @@ export interface FolioProject {
   repo?: string
   package?: string
   slug?: string
+  commits?: ProjectCommit[]
 }

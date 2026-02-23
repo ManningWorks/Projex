@@ -257,6 +257,54 @@ Full control with no automatic data fetching. Use for client work, private proje
 }
 ```
 
+## Project Commits
+
+Display recent GitHub commits in your project view. Available for GitHub and hybrid project types.
+
+### Enabling Commits
+
+Set a global default for all GitHub/hybrid projects:
+
+```ts
+import { defineProjects } from '@reallukemanning/folio'
+
+export const projects = defineProjects([
+  { id: 'my-lib', type: 'github', repo: 'username/repo' },
+  { id: 'another-lib', type: 'hybrid', repo: 'username/lib', package: 'my-lib' },
+], { commits: 5 })
+```
+
+Or override per-project:
+
+```ts
+export const projects = defineProjects([
+  { id: 'featured', type: 'github', repo: 'username/repo', commits: 10 },
+  { id: 'secondary', type: 'github', repo: 'username/other' }, // uses global default
+], { commits: 5 })
+```
+
+### Rate Limits
+
+GitHub allows 60 requests/hour unauthenticated. For projects with many commits, set a `GITHUB_TOKEN`:
+
+```bash
+GITHUB_TOKEN=github_pat_xxx pnpm build
+```
+
+This increases the rate limit to 5,000 requests/hour.
+
+### Displaying Commits
+
+Use `ProjectView.Commits` in your project detail page:
+
+```tsx
+<ProjectView project={project} onBack={() => router.push('/')}>
+  <ProjectView.Section name="background" project={project} />
+  <ProjectView.Stats project={project} />
+  <ProjectView.Commits project={project} />
+</ProjectView>
+```
+
 ## Project Status
 
 Each project has a status that indicates its current state:
@@ -285,10 +333,21 @@ Folio is designed for **build-time data fetching**. All remote data (GitHub, npm
 For GitHub, set `GITHUB_TOKEN` to increase rate limits from 60/hr to 5,000/hr:
 
 ```bash
-GITHUB_TOKEN=ghp_xxx pnpm build
+GITHUB_TOKEN=github_pat_xxx pnpm build
 ```
 
-Create a token at [github.com/settings/tokens](https://github.com/settings/tokens) (no special permissions needed for public repos).
+We recommend using a **fine-grained personal access token** for better security:
+
+1. Go to [github.com/settings/personal-access-token/new](https://github.com/settings/personal-access-token/new)
+2. Select **Fine-grained** token type
+3. Set permissions: **Contents** (Read-only)
+4. Select **Only select repositories** and choose your portfolio repos
+5. For expiration, we recommend **no expiration** for CI/CD (token only reads public data)
+
+**Why fine-grained?**
+- Scoped to specific repos only
+- Read-only access (no write permissions)
+- Can be revoked independently of other tokens
 
 ### Caching
 
@@ -317,10 +376,10 @@ Set a GitHub token as an environment variable:
 
 ```bash
 # .env.local
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxx
+GITHUB_TOKEN=github_pat_xxxxxxxxxxxxx
 ```
 
-Create a token at [github.com/settings/tokens](https://github.com/settings/tokens) (no special permissions needed for public repos).
+Create a fine-grained token at [github.com/settings/personal-access-token/new](https://github.com/settings/personal-access-token/new) with **Contents (Read-only)** permission scoped to your portfolio repos.
 
 ```bash
 # Build with token
@@ -353,10 +412,10 @@ Common failures:
 Private GitHub repositories require authentication:
 
 ```bash
-GITHUB_TOKEN=ghp_xxx pnpm build
+GITHUB_TOKEN=github_pat_xxx pnpm build
 ```
 
-The token must have `read` permissions for the repository.
+The token must have **Contents (Read-only)** permission for the repository. When creating a fine-grained token, ensure private repos are included in the repository selection.
 
 **Without authentication:**
 - Private repos return `null` from `fetchGitHubRepo`

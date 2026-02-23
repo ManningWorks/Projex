@@ -1,9 +1,10 @@
 import type { FolioProject } from '../../types'
+import { CommitList } from '../CommitList'
 
-type SectionName = keyof Pick<FolioProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts'>
+type SectionName = keyof Pick<FolioProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts' | 'commits'>
 
 function isValidSectionName(name: string): name is SectionName {
-  return ['description', 'background', 'why', 'stack', 'struggles', 'timeline', 'posts'].includes(name)
+  return ['description', 'background', 'why', 'stack', 'struggles', 'timeline', 'posts', 'commits'].includes(name)
 }
 
 function ProjectView({
@@ -77,6 +78,9 @@ ProjectView.Section = function ProjectViewSection({
                 </div>
               )
             }
+          }
+          if ('message' in item && 'date' in item) {
+            return null
           }
           return null
         })}
@@ -161,6 +165,19 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
       {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
       {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
       {project.stats.comments && <span data-folio-stat="comments">{project.stats.comments} comments</span>}
+    </div>
+  )
+}
+
+ProjectView.Commits = function ProjectViewCommits({ project }: { project: FolioProject }) {
+  if (!project.commits || project.commits.length === 0) {
+    return null
+  }
+
+  return (
+    <div data-folio-commits>
+      <div data-folio-commits-header>Commits</div>
+      <CommitList commits={project.commits} />
     </div>
   )
 }

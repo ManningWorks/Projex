@@ -36,6 +36,71 @@ export const LANGUAGE_COLORS: Record<string, string> = {
   CSS: '#563d7c',
 }
 
+export interface GitHubCommitData {
+  sha: string
+  message: string
+  author: string | null
+  date: string
+  avatarUrl: string | null
+  htmlUrl: string
+}
+
+export async function fetchGitHubCommits(
+  repo: string,
+  limit: number,
+): Promise<GitHubCommitData[] | null> {
+  try {
+    const url = `https://api.github.com/repos/${repo}/commits?per_page=${limit}`
+
+    const headers: HeadersInit = {
+      Accept: 'application/vnd.github.v3+json',
+    }
+
+    const token = process.env.GITHUB_TOKEN
+    if (token) {
+      headers.Authorization = `Bearer ${token}`
+    } else {
+      console.warn(
+        'GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit). Create a fine-grained token at https://github.com/settings/personal-access-token/new',
+      )
+    }
+
+    const response = await fetch(url, {
+      headers,
+      cache: 'force-cache',
+    })
+
+    if (response.status === 404) {
+      return null
+    }
+
+    if (response.status === 403) {
+      console.warn('GitHub API rate limit exceeded. Consider adding a GITHUB_TOKEN.')
+      return null
+    }
+
+    if (!response.ok) {
+      return null
+    }
+
+    const data = await response.json()
+
+    const commits = data.map((commit: any) => ({
+      sha: commit.sha,
+      message: commit.commit.message,
+      author: commit.author?.login ?? commit.commit.author?.name ?? null,
+      date: commit.commit.author?.date ?? '',
+      avatarUrl: commit.author?.avatar_url ?? null,
+      htmlUrl: commit.html_url,
+    }))
+
+    return commits
+  } catch {
+    console.warn('Network error while fetching GitHub commits.')
+    return null
+  }
+}
+
 export async function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | null> {
   try {
     const url = `https://api.github.com/repos/${repo}`
@@ -48,7 +113,7 @@ export async function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | nu
     if (token) {
       headers.Authorization = `Bearer ${token}`
     } else {
-      console.warn('GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit)')
+      console.warn('GITHUB_TOKEN not set - using unauthenticated GitHub API (60/hr rate limit). Create a fine-grained token at https://github.com/settings/personal-access-token/new')
     }
 
     const response = await fetch(url, {

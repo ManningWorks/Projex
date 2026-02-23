@@ -164,7 +164,8 @@ async function generateGitHubConfig(): Promise<string> {
       console.log(chalk.red('✖ GitHub API rate limit exceeded'))
       if (!process.env.GITHUB_TOKEN) {
         console.log(chalk.yellow('  Rate limit: 60 requests/hour (unauthenticated)'))
-        console.log(chalk.yellow('  Recommended: Set GITHUB_TOKEN environment variable for 5000 requests/hour'))
+        console.log(chalk.yellow('  Recommended: Set GITHUB_TOKEN for 5000 requests/hour'))
+        console.log(chalk.yellow('  Create token: https://github.com/settings/personal-access-token/new'))
       }
       console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
     } else if (result.error === 'network') {
@@ -190,7 +191,7 @@ async function generateGitHubConfig(): Promise<string> {
     console.log(chalk.gray('  - Rate limit exceeded (60/hr unauthenticated)'))
     console.log()
     console.log(chalk.gray('Suggestions:'))
-    console.log(chalk.gray('  1. Set GITHUB_TOKEN environment variable for private repos'))
+    console.log(chalk.gray('  1. Set GITHUB_TOKEN (fine-grained PAT with Contents read-only)'))
     console.log(chalk.gray('  2. Run "npx folio init" for a basic scaffold instead'))
     console.log(chalk.gray('  3. Check your GitHub username and try again'))
     process.exit(1)
