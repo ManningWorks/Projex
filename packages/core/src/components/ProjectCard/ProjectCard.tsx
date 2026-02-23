@@ -68,29 +68,68 @@ ProjectCard.Status = function ProjectCardStatus({ project }: { project: FolioPro
 }
 
 ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProject }) {
-  if (!project.links.github && !project.links.live && !project.links.npm && !project.links.productHunt) return null
+  const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'appStore', 'playStore', 'custom'] as const
+
+  const linkLabels: Record<string, string> = {
+    github: 'GitHub',
+    live: 'Live',
+    docs: 'Docs',
+    demo: 'Demo',
+    npm: 'npm',
+    productHunt: 'Product Hunt',
+    appStore: 'App Store',
+    playStore: 'Play Store',
+  }
+
+  const linkTypeAttr: Record<string, string> = {
+    github: 'github',
+    live: 'live',
+    docs: 'docs',
+    demo: 'demo',
+    npm: 'npm',
+    productHunt: 'product-hunt',
+    appStore: 'app-store',
+    playStore: 'play-store',
+  }
+
+  const order = project.linkOrder || standardLinks
+
+  const hasLinks = order.some(linkType => {
+    if (linkType === 'custom') return project.links.custom && project.links.custom.length > 0
+    if (linkType === 'appStore' || linkType === 'playStore') return false
+    return project.links[linkType as keyof typeof project.links] !== undefined
+  })
+
+  if (!hasLinks) return null
+
   return (
     <div data-folio-card-links>
-      {project.links.github && (
-        <a href={project.links.github} data-folio-link data-folio-link-type="github">
-          GitHub
-        </a>
-      )}
-      {project.links.live && (
-        <a href={project.links.live} data-folio-link data-folio-link-type="live">
-          Live
-        </a>
-      )}
-      {project.links.npm && (
-        <a href={project.links.npm} data-folio-link data-folio-link-type="npm">
-          npm
-        </a>
-      )}
-      {project.links.productHunt && (
-        <a href={project.links.productHunt} data-folio-link data-folio-link-type="product-hunt">
-          Product Hunt
-        </a>
-      )}
+      {order.map(linkType => {
+        if (linkType === 'custom') {
+          return project.links.custom?.map((link) => (
+            <a
+              key={link.label}
+              href={link.url}
+              data-folio-link
+              data-folio-link-type="custom"
+              data-folio-link-label={link.label}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+
+        if (linkType === 'appStore' || linkType === 'playStore') return null
+
+        const url = project.links[linkType as keyof typeof project.links] as string | undefined
+        if (!url) return null
+
+        return (
+          <a key={linkType} href={url} data-folio-link data-folio-link-type={linkTypeAttr[linkType]}>
+            {linkLabels[linkType]}
+          </a>
+        )
+      })}
     </div>
   )
 }

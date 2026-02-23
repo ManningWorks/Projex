@@ -93,7 +93,8 @@ Returns `null` if no links are available.
 | `data-folio-type-value` | `github` \| `npm` \| ... | Project type |
 | `data-folio-tag` | - | Individual tag |
 | `data-folio-link` | - | Link element |
-| `data-folio-link-type` | `github` \| `live` \| `npm` \| `product-hunt` | Link type |
+| `data-folio-link-type` | `github` \| `live` \| `docs` \| `demo` \| `npm` \| `product-hunt` \| `custom` | Link type |
+| `data-folio-link-label` | `string` | Custom link label |
 | `data-folio-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
 
 ## Example

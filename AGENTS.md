@@ -40,7 +40,7 @@ folio/
 │   ├── core/              # Main component library (includes CLI)
 │   │   └── src/
 │   │       ├── components/      # React components
-│   │       ├── cli-components/  # Components copied by CLI
+│   │       ├── cli-components/  # Components copied by CLI (separate from components/)
 │   │       ├── commands/        # CLI command implementations
 │   │       ├── lib/             # Utilities (github.ts, normalise.ts, defineProjects.ts)
 │   │       ├── types/           # TypeScript interfaces
@@ -51,6 +51,12 @@ folio/
 ├── pnpm-workspace.yaml
 └── package.json
 ```
+
+**IMPORTANT**: When updating components, you must update BOTH:
+1. `packages/core/src/components/` - Main library components
+2. `packages/core/src/cli-components/` - CLI-copied components (separate duplicates)
+
+CLI components have their own `types.ts` file that mirrors the main types.
 
 ## Code Style Guidelines
 
@@ -106,10 +112,13 @@ data-folio-featured, data-folio-featured-image, data-folio-grid, data-folio-list
 data-folio-status, data-folio-status-value="active"
 data-folio-type, data-folio-type-value="github"
 data-folio-struggle, data-folio-struggle-type="warn"
-data-folio-tag, data-folio-link, data-folio-link-type="github"
+data-folio-tag, data-folio-link, data-folio-link-type="github|live|docs|demo|npm|product-hunt|app-store|play-store|custom"
+data-folio-link-label="custom-link-label"
 data-folio-stat="stars|forks|downloads|version|upvotes|comments"
 data-folio-timeline-date, data-folio-timeline-note
 data-folio-post-title, data-folio-post-date, data-folio-post-link
+data-folio-commits, data-folio-commits-header, data-folio-commit-list
+data-folio-commit, data-folio-commit-message, data-folio-commit-date, data-folio-commit-link, data-folio-commit-author
 ```
 
 ### Error Handling & API Fetching
@@ -166,11 +175,10 @@ The `project_docs/` directory contains design documents, agent briefings, and re
 
 ### CHANGELOG Updates
 
-When creating a new release tag, **always update `CHANGELOG.md`**:
-- Follow Keep a Changelog format with version, date, and change sections
-- Use semantic versioning (major.minor.patch)
-- Document all new/modified public API surfaces
-- List new data attributes for CSS styling
-- Include breaking changes if any
+When creating a new release, **always do the following in order**:
 
-The CHANGELOG.md file must be updated **before** creating the git tag to ensure the release notes are committed.
+1. **Bump the version** in `packages/core/package.json` to match your intended release (e.g., 1.0.1 → 1.1.0)
+2. **Update `CHANGELOG.md`** with the changes (follow Keep a Changelog format)
+3. **Commit and tag** - create the git tag (e.g., `v1.1.0`)
+
+**Important**: npm publish will silently skip publishing if the version in package.json hasn't changed. GitHub Actions detects version changes by comparing the package.json version, not the git tag. Tagging without bumping the version will result in "There are no new packages that should be published".

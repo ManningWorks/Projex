@@ -34,9 +34,12 @@ export interface ProjectLinks {
   github?: string
   live?: string
   npm?: string
+  docs?: string
+  demo?: string
   appStore?: string
   playStore?: string
   productHunt?: string
+  custom?: Array<{ label: string, url: string }>
 }
 
 export interface GitHubStats {
@@ -81,6 +84,7 @@ export interface BaseProjectInput {
   stats?: ProjectStats
   createdAt?: string
   updatedAt?: string
+  linkOrder?: string[]
   override?: {
     name?: string
     tagline?: string
@@ -156,4 +160,5 @@ export interface FolioProject {
   package?: string
   slug?: string
   commits?: ProjectCommit[]
+  linkOrder?: string[]
 }

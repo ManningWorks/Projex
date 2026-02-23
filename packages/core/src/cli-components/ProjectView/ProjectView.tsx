@@ -78,50 +78,65 @@ ProjectView.Section = function ProjectViewSection({
 
 ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProject }) {
   const links = project.links
+  const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'appStore', 'playStore', 'custom'] as const
 
-  if (
-    !links.github &&
-    !links.live &&
-    !links.npm &&
-    !links.appStore &&
-    !links.playStore &&
-    !links.productHunt
-  ) {
-    return null
+  const linkLabels: Record<string, string> = {
+    github: 'GitHub',
+    live: 'Live',
+    docs: 'Docs',
+    demo: 'Demo',
+    npm: 'npm',
+    productHunt: 'Product Hunt',
+    appStore: 'App Store',
+    playStore: 'Play Store',
   }
+
+  const linkTypeAttr: Record<string, string> = {
+    github: 'github',
+    live: 'live',
+    docs: 'docs',
+    demo: 'demo',
+    npm: 'npm',
+    productHunt: 'product-hunt',
+    appStore: 'app-store',
+    playStore: 'play-store',
+  }
+
+  const order = project.linkOrder || standardLinks
+
+  const hasLinks = order.some(linkType => {
+    if (linkType === 'custom') return links.custom && links.custom.length > 0
+    return links[linkType as keyof typeof links] !== undefined
+  })
+
+  if (!hasLinks) return null
 
   return (
     <div data-folio-view-links>
-      {links.github && (
-        <a href={links.github} data-folio-link data-folio-link-type="github">
-          GitHub
-        </a>
-      )}
-      {links.live && (
-        <a href={links.live} data-folio-link data-folio-link-type="live">
-          Live
-        </a>
-      )}
-      {links.npm && (
-        <a href={links.npm} data-folio-link data-folio-link-type="npm">
-          npm
-        </a>
-      )}
-      {links.appStore && (
-        <a href={links.appStore} data-folio-link data-folio-link-type="app-store">
-          App Store
-        </a>
-      )}
-      {links.playStore && (
-        <a href={links.playStore} data-folio-link data-folio-link-type="play-store">
-          Play Store
-        </a>
-      )}
-      {links.productHunt && (
-        <a href={links.productHunt} data-folio-link data-folio-link-type="product-hunt">
-          Product Hunt
-        </a>
-      )}
+      {order.map(linkType => {
+        if (linkType === 'custom') {
+          return links.custom?.map((link) => (
+            <a
+              key={link.label}
+              href={link.url}
+              data-folio-link
+              data-folio-link-type="custom"
+              data-folio-link-label={link.label}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+
+        const url = links[linkType as keyof typeof links] as string | undefined
+        if (!url) return null
+
+        return (
+          <a key={linkType} href={url} data-folio-link data-folio-link-type={linkTypeAttr[linkType]}>
+            {linkLabels[linkType]}
+          </a>
+        )
+      })}
     </div>
   )
 }

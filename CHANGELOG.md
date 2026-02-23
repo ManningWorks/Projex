@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-23
+
+### Added
+
+#### Links
+- New standard link types: `docs` and `demo` for documentation and demo sites
+- Custom link support via `custom` array field in `ProjectLinks`
+- Link ordering control via `linkOrder` config option (per-project)
+
+#### Configuration
+- `linkOrder?: string[]` field on `FolioProject` and all project input types
+- Default link order: github → live → docs → demo → npm → productHunt → appStore → playStore → custom
+
+#### Types
+- `ProjectLinks` - Added `docs`, `demo`, and `custom` fields
+- Custom link type: `Array<{ label: string, url: string }>`
+
+#### Documentation
+- Demo app updated with custom links and ordering example
+- New data attributes for CSS styling
+
+### Changed
+- `ProjectCard.Links` now renders `docs` and `demo` links when provided
+- `ProjectView.Links` renders all standard link types including `docs` and `demo`
+- Default link order applied across both `ProjectCard.Links` and `ProjectView.Links`
+
+### Public API Surface
+
+**Modified Types:**
+- `ProjectLinks` - Added optional `docs`, `demo`, and `custom` fields
+- `FolioProject` - Added optional `linkOrder?: string[]` field
+- `BaseProjectInput` - Added optional `linkOrder?: string[]` field
+
+**New Data Attributes (for CSS styling):**
+- `data-folio-link-type="docs"` - Documentation link
+- `data-folio-link-type="demo"` - Demo link
+- `data-folio-link-type="custom"` - Custom link (type indicator)
+- `data-folio-link-label` - Custom link label value
+
+---
+
 ## [1.1.0] - 2026-02-23
 
 ### Added

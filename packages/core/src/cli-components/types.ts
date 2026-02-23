@@ -21,10 +21,13 @@ export interface ProjectPost {
 export interface ProjectLinks {
   github?: string
   live?: string
+  docs?: string
+  demo?: string
   npm?: string
   appStore?: string
   playStore?: string
   productHunt?: string
+  custom?: Array<{ label: string, url: string }>
 }
 
 export interface ProjectStats {
@@ -60,4 +63,6 @@ export interface FolioProject {
   repo?: string
   package?: string
   slug?: string
+  linkOrder?: string[]
+  commits?: any[]
 }

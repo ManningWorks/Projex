@@ -29,6 +29,8 @@ interface FolioProject {
   repo?: string
   package?: string
   slug?: string
+  commits?: ProjectCommit[]
+  linkOrder?: string[]
 }
 ```
 
@@ -59,6 +61,8 @@ interface FolioProject {
 | `repo` | `string` | Repository path (GitHub/hybrid) |
 | `package` | `string` | Package name (npm/hybrid) |
 | `slug` | `string` | Product Hunt slug |
+| `commits` | `ProjectCommit[]` | Recent commits (GitHub/hybrid) |
+| `linkOrder` | `string[]` | Link display order |
 
 ## Creation
 

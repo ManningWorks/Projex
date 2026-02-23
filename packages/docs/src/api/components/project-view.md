@@ -89,7 +89,8 @@ Returns `null` if `project.commits` is empty or undefined. Available for GitHub 
 | `data-folio-post-date` | - | Post date |
 | `data-folio-post-link` | - | Post link |
 | `data-folio-link` | - | Link element |
-| `data-folio-link-type` | `github` \| `live` \| `npm` \| `app-store` \| `play-store` \| `product-hunt` | Link type |
+| `data-folio-link-type` | `github` \| `live` \| `docs` \| `demo` \| `npm` \| `app-store` \| `play-store` \| `product-hunt` \| `custom` | Link type |
+| `data-folio-link-label` | `string` | Custom link label |
 | `data-folio-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
 | `data-folio-commits` | - | Commits container |
 | `data-folio-commits-header` | - | Commits section header |

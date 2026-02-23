@@ -155,5 +155,30 @@ export const { projects } = defineProjects([
     struggles: [
       { type: 'warn', text: 'Query performance optimization for large datasets' }
     ],
+  },
+  {
+    id: 'component-library',
+    type: 'manual',
+    status: 'active',
+    name: 'Component Library',
+    tagline: 'Demo of custom links and ordering',
+    description: 'Example showing docs, demo, and custom links with custom ordering.',
+    links: {
+      github: 'https://github.com/user/component-library',
+      live: 'https://components.dev',
+      docs: 'https://docs.components.dev',
+      demo: 'https://demo.components.dev',
+      custom: [
+        { label: 'Storybook', url: 'https://storybook.components.dev' },
+        { label: 'Discord', url: 'https://discord.gg/abcdef' }
+      ]
+    },
+    linkOrder: ['github', 'docs', 'demo', 'live', 'custom'],
+    stack: ['React', 'TypeScript', 'Storybook'],
+    background: 'Modern component library with comprehensive documentation and interactive demos.',
+    timeline: [
+      { date: '2024-01', note: 'Initial component set' },
+      { date: '2024-02', note: 'Documentation site launched' },
+    ],
   }
 ], { commits: 5 })

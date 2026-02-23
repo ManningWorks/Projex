@@ -104,6 +104,8 @@ All fields are optional except where noted.
 | `stats` | `ProjectStats` | GitHub/npm stats |
 | `language` | `string` | Primary programming language |
 | `languageColor` | `string` | Hex color for language badge |
+| `linkOrder` | `string[]` | Link display order |
+| `commits` | `number` | Number of commits to fetch (github/hybrid) |
 | `override` | `object` | Override GitHub API data |
 
 ### ProjectLinks
@@ -112,9 +114,13 @@ All fields are optional except where noted.
 |-------|------|
 | `github` | `string` |
 | `live` | `string` |
+| `docs` | `string` |
+| `demo` | `string` |
 | `npm` | `string` |
 | `appStore` | `string` |
 | `playStore` | `string` |
+| `productHunt` | `string` |
+| `custom` | `Array<{ label: string, url: string }>` |
 
 ### ProjectStats
 
@@ -123,6 +129,10 @@ All fields are optional except where noted.
 | `stars` | `number` |
 | `forks` | `number` |
 | `downloads` | `string` |
+| `version` | `string` |
+| `upvotes` | `number` |
+| `comments` | `number` |
+| `launchDate` | `string` |
 
 ### ProjectStruggle
 
@@ -196,7 +206,7 @@ Every rendered element has a `data-folio-*` attribute for styling.
 | Individual stat | `data-folio-stat="stars|forks|downloads"` |
 | Status badge | `data-folio-status`, `data-folio-status-value` |
 | Links container | `data-folio-card-links` |
-| Individual link | `data-folio-link`, `data-folio-link-type="github|live|npm"` |
+| Individual link | `data-folio-link`, `data-folio-link-type="github|live|docs|demo|npm|product-hunt|custom"` |
 
 ### ProjectView
 
