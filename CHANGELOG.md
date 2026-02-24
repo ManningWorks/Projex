@@ -5,6 +5,73 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-02-24
+
+### Added
+
+#### Components
+- `ProjectSearch` - Search input component with Fuse.js integration and 300ms debounce
+- `ProjectFilterBar` - Container component for filter tag display
+- `ProjectFilterTag` - Clickable filter chip with active state indication
+- `ProjectSort` - Dropdown component for sort selection
+
+#### Hooks
+- `useProjectSearch` - Fuse.js powered search hook with empty query handling
+- `useProjectFilters` - Multi-select tag filtering hook with OR logic
+
+#### Utilities
+- `sortProjects(projects, sortValue)` - Unified sorting function dispatching to existing utilities
+- `getFuseOptions()` - Fuse.js configuration with field weighting
+
+#### Dependencies
+- `fuse.js@^7.1.0` - Added for fuzzy search capability
+
+#### Configuration
+- `SortValue` type - `'stars' | 'name' | 'date' | 'date-asc'`
+
+### Public API Surface
+
+**New Components:**
+- `ProjectSearch`
+- `ProjectFilterBar`
+- `ProjectFilterTag`
+- `ProjectSort`
+
+**New Hooks:**
+- `useProjectSearch`
+- `useProjectFilters`
+
+**New Utilities:**
+- `sortProjects`
+- `getFuseOptions`
+
+**New Types:**
+- `SortValue`
+
+**New Data Attributes (for CSS styling):**
+- `data-folio-search` - Search input container
+- `data-folio-filter-bar` - Filter bar container
+- `data-folio-filter-tag` - Individual filter chip
+- `data-folio-filter-tag-active` - Active filter chip indicator
+- `data-folio-sort` - Sort dropdown container
+- `data-folio-sort-value` - Selected sort value indicator
+
+### Documentation
+- Added documentation for search component with debouncing examples
+- Added documentation for filter components with multi-select examples
+- Added documentation for sort component with dispatching pattern
+- Added integration examples for combining search + filters
+
+### Testing
+- Added unit tests for Fuse.js integration
+- Added unit tests for useProjectSearch hook
+- Added unit tests for useProjectFilters hook
+- Added unit tests for sortProjects utility
+- Added integration tests for search + filter combination
+- Added component tests for ProjectSearch, ProjectFilterBar, ProjectFilterTag, ProjectSort
+
+---
+
 ## [1.3.0] - 2026-02-23
 
 ### Changed
