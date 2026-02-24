@@ -39,7 +39,11 @@ export default defineConfig({
             { text: 'ProjectView', link: '/api/components/project-view' },
             { text: 'ProjectGrid', link: '/api/components/project-grid' },
             { text: 'ProjectList', link: '/api/components/project-list' },
-            { text: 'FeaturedProject', link: '/api/components/featured-project' }
+            { text: 'FeaturedProject', link: '/api/components/featured-project' },
+            { text: 'ProjectSearch', link: '/api/components/project-search' },
+            { text: 'ProjectFilterBar', link: '/api/components/project-filter-bar' },
+            { text: 'ProjectFilterTag', link: '/api/components/project-filter-tag' },
+            { text: 'ProjectSort', link: '/api/components/project-sort' }
           ]
         },
         {
@@ -52,6 +56,9 @@ export default defineConfig({
             { text: 'sortByDate', link: '/api/utilities/sort-by-date' },
             { text: 'sortByName', link: '/api/utilities/sort-by-name' },
             { text: 'sortByStars', link: '/api/utilities/sort-by-stars' },
+            { text: 'sortProjects', link: '/api/utilities/sort-projects' },
+            { text: 'useProjectSearch', link: '/api/utilities/use-project-search' },
+            { text: 'useProjectFilters', link: '/api/utilities/use-project-filters' },
             { text: 'normalise', link: '/api/utilities/normalise' },
             { text: 'normalizeStats', link: '/api/utilities/normalize-stats' },
             { text: 'defineProjects', link: '/api/utilities/define-projects' },

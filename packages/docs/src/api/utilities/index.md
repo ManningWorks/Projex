@@ -19,6 +19,14 @@ Folio provides utility functions for filtering, sorting, and normalizing project
 | [sortByDate](./sort-by-date) | Sort projects by date |
 | [sortByName](./sort-by-name) | Sort projects alphabetically |
 | [sortByStars](./sort-by-stars) | Sort GitHub projects by stars |
+| [sortProjects](./sort-projects) | Unified sorting by stars/name/date |
+
+### React Hooks
+
+| Function | Description |
+|----------|-------------|
+| [useProjectSearch](./use-project-search) | Fuzzy search projects by name, description, stack |
+| [useProjectFilters](./use-project-filters) | Filter projects by tags |
 
 ### Data Normalization
 
@@ -51,6 +59,9 @@ import {
   sortByDate,
   sortByName,
   sortByStars,
+  sortProjects,
+  useProjectSearch,
+  useProjectFilters,
   normalise,
   normalizeStats,
   defineProjects,

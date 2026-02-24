@@ -18,5 +18,12 @@
     "path": "packages/core/src/lib/index.ts",
     "import": "{ defineProjects }",
     "limit": "3 KB"
+  },
+  {
+    "name": "@folio/core (tree-shaken: ProjectSearch only)",
+    "path": "packages/core/src/components/ProjectSearch/ProjectSearch.tsx",
+    "import": "{ ProjectSearch }",
+    "limit": "6 KB",
+    "ignore": ["react", "react-dom", "fuse.js"]
   }
 ]

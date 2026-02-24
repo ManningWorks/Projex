@@ -88,7 +88,7 @@ interface PackageResult {
 }
 
 async function measureCorePackage(): Promise<PackageResult> {
-  console.log('Measuring @folio/core...')
+  console.log('Measuring @reallukemanning/folio...')
   
   const result = execSync('pnpm size-limit --json 2>/dev/null', { 
     cwd: ROOT, 
@@ -104,7 +104,7 @@ async function measureCorePackage(): Promise<PackageResult> {
   const limit = 10 * 1024
   
   return {
-    name: '@folio/core',
+    name: '@reallukemanning/folio',
     target: '< 10 KB gzipped',
     uncompressed: size,
     gzipped: gzipped,
@@ -112,31 +112,7 @@ async function measureCorePackage(): Promise<PackageResult> {
   }
 }
 
-async function measureCliPackage(): Promise<PackageResult> {
-  console.log('Measuring @folio/cli...')
-  
-  const cliDist = join(ROOT, 'packages/cli/dist')
-  
-  if (!existsSync(cliDist)) {
-    console.log('Building CLI package...')
-    execSync('pnpm --filter @folio/cli build', { cwd: ROOT, stdio: 'inherit' })
-  }
-  
-  const jsFiles = await getDirectoryFiles(cliDist, ['.js'])
-  const concatenated = await concatenateFiles(jsFiles)
-  
-  const uncompressed = concatenated.length
-  const gzipped = await measureGzipSize(concatenated)
-  const limit = 50 * 1024
-  
-  return {
-    name: '@folio/cli',
-    target: '< 50 KB gzipped',
-    uncompressed,
-    gzipped,
-    passes: gzipped < limit
-  }
-}
+
 
 async function main() {
   console.log('\n📦 Folio Bundle Size Measurement\n')
@@ -147,13 +123,7 @@ async function main() {
   try {
     results.push(await measureCorePackage())
   } catch (error) {
-    console.error('Failed to measure @folio/core:', error)
-  }
-  
-  try {
-    results.push(await measureCliPackage())
-  } catch (error) {
-    console.error('Failed to measure @folio/cli:', error)
+    console.error('Failed to measure @reallukemanning/folio:', error)
   }
   
   console.log('\n' + '='.repeat(70))
