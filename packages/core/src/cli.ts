@@ -20,7 +20,8 @@ program
 program
   .command('add')
   .description('Add a Folio component to your project')
-  .argument('<component>', 'Component name (e.g., project-card, project-view)')
+  .argument('<component>', 'Component name (e.g., github-card, npm-card, showcase-card)')
+  .option('-f, --force', 'Overwrite existing files without prompting')
   .action(add)
 
 program.parse()

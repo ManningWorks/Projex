@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-02-24
+
+### Added
+
+#### Preset Components
+- `GitHubCard` - Pre-built card component for GitHub projects with stars, forks, language, and commits
+- `NpmCard` - Pre-built card component for npm packages with downloads, version, and npm link
+- `ShowcaseCard` - Pre-built card component for manual projects with live link and tech stack
+
+#### CLI
+- `npx folio add github-card` - Install GitHubCard preset to your project
+- `npx folio add npm-card` - Install NpmCard preset to your project
+- `npx folio add showcase-card` - Install ShowcaseCard preset to your project
+- `--force` flag to overwrite existing files without prompting
+- Confirmation prompt when preset files already exist
+
+#### Preset Features
+- All presets support compound component pattern (Header, Description, Tags, Stats, Status, Links, Footer)
+- GitHubCard supports `showForks` prop to optionally hide forks
+- GitHubCard supports `statsComponent` prop for custom stats
+- NpmCard supports `showVersion` prop to optionally hide version
+- All presets support `children` prop for custom footer content
+- Missing optional stats are handled gracefully (no errors, no empty sections)
+
+### Public API Surface
+
+**New Components:**
+- `GitHubCard` (and subcomponents: `GitHubCard.Header`, `GitHubCard.Description`, `GitHubCard.Tags`, `GitHubCard.Stats`, `GitHubCard.Status`, `GitHubCard.Links`, `GitHubCard.Footer`)
+- `NpmCard` (and subcomponents: `NpmCard.Header`, `NpmCard.Description`, `NpmCard.Tags`, `NpmCard.Stats`, `NpmCard.Status`, `NpmCard.Links`, `NpmCard.Footer`)
+- `ShowcaseCard` (and subcomponents: `ShowcaseCard.Header`, `ShowcaseCard.Description`, `ShowcaseCard.Tags`, `ShowcaseCard.Stats`, `ShowcaseCard.Status`, `ShowcaseCard.Links`, `ShowcaseCard.Footer`)
+
+**New Types:**
+- `GitHubCardProps`
+- `NpmCardProps`
+- `ShowcaseCardProps`
+
+**New Data Attributes (for CSS styling):**
+- `data-folio-language` - Language label
+- `data-folio-language-color` - Language color indicator
+- `data-folio-card-tagline` - Tagline text
+- `data-folio-card-footer` - Custom footer content container
+
+### Testing
+- Added unit tests for CLI add command with presets
+- Tests for confirmation prompting and --force flag behavior
+- Tests for error handling with invalid preset names
+
+---
+
 ## [1.4.0] - 2026-02-24
 
 ### Added

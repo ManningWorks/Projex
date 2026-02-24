@@ -18,7 +18,8 @@ To add components:
 
 ```bash
 npx @reallukemanning/folio add project-card
-npx @reallukemanning/folio add project-view
+npx @reallukemanning/folio add github-card
+npx @reallukemanning/folio add npm-card
 ```
 
 Available components:
@@ -27,6 +28,11 @@ Available components:
 - `project-grid` - Grid layout container
 - `project-list` - List layout container
 - `featured-project` - Featured project highlight
+
+**Preset components** (ready-to-use for common patterns):
+- `github-card` - Pre-built card for GitHub projects
+- `npm-card` - Pre-built card for npm packages
+- `showcase-card` - Pre-built card for manual projects
 
 The CLI copies components to `components/folio/` and includes all necessary type definitions.
 
@@ -86,6 +92,8 @@ Using a GitHub token increases the rate limit from 60 requests/hour to 5,000 req
 
 Add a Folio component to your project.
 
+**Core components:**
+
 ```bash
 npx @reallukemanning/folio add project-card
 npx @reallukemanning/folio add project-view
@@ -94,7 +102,18 @@ npx @reallukemanning/folio add project-list
 npx @reallukemanning/folio add featured-project
 ```
 
+**Preset components:**
+
+```bash
+npx @reallukemanning/folio add github-card
+npx @reallukemanning/folio add npm-card
+npx @reallukemanning/folio add showcase-card
+```
+
 The command copies component files to `components/folio/<ComponentName>/` and includes a shared `types.ts` file with all necessary type definitions.
+
+**Options:**
+- `--force` - Overwrite existing files without confirmation prompt
 
 ## Quick Start
 

@@ -4,6 +4,16 @@ Folio provides compound components for building project showcase pages. All comp
 
 ## Available Components
 
+### Preset Components
+
+| Component | Description |
+|-----------|-------------|
+| [GitHubCard](./github-card) | Pre-built card for GitHub projects with stars, forks, language, and commits |
+| [NpmCard](./npm-card) | Pre-built card for npm packages with downloads, version, and npm link |
+| [ShowcaseCard](./showcase-card) | Pre-built card for manual projects with live link and tech stack |
+
+### Core Components
+
 | Component | Description |
 |-----------|-------------|
 | [ProjectCard](./project-card) | Card component for displaying individual project summaries |

@@ -17,6 +17,18 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const COMPONENTS: ComponentMapping = {
+  'github-card': {
+    sourcePath: resolve(__dirname, '../components/GitHubCard'),
+    destName: 'GitHubCard',
+  },
+  'npm-card': {
+    sourcePath: resolve(__dirname, '../components/NpmCard'),
+    destName: 'NpmCard',
+  },
+  'showcase-card': {
+    sourcePath: resolve(__dirname, '../components/ShowcaseCard'),
+    destName: 'ShowcaseCard',
+  },
   'project-card': {
     sourcePath: resolve(__dirname, '../components/ProjectCard'),
     destName: 'ProjectCard',
@@ -39,7 +51,11 @@ const COMPONENTS: ComponentMapping = {
   },
 }
 
-export async function add(componentName: string): Promise<void> {
+interface AddOptions {
+  force?: boolean
+}
+
+export async function add(componentName: string, options: AddOptions = {}): Promise<void> {
   const workingDir = process.cwd()
   const component = COMPONENTS[componentName]
 
@@ -73,7 +89,7 @@ export async function add(componentName: string): Promise<void> {
 
     const existingFiles = await checkExistingFiles(destDir, sourceFiles)
 
-    if (existingFiles.length > 0) {
+    if (existingFiles.length > 0 && !options.force) {
       console.log(chalk.yellow(`⚠ Found ${existingFiles.length} existing file(s):`))
       existingFiles.forEach((file) => {
         console.log(chalk.gray(`  - ${file}`))
@@ -93,6 +109,8 @@ export async function add(componentName: string): Promise<void> {
         console.log(chalk.yellow('✖ Add cancelled.'))
         return
       }
+    } else if (existingFiles.length > 0 && options.force) {
+      console.log(chalk.yellow(`⚠ Overwriting ${existingFiles.length} existing file(s) (--force)`))
     }
 
     await createDirectory(destDir)
