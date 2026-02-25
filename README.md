@@ -57,7 +57,7 @@ export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
 
 ## CLI
 
-Folio includes a CLI for copying components into your project (shadcn-style):
+Folio includes a CLI for copying components and themes into your project (shadcn-style):
 
 ```bash
 # Initialize config
@@ -66,6 +66,11 @@ npx folio init
 # Copy components to your project
 npx folio add project-card
 npx folio add project-view
+
+# Add pre-built themes
+npx folio add theme-minimal
+npx folio add theme-dark
+npx folio add theme-gradient
 ```
 
 The CLI automatically installs the `@reallukemanning/folio` package as a dependency, and copied components import types directly from it.
@@ -89,10 +94,16 @@ All fields are optional except where noted.
 | Field | Type | Description |
 |-------|------|-------------|
 | `id` | `string` (required) | Unique identifier for project |
-| `type` | `'github' \| 'manual' \| 'npm' \| 'hybrid'` (required) | Project type |
+| `type` | `'github' \| 'manual' \| 'npm' \| 'product-hunt' \| 'youtube' \| 'gumroad' \| 'lemonsqueezy' \| 'devto' \| 'hybrid'` (required) | Project type |
 | `status` | `'active' \| 'shipped' \| 'in-progress' \| 'coming-soon' \| 'archived' \| 'for-sale'` (required) | Current status |
 | `featured` | `boolean` | Whether project is featured |
 | `repo` | `string` | GitHub repo in "username/repo" format (required for github/hybrid) |
+| `package` | `string` | npm package name (required for npm/hybrid) |
+| `slug` | `string` | Product Hunt slug (required for product-hunt) |
+| `channelId` | `string` | YouTube channel ID (required for youtube) |
+| `productId` | `string` | Gumroad product ID (required for gumroad) |
+| `storeId` | `string` | Lemon Squeezy store ID (required for lemonsqueezy) |
+| `username` | `string` | Dev.to username (required for devto) |
 | `name` | `string` | Display name (optional for github, required for manual/npm) |
 | `tagline` | `string` | Short tagline |
 | `description` | `string` | Short description (optional for github, required for manual/npm) |
@@ -280,6 +291,28 @@ Without a token, Folio logs a warning and continues with unauthenticated request
 
 Folio ships with zero styling. Use the data attributes to style components however you want.
 
+### Pre-Built Themes
+
+Get started quickly with pre-built themes:
+
+```bash
+# Install themes via CLI
+npx folio add theme-minimal    # Light theme
+npx folio add theme-dark        # Dark mode with system preference
+npx folio add theme-gradient    # Gradient theme
+```
+
+Themes are copied to `styles/folio-<theme-name>.css`. Import in your app:
+
+```tsx
+// app/layout.tsx (Next.js)
+import './styles/folio-theme-minimal.css'
+```
+
+### Custom Styling
+
+Use the data attributes to style components however you want:
+
 ```css
 [data-folio-card] {
   border: 1px solid #e5e5e5;
@@ -307,6 +340,54 @@ Folio ships with zero styling. Use the data attributes to style components howev
   border-radius: 4px;
   margin-right: 0.5rem;
 }
+```
+
+### CSS Custom Properties
+
+All components use CSS custom properties with fallback values. Override them for fine-grained control:
+
+```css
+:root {
+  --folio-card-bg: #ffffff;
+  --folio-card-border: #e5e7eb;
+  --folio-card-radius: 8px;
+  --folio-card-padding: 16px;
+  --folio-card-text: #374151;
+
+  --folio-tag-bg: #f3f4f6;
+  --folio-tag-text: #374151;
+  --folio-tag-radius: 4px;
+
+  --folio-stats-label: #6b7280;
+  --folio-stats-value: #374151;
+
+  --folio-link-text: #374151;
+
+  --folio-status-active-bg: #dcfce7;
+  --folio-status-active-text: #166534;
+  --folio-status-shipped-bg: #dbeafe;
+  --folio-status-shipped-text: #1e40af;
+  --folio-status-in-progress-bg: #fef3c7;
+  --folio-status-in-progress-text: #92400e;
+  --folio-status-coming-soon-bg: #f3e8ff;
+  --folio-status-coming-soon-text: #7c3aed;
+  --folio-status-archived-bg: #f1f5f9;
+  --folio-status-archived-text: #475569;
+  --folio-status-for-sale-bg: #fee2e2;
+  --folio-status-for-sale-text: #991b1b;
+}
+```
+
+### Dark Mode
+
+Use `theme-dark.css` for automatic dark mode based on system preference, or manually toggle with data attributes:
+
+```html
+<!-- Force dark mode -->
+<html data-theme="dark">
+
+<!-- Force light mode -->
+<html data-theme="light">
 ```
 
 ## Roadmap

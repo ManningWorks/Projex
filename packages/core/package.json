@@ -1,6 +1,6 @@
 {
   "name": "@reallukemanning/folio",
-  "version": "1.5.0",
+  "version": "1.7.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,7 +11,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./themes/theme-minimal.css": "./dist/themes/theme-minimal.css",
+    "./themes/theme-dark.css": "./dist/themes/theme-dark.css",
+    "./themes/theme-gradient.css": "./dist/themes/theme-gradient.css"
   },
   "scripts": {
     "build": "tsc && node copy-components.js",
@@ -25,7 +28,6 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-    "@types/inquirer": "^9.0.7",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.6",
@@ -38,11 +40,12 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
+    "@inquirer/prompts": "^6.0.1",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "fuse.js": "^7.1.0",
-    "inquirer": "^12.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.1"
   }
 }

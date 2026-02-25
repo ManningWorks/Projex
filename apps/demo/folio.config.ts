@@ -180,5 +180,82 @@ export const { projects } = defineProjects([
       { date: '2024-01', note: 'Initial component set' },
       { date: '2024-02', note: 'Documentation site launched' },
     ],
+  },
+  {
+    id: 'my-youtube-channel',
+    type: 'youtube',
+    channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+    status: 'active',
+    featured: true,
+    name: 'My YouTube Channel',
+    tagline: 'Tech tutorials and coding tips',
+    description: 'A YouTube channel focused on teaching web development, React, and TypeScript.',
+    stack: ['Video', 'Education', 'Web Development'],
+    background: 'Started creating tutorials to help developers learn modern web technologies.',
+    timeline: [
+      { date: '2023-06', note: 'Channel created' },
+      { date: '2023-12', note: 'Reached 1000 subscribers' },
+      { date: '2024-05', note: 'Hit 100K total views' },
+    ],
+    struggles: [
+      { type: 'warn', text: 'Finding time to produce high-quality content consistently' }
+    ]
+  },
+  {
+    id: 'my-digital-product',
+    type: 'gumroad',
+    productId: 'prod_test123',
+    status: 'shipped',
+    name: 'React Component Patterns',
+    tagline: 'E-book on advanced React patterns',
+    description: 'A comprehensive guide to mastering advanced React component patterns and architectures.',
+    stack: ['React', 'TypeScript', 'eBook'],
+    background: 'Created to share knowledge gained from building complex React applications.',
+    timeline: [
+      { date: '2024-01', note: 'Started writing' },
+      { date: '2024-03', note: 'Launched on Gumroad' },
+      { date: '2024-04', note: 'Reached 100 sales' },
+    ],
+    struggles: [
+      { type: 'warn', text: 'Balancing depth vs accessibility in explanations' }
+    ]
+  },
+  {
+    id: 'my-saas-app',
+    type: 'lemonsqueezy',
+    storeId: '1',
+    status: 'active',
+    name: 'SaaS Starter',
+    tagline: 'Complete SaaS boilerplate',
+    description: 'A production-ready SaaS starter kit with authentication, billing, and deployment.',
+    stack: ['Next.js', 'Lemon Squeezy', 'Supabase'],
+    background: 'Built after launching multiple SaaS products to avoid reinventing the wheel.',
+    timeline: [
+      { date: '2024-02', note: 'Development started' },
+      { date: '2024-03', note: 'Beta launch' },
+      { date: '2024-05', note: 'Official v1.0 release' },
+    ],
+    struggles: [
+      { type: 'warn', text: 'Maintaining documentation alongside features' }
+    ]
+  },
+  {
+    id: 'my-blog',
+    type: 'devto',
+    username: 'ben',
+    status: 'active',
+    name: 'My Dev.to Blog',
+    tagline: 'Technical articles and tutorials',
+    description: 'Writing about web development, software architecture, and developer experience.',
+    stack: ['Writing', 'Education', 'Web Development'],
+    background: 'Started writing to solidify my own understanding and help others learn.',
+    timeline: [
+      { date: '2023-08', note: 'Published first article' },
+      { date: '2024-01', note: 'Reached 50 articles' },
+      { date: '2024-06', note: 'Hit 100K total views' },
+    ],
+    struggles: [
+      { type: 'warn', text: 'Consistency in posting schedule' }
+    ]
   }
 ], { commits: 5 })

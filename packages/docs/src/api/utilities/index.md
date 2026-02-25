@@ -40,21 +40,43 @@ Folio provides utility functions for filtering, sorting, and normalizing project
 | Function | Description |
 |----------|-------------|
 | [fetchGitHubRepo](./fetch-github-repo) | Fetch GitHub repository data |
+| [fetchGitHubRepos](./fetch-github-repo) | Fetch all repositories for a GitHub user |
 | [fetchNpmPackage](./fetch-npm-package) | Fetch npm package data |
 | [fetchProductHuntPost](./fetch-product-hunt-post) | Fetch Product Hunt post data |
+| [fetchYouTubeChannel](./fetch-youtube-channel) | Fetch YouTube channel data |
+| [fetchGumroadProduct](./fetch-gumroad-product) | Fetch Gumroad product data |
+| [fetchLemonSqueezyStore](./fetch-lemon-squeezy-store) | Fetch Lemon Squeezy store data |
+| [fetchDevToUser](./fetch-devto-user) | Fetch Dev.to user data |
+
+### Search Configuration
+
+| Function | Description |
+|----------|-------------|
+| [getFuseOptions](./fuse-search) | Get Fuse.js search configuration |
+| [createFuseSearch](./fuse-search) | Create Fuse.js search instance |
+
+### SEO & Metadata
+
+| Function | Description |
+|----------|-------------|
+| [generatePersonSchema](../../guides/seo) | Generate Schema.org Person JSON-LD structured data |
+| [generateProjectSchema](../../guides/seo) | Generate Schema.org SoftwareApplication JSON-LD structured data |
+| [generatePortfolioMetadata](../../guides/seo) | Generate Next.js metadata for portfolio homepage |
+| [generateProjectMetadata](../../guides/seo) | Generate Next.js metadata for individual project pages |
 
 ### Configuration
 
 | Function | Description |
 |----------|-------------|
 | [defineProjects](./define-projects) | Type-safe project configuration helper |
+| [formatZodError](./format-zod-error) | Format Zod validation errors with helpful suggestions |
 
 ## Import
 
 ```tsx
-import { 
-  filterByStatus, 
-  filterByType, 
+import {
+  filterByStatus,
+  filterByType,
   filterByFeatured,
   sortByDate,
   sortByName,
@@ -66,8 +88,20 @@ import {
   normalizeStats,
   defineProjects,
   fetchGitHubRepo,
+  fetchGitHubRepos,
   fetchNpmPackage,
-  fetchProductHuntPost
+  fetchProductHuntPost,
+  fetchYouTubeChannel,
+  fetchGumroadProduct,
+  fetchLemonSqueezyStore,
+  fetchDevToUser,
+  getFuseOptions,
+  createFuseSearch,
+  generatePersonSchema,
+  generateProjectSchema,
+  generatePortfolioMetadata,
+  generateProjectMetadata,
+  formatZodError
 } from '@reallukemanning/folio'
 ```
 

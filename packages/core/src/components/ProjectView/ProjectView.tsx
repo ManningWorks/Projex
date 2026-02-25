@@ -164,7 +164,19 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
     project.stats.downloads ||
     project.stats.version ||
     project.stats.upvotes ||
-    project.stats.comments
+    project.stats.comments ||
+    project.stats.subscribers ||
+    project.stats.views ||
+    project.stats.latestVideoTitle ||
+    project.stats.formattedRevenue ||
+    project.stats.salesCount ||
+    project.stats.subscriberCount ||
+    project.stats.formattedMRR ||
+    project.stats.orderCount ||
+    project.stats.customerCount ||
+    project.stats.articleCount ||
+    project.stats.totalViews ||
+    project.stats.averageReactions
 
   if (!hasStats) {
     return null
@@ -180,6 +192,26 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
       {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
       {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
       {project.stats.comments && <span data-folio-stat="comments">{project.stats.comments} comments</span>}
+      {project.stats.subscribers && <span data-folio-stat="subscribers">{project.stats.subscribers} subscribers</span>}
+      {project.stats.views && <span data-folio-stat="views">{project.stats.views} views</span>}
+      {project.stats.latestVideoTitle && project.stats.latestVideoUrl && (
+        <a href={project.stats.latestVideoUrl} data-folio-link data-folio-link-type="youtube">
+          {project.stats.latestVideoTitle}
+        </a>
+      )}
+      {project.stats.formattedRevenue && <span data-folio-stat="revenue">{project.stats.formattedRevenue}</span>}
+      {project.stats.salesCount && <span data-folio-stat="sales">{project.stats.salesCount} sales</span>}
+      {project.stats.subscriberCount && (
+        <span data-folio-stat="subscribers">{project.stats.subscriberCount} subscribers</span>
+      )}
+      {project.stats.formattedMRR && <span data-folio-stat="mrr">{project.stats.formattedMRR} MRR</span>}
+      {project.stats.orderCount && <span data-folio-stat="orders">{project.stats.orderCount} orders</span>}
+      {project.stats.customerCount && (
+        <span data-folio-stat="customers">{project.stats.customerCount} customers</span>
+      )}
+      {project.stats.articleCount && <span data-folio-stat="articles">{project.stats.articleCount} articles</span>}
+      {project.stats.totalViews && <span data-folio-stat="total-views">{project.stats.totalViews} views</span>}
+      {project.stats.averageReactions && <span data-folio-stat="reactions">{project.stats.averageReactions} reactions</span>}
     </div>
   )
 }

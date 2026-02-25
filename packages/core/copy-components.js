@@ -25,6 +25,7 @@ async function copyDirectory(src, dst) {
 
 async function main() {
   await copyDirectory(join(__dirname, 'src/components'), join(__dirname, 'dist/components'))
+  await copyDirectory(join(__dirname, 'src/themes'), join(__dirname, 'dist/themes'))
 }
 
 main().catch(console.error)

@@ -110,7 +110,17 @@ npx @reallukemanning/folio add npm-card
 npx @reallukemanning/folio add showcase-card
 ```
 
+**Themes:**
+
+```bash
+npx @reallukemanning/folio add theme-minimal
+npx @reallukemanning/folio add theme-dark
+npx @reallukemanning/folio add theme-gradient
+```
+
 The command copies component files to `components/folio/<ComponentName>/` and includes a shared `types.ts` file with all necessary type definitions.
+
+Themes are copied to `styles/folio-<theme-name>.css`.
 
 **Options:**
 - `--force` - Overwrite existing files without confirmation prompt
@@ -631,7 +641,101 @@ export default async function ProjectsPage() {
 
 ### Styling
 
-Folio ships with zero CSS. Style using the data attributes:
+Folio ships with zero CSS. Style using of data attributes or use pre-built themes.
+
+#### Pre-Built Themes
+
+Install themes for instant styling:
+
+```bash
+npx folio add theme-minimal    # Light theme
+npx folio add theme-dark        # Dark mode with system preference
+npx folio add theme-gradient    # Gradient theme
+```
+
+Themes are copied to `styles/folio-<theme-name>.css`. Import in your app:
+
+```tsx
+// app/layout.tsx (Next.js)
+import './styles/folio-theme-minimal.css'
+```
+
+**theme-minimal:** Clean light theme with neutral colors
+**theme-dark:** Dark mode that responds to system preference or manual toggle
+**theme-gradient:** Purple gradient theme with modern look
+
+#### Dark Mode Support
+
+The `theme-dark.css` supports both automatic and manual dark mode:
+
+**Automatic (system preference):**
+```tsx
+import './styles/folio-theme-dark.css'
+// Automatically switches based on system preference
+```
+
+**Manual toggle:**
+```html
+<!-- Force dark mode -->
+<html data-theme="dark">
+
+<!-- Force light mode -->
+<html data-theme="light">
+```
+
+#### CSS Custom Properties
+
+All components use CSS custom properties with fallback values. This allows fine-grained customization without editing theme files:
+
+```css
+:root {
+  --folio-card-bg: #ffffff;
+  --folio-card-border: #e5e7eb;
+  --folio-card-radius: 8px;
+  --folio-card-padding: 16px;
+  --folio-card-text: #374151;
+
+  --folio-tag-bg: #f3f4f6;
+  --folio-tag-text: #374151;
+  --folio-tag-radius: 4px;
+
+  --folio-stats-label: #6b7280;
+  --folio-stats-value: #374151;
+
+  --folio-link-text: #374151;
+
+  --folio-status-active-bg: #dcfce7;
+  --folio-status-active-text: #166534;
+  --folio-status-shipped-bg: #dbeafe;
+  --folio-status-shipped-text: #1e40af;
+  --folio-status-in-progress-bg: #fef3c7;
+  --folio-status-in-progress-text: #92400e;
+  --folio-status-coming-soon-bg: #f3e8ff;
+  --folio-status-coming-soon-text: #7c3aed;
+  --folio-status-archived-bg: #f1f5f9;
+  --folio-status-archived-text: #475569;
+  --folio-status-for-sale-bg: #fee2e2;
+  --folio-status-for-sale-text: #991b1b;
+}
+```
+
+**Target specific components:**
+
+```css
+/* Override only GitHub-type cards */
+[data-folio-type-value="github"] {
+  --folio-card-bg: #f0fdf4;
+}
+
+/* Override specific project by ID */
+[data-folio-card="my-project"] {
+  --folio-card-border: #10b981;
+}
+```
+
+#### Custom Styling
+
+Use data attributes for complete control:
 
 ```css
 [data-folio-card] {
@@ -661,4 +765,5 @@ Folio ships with zero CSS. Style using the data attributes:
 
 - [Component Reference](./api/components/project-card) - All available components
 - [Utilities](./api/utilities/define-projects) - Filtering, sorting, and more
+- [SEO Integration](./guides/seo) - Metadata and structured data for search engines
 - [Types](./api/types/folio-project) - TypeScript type definitions

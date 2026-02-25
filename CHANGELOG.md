@@ -5,6 +5,122 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-02-24
+
+### Added
+
+#### SEO Module
+- **generatePersonSchema()** - Generate Schema.org Person JSON-LD structured data for portfolio homepages
+- **generateProjectSchema()** - Generate Schema.org SoftwareApplication JSON-LD structured data for project pages
+- **generatePortfolioMetadata()** - Generate Next.js App Router metadata for portfolio homepage with OpenGraph tags
+- **generateProjectMetadata()** - Generate Next.js App Router metadata for individual project pages
+- **Build-time data attributes** - ProjectCard now includes `data-folio-og-image`, `data-folio-og-title`, `data-folio-og-description` for OG image generation and analytics
+- **Structured data validation** - All SEO functions validate inputs and return null with warnings for invalid data
+- **URL priority handling** - Metadata functions use different URL priorities for OpenGraph (live > github) vs schema (github > live)
+
+#### Schema Features
+- **Person schema** - Supports name, url, jobTitle, image, and sameAs social links
+- **SoftwareApplication schema** - Supports name, description, url, applicationCategory, aggregateRating (stars), and interactionStatistic (downloads)
+- **GitHub/NPM type detection** - Automatically sets `applicationCategory: "DeveloperApplication"` for github/npm project types
+
+#### Metadata Features
+- **OpenGraph support** - Auto-generates og:title, og:description, og:url, og:type, og:image
+- **Keywords** - Project metadata includes project stack as comma-separated keywords
+- **SameAs support** - Portfolio metadata includes social profile links
+- **Schema embedding** - Embeds JSON-LD schemas in Next.js `metadata.other` field
+
+#### Documentation
+- **SEO Integration Guide** - Complete documentation at `/guides/seo.md` with Next.js App Router and Pages Router examples
+- **Schema examples** - Code examples for both app router (`export const metadata`) and pages router (`<Head>` component)
+- **Testing tools** - Links to Google Rich Results Test, Facebook Sharing Debugger, Twitter Card Validator, and Schema Markup Validator
+
+### Public API Surface
+
+**New Functions:**
+- `generatePersonSchema(options: GeneratePersonSchemaOptions): PersonSchema | null`
+- `generateProjectSchema(project: FolioProject): SoftwareApplicationSchema | null`
+- `generatePortfolioMetadata(options: GeneratePortfolioMetadataOptions): Metadata | null`
+- `generateProjectMetadata(project: FolioProject): Metadata | null`
+
+**New Types:**
+- `PersonSchema` - Schema.org Person object
+- `SoftwareApplicationSchema` - Schema.org SoftwareApplication object
+- `GeneratePersonSchemaOptions` - Options for person schema generation
+- `GeneratePortfolioMetadataOptions` - Options for portfolio metadata generation
+
+**New Data Attributes:**
+- `data-folio-og-image` - Project image URL for OG image generation
+- `data-folio-og-title` - Project title for metadata extraction
+- `data-folio-og-description` - Project description for metadata extraction
+
+**Modified Component Behavior:**
+- `ProjectCard` - Now accepts optional `project` prop and adds OG metadata attributes when provided
+
+### Testing
+- 135 new tests for SEO functions covering schema generation, validation, and metadata creation
+- All tests pass with comprehensive coverage for edge cases and error handling
+- Schema validation tests ensure compliance with schema.org specifications
+
+---
+
+## [1.6.0] - 2026-02-24
+
+### Added
+
+#### Theming System
+- **CSS Custom Properties** - All components now use CSS custom properties with fallback values for flexible theming
+- **Theme Files** - Three pre-built themes available:
+  - `theme-minimal.css` - Clean light theme with neutral colors
+  - `theme-dark.css` - Dark mode with system preference and manual toggle support
+  - `theme-gradient.css` - Purple gradient theme with modern aesthetic
+- **CLI Theme Installation** - `npx folio add theme-<name>` to install themes to `styles/` directory
+- **Dark Mode Support** - Automatic system preference detection and manual toggle via `[data-theme="dark"]` attribute
+- **Theme Exports** - Theme files exportable from package via `@reallukemanning/folio/themes/theme-*.css`
+
+#### CSS Custom Properties
+All component styles now themeable via CSS variables:
+- Card: `--folio-card-bg`, `--folio-card-border`, `--folio-card-radius`, `--folio-card-padding`, `--folio-card-text`
+- Tags: `--folio-tag-bg`, `--folio-tag-text`, `--folio-tag-radius`
+- Stats: `--folio-stats-label`, `--folio-stats-value`
+- Links: `--folio-link-text`
+- Status (per status type): `--folio-status-<type>-bg`, `--folio-status-<type>-text`
+
+#### CLI Features
+- Theme installation with confirmation prompt for existing files
+- `--force` flag support for theme overwriting
+- Automatic `styles/` directory creation
+- Clear success messages with import instructions
+
+### Public API Surface
+
+**New CSS Exports:**
+- `@reallukemanning/folio/themes/theme-minimal.css`
+- `@reallukemanning/folio/themes/theme-dark.css`
+- `@reallukemanning/folio/themes/theme-gradient.css`
+
+**New CSS Custom Properties:**
+All components now support CSS custom properties with fallback values. See documentation for full list.
+
+**New Data Attributes:**
+`[data-theme="dark"]` - Force dark mode when using theme-dark.css
+
+**Modified Component Behavior:**
+- All components now use CSS custom properties with inline fallbacks
+- Components render correctly without themes (fallback values)
+- Theme installation optional - zero-opinion styling maintained
+
+### Documentation
+- Updated README.md with theming system documentation
+- Added theme installation examples and CSS custom properties reference
+- Updated CLI documentation to include theme commands
+- Added dark mode setup instructions
+
+### Testing
+- All existing tests pass with new CSS custom properties
+- No breaking changes to component props or behavior
+
+---
+
 ## [1.5.0] - 2026-02-24
 
 ### Added

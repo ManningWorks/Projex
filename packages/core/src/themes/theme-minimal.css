@@ -1,0 +1,29 @@
+:root {
+  --folio-card-bg: #ffffff;
+  --folio-card-border: #e5e7eb;
+  --folio-card-radius: 8px;
+  --folio-card-padding: 16px;
+  --folio-card-text: #374151;
+
+  --folio-tag-bg: #f3f4f6;
+  --folio-tag-text: #374151;
+  --folio-tag-radius: 4px;
+
+  --folio-stats-label: #6b7280;
+  --folio-stats-value: #374151;
+
+  --folio-link-text: #374151;
+
+  --folio-status-active-bg: #dcfce7;
+  --folio-status-active-text: #166534;
+  --folio-status-shipped-bg: #dbeafe;
+  --folio-status-shipped-text: #1e40af;
+  --folio-status-in-progress-bg: #fef3c7;
+  --folio-status-in-progress-text: #92400e;
+  --folio-status-coming-soon-bg: #f3e8ff;
+  --folio-status-coming-soon-text: #7c3aed;
+  --folio-status-archived-bg: #f1f5f9;
+  --folio-status-archived-text: #475569;
+  --folio-status-for-sale-bg: #fee2e2;
+  --folio-status-for-sale-text: #991b1b;
+}

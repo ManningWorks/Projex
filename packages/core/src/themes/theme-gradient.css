@@ -1,0 +1,29 @@
+:root {
+  --folio-card-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --folio-card-border: transparent;
+  --folio-card-radius: 12px;
+  --folio-card-padding: 20px;
+  --folio-card-text: #ffffff;
+
+  --folio-tag-bg: rgba(255, 255, 255, 0.2);
+  --folio-tag-text: #ffffff;
+  --folio-tag-radius: 6px;
+
+  --folio-stats-label: rgba(255, 255, 255, 0.7);
+  --folio-stats-value: #ffffff;
+
+  --folio-link-text: #ffffff;
+
+  --folio-status-active-bg: rgba(34, 197, 94, 0.3);
+  --folio-status-active-text: #4ade80;
+  --folio-status-shipped-bg: rgba(59, 130, 246, 0.3);
+  --folio-status-shipped-text: #60a5fa;
+  --folio-status-in-progress-bg: rgba(234, 179, 8, 0.3);
+  --folio-status-in-progress-text: #facc15;
+  --folio-status-coming-soon-bg: rgba(168, 85, 247, 0.3);
+  --folio-status-coming-soon-text: #c084fc;
+  --folio-status-archived-bg: rgba(100, 116, 139, 0.3);
+  --folio-status-archived-text: #94a3b8;
+  --folio-status-for-sale-bg: rgba(239, 68, 68, 0.3);
+  --folio-status-for-sale-text: #f87171;
+}

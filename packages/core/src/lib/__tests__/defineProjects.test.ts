@@ -137,4 +137,134 @@ describe('defineProjects', () => {
     expect(result.projects).toEqual([])
     expect(result.options.commits).toBe(0)
   })
+
+  describe('validation', () => {
+    it('should throw an error for invalid project data', () => {
+      const invalidProjects = [
+        {
+          id: 'invalid-project',
+          type: 'github',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw an error for missing required field id', () => {
+      const invalidProjects = [
+        {
+          type: 'manual',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw an error for invalid status value', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'manual',
+          status: 'invalid-status',
+        },
+      ] as unknown as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw an error for missing repo on github type', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'github',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw an error for missing package on npm type', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'npm',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw an error for invalid URL in links', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'manual',
+          status: 'active',
+          links: {
+            live: 'not-a-url',
+          },
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should include validation error details in thrown error', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'github',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow(/repo/)
+      expect(() => defineProjects(invalidProjects)).toThrow(/Validation failed/)
+    })
+
+    it('should throw for invalid enum values in array', () => {
+      const invalidProjects = [
+        {
+          id: 'test',
+          type: 'manual',
+          status: 'bad-status',
+        },
+      ] as unknown as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw for multiple validation errors', () => {
+      const invalidProjects = [
+        {
+          type: 'manual',
+          status: 'bad-status',
+        },
+      ] as unknown as FolioProjectInput[]
+
+      expect(() => defineProjects(invalidProjects)).toThrow()
+    })
+
+    it('should throw for invalid project in array with multiple projects', () => {
+      const mixedProjects = [
+        {
+          id: 'valid-project',
+          type: 'github',
+          repo: 'user/repo',
+          status: 'active',
+        },
+        {
+          id: 'invalid-project',
+          type: 'github',
+          status: 'active',
+        },
+      ] as FolioProjectInput[]
+
+      expect(() => defineProjects(mixedProjects)).toThrow()
+    })
+  })
 })

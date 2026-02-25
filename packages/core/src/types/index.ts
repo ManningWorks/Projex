@@ -1,4 +1,4 @@
-export type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'hybrid'
+export type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'youtube' | 'gumroad' | 'lemonsqueezy' | 'devto' | 'hybrid'
 
 export type ProjectStatus = 'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'archived' | 'for-sale'
 
@@ -58,7 +58,33 @@ export interface ProductHuntStats {
   launchDate?: string
 }
 
-export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats
+export interface YouTubeStats {
+  subscribers?: number
+  views?: number
+  latestVideoTitle?: string | null
+  latestVideoUrl?: string | null
+  latestVideoPublishedAt?: string | null
+}
+
+export interface GumroadStats {
+  formattedRevenue?: string
+  salesCount?: number
+  subscriberCount?: number
+}
+
+export interface LemonSqueezyStats {
+  formattedMRR?: string
+  orderCount?: number
+  customerCount?: number
+}
+
+export interface DevToStats {
+  articleCount?: number
+  totalViews?: number
+  averageReactions?: number
+}
+
+export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & GumroadStats & LemonSqueezyStats & DevToStats
 
 export interface NormalizedStat {
   label: string
@@ -113,6 +139,26 @@ export interface ProductHuntProjectInput extends BaseProjectInput {
   slug: string
 }
 
+export interface YouTubeProjectInput extends BaseProjectInput {
+  type: 'youtube'
+  channelId: string
+}
+
+export interface GumroadProjectInput extends BaseProjectInput {
+  type: 'gumroad'
+  productId: string
+}
+
+export interface LemonSqueezyProjectInput extends BaseProjectInput {
+  type: 'lemonsqueezy'
+  storeId: string
+}
+
+export interface DevToProjectInput extends BaseProjectInput {
+  type: 'devto'
+  username: string
+}
+
 export interface HybridProjectInput extends BaseProjectInput {
   type: 'hybrid'
   repo: string
@@ -125,6 +171,10 @@ export type FolioProjectInput =
   | ManualProjectInput
   | NpmProjectInput
   | ProductHuntProjectInput
+  | YouTubeProjectInput
+  | GumroadProjectInput
+  | LemonSqueezyProjectInput
+  | DevToProjectInput
   | HybridProjectInput
 
 export type FolioProjectInputCompat = Omit<BaseProjectInput, 'id'> & {
@@ -159,6 +209,10 @@ export interface FolioProject {
   repo?: string
   package?: string
   slug?: string
+  channelId?: string
+  productId?: string
+  storeId?: string
+  username?: string
   commits?: ProjectCommit[]
   linkOrder?: string[]
 }

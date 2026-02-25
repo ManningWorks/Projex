@@ -71,6 +71,21 @@ Returns `null` if no links are available.
 
 Returns `null` if `project.commits` is empty or undefined. Available for GitHub and hybrid project types only.
 
+Requires the `commits` field to be set in project configuration or global options:
+
+```ts
+// Per-project commits
+{
+  id: 'my-project',
+  type: 'github',
+  repo: 'user/repo',
+  commits: 10
+}
+
+// Global commits in defineProjects
+defineProjects([...projects], { commits: 5 })
+```
+
 ## Data Attributes
 
 | Attribute | Value | Description |

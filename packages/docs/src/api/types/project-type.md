@@ -5,7 +5,7 @@ Union type for project types.
 ## Definition
 
 ```tsx
-type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'hybrid'
+type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'youtube' | 'gumroad' | 'lemonsqueezy' | 'devto' | 'hybrid'
 ```
 
 ## Values
@@ -13,10 +13,14 @@ type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'hybrid'
 | Value | Description |
 |-------|-------------|
 | `github` | GitHub repository |
+| `manual` | Manual configuration |
 | `npm` | npm package |
 | `product-hunt` | Product Hunt launch |
+| `youtube` | YouTube channel |
+| `gumroad` | Gumroad product |
+| `lemonsqueezy` | Lemon Squeezy store |
+| `devto` | Dev.to user profile |
 | `hybrid` | GitHub + npm combination |
-| `manual` | Manual configuration |
 
 ## Usage
 
@@ -28,6 +32,10 @@ function getIcon(type: ProjectType): string {
     case 'github': return 'github'
     case 'npm': return 'package'
     case 'product-hunt': return 'rocket'
+    case 'youtube': return 'video'
+    case 'gumroad': return 'shopping-cart'
+    case 'lemonsqueezy': return 'store'
+    case 'devto': return 'article'
     case 'hybrid': return 'link'
     case 'manual': return 'file'
   }
@@ -39,7 +47,11 @@ function getIcon(type: ProjectType): string {
 | Type | Fetches Data | Required Fields |
 |------|--------------|-----------------|
 | `github` | Yes | `repo` |
+| `manual` | No | None |
 | `npm` | Yes | `package` |
 | `product-hunt` | Yes | `slug` |
+| `youtube` | Yes | `channelId` |
+| `gumroad` | Yes | `productId` |
+| `lemonsqueezy` | Yes | `storeId` |
+| `devto` | Yes | `username` |
 | `hybrid` | Yes | `repo`, `package` |
-| `manual` | No | None |

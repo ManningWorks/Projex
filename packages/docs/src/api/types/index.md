@@ -21,6 +21,10 @@ Folio exports TypeScript types for all data structures. Import types from the ma
 | GitHubStats | GitHub-specific stats |
 | NpmStats | npm-specific stats |
 | ProductHuntStats | Product Hunt-specific stats |
+| YouTubeStats | YouTube-specific stats |
+| GumroadStats | Gumroad-specific stats |
+| LemonSqueezyStats | Lemon Squeezy-specific stats |
+| DevToStats | Dev.to-specific stats |
 | NormalizedStat | Normalized stat for display |
 
 ### Data Types
@@ -37,8 +41,33 @@ Folio exports TypeScript types for all data structures. Import types from the ma
 | Type | Description |
 |------|-------------|
 | [GitHubRepoData](./github-repo-data) | GitHub API response |
+| FetchReposResult | Result object for fetchGitHubRepos |
+| FetchReposError | Error type for fetchGitHubRepos |
 | [NpmPackageData](./npm-package-data) | npm API response |
 | [ProductHuntPostData](./product-hunt-post-data) | Product Hunt API response |
+| YouTubeChannelData | YouTube API response |
+| GumroadProductData | Gumroad API response |
+| LemonSqueezyStoreData | Lemon Squeezy API response |
+| DevToUserData | Dev.to API response |
+| DevToArticleData | Dev.to article data |
+
+### Utility Types
+
+| Type | Description |
+|------|-------------|
+| SortValue | Allowed sort values for sortProjects |
+| FolioProjectInputZod | Zod schema type for project validation |
+| FuseOptions | Fuse.js configuration options |
+
+### Schema Types
+
+| Type | Description |
+|------|-------------|
+| folioProjectInputSchema | Zod validation schema for FolioProjectInput |
+| PersonSchema | Schema.org Person JSON-LD |
+| SoftwareApplicationSchema | Schema.org SoftwareApplication JSON-LD |
+| GeneratePersonSchemaOptions | Options for generatePersonSchema |
+| GeneratePortfolioMetadataOptions | Options for generatePortfolioMetadata |
 
 ## Import
 
@@ -59,6 +88,10 @@ FolioProjectInput ──normalise()──> FolioProject
        ├── GitHubProjectInput            ├── stats: ProjectStats
        ├── NpmProjectInput               ├── links: ProjectLinks
        ├── ProductHuntProjectInput       ├── struggles: ProjectStruggle[]
-       ├── HybridProjectInput            ├── timeline: ProjectTimelineEntry[]
-       └── ManualProjectInput            └── posts: ProjectPost[]
+       ├── YouTubeProjectInput           ├── timeline: ProjectTimelineEntry[]
+       ├── GumroadProjectInput          └── posts: ProjectPost[]
+       ├── LemonSqueezyProjectInput
+       ├── DevToProjectInput
+       ├── HybridProjectInput
+       └── ManualProjectInput
 ```

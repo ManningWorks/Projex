@@ -1,6 +1,12 @@
 import { fetchGitHubCommits, fetchGitHubRepo, LANGUAGE_COLORS } from './github'
 import { fetchNpmPackage } from './npm'
 import { fetchProductHuntPost } from './product-hunt'
+import { fetchYouTubeChannel } from './youtube'
+import { fetchGumroadProduct } from './gumroad'
+import { fetchLemonSqueezyStore } from './lemonsqueezy'
+import { fetchDevToUser } from './devto'
+import { folioProjectInputSchema } from './config-schema'
+import { formatZodError } from './format-error'
 import type { DefineProjectsOptions } from './defineProjects'
 import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
 
@@ -8,6 +14,12 @@ export async function normalise(
   input: FolioProjectInput,
   options?: DefineProjectsOptions,
 ): Promise<FolioProject> {
+  const validationResult = folioProjectInputSchema.safeParse(input)
+
+  if (!validationResult.success) {
+    throw new Error(formatZodError(validationResult.error))
+  }
+
   const {
     id,
     type,
@@ -57,6 +69,46 @@ export async function normalise(
   if (type === 'product-hunt') {
     if (slug) {
       productHuntData = await fetchProductHuntPost(slug)
+    }
+  }
+
+  const channelId = 'channelId' in input ? input.channelId : undefined
+
+  let youtubeData = null
+
+  if (type === 'youtube') {
+    if (channelId) {
+      youtubeData = await fetchYouTubeChannel(channelId)
+    }
+  }
+
+  const productId = 'productId' in input ? input.productId : undefined
+
+  let gumroadData = null
+
+  if (type === 'gumroad') {
+    if (productId) {
+      gumroadData = await fetchGumroadProduct(productId)
+    }
+  }
+
+  const storeId = 'storeId' in input ? input.storeId : undefined
+
+  let lemonsqueezyData = null
+
+  if (type === 'lemonsqueezy') {
+    if (storeId) {
+      lemonsqueezyData = await fetchLemonSqueezyStore(storeId)
+    }
+  }
+
+  const username = 'username' in input ? input.username : undefined
+
+  let devtoData = null
+
+  if (type === 'devto') {
+    if (username) {
+      devtoData = await fetchDevToUser(username)
     }
   }
 
@@ -142,7 +194,7 @@ export async function normalise(
   }
 
   let finalStats: FolioProject['stats'] | null = null
-  if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt') {
+  if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt' || type === 'youtube' || type === 'gumroad' || type === 'lemonsqueezy' || type === 'devto') {
     if (githubData) {
       finalStats = {
         stars: githubData.stargazers_count,
@@ -162,6 +214,40 @@ export async function normalise(
         upvotes: productHuntData.votes_count,
         comments: productHuntData.comments_count,
         launchDate: productHuntData.featured_at || undefined,
+      }
+    }
+    if (youtubeData) {
+      finalStats = {
+        ...finalStats,
+        subscribers: youtubeData.subscriberCount,
+        views: youtubeData.viewCount,
+        latestVideoTitle: youtubeData.latestVideoTitle,
+        latestVideoUrl: youtubeData.latestVideoUrl,
+        latestVideoPublishedAt: youtubeData.latestVideoPublishedAt,
+      }
+    }
+    if (gumroadData) {
+      finalStats = {
+        ...finalStats,
+        formattedRevenue: gumroadData.formattedRevenue,
+        salesCount: gumroadData.salesCount,
+        subscriberCount: gumroadData.subscriberCount,
+      }
+    }
+    if (lemonsqueezyData) {
+      finalStats = {
+        ...finalStats,
+        formattedMRR: lemonsqueezyData.formattedMRR,
+        orderCount: lemonsqueezyData.orderCount,
+        customerCount: lemonsqueezyData.customerCount,
+      }
+    }
+    if (devtoData) {
+      finalStats = {
+        ...finalStats,
+        articleCount: devtoData.articleCount,
+        totalViews: devtoData.totalViews,
+        averageReactions: devtoData.averageReactions,
       }
     }
     if (inputStats) {
@@ -218,6 +304,10 @@ export async function normalise(
     package: npmPackage,
     slug: 'slug' in input ? input.slug : undefined,
     commits: finalCommits,
+    channelId: 'channelId' in input ? input.channelId : undefined,
+    productId: 'productId' in input ? input.productId : undefined,
+    storeId: 'storeId' in input ? input.storeId : undefined,
+    username: 'username' in input ? input.username : undefined,
   }
 }
 
@@ -295,6 +385,70 @@ export function normalizeStats(stats: Record<string, unknown>, _type: ProjectTyp
 
   if (stats.launchDate !== undefined && stats.launchDate !== null) {
     result.push({ label: 'Launched', value: formatDate(String(stats.launchDate)) })
+  }
+
+  if (stats.subscribers !== undefined && stats.subscribers !== null) {
+    const value = Number(stats.subscribers)
+    if (!isNaN(value)) {
+      result.push({ label: 'Subscribers', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.views !== undefined && stats.views !== null) {
+    const value = Number(stats.views)
+    if (!isNaN(value)) {
+      result.push({ label: 'Views', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.formattedRevenue !== undefined && stats.formattedRevenue !== null) {
+    result.push({ label: 'Revenue', value: String(stats.formattedRevenue) })
+  }
+
+  if (stats.salesCount !== undefined && stats.salesCount !== null) {
+    const value = Number(stats.salesCount)
+    if (!isNaN(value)) {
+      result.push({ label: 'Sales', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.formattedMRR !== undefined && stats.formattedMRR !== null) {
+    result.push({ label: 'MRR', value: String(stats.formattedMRR) })
+  }
+
+  if (stats.orderCount !== undefined && stats.orderCount !== null) {
+    const value = Number(stats.orderCount)
+    if (!isNaN(value)) {
+      result.push({ label: 'Orders', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.customerCount !== undefined && stats.customerCount !== null) {
+    const value = Number(stats.customerCount)
+    if (!isNaN(value)) {
+      result.push({ label: 'Customers', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.articleCount !== undefined && stats.articleCount !== null) {
+    const value = Number(stats.articleCount)
+    if (!isNaN(value)) {
+      result.push({ label: 'Articles', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.totalViews !== undefined && stats.totalViews !== null) {
+    const value = Number(stats.totalViews)
+    if (!isNaN(value)) {
+      result.push({ label: 'Views', value: formatNumber(value) })
+    }
+  }
+
+  if (stats.averageReactions !== undefined && stats.averageReactions !== null) {
+    const value = Number(stats.averageReactions)
+    if (!isNaN(value)) {
+      result.push({ label: 'Reactions', value: formatNumber(value) })
+    }
   }
 
   return result

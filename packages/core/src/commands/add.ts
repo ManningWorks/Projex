@@ -1,7 +1,7 @@
 import { mkdir, access, copyFile, readdir, readFile } from 'node:fs/promises'
 import { resolve, dirname } from 'node:path'
 import { existsSync } from 'node:fs'
-import inquirer from 'inquirer'
+import { confirm } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
@@ -51,6 +51,21 @@ const COMPONENTS: ComponentMapping = {
   },
 }
 
+const THEMES: ComponentMapping = {
+  'theme-minimal': {
+    sourcePath: resolve(__dirname, '../themes/theme-minimal.css'),
+    destName: 'theme-minimal.css',
+  },
+  'theme-dark': {
+    sourcePath: resolve(__dirname, '../themes/theme-dark.css'),
+    destName: 'theme-dark.css',
+  },
+  'theme-gradient': {
+    sourcePath: resolve(__dirname, '../themes/theme-gradient.css'),
+    destName: 'theme-gradient.css',
+  },
+}
+
 interface AddOptions {
   force?: boolean
 }
@@ -58,12 +73,23 @@ interface AddOptions {
 export async function add(componentName: string, options: AddOptions = {}): Promise<void> {
   const workingDir = process.cwd()
   const component = COMPONENTS[componentName]
+  const theme = THEMES[componentName]
+
+  if (theme) {
+    await addTheme(theme, workingDir, options)
+    return
+  }
 
   if (!component) {
     console.error(chalk.red(`✖ Component "${componentName}" not found`))
     console.log()
     console.log(chalk.bold('Available components:'))
     Object.keys(COMPONENTS).forEach((name) => {
+      console.log(chalk.gray(`  - ${name}`))
+    })
+    console.log()
+    console.log(chalk.bold('Available themes:'))
+    Object.keys(THEMES).forEach((name) => {
       console.log(chalk.gray(`  - ${name}`))
     })
     console.log()
@@ -96,14 +122,10 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
       })
       console.log()
 
-      const { overwrite } = await inquirer.prompt([
-        {
-          type: 'confirm',
-          name: 'overwrite',
-          message: 'Overwrite existing files?',
-          default: false,
-        },
-      ])
+      const overwrite = await confirm({
+        message: 'Overwrite existing files?',
+        default: false,
+      })
 
       if (!overwrite) {
         console.log(chalk.yellow('✖ Add cancelled.'))
@@ -238,4 +260,60 @@ async function copyFiles(sourceFiles: string[], destDir: string): Promise<void> 
     const destPath = resolve(destDir, fileName)
     await copyFile(sourceFile, destPath)
   }
+}
+
+async function addTheme(
+  theme: { sourcePath: string; destName: string },
+  workingDir: string,
+  options: AddOptions
+): Promise<void> {
+  const themeName = theme.destName.replace('.css', '')
+  const destDir = resolve(workingDir, 'styles')
+  const destPath = resolve(destDir, `folio-${theme.destName}`)
+
+  console.log(chalk.bold(`🎨 Adding ${themeName}...`))
+  console.log()
+
+  await ensureFolioInstalled()
+
+  try {
+    await access(theme.sourcePath)
+  } catch {
+    console.error(chalk.red(`✖ Theme "${themeName}" not found`))
+    console.error(chalk.gray('  Try reinstalling @folio/cli'))
+    process.exit(1)
+  }
+
+  try {
+    await access(destPath)
+    if (!options.force) {
+      console.log(chalk.yellow(`⚠ Found existing file:`))
+      console.log(chalk.gray(`  - styles/folio-${theme.destName}`))
+      console.log()
+
+      const overwrite = await confirm({
+        message: 'Overwrite existing file?',
+        default: false,
+      })
+
+      if (!overwrite) {
+        console.log(chalk.yellow('✖ Add cancelled.'))
+        return
+      }
+    } else {
+      console.log(chalk.yellow(`⚠ Overwriting existing file (--force)`))
+    }
+  } catch {
+  }
+
+  await createDirectory(destDir)
+  await copyFile(theme.sourcePath, destPath)
+
+  console.log(chalk.green(`✓ ${themeName} added successfully`))
+  console.log()
+  console.log(chalk.bold('Import usage:'))
+  console.log(chalk.gray(`  import './styles/folio-${theme.destName}'`))
+  console.log()
+  console.log(chalk.gray('  Or add to your CSS:'))
+  console.log(chalk.gray(`  @import './styles/folio-${theme.destName}';`))
 }

@@ -1,7 +1,7 @@
 import { readFile, writeFile, access, constants } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
-import inquirer from 'inquirer'
+import { confirm, input } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { execSync } from 'node:child_process'
 import { fetchGitHubRepos } from '../lib/github.js'
@@ -22,14 +22,10 @@ export async function init(options: InitOptions = {}): Promise<void> {
   try {
     await access(CONFIG_FILE, constants.F_OK)
 
-    const { overwrite } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'overwrite',
-        message: `${CONFIG_FILE} already exists. Overwrite?`,
-        default: false,
-      },
-    ])
+    const overwrite = await confirm({
+      message: `${CONFIG_FILE} already exists. Overwrite?`,
+      default: false,
+    })
 
     if (!overwrite) {
       console.log(chalk.yellow('✖ Init cancelled.'))
@@ -149,14 +145,10 @@ export const projects = defineProjects([
 //   - url: Link to the post (optional)
 
 async function generateGitHubConfig(): Promise<string> {
-  const { username } = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'username',
-      message: 'Enter your GitHub username:',
-      validate: (input: string) => input.trim().length > 0 || 'Username is required',
-    },
-  ])
+  const username = await input({
+    message: 'Enter your GitHub username:',
+    validate: (value: string) => value.trim().length > 0 || 'Username is required',
+  })
 
   console.log()
   console.log(chalk.gray('Fetching repositories...'))
@@ -201,14 +193,10 @@ async function generateGitHubConfig(): Promise<string> {
     process.exit(1)
   }
 
-  const { includeForks } = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'includeForks',
-      message: 'Include forked repositories?',
-      default: false,
-    },
-  ])
+  const includeForks = await confirm({
+    message: 'Include forked repositories?',
+    default: false,
+  })
 
   const filteredRepos = result.data.filter((repo) => {
     if (repo.archived) {

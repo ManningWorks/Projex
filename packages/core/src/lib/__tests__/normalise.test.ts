@@ -665,6 +665,119 @@ describe('normalise', () => {
       expect(result.languageColor).toBeNull()
     })
   })
+
+  describe('validation', () => {
+    it('should throw an error for missing id', async () => {
+      const invalidInput = {
+        type: 'manual',
+        status: 'active',
+      } as unknown as ManualProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should throw an error for missing type', async () => {
+      const invalidInput = {
+        id: 'test',
+        status: 'active',
+      } as unknown as ManualProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should throw an error for missing status', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'manual',
+      } as unknown as ManualProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should throw an error for invalid status value', async () => {
+      const invalidInput: ManualProjectInput = {
+        id: 'test',
+        type: 'manual',
+        status: 'invalid-status' as 'active',
+      }
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should throw an error for missing repo on github type', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'github',
+        status: 'active',
+      } as unknown as GitHubProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow(/repo/)
+    })
+
+    it('should throw an error for missing package on npm type', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'npm',
+        status: 'active',
+      } as unknown as NpmProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow(/package/)
+    })
+
+    it('should throw an error for missing slug on product-hunt type', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'product-hunt',
+        status: 'active',
+      } as unknown as ProductHuntProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow(/slug/)
+    })
+
+    it('should throw an error for invalid URL in links', async () => {
+      const invalidInput: ManualProjectInput = {
+        id: 'test',
+        type: 'manual',
+        status: 'active',
+        links: {
+          live: 'not-a-url',
+        },
+      }
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should include validation error details in thrown error', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'github',
+        status: 'active',
+      } as unknown as GitHubProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow(/Validation failed/)
+      await expect(normalise(invalidInput)).rejects.toThrow(/repo/)
+    })
+
+    it('should throw for invalid enum values', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'manual',
+        status: 'bad-status',
+      } as unknown as ManualProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+
+    it('should throw for missing required fields on hybrid type', async () => {
+      const invalidInput = {
+        id: 'test',
+        type: 'hybrid',
+        status: 'active',
+      } as unknown as GitHubProjectInput
+
+      await expect(normalise(invalidInput)).rejects.toThrow()
+    })
+  })
 })
 
 describe('normalizeStats', () => {

@@ -1,0 +1,92 @@
+:root,
+[data-theme="light"] {
+  --folio-card-bg: #ffffff;
+  --folio-card-border: #e5e7eb;
+  --folio-card-radius: 8px;
+  --folio-card-padding: 16px;
+  --folio-card-text: #374151;
+
+  --folio-tag-bg: #f3f4f6;
+  --folio-tag-text: #374151;
+  --folio-tag-radius: 4px;
+
+  --folio-stats-label: #6b7280;
+  --folio-stats-value: #374151;
+
+  --folio-link-text: #374151;
+
+  --folio-status-active-bg: #dcfce7;
+  --folio-status-active-text: #166534;
+  --folio-status-shipped-bg: #dbeafe;
+  --folio-status-shipped-text: #1e40af;
+  --folio-status-in-progress-bg: #fef3c7;
+  --folio-status-in-progress-text: #92400e;
+  --folio-status-coming-soon-bg: #f3e8ff;
+  --folio-status-coming-soon-text: #7c3aed;
+  --folio-status-archived-bg: #f1f5f9;
+  --folio-status-archived-text: #475569;
+  --folio-status-for-sale-bg: #fee2e2;
+  --folio-status-for-sale-text: #991b1b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --folio-card-bg: #1a1a1a;
+    --folio-card-border: #333333;
+    --folio-card-radius: 8px;
+    --folio-card-padding: 16px;
+    --folio-card-text: #e0e0e0;
+
+    --folio-tag-bg: #2d2d2d;
+    --folio-tag-text: #e0e0e0;
+    --folio-tag-radius: 4px;
+
+    --folio-stats-label: #9ca3af;
+    --folio-stats-value: #e0e0e0;
+
+    --folio-link-text: #e0e0e0;
+
+    --folio-status-active-bg: #14532d;
+    --folio-status-active-text: #86efac;
+    --folio-status-shipped-bg: #1e3a8a;
+    --folio-status-shipped-text: #93c5fd;
+    --folio-status-in-progress-bg: #78350f;
+    --folio-status-in-progress-text: #fde047;
+    --folio-status-coming-soon-bg: #581c87;
+    --folio-status-coming-soon-text: #d8b4fe;
+    --folio-status-archived-bg: #334155;
+    --folio-status-archived-text: #94a3b8;
+    --folio-status-for-sale-bg: #7f1d1d;
+    --folio-status-for-sale-text: #fca5a5;
+  }
+}
+
+[data-theme="dark"] {
+  --folio-card-bg: #1a1a1a;
+  --folio-card-border: #333333;
+  --folio-card-radius: 8px;
+  --folio-card-padding: 16px;
+  --folio-card-text: #e0e0e0;
+
+  --folio-tag-bg: #2d2d2d;
+  --folio-tag-text: #e0e0e0;
+  --folio-tag-radius: 4px;
+
+  --folio-stats-label: #9ca3af;
+  --folio-stats-value: #e0e0e0;
+
+  --folio-link-text: #e0e0e0;
+
+  --folio-status-active-bg: #14532d;
+  --folio-status-active-text: #86efac;
+  --folio-status-shipped-bg: #1e3a8a;
+  --folio-status-shipped-text: #93c5fd;
+  --folio-status-in-progress-bg: #78350f;
+  --folio-status-in-progress-text: #fde047;
+  --folio-status-coming-soon-bg: #581c87;
+  --folio-status-coming-soon-text: #d8b4fe;
+  --folio-status-archived-bg: #334155;
+  --folio-status-archived-text: #94a3b8;
+  --folio-status-for-sale-bg: #7f1d1d;
+  --folio-status-for-sale-text: #fca5a5;
+}

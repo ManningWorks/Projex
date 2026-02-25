@@ -96,6 +96,10 @@ Returns `null` if no links are available.
 | `data-folio-link-type` | `github` \| `live` \| `docs` \| `demo` \| `npm` \| `product-hunt` \| `custom` | Link type |
 | `data-folio-link-label` | `string` | Custom link label |
 | `data-folio-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
+| `data-folio-github-card` | - | Present when project type is 'github' |
+| `data-folio-og-image` | `string` | OpenGraph image URL (if project has image) |
+| `data-folio-og-title` | `string` | OpenGraph title (project name) |
+| `data-folio-og-description` | `string` | OpenGraph description (if project has description) |
 
 ## Example
 

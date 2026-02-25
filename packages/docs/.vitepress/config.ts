@@ -10,6 +10,7 @@ export default defineConfig({
     nav: [
       { text: 'Getting Started', link: '/' },
       { text: 'Performance', link: '/performance' },
+      { text: 'Guides', link: '/guides/seo' },
       { text: 'API Reference', link: '/api/components/' }
     ],
     sidebar: [
@@ -22,6 +23,15 @@ export default defineConfig({
           {
             text: 'Performance',
             link: '/performance'
+          },
+          {
+            text: 'Guides',
+            items: [
+              {
+                text: 'SEO Integration',
+                link: '/guides/seo'
+              }
+            ]
           },
           {
             text: 'API Reference',

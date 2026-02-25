@@ -92,3 +92,92 @@ const project = await normalise({
   status: 'active'
 })
 ```
+
+## fetchGitHubRepos
+
+Fetch all repositories for a GitHub user. Useful for CLI initialization or batch project setup.
+
+### Signature
+
+```tsx
+function fetchGitHubRepos(username: string): Promise<FetchReposResult>
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| username | `string` | GitHub username |
+
+### Returns
+
+`Promise<FetchReposResult>` - Result object with data or error
+
+### Types
+
+```tsx
+interface FetchReposResult {
+  data: GitHubRepoData[] | null
+  error: FetchReposError | null
+}
+
+type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
+```
+
+### Behavior
+
+- Fetches all public repositories for the user
+- Excludes archived repositories
+- Excludes repositories ending with `.template` or `.github.io`
+- Excludes repositories without descriptions
+- Returns `null` data with error code on failure
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GITHUB_TOKEN` | No | GitHub personal access token |
+
+### Rate Limits
+
+| Auth | Rate Limit |
+|------|------------|
+| Unauthenticated | 60 requests/hour |
+| Authenticated | 5000 requests/hour |
+
+### Example
+
+```tsx
+import { fetchGitHubRepos } from '@reallukemanning/folio'
+
+const result = await fetchGitHubRepos('facebook')
+
+if (result.data) {
+  console.log(`Found ${result.data.length} repositories`)
+  result.data.forEach(repo => {
+    console.log(`- ${repo.name}: ${repo.stargazers_count} stars`)
+  })
+} else if (result.error === 'rate_limit') {
+  console.error('Rate limit exceeded. Set GITHUB_TOKEN.')
+}
+```
+
+### Error Codes
+
+| Error | Description |
+|-------|-------------|
+| `rate_limit` | GitHub API rate limit exceeded |
+| `network` | Network error or request failed |
+| `not_found` | GitHub user not found |
+| `unknown` | Unknown error occurred |
+
+### Usage in CLI
+
+This function is used internally by `npx folio init --github`:
+
+```bash
+# Interactive CLI uses fetchGitHubRepos
+npx folio init --github
+
+# Prompts for username, fetches all repos, generates config
+```
