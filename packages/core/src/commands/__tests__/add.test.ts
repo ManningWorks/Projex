@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { add } from '../add'
-import inquirer from 'inquirer'
+import * as prompts from '@inquirer/prompts'
 
-vi.mock('inquirer')
+vi.mock('@inquirer/prompts', async () => ({
+  confirm: vi.fn()
+}))
 vi.mock('node:fs/promises')
 vi.mock('node:fs')
 vi.mock('node:child_process')
@@ -163,7 +165,8 @@ describe('add command', () => {
 
       await add('github-card', { force: true })
 
-      expect(inquirer.prompt).not.toHaveBeenCalled()
+      const prompts = await import('@inquirer/prompts')
+      expect(prompts.confirm).not.toHaveBeenCalled()
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Overwriting')
       )
@@ -172,7 +175,7 @@ describe('add command', () => {
     })
 
     it('should prompt when --force is false and files exist', async () => {
-      vi.mocked(inquirer.prompt).mockResolvedValue({ overwrite: true })
+      vi.mocked(prompts.confirm).mockResolvedValue(true)
 
       const { access } = await import('node:fs/promises')
       const { existsSync } = await import('node:fs')
@@ -182,7 +185,7 @@ describe('add command', () => {
 
       await add('github-card', { force: false })
 
-      expect(inquirer.prompt).toHaveBeenCalled()
+      expect(prompts.confirm).toHaveBeenCalled()
     })
   })
 })
