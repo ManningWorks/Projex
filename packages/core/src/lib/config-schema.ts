@@ -112,12 +112,36 @@ const hybridProjectInputSchema = baseProjectInputSchema.extend({
   commits: z.number().optional(),
 })
 
+const youtubeProjectInputSchema = baseProjectInputSchema.extend({
+  type: z.literal('youtube'),
+  channelId: z.string(),
+})
+
+const gumroadProjectInputSchema = baseProjectInputSchema.extend({
+  type: z.literal('gumroad'),
+  productId: z.string(),
+})
+
+const lemonSqueezyProjectInputSchema = baseProjectInputSchema.extend({
+  type: z.literal('lemonsqueezy'),
+  storeId: z.string(),
+})
+
+const devToProjectInputSchema = baseProjectInputSchema.extend({
+  type: z.literal('devto'),
+  username: z.string(),
+})
+
 export const folioProjectInputSchema = z.discriminatedUnion('type', [
   gitHubProjectInputSchema,
   manualProjectInputSchema,
   npmProjectInputSchema,
   productHuntProjectInputSchema,
   hybridProjectInputSchema,
+  youtubeProjectInputSchema,
+  gumroadProjectInputSchema,
+  lemonSqueezyProjectInputSchema,
+  devToProjectInputSchema,
 ])
 
 export type FolioProjectInputZod = z.infer<typeof folioProjectInputSchema>

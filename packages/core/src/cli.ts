@@ -15,6 +15,7 @@ program
   .command('init')
   .description('Initialize a new Folio project')
   .option('--github', 'Auto-detect projects from GitHub repos')
+  .option('-y, --yes', 'Skip all prompts and use default values')
   .action(init)
 
 program

@@ -1,4 +1,4 @@
-import { readFile, writeFile, access, constants } from 'node:fs/promises'
+import { readFile, writeFile, access, constants, unlink, rename } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { existsSync } from 'node:fs'
 import { confirm, input } from '@inquirer/prompts'
@@ -11,25 +11,56 @@ const PACKAGE_JSON = 'package.json'
 
 interface InitOptions {
   github?: boolean
+  yes?: boolean
 }
 
 export async function init(options: InitOptions = {}): Promise<void> {
   const workingDir = process.cwd()
 
+  let tempConfigPath: string | null = null
+
+  const handleSigint = () => {
+    console.log()
+    console.log(chalk.yellow('✖ Init cancelled by user'))
+    if (tempConfigPath) {
+      unlink(tempConfigPath).catch(() => {})
+    }
+    process.exit(0)
+  }
+
+  const originalSigint = process.listenerCount('SIGINT') > 0 ? process.listeners('SIGINT')[0] : null
+  process.removeAllListeners('SIGINT')
+  process.on('SIGINT', handleSigint)
+
+  try {
+    await runInit(options, workingDir, (path: string) => {
+      tempConfigPath = path
+    })
+  } finally {
+    process.removeAllListeners('SIGINT')
+    if (originalSigint) {
+      process.on('SIGINT', originalSigint)
+    }
+  }
+}
+
+async function runInit(options: InitOptions, workingDir: string, setTempPath: (path: string) => void): Promise<void> {
   console.log(chalk.bold('🚀 Initializing Folio project...'))
   console.log()
 
   try {
     await access(CONFIG_FILE, constants.F_OK)
 
-    const overwrite = await confirm({
-      message: `${CONFIG_FILE} already exists. Overwrite?`,
-      default: false,
-    })
+    if (!options.yes) {
+      const overwrite = await confirm({
+        message: `${CONFIG_FILE} already exists. Overwrite?`,
+        default: false,
+      })
 
-    if (!overwrite) {
-      console.log(chalk.yellow('✖ Init cancelled.'))
-      return
+      if (!overwrite) {
+        console.log(chalk.yellow('✖ Init cancelled.'))
+        return
+      }
     }
   } catch {
   }
@@ -47,15 +78,22 @@ export async function init(options: InitOptions = {}): Promise<void> {
   let template: string
 
   if (options.github) {
-    template = await generateGitHubConfig()
+    template = await generateGitHubConfig(options.yes)
   } else {
     template = generateConfigTemplate()
   }
 
   try {
     const configPath = resolve(workingDir, CONFIG_FILE)
+    const tempPath = resolve(workingDir, `${CONFIG_FILE}.tmp`)
 
-    await writeFile(configPath, template, 'utf-8')
+    setTempPath(tempPath)
+
+    await writeFile(tempPath, template, 'utf-8')
+
+    await rename(tempPath, configPath)
+
+    setTempPath('')
 
     await ensureFolioInstalled()
 
@@ -144,11 +182,28 @@ export const projects = defineProjects([
 //   - date: Publication date
 //   - url: Link to the post (optional)
 
-async function generateGitHubConfig(): Promise<string> {
-  const username = await input({
-    message: 'Enter your GitHub username:',
-    validate: (value: string) => value.trim().length > 0 || 'Username is required',
-  })
+async function generateGitHubConfig(yes = false): Promise<string> {
+  let username: string
+
+  if (yes) {
+    try {
+      username = execSync('git config --get user.name', { encoding: 'utf-8' }).trim()
+      if (username.length === 0) {
+        console.log(chalk.yellow('⚠ Could not detect GitHub username from git config'))
+        console.log(chalk.gray('  Falling back to basic template. Use --github without --yes for interactive mode.'))
+        return generateConfigTemplate()
+      }
+    } catch {
+      console.log(chalk.yellow('⚠ Could not detect GitHub username from git config'))
+      console.log(chalk.gray('  Falling back to basic template. Use --github without --yes for interactive mode.'))
+      return generateConfigTemplate()
+    }
+  } else {
+    username = await input({
+      message: 'Enter your GitHub username:',
+      validate: (value: string) => value.trim().length > 0 || 'Username is required',
+    })
+  }
 
   console.log()
   console.log(chalk.gray('Fetching repositories...'))
@@ -193,7 +248,7 @@ async function generateGitHubConfig(): Promise<string> {
     process.exit(1)
   }
 
-  const includeForks = await confirm({
+  const includeForks = yes ? false : await confirm({
     message: 'Include forked repositories?',
     default: false,
   })
