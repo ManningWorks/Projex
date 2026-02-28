@@ -228,6 +228,138 @@ describe('normalise', () => {
       expect(result.links.npm).toBe('https://npmjs.com/package/my-pkg')
     })
 
+    it('should suppress auto-populated live link when linkOrder does not include live', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'linkorder-suppress-live',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        links: {
+          demo: 'https://demo.example.com',
+          docs: 'https://docs.example.com',
+          npm: 'https://npmjs.com/package/my-pkg',
+        },
+        linkOrder: ['demo', 'docs', 'npm'],
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.demo).toBe('https://demo.example.com')
+      expect(result.links.docs).toBe('https://docs.example.com')
+      expect(result.links.npm).toBe('https://npmjs.com/package/my-pkg')
+      expect(result.links.live).toBeUndefined()
+    })
+
+    it('should preserve auto-populated live link when linkOrder includes live', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'linkorder-include-live',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        links: {
+          demo: 'https://demo.example.com',
+        },
+        linkOrder: ['demo', 'live'],
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.demo).toBe('https://demo.example.com')
+      expect(result.links.live).toBe('https://example.com')
+    })
+
+    it('should preserve auto-populated live link when no linkOrder is specified', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'no-linkorder',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        links: {
+          demo: 'https://demo.example.com',
+        },
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.demo).toBe('https://demo.example.com')
+      expect(result.links.live).toBe('https://example.com')
+    })
+
+    it('should preserve explicitly set live link even when linkOrder does not include live', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://github-homepage.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'explicit-live-no-linkorder',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        links: {
+          demo: 'https://demo.example.com',
+          live: 'https://custom-live.com',
+        },
+        linkOrder: ['demo'],
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.demo).toBe('https://demo.example.com')
+      expect(result.links.live).toBeUndefined()
+    })
+
     it('should use global commits default when no per-project commits config', async () => {
       mockedFetchGitHubRepo.mockResolvedValue({
         name: 'test-repo',

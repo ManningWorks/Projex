@@ -107,6 +107,33 @@ For certain project types, links are automatically populated:
 | `product-hunt` | None |
 | `manual` | None |
 
+## Link Suppression
+
+Auto-generated `live` links can be suppressed by omitting `live` from `linkOrder`:
+
+```tsx
+{
+  id: 'my-project',
+  type: 'github',
+  repo: 'user/repo',
+  status: 'active',
+  links: {
+    demo: 'https://demo.example.com',
+    docs: 'https://docs.example.com',
+    npm: 'https://npmjs.com/package/my-package'
+  },
+  linkOrder: ['demo', 'docs', 'npm']  // 'live' excluded = auto-live link suppressed
+}
+```
+
+**Behavior:**
+- If `linkOrder` is specified and does not include `live`, the auto-generated `live` link is removed
+- If `linkOrder` includes `live`, the auto-generated `live` link is preserved
+- If `linkOrder` is not specified, all auto-generated links are preserved (default behavior)
+- Explicitly set `live` links in the `links` object are also removed if not in `linkOrder` (user intent prevails)
+
+This allows customizing which links appear without requiring manual filtering in consuming applications.
+
 ## Data Attributes
 
 Each link element receives `data-folio-link` and `data-folio-link-type` attributes:

@@ -193,6 +193,11 @@ export async function normalise(
     finalLinks = inputLinks || {}
   }
 
+  const { linkOrder } = input
+  if (linkOrder && !linkOrder.includes('live')) {
+    delete finalLinks.live
+  }
+
   let finalStats: FolioProject['stats'] | null = null
   if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt' || type === 'youtube' || type === 'gumroad' || type === 'lemonsqueezy' || type === 'devto') {
     if (githubData) {
