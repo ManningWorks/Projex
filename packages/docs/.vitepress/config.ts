@@ -1,6 +1,17 @@
 import { defineConfig } from 'vitepress'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  vite: {
+    plugins: [
+      react({
+        include: /\.(jsx|tsx)$/,
+      }),
+    ],
+    ssr: {
+      noExternal: ['@reallukemanning/folio'],
+    },
+  },
   title: 'Folio',
   description: 'A shadcn-style component library for project showcase pages',
   srcDir: 'src',
@@ -9,6 +20,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Getting Started', link: '/' },
+      { text: 'Examples', link: '/examples/index' },
       { text: 'Performance', link: '/performance' },
       { text: 'Guides', link: '/guides/seo' },
       { text: 'API Reference', link: '/api/components/' }
@@ -19,6 +31,31 @@ export default defineConfig({
           {
             text: 'Getting Started',
             link: '/'
+          },
+          {
+            text: 'Examples',
+            items: [
+              {
+                text: 'Overview',
+                link: '/examples/index'
+              },
+              {
+                text: 'Full Portfolio',
+                link: '/examples/full-portfolio'
+              },
+              {
+                text: 'Filtered Grid',
+                link: '/examples/filtered-grid'
+              },
+              {
+                text: 'Searchable List',
+                link: '/examples/searchable-list'
+              },
+              {
+                text: 'Interactive Demo',
+                link: '/examples/interactive-demo'
+              }
+            ]
           },
           {
             text: 'Performance',

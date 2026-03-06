@@ -151,6 +151,10 @@ mockFetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockData
 - CLI commands (`src/commands/**`) exempt from console rules
 - Run with `--max-warnings 0` to fail on any warnings
 
+### Agent Rules
+
+- **NEVER run dev servers** - agents should only use build/lint/test commands. Do not run `pnpm dev` or `npm run dev`
+
 ## Key Architectural Decisions
 
 1. **shadcn-style distribution** - consumers own the code after copying

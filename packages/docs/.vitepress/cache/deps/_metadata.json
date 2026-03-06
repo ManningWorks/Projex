@@ -1,0 +1,100 @@
+{
+  "hash": "d086f35d",
+  "configHash": "6dd9abde",
+  "lockfileHash": "7cb902d5",
+  "browserHash": "02e75e13",
+  "optimized": {
+    "react": {
+      "src": "../../../../../node_modules/.pnpm/react@19.2.4/node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "5bc220d7",
+      "needsInterop": true
+    },
+    "react-dom": {
+      "src": "../../../../../node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "6894156e",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../../../../node_modules/.pnpm/react@19.2.4/node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "d31bad9c",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../../../../node_modules/.pnpm/react@19.2.4/node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "e6f8b017",
+      "needsInterop": true
+    },
+    "vue": {
+      "src": "../../../../../node_modules/.pnpm/vue@3.5.28_typescript@5.9.3/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "b8d066d6",
+      "needsInterop": false
+    },
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../../../node_modules/.pnpm/@vue+devtools-api@7.7.9/node_modules/@vue/devtools-api/dist/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "3cf4065e",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../../node_modules/.pnpm/@vueuse+core@12.8.2_typescript@5.9.3/node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "d68bb9dd",
+      "needsInterop": false
+    },
+    "fuse.js": {
+      "src": "../../../../../node_modules/.pnpm/fuse.js@7.1.0/node_modules/fuse.js/dist/fuse.mjs",
+      "file": "fuse__js.js",
+      "fileHash": "499177b2",
+      "needsInterop": false
+    },
+    "zod": {
+      "src": "../../../../../node_modules/.pnpm/zod@3.25.76/node_modules/zod/index.js",
+      "file": "zod.js",
+      "fileHash": "e9ced826",
+      "needsInterop": false
+    },
+    "chalk": {
+      "src": "../../../../../node_modules/.pnpm/chalk@5.6.2/node_modules/chalk/source/index.js",
+      "file": "chalk.js",
+      "fileHash": "465c0344",
+      "needsInterop": false
+    },
+    "prismjs": {
+      "src": "../../../../../node_modules/.pnpm/prismjs@1.30.0/node_modules/prismjs/prism.js",
+      "file": "prismjs.js",
+      "fileHash": "330628b6",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../../../../node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "71f3b119",
+      "needsInterop": true
+    },
+    "vue-react": {
+      "src": "../../../../../node_modules/.pnpm/vue-react@1.2.0/node_modules/vue-react/dist/build.js",
+      "file": "vue-react.js",
+      "fileHash": "ab3b9f38",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-DLYAFOUL": {
+      "file": "chunk-DLYAFOUL.js"
+    },
+    "chunk-I3TE2D5G": {
+      "file": "chunk-I3TE2D5G.js"
+    },
+    "chunk-NGGQV2J5": {
+      "file": "chunk-NGGQV2J5.js"
+    },
+    "chunk-HKJ2B2AA": {
+      "file": "chunk-HKJ2B2AA.js"
+    }
+  }
+}

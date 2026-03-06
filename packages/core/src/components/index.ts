@@ -1,3 +1,4 @@
+export { CodePanel } from './CodePanel'
 export { CommitList } from './CommitList'
 export { FeaturedProject } from './FeaturedProject'
 export { GitHubCard, type GitHubCardProps } from './GitHubCard'

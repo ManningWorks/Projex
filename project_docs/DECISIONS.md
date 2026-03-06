@@ -46,3 +46,19 @@ Keep sourcemaps (`*.js.map`, `*.d.ts.map`) - considered for better debugging exp
 
 **Consequences**
 Package size reduced from 40.6 KB to 17.5 KB. Consumers cannot debug into compiled source files, but they can reference the GitHub repo for source code if needed.
+
+## React Component Integration in VitePress — 2026-03-06
+
+**Decision**
+Create ReactWrapper.vue component that bridges React components to VitePress by using createRoot to render React components in their own context, rather than registering React components directly as Vue components.
+
+**Why**
+VitePress is Vue-only and doesn't natively support React components. Registering React components as Vue components causes React hooks to fail because React isn't properly initialized - the "Invalid hook call" error occurs when useState and other hooks are called outside a valid React context. The ReactWrapper creates a proper React root where hooks can execute correctly.
+
+**Rejected**
+- vue-react library — designed for Vue 2, incompatible with VitePress/Vue 3
+- Slot-based approach — Vue slots don't translate to React component structure
+- Direct component registration — fails because Vue tries to render React components without React context
+
+**Consequences**
+All interactive examples in docs must use `<ReactWrapper name="ComponentName" />` syntax. React components are not registered as Vue components in theme/index.ts. React components are imported directly in ReactWrapper.vue to maintain proper React context.
