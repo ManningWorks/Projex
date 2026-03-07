@@ -51,3 +51,6 @@ tasks/
 # bundle size tracking
 .bundle-size.json
 packages/docs/.vitepress/dist/
+
+# opencode
+.opencode/

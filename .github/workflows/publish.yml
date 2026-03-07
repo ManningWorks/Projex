@@ -38,3 +38,12 @@ jobs:
         run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: See [CHANGELOG.md](https://github.com/reallukemanning/folio/blob/main/CHANGELOG.md) for full details.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
