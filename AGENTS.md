@@ -27,9 +27,6 @@ pnpm --filter @reallukemanning/folio test:coverage
 
 # Run benchmarks
 pnpm --filter @reallukemanning/folio benchmark
-
-# Run demo app in development
-pnpm --filter @folio/demo dev
 ```
 
 ## Monorepo Structure
@@ -45,8 +42,6 @@ folio/
 │   │       ├── types/           # TypeScript interfaces
 │   │       └── index.ts         # Public API exports
 │   └── docs/              # VitePress documentation
-├── apps/
-│   └── demo/              # Next.js demo app with folio.config.ts
 ├── pnpm-workspace.yaml
 └── package.json
 ```

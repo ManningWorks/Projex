@@ -32,8 +32,6 @@ folio/
 ├── packages/
 │   ├── core/          # Main component library (includes CLI)
 │   └── docs/          # VitePress documentation
-├── apps/
-│   └── demo/          # Next.js demo application
 ├── project_docs/      # Internal documentation (PRDs, briefings)
 └── scripts/           # Utility scripts
 ```

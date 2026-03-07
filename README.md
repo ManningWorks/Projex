@@ -5,7 +5,6 @@ Folio is a shadcn-style component library for developers and solopreneurs who wa
 ## Links
 
 - **Documentation:** https://folio-guide.vercel.app
-- **Demo:** https://folio-demo.vercel.app
 
 ## Problem
 
