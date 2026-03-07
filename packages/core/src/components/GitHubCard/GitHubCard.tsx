@@ -13,7 +13,7 @@ function GitHubCard({ project, showForks = true, statsComponent, children }: Git
     return (
       <div data-folio-card>
         <div data-folio-card-header>
-          <h3>{project.name}</h3>
+          <h3>{project.repo || project.name}</h3>
           {project.language && (
             <span data-folio-language data-folio-language-color={project.languageColor || undefined}>
               {project.language}
@@ -50,7 +50,7 @@ function GitHubCard({ project, showForks = true, statsComponent, children }: Git
 GitHubCard.Header = function GitHubCardHeader({ project }: { project: FolioProject }) {
   return (
     <div data-folio-card-header>
-      <h3>{project.name}</h3>
+      <h3>{project.repo || project.name}</h3>
       {project.language && (
         <span data-folio-language data-folio-language-color={project.languageColor || undefined}>
           {project.language}
