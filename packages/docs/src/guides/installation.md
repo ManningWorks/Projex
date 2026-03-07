@@ -184,7 +184,7 @@ export const projects = defineProjects([
 - [Using Components](./using-components) - How to integrate Folio components in Next.js
 - [Project Types](./project-types) - Available project types and their features
 - [Styling](./styling) - Customizing your portfolio's appearance
-- [Examples](../examples) - Code examples and patterns
+- [Examples](/examples/) - Code examples and patterns
 
 ## Troubleshooting
 

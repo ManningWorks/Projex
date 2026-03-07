@@ -485,5 +485,5 @@ If build fails:
 - [Using Components](./using-components) - Component integration patterns
 - [Styling Guide](./styling) - Customizing your portfolio
 - [Project Types](./project-types) - All available project types
-- [Examples](../examples) - More code examples
+- [Examples](/examples/) - More code examples
 - [Component API](../api/components/) - All available components

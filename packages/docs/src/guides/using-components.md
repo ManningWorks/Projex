@@ -413,6 +413,6 @@ function InteractivePortfolio({ projects }) {
 ## Next Steps
 
 - [Styling](./styling) - Customizing component appearance
-- [Examples](../examples) - Complete working examples
+- [Examples](/examples/) - Complete working examples
 - [Project Types](./project-types) - Understanding project configurations
 - [API Reference](../api/components/) - All available components and utilities

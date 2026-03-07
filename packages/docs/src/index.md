@@ -85,8 +85,8 @@ Folio is built and maintained by [Luke Manning](https://lukemanning.ie), a solo 
 
 # Next Steps
 
-- [Getting Started Tutorial](./guides/getting-started) — Build a complete portfolio step-by-step
-- [Guides](./guides) — All available guides and tutorials
-- [Examples](./examples) — Code examples and complete implementations
+- [Getting Started Tutorial](/guides/getting-started) — Build a complete portfolio step-by-step
+- [Guides](/guides/) — All available guides and tutorials
+- [Examples](/examples/) — Code examples and complete implementations
 - [Component Reference](./api/components/) — All available components
 - [Utilities](./api/utilities/) — Filtering, sorting, and more
