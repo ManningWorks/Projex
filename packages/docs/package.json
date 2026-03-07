@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "tsx .vitepress/theme/components/examples/data/generate.ts && vitepress build && node scripts/fix-paths.js",
-    "preview": "vitepress preview",
-    "generate-data": "tsx .vitepress/theme/components/examples/data/generate.ts"
+    "build": "vitepress build && node scripts/fix-paths.js",
+    "preview": "vitepress preview"
   },
   "dependencies": {
     "@reallukemanning/folio": "workspace:*",

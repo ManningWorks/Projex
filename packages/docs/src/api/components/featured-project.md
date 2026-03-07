@@ -2,10 +2,6 @@
 
 Featured project hero section for highlighting a single project.
 
-## Preview
-
-<FeaturedProjectPreview />
-
 ## Import
 
 ```tsx

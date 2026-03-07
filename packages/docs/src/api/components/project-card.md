@@ -1,10 +1,6 @@
 # ProjectCard
 
-Card component for displaying individual project summaries. Uses the compound component pattern for flexible composition.
-
-## Preview
-
-<ProjectCardPreview />
+Card component for displaying individual project summaries. Uses compound component pattern for flexible composition.
 
 ## Import
 

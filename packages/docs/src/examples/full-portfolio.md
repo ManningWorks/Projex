@@ -2,8 +2,6 @@
 
 A complete portfolio page showcasing all major Folio components working together.
 
-<ReactWrapper name="FullPortfolioExample" />
-
 ## Features
 
 - **FeaturedProject** - Hero section showcasing your best work
@@ -55,6 +53,96 @@ function Portfolio() {
   )
 }
 ```
+
+## HTML Output
+
+The components generate semantic HTML with data attributes for styling:
+
+```html
+<!-- FeaturedProject -->
+<div data-folio-featured>
+  <img data-folio-featured-image src="..." alt="Featured Project" />
+  <div data-folio-view>
+    <h2>Featured Project</h2>
+    <div data-folio-view-section data-folio-view-section-name="background">
+      Background story...
+    </div>
+    <div data-folio-view-section data-folio-view-section-name="why">
+      Why I built this...
+    </div>
+    <div data-folio-view-stats>
+      <span data-folio-stat="stars">1000 stars</span>
+      <span data-folio-stat="forks">200 forks</span>
+    </div>
+    <div data-folio-view-links>
+      <a href="..." data-folio-link data-folio-link-type="github">GitHub</a>
+      <a href="..." data-folio-link data-folio-link-type="live">Live</a>
+    </div>
+  </div>
+</div>
+
+<!-- ProjectGrid -->
+<div data-folio-grid>
+  <div data-folio-card>
+    <!-- Card content -->
+  </div>
+  <div data-folio-card>
+    <!-- Card content -->
+  </div>
+</div>
+
+<!-- List view -->
+<div class="list">
+  <div data-folio-card>
+    <!-- Card content -->
+  </div>
+</div>
+```
+
+## Styling Example
+
+CSS for the featured section and layouts:
+
+```css
+/* Featured section */
+[data-folio-featured] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 48px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+[data-folio-featured] h2 {
+  margin: 0 0 16px 0;
+  font-size: 2em;
+}
+
+/* Grid layout */
+[data-folio-grid] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* List layout */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list [data-folio-card] {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+```
+
+See the [Styling Guide](../guides/styling.md) for comprehensive CSS examples.
 
 ## Tips
 

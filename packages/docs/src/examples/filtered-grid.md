@@ -2,8 +2,6 @@
 
 A filterable project grid with type and status filters using `ProjectFilterBar` and `ProjectFilterTag`.
 
-<ReactWrapper name="FilteredGridExample" />
-
 ## Features
 
 - **ProjectFilterBar** - Container for filter tags
@@ -74,6 +72,84 @@ function FilteredProjects() {
   )
 }
 ```
+
+## HTML Output
+
+The components generate semantic HTML with data attributes:
+
+```html
+<!-- ProjectFilterBar -->
+<div data-folio-filter-bar>
+  <div>
+    <button data-folio-filter-tag data-folio-filter-active>All</button>
+    <button data-folio-filter-tag data-folio-filter-active="false">github</button>
+    <button data-folio-filter-tag data-folio-filter-active="false">npm</button>
+    <button data-folio-filter-tag data-folio-filter-active="false">manual</button>
+  </div>
+  <div>
+    <button data-folio-filter-tag data-folio-filter-active>All</button>
+    <button data-folio-filter-tag data-folio-filter-active="false">active</button>
+    <button data-folio-filter-tag data-folio-filter-active="false">shipped</button>
+  </div>
+</div>
+
+<!-- ProjectGrid -->
+<div data-folio-grid>
+  <div data-folio-card>
+    <!-- Card content -->
+  </div>
+</div>
+```
+
+## Styling Example
+
+CSS for the filter bar and active states:
+
+```css
+/* Filter bar container */
+[data-folio-filter-bar] {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* Filter tags */
+[data-folio-filter-tag] {
+  padding: 8px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* Active filter */
+[data-folio-filter-active="true"] {
+  background: #374151;
+  color: #fff;
+  border-color: #374151;
+}
+
+/* Hover state */
+[data-folio-filter-tag]:hover {
+  background: #f9fafb;
+}
+
+[data-folio-filter-active="true"]:hover {
+  background: #1f2937;
+}
+
+/* Grid layout */
+[data-folio-grid] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+```
+
+See the [Styling Guide](../guides/styling.md) for more CSS examples.
 
 ## Tips
 

@@ -1,10 +1,6 @@
 # ProjectView
 
-Full page view for displaying detailed project information. Uses the compound component pattern with section-based content.
-
-## Preview
-
-<ProjectViewPreview />
+Full page view for displaying detailed project information. Uses compound component pattern with section-based content.
 
 ## Import
 

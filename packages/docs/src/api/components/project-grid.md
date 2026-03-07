@@ -2,10 +2,6 @@
 
 Container component for displaying projects in a grid layout.
 
-## Preview
-
-<ProjectGridPreview />
-
 ## Import
 
 ```tsx
