@@ -14,7 +14,7 @@ function NpmCard({ children }: { children?: ReactNode }) {
 NpmCard.Header = function NpmCardHeader({ project }: { project: FolioProject }) {
   return (
     <div data-folio-card-header>
-      <h3>{project.name}</h3>
+      <h3>{project.name || project.package}</h3>
     </div>
   )
 }
