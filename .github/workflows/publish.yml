@@ -36,7 +36,7 @@ jobs:
       - run: pnpm build
 
       - name: Publish @reallukemanning/folio
-        run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public
+        run: npm publish packages/core --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
