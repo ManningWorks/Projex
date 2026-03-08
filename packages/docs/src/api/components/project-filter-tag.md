@@ -5,7 +5,7 @@ Interactive tag button for filtering projects. Supports active state to indicate
 ## Import
 
 ```tsx
-import { ProjectFilterTag } from '@reallukemanning/folio'
+import { ProjectFilterTag } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -30,14 +30,14 @@ import { ProjectFilterTag } from '@reallukemanning/folio'
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-filter-tag` | - | Root button element |
-| `data-folio-filter-tag-active` | `true` | Present when isActive is true |
+| `data-projex-filter-tag` | - | Root button element |
+| `data-projex-filter-tag-active` | `true` | Present when isActive is true |
 
 ## Example
 
 ```tsx
 import { useState } from 'react'
-import { ProjectFilterBar, ProjectFilterTag, useProjectFilters, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectFilterBar, ProjectFilterTag, useProjectFilters, ProjectGrid } from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js', 'Python']
 

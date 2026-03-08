@@ -142,7 +142,7 @@ export function formatZodError(error: z.ZodError): string {
   }
 
   lines.push('')
-  lines.push(chalk.gray('Tip: Check your folio.config.ts for the errors above.'))
+  lines.push(chalk.gray('Tip: Check your projex.config.ts for the errors above.'))
 
   const hasTypeIssues = error.issues.some((i) => i.code === 'invalid_type')
   const hasEnumIssues = error.issues.some((i) => i.code === 'invalid_enum_value')

@@ -42,7 +42,7 @@ interface FuseOptions {
 ### Example
 
 ```tsx
-import { getFuseOptions } from '@reallukemanning/folio'
+import { getFuseOptions } from '@manningworks/projex'
 
 // Default threshold (0.3)
 const options = getFuseOptions()
@@ -70,24 +70,24 @@ Create a configured Fuse search instance for fuzzy searching projects.
 ### Signature
 
 ```tsx
-function createFuseSearch(projects: FolioProject[], threshold?: number): Fuse<FolioProject>
+function createFuseSearch(projects: ProjexProject[], threshold?: number): Fuse<ProjexProject>
 ```
 
 ### Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
-| projects | `FolioProject[]` | - | Array of projects to search |
+| projects | `ProjexProject[]` | - | Array of projects to search |
 | threshold | `number` | `0.3` | Match threshold (0.0 = perfect, 1.0 = match anything) |
 
 ### Returns
 
-`Fuse<FolioProject>` - Fuse search instance ready for searching
+`Fuse<ProjexProject>` - Fuse search instance ready for searching
 
 ### Example
 
 ```tsx
-import { createFuseSearch } from '@reallukemanning/folio'
+import { createFuseSearch } from '@manningworks/projex'
 
 const fuse = createFuseSearch(projects)
 
@@ -105,7 +105,7 @@ results.forEach(({ item, refIndex }) => {
 These utilities are used internally by `useProjectSearch` hook:
 
 ```tsx
-import { useProjectSearch } from '@reallukemanning/folio'
+import { useProjectSearch } from '@manningworks/projex'
 
 function ProjectSearch({ projects }) {
   const [query, setQuery] = useState('')
@@ -125,7 +125,7 @@ For custom search behavior, create your own options:
 
 ```tsx
 import Fuse from 'fuse.js'
-import type { FolioProject } from '@reallukemanning/folio'
+import type { ProjexProject } from '@manningworks/projex'
 
 const fuse = new Fuse(projects, {
   threshold: 0.2,

@@ -1,6 +1,6 @@
 # Performance
 
-Folio is designed to add minimal overhead to your project. This page documents bundle sizes, tree-shaking behavior, and optimization strategies.
+Projex is designed to add minimal overhead to your project. This page documents bundle sizes, tree-shaking behavior, and optimization strategies.
 
 ## Bundle Size
 
@@ -8,7 +8,7 @@ Size measurements are taken with tree-shaking enabled, all dependencies minified
 
 | Package | Target | Actual (gzipped) | Status |
 |---------|--------|------------------|--------|
-| @reallukemanning/folio | < 10 KB | **2.74 KB** | ✓ |
+| @manningworks/projex | < 10 KB | **2.74 KB** | ✓ |
 
 ::: tip
 The package is well under its size target. We track this limit to prevent accidental bloat.
@@ -16,13 +16,13 @@ The package is well under its size target. We track this limit to prevent accide
 
 ## Benchmarks
 
-Folio includes comprehensive benchmarks for measuring component render times, API fetch performance, and utility function efficiency.
+Projex includes comprehensive benchmarks for measuring component render times, API fetch performance, and utility function efficiency.
 
 ### Running Benchmarks
 
 ```bash
 # Run all benchmarks
-pnpm --filter @reallukemanning/folio benchmark
+pnpm --filter @manningworks/projex benchmark
 
 # Or from the core package
 cd packages/core && pnpm benchmark
@@ -77,7 +77,7 @@ Add to your CI pipeline to catch performance regressions:
 ```yaml
 # .github/workflows/benchmarks.yml
 - name: Run benchmarks
-  run: pnpm --filter @reallukemanning/folio benchmark
+  run: pnpm --filter @manningworks/projex benchmark
 ```
 
 Benchmarks run on every PR to ensure no performance regressions are introduced.
@@ -90,20 +90,20 @@ All exports are fully tree-shakeable. Importing only what you need significantly
 
 ```tsx
 // Import only ProjectCard (~320 B gzipped)
-import { ProjectCard } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
 
 // Import multiple components (only used ones are included)
-import { ProjectCard, ProjectView } from '@reallukemanning/folio'
+import { ProjectCard, ProjectView } from '@manningworks/projex'
 ```
 
 ### Utility Imports
 
 ```tsx
 // Import only what you need
-import { defineProjects, sortByStars } from '@reallukemanning/folio'
+import { defineProjects, sortByStars } from '@manningworks/projex'
 
 // Type imports have zero runtime cost
-import type { FolioProject, ProjectType } from '@reallukemanning/folio'
+import type { ProjexProject, ProjectType } from '@manningworks/projex'
 ```
 
 ### What Gets Tree-Shaken
@@ -118,7 +118,7 @@ Folio ships with **zero CSS**. All styling hooks are provided through data attri
 
 ```css
 /* You control every byte of CSS */
-[data-folio-card] {
+[data-projex-card] {
   /* Your styles here */
 }
 ```
@@ -131,9 +131,9 @@ This means:
 
 ## External Dependencies
 
-### @reallukemanning/folio
+### @manningworks/projex
 
-Folio has **zero runtime dependencies** beyond React (which you already have):
+Projex has **zero runtime dependencies** beyond React (which you already have):
 
 ```
 react        - peer dependency (you provide)
@@ -148,7 +148,7 @@ inquirer     - Interactive prompts (~30 KB)
 chalk        - Terminal colors (~10 KB)
 ```
 
-These CLI dependencies are only used when running `npx folio` commands - they don't impact your production bundle.
+These CLI dependencies are only used when running `npx projex` commands - they don't impact your production bundle.
 
 ## Measuring Bundle Size
 
@@ -176,28 +176,28 @@ Add to your CI pipeline to catch size regressions:
 
 ```tsx
 // Good: Zero runtime cost
-import type { FolioProject } from '@reallukemanning/folio'
+import type { ProjexProject } from '@manningworks/projex'
 
 // Works the same but doesn't hint tree-shaking
-import { FolioProject } from '@reallukemanning/folio'
+import { ProjexProject } from '@manningworks/projex'
 ```
 
 ### 2. Import Components Individually
 
 ```tsx
 // Good: Tree-shakes unused components
-import { ProjectCard } from '@reallukemanning/folio'
-import { ProjectView } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
+import { ProjectView } from '@manningworks/projex'
 
 // Avoid: Prevents tree-shaking analysis
-import * as Folio from '@reallukemanning/folio'
+import * as Projex from '@manningworks/projex'
 ```
 
 ### 3. Use Data Attributes for Styling
 
 ```css
 /* Good: Pure CSS, zero JS */
-[data-folio-card] { ... }
+[data-projex-card] { ... }
 
 /* Avoid: Adds CSS-in-JS runtime */
 import styled from 'styled-components'
@@ -212,7 +212,7 @@ Current baseline (as of measurement):
   "timestamp": "2026-02-22T00:00:00.000Z",
   "packages": [
     {
-      "name": "@reallukemanning/folio",
+      "name": "@manningworks/projex",
       "target": "< 10 KB gzipped",
       "gzipped": 2805,
       "passes": true

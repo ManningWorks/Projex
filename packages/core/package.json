@@ -1,11 +1,11 @@
 {
-  "name": "@reallukemanning/folio",
-  "version": "1.7.2",
+  "name": "@manningworks/projex",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "folio": "./dist/cli.js"
+    "projex": "./dist/cli.js"
   },
   "exports": {
     ".": {
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RealLukeManning/Folio.git"
+    "url": "git+https://github.com/ManningWorks/Projex.git"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

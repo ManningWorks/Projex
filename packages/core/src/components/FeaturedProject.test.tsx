@@ -1,13 +1,13 @@
 import { describe, it, expect, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { FeaturedProject } from './FeaturedProject'
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 
 afterEach(() => {
   cleanup()
 })
 
-const createProject = (overrides: Partial<FolioProject> = {}): FolioProject => ({
+const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject => ({
   id: 'test-project',
   type: 'github',
   status: 'active',

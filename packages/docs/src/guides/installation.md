@@ -1,11 +1,11 @@
 # Installation
 
-Detailed installation guide for setting up Folio in your Next.js project.
+Detailed installation guide for setting up Projex in your Next.js project.
 
 ## Prerequisites
 
 - **Node.js 18+** - Required for modern React features
-- **Next.js** - Folio is designed for Next.js projects
+- **Next.js** - Projex is designed for Next.js projects
 - **TypeScript** - Strongly recommended for type safety
 
 ## Quick Install
@@ -13,16 +13,16 @@ Detailed installation guide for setting up Folio in your Next.js project.
 Run the CLI to initialize your project:
 
 ```bash
-npx @reallukemanning/folio init
+npx @manningworks/projex init
 ```
 
 Or auto-detect your GitHub repositories:
 
 ```bash
-npx @reallukemanning/folio init --github
+npx @manningworks/projex init --github
 ```
 
-This creates a `folio.config.ts` file in your project root.
+This creates a `projex.config.ts` file in your project root.
 
 ## Installation Methods
 
@@ -32,23 +32,23 @@ Use the CLI to copy components into your project:
 
 ```bash
 # Initialize config
-npx @reallukemanning/folio init --github
+npx @manningworks/projex init --github
 
 # Add components
-npx @reallukemanning/folio add project-card
-npx @reallukemanning/folio add project-view
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-view
 
 # Install dependencies
 pnpm install
 
 # Add theme (optional)
-npx @reallukemanning/folio add theme-minimal
+npx @manningworks/projex add theme-minimal
 ```
 
 **Pros:**
 - You own the component code
 - Can modify components as needed
-- No runtime dependency on Folio package
+- No runtime dependency on Projex package
 
 **Cons:**
 - Manual updates to components
@@ -59,14 +59,14 @@ npx @reallukemanning/folio add theme-minimal
 Install the package and import directly:
 
 ```bash
-pnpm add @reallukemanning/folio
+pnpm add @manningworks/projex
 ```
 
 Then import components:
 
 ```tsx
-import { ProjectCard, normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard, normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 ```
 
 **Pros:**
@@ -75,7 +75,7 @@ import type { FolioProject } from '@reallukemanning/folio'
 - Always latest features
 
 **Cons:**
-- Runtime dependency on Folio
+- Runtime dependency on Projex
 - Less customization flexibility
 
 ## Adding Components
@@ -84,22 +84,22 @@ Use the CLI to add components (works with both methods):
 
 ```bash
 # Base components
-npx folio add project-card
-npx folio add project-view
-npx folio add project-grid
-npx folio add project-list
-npx folio add featured-project
+npx projex add project-card
+npx projex add project-view
+npx projex add project-grid
+npx projex add project-list
+npx projex add featured-project
 
 # Preset components (ready to use)
-npx folio add github-card
-npx folio add npm-card
-npx folio add showcase-card
+npx projex add github-card
+npx projex add npm-card
+npx projex add showcase-card
 
 # Interactive components
-npx folio add project-search
-npx folio add project-filter-bar
-npx folio add project-filter-tag
-npx folio add project-sort
+npx projex add project-search
+npx projex add project-filter-bar
+npx projex add project-filter-tag
+npx projex add project-sort
 ```
 
 ## Adding Themes
@@ -107,16 +107,16 @@ npx folio add project-sort
 Install pre-built themes for instant styling:
 
 ```bash
-npx folio add theme-minimal    # Clean light theme
-npx folio add theme-dark        # Dark mode with system preference
-npx folio add theme-gradient    # Purple gradient theme
+npx projex add theme-minimal    # Clean light theme
+npx projex add theme-dark        # Dark mode with system preference
+npx projex add theme-gradient    # Purple gradient theme
 ```
 
-Themes are copied to `styles/folio-<theme-name>.css`. Import in your app:
+Themes are copied to `styles/projex-<theme-name>.css`. Import in your app:
 
 ```tsx
 // app/layout.tsx (Next.js)
-import './styles/folio-theme-minimal.css'
+import './styles/projex-theme-minimal.css'
 ```
 
 ## Environment Variables
@@ -149,10 +149,10 @@ PRODUCT_HUNT_TOKEN=xxxxxxxxxxxx
 
 ## Config File
 
-Create `folio.config.ts` in your project root:
+Create `projex.config.ts` in your project root:
 
 ```ts
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -181,7 +181,7 @@ export const projects = defineProjects([
 
 ## Next Steps
 
-- [Using Components](./using-components) - How to integrate Folio components in Next.js
+- [Using Components](./using-components) - How to integrate Projex components in Next.js
 - [Project Types](./project-types) - Available project types and their features
 - [Styling](./styling) - Customizing your portfolio's appearance
 - [Examples](/examples/) - Code examples and patterns
@@ -193,22 +193,22 @@ export const projects = defineProjects([
 Use the full package name:
 
 ```bash
-npx @reallukemanning/folio init
+npx @manningworks/projex init
 ```
 
 Or install globally:
 
 ```bash
-npm install -g @reallukemanning/folio
+npm install -g @manningworks/projex
 ```
 
 ### Package Already Installed
 
-If `@reallukemanning/folio` is already installed, use shorter commands:
+If `@manningworks/projex` is already installed, use shorter commands:
 
 ```bash
-npx folio init
-npx folio add project-card
+npx projex init
+npx projex add project-card
 ```
 
 ### TypeScript Errors

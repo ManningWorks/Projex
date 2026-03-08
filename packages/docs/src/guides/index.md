@@ -1,22 +1,22 @@
 # Guides
 
-Complete guides for working with Folio components and features.
+Complete guides for working with Projex components and features.
 
 ## Getting Started
 
 - [Getting Started Tutorial](./getting-started) - Build a complete solo developer portfolio step-by-step
-- [Installation](./installation) - Setting up Folio in your Next.js project
+- [Installation](./installation) - Setting up Projex in your Next.js project
 
 ## Configuration
 
-- [Using Components](./using-components) - Integrating Folio components in Next.js pages
+- [Using Components](./using-components) - Integrating Projex components in Next.js pages
 - [Project Types](./project-types) - GitHub, npm, Product Hunt, hybrid, and manual project types
 - [Fetch Strategy](./fetch-strategy) - Build-time data fetching and authentication
 
 ## Styling
 
 - [Styling Guide](./styling) - Data attributes, CSS patterns, and theming
-- [Real World Examples](./real-world-examples) - Portfolio sites using Folio
+- [Real World Examples](./real-world-examples) - Portfolio sites using Projex
 
 ## Advanced
 
@@ -32,7 +32,7 @@ Complete guides for working with Folio components and features.
 
 ## Where to Start?
 
-If you're new to Folio, follow this path:
+If you're new to Projex, follow this path:
 
 1. Read the [Getting Started Tutorial](./getting-started) for a complete walkthrough
 2. Review [Installation](./installation) for detailed setup instructions

@@ -1,4 +1,4 @@
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 import { generateProjectSchema } from './project'
 
 export interface Metadata {
@@ -18,7 +18,7 @@ export interface Metadata {
 }
 
 export function generateProjectMetadata(
-  project: FolioProject
+  project: ProjexProject
 ): Metadata | null {
   const isNameValid = project.name && typeof project.name === 'string' && project.name.trim() !== ''
   const isDescriptionValid = project.description && typeof project.description === 'string' && project.description.trim() !== ''

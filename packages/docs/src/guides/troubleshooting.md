@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Folio is designed to handle errors gracefully. Here's what to expect and how to handle common issues.
+Projex is designed to handle errors gracefully. Here's what to expect and how to handle common issues.
 
 ## Error Handling
 
@@ -35,7 +35,7 @@ pnpm build
 
 ### Failed API Fetches
 
-If GitHub, npm, or Product Hunt API requests fail, Folio handles it gracefully:
+If GitHub, npm, or Product Hunt API requests fail, Projex handles it gracefully:
 
 - The `normalise` function returns a project with `stats: null`
 - Components with missing stats won't render the stats section
@@ -71,7 +71,7 @@ The token must have **Contents (Read-only)** permission for the repository. When
 
 ### Missing Environment Variables
 
-Folio fetches data at build time using environment variables:
+Projex fetches data at build time using environment variables:
 
 | Variable | Purpose | Required |
 |----------|-----------|------------|
@@ -79,7 +79,7 @@ Folio fetches data at build time using environment variables:
 | `PRODUCT_HUNT_TOKEN` | Product Hunt API access | Optional (if using product-hunt type) |
 
 **Missing variables:**
-- Folio logs a warning
+- Projex logs a warning
 - Falls back to unauthenticated requests
 - Continues to build (may hit rate limits)
 
@@ -160,7 +160,7 @@ For mission-critical data:
 
 **Solutions:**
 - Using CLI: Components are copied to `components/folio/<ComponentName>/` with types in `components/folio/types.ts`
-- Using npm package: Import from `@reallukemanning/folio` package
+- Using npm package: Import from `@manningworks/projex` package
 - Check TypeScript config includes component directory
 
 ### Build Not Updating Data
@@ -177,7 +177,7 @@ For mission-critical data:
 **Symptom:** `folio: command not found`
 
 **Solutions:**
-- Use `npx @reallukemanning/folio <command>` - no installation required
-- Or install the package first: `pnpm add @reallukemanning/folio` then use `npx folio <command>`
-- Or install globally: `npm install -g @reallukemanning/folio`
+- Use `npx @manningworks/projex <command>` - no installation required
+- Or install the package first: `pnpm add @manningworks/projex` then use `npx projex <command>`
+- Or install globally: `npm install -g @manningworks/projex`
 - Check Node.js version: `node --version` (requires 18+)

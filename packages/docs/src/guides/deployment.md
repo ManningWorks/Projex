@@ -1,6 +1,6 @@
 # Deploying Your Portfolio
 
-Deploy your Folio portfolio to popular hosting platforms with build-time data fetching.
+Deploy your Projex portfolio to popular hosting platforms with build-time data fetching.
 
 ## GitHub Actions Workflow
 
@@ -18,7 +18,7 @@ on:
     # Rebuild daily at 2 AM UTC to fetch fresh GitHub stats
     - cron: '0 2 * * *'
   repository_dispatch:
-    types: [folio-rebuild]
+    types: [projex-rebuild]
 
 jobs:
   build-and-deploy:
@@ -97,7 +97,7 @@ gh workflow run deploy-portfolio.yml
 ```yaml
 on:
   repository_dispatch:
-    types: [folio-rebuild]
+    types: [projex-rebuild]
 ```
 Trigger with:
 ```bash
@@ -105,7 +105,7 @@ curl -X POST \
   -H "Authorization: token $GITHUB_TOKEN" \
   -H "Accept: application/vnd.github.v3+json" \
   https://api.github.com/repos/owner/repo/dispatches \
-  -d '{"event_type":"folio-rebuild"}'
+  -d '{"event_type":"projex-rebuild"}'
 ```
 
 ## Platform-Specific Deployment
@@ -303,7 +303,7 @@ jobs:
 **Solutions**:
 1. Verify token has `Contents: Read-only` permission
 2. Check repository is public or token has access
-3. Ensure repos in `folio.config.ts` exist
+3. Ensure repos in `projex.config.ts` exist
 
 ### Missing data after deployment
 

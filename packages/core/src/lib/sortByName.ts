@@ -1,7 +1,7 @@
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 import type { SortOrder } from './sortByDate'
 
-export function sortByName(projects: FolioProject[], order: SortOrder = 'asc'): FolioProject[] {
+export function sortByName(projects: ProjexProject[], order: SortOrder = 'asc'): ProjexProject[] {
   if (projects.length === 0) {
     return []
   }

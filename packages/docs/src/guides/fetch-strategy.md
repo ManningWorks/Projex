@@ -1,6 +1,6 @@
 # Fetch Strategy
 
-Folio is designed for **build-time data fetching**. All remote data (GitHub, npm, Product Hunt) is fetched when your site builds.
+Projex is designed for **build-time data fetching**. All remote data (GitHub, npm, Product Hunt) is fetched when your site builds.
 
 ## Why Build-Time?
 
@@ -39,7 +39,7 @@ We recommend using a **fine-grained personal access token** for better security:
 
 ### Environment Variables
 
-Folio fetches data at build time using environment variables:
+Projex fetches data at build time using environment variables:
 
 | Variable | Purpose | Required |
 |----------|-----------|------------|

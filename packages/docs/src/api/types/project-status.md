@@ -22,8 +22,8 @@ type ProjectStatus = 'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'arc
 ## Usage
 
 ```tsx
-import type { ProjectStatus } from '@reallukemanning/folio'
-import { filterByStatus } from '@reallukemanning/folio'
+import type { ProjectStatus } from '@manningworks/projex'
+import { filterByStatus } from '@manningworks/projex'
 
 // Filter by single status
 const active = filterByStatus(projects, 'active')
@@ -35,10 +35,10 @@ const visible = filterByStatus(projects, ['active', 'shipped', 'in-progress'])
 ## Styling by Status
 
 ```css
-[data-folio-status-value="active"] { color: green; }
-[data-folio-status-value="shipped"] { color: blue; }
-[data-folio-status-value="in-progress"] { color: orange; }
-[data-folio-status-value="coming-soon"] { color: gray; }
-[data-folio-status-value="archived"] { color: gray; opacity: 0.6; }
-[data-folio-status-value="for-sale"] { color: purple; }
+[data-projex-status-value="active"] { color: green; }
+[data-projex-status-value="shipped"] { color: blue; }
+[data-projex-status-value="in-progress"] { color: orange; }
+[data-projex-status-value="coming-soon"] { color: gray; }
+[data-projex-status-value="archived"] { color: gray; opacity: 0.6; }
+[data-projex-status-value="for-sale"] { color: purple; }
 ```

@@ -4,7 +4,7 @@ Guidelines for agentic coding agents operating in this repository.
 
 ## Project Overview
 
-Folio is a shadcn-style component library for developers building project showcase pages. Components are copied into consumer projects (not installed as npm packages). The library ships zero styling - only semantic HTML with data attributes for CSS targeting.
+Projex is a shadcn-style component library for developers building project showcase pages. Components are copied into consumer projects (not installed as npm packages). The library ships zero styling - only semantic HTML with data attributes for CSS targeting.
 
 ## Build/Lint/Test Commands
 
@@ -16,23 +16,23 @@ pnpm lint                       # Run linting
 pnpm test                       # Run all tests
 
 # Run a single test file (from repo root)
-pnpm --filter @reallukemanning/folio test -- src/lib/__tests__/github.test.ts
+pnpm --filter @manningworks/projex test -- src/lib/__tests__/github.test.ts
 
 # Run a single test by name pattern
-pnpm --filter @reallukemanning/folio test -- -t "should return null for 404"
+pnpm --filter @manningworks/projex test -- -t "should return null for 404"
 
 # Run tests in watch mode / with coverage
-pnpm --filter @reallukemanning/folio test -- --watch
-pnpm --filter @reallukemanning/folio test:coverage
+pnpm --filter @manningworks/projex test -- --watch
+pnpm --filter @manningworks/projex test:coverage
 
 # Run benchmarks
-pnpm --filter @reallukemanning/folio benchmark
+pnpm --filter @manningworks/projex benchmark
 ```
 
 ## Monorepo Structure
 
 ```
-folio/
+projex/
 ├── packages/
 │   ├── core/              # Main component library (includes CLI)
 │   │   └── src/
@@ -58,13 +58,13 @@ folio/
 
 ### Imports
 
-Group imports: React/framework first, then external libraries, then internal modules. Use `@reallukemanning/folio` for cross-package imports. Prefer named exports.
+Group imports: React/framework first, then external libraries, then internal modules. Use `@manningworks/projex` for cross-package imports. Prefer named exports.
 
 ```typescript
 import { useState, useEffect } from 'react'
 import type { Metadata } from 'next'
 import { fetchGitHubRepo } from './github'
-import type { FolioProject, ProjectType } from '../types'
+import type { ProjexProject, ProjectType } from '../types'
 ```
 
 ### Naming Conventions
@@ -72,10 +72,10 @@ import type { FolioProject, ProjectType } from '../types'
 - **Components**: PascalCase - `ProjectCard`, `ProjectView`
 - **Compound components**: Dot notation - `ProjectCard.Header`
 - **Files**: Match export name - `ProjectCard.tsx`, `github.ts`
-- **Types/Interfaces**: PascalCase - `FolioProject`, `ProjectLinks`
+- **Types/Interfaces**: PascalCase - `ProjexProject`, `ProjectLinks`
 - **Utilities**: camelCase - `fetchGitHubRepo`, `defineProjects`
 - **Constants**: SCREAMING_SNAKE or PascalCase - `STATUS`, `TYPE_ICON`
-- **Data attributes**: kebab-case with `data-folio-` prefix - `data-folio-card`
+- **Data attributes**: kebab-case with `data-projex-` prefix - `data-projex-card`
 
 ### Formatting
 
@@ -90,23 +90,23 @@ No semicolons, single quotes for strings, trailing commas in multiline structure
 
 ### Data Attributes
 
-Every rendered element must have a `data-folio-*` attribute:
+Every rendered element must have a `data-projex-*` attribute:
 
 ```
-data-folio-card, data-folio-card-header, data-folio-card-description, data-folio-card-tags
-data-folio-card-stats, data-folio-card-status, data-folio-card-links
-data-folio-view, data-folio-view-section, data-folio-view-links, data-folio-view-stats
-data-folio-featured, data-folio-featured-image, data-folio-grid, data-folio-list
-data-folio-status, data-folio-status-value="active"
-data-folio-type, data-folio-type-value="github"
-data-folio-struggle, data-folio-struggle-type="warn"
-data-folio-tag, data-folio-link, data-folio-link-type="github|live|docs|demo|npm|product-hunt|app-store|play-store|custom"
-data-folio-link-label="custom-link-label"
-data-folio-stat="stars|forks|downloads|version|upvotes|comments"
-data-folio-timeline-date, data-folio-timeline-note
-data-folio-post-title, data-folio-post-date, data-folio-post-link
-data-folio-commits, data-folio-commits-header, data-folio-commit-list
-data-folio-commit, data-folio-commit-message, data-folio-commit-date, data-folio-commit-link, data-folio-commit-author
+data-projex-card, data-projex-card-header, data-projex-card-description, data-projex-card-tags
+data-projex-card-stats, data-projex-card-status, data-projex-card-links
+data-projex-view, data-projex-view-section, data-projex-view-links, data-projex-view-stats
+data-projex-featured, data-projex-featured-image, data-projex-grid, data-projex-list
+data-projex-status, data-projex-status-value="active"
+data-projex-type, data-projex-type-value="github"
+data-projex-struggle, data-projex-struggle-type="warn"
+data-projex-tag, data-projex-link, data-projex-link-type="github|live|docs|demo|npm|product-hunt|app-store|play-store|custom"
+data-projex-link-label="custom-link-label"
+data-projex-stat="stars|forks|downloads|version|upvotes|comments"
+data-projex-timeline-date, data-projex-timeline-note
+data-projex-post-title, data-projex-post-date, data-projex-post-link
+data-projex-commits, data-projex-commits-header, data-projex-commit-list
+data-projex-commit, data-projex-commit-message, data-projex-commit-date, data-projex-commit-link, data-projex-commit-author
 ```
 
 ### Error Handling & API Fetching
@@ -131,7 +131,7 @@ Uses **Vitest** with `@testing-library/react` and `@testing-library/jest-dom`:
 - Cleanup after each test with `afterEach(() => cleanup())`
 
 ```typescript
-const createProject = (overrides: Partial<FolioProject> = {}): FolioProject => ({
+const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject => ({
   id: 'test-project', type: 'github', status: 'active', ...overrides,
 })
 const mockFetch = vi.fn()
@@ -154,7 +154,7 @@ mockFetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockData
 
 1. **shadcn-style distribution** - consumers own the code after copying
 2. **Zero styling opinions** - no fonts, colors, or layout assumptions
-3. **Config-driven** - all projects defined in `folio.config.ts`
+3. **Config-driven** - all projects defined in `projex.config.ts`
 4. **Every project type is first-class** - GitHub, manual, npm, hybrid all equal
 5. **Build-time data fetching** - no runtime API calls
 6. **Compound components** - maximum flexibility for consumers

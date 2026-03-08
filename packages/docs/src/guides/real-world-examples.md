@@ -1,6 +1,6 @@
 # Real World Examples
 
-See Folio in action on real portfolios. These examples demonstrate what's possible with the library's semantic HTML and flexible styling.
+See Projex in action on real portfolios. These examples demonstrate what's possible with the library's semantic HTML and flexible styling.
 
 ## Featured Examples
 
@@ -14,15 +14,15 @@ A personal portfolio showcasing open source projects, npm packages, and personal
 
 ## Submit Your Portfolio
 
-Have you built a portfolio using Folio? We'd love to feature it!
+Have you built a portfolio using Projex? We'd love to feature it!
 
 **Requirements:**
 - The portfolio is publicly accessible
-- Uses Folio components
+- Uses Projex components
 - Demonstrates interesting use of the library
 
 **To submit:**
-1. Open an issue or PR on the [Folio GitHub repository](https://github.com/yourusername/folio)
+1. Open an issue or PR on the [Projex GitHub repository](https://github.com/yourusername/folio)
 2. Include:
    - Portfolio URL
    - Brief description of what it demonstrates

@@ -10,18 +10,18 @@ function ProjectSort({ options, value, onChange }: ProjectSortProps) {
   }
 
   return (
-    <div data-folio-sort>
+    <div data-projex-sort>
       <select
         value={value}
         onChange={handleChange}
-        data-folio-sort-select
+        data-projex-sort-select
       >
         {options.map((option) => (
           <option
             key={option}
             value={option}
-            data-folio-sort-option
-            data-folio-sort-value={option === value ? option : undefined}
+            data-projex-sort-option
+            data-projex-sort-value={option === value ? option : undefined}
           >
             {option}
           </option>

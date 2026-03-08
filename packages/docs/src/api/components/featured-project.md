@@ -5,7 +5,7 @@ Featured project hero section for highlighting a single project.
 ## Import
 
 ```tsx
-import { FeaturedProject } from '@reallukemanning/folio'
+import { FeaturedProject } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import { FeaturedProject } from '@reallukemanning/folio'
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject \| null \| undefined` | Yes | Featured project data |
+| project | `ProjexProject \| null \| undefined` | Yes | Featured project data |
 
 Returns `null` if `project` is null or undefined.
 
@@ -26,13 +26,13 @@ Returns `null` if `project` is null or undefined.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-folio-featured` | Featured container |
-| `data-folio-featured-image` | Featured project image |
+| `data-projex-featured` | Featured container |
+| `data-projex-featured-image` | Featured project image |
 
 ## Example
 
 ```tsx
-import { FeaturedProject, filterByFeatured } from '@reallukemanning/folio'
+import { FeaturedProject, filterByFeatured } from '@manningworks/projex'
 
 function HomePage({ projects }) {
   const featured = filterByFeatured(projects, true)[0]

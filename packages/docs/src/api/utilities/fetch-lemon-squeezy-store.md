@@ -56,7 +56,7 @@ interface LemonSqueezyStoreData {
 ## Example
 
 ```tsx
-import { fetchLemonSqueezyStore } from '@reallukemanning/folio'
+import { fetchLemonSqueezyStore } from '@manningworks/projex'
 
 const data = await fetchLemonSqueezyStore('1')
 

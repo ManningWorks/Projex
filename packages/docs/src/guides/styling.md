@@ -1,33 +1,33 @@
 # Styling Guide
 
-Folio ships zero styling - just semantic HTML with data attributes for CSS targeting. You have complete control over the look and feel of your portfolio.
+Projex ships zero styling - just semantic HTML with data attributes for CSS targeting. You have complete control over the look and feel of your portfolio.
 
 ## Data Attribute Reference
 
-All Folio components use `data-folio-*` attributes for styling hooks. These provide semantic, maintainable selectors that won't conflict with your existing CSS.
+All Projex components use `data-projex-*` attributes for styling hooks. These provide semantic, maintainable selectors that won't conflict with your existing CSS.
 
 ### Card Components
 
 All card components (GitHubCard, NpmCard, ShowcaseCard) share these base attributes:
 
 ```html
-<div data-folio-card>
-  <div data-folio-card-header>
+<div data-projex-card>
+  <div data-projex-card-header>
     <h3>Project Name</h3>
   </div>
-  <div data-folio-card-description>Project description...</div>
-  <div data-folio-card-tags>
-    <span data-folio-tag>React</span>
-    <span data-folio-tag>TypeScript</span>
+  <div data-projex-card-description>Project description...</div>
+  <div data-projex-card-tags>
+    <span data-projex-tag>React</span>
+    <span data-projex-tag>TypeScript</span>
   </div>
-  <div data-folio-card-stats>
-    <span data-folio-stat="stars">243 stars</span>
-    <span data-folio-stat="forks">45 forks</span>
+  <div data-projex-card-stats>
+    <span data-projex-stat="stars">243 stars</span>
+    <span data-projex-stat="forks">45 forks</span>
   </div>
-  <div data-folio-status data-folio-status-value="active">active</div>
-  <div data-folio-card-links>
-    <a href="..." data-folio-link data-folio-link-type="github">GitHub</a>
-    <a href="..." data-folio-link data-folio-link-type="live">Live</a>
+  <div data-projex-status data-projex-status-value="active">active</div>
+  <div data-projex-card-links>
+    <a href="..." data-projex-link data-projex-link-type="github">GitHub</a>
+    <a href="..." data-projex-link data-projex-link-type="live">Live</a>
   </div>
 </div>
 ```
@@ -35,12 +35,12 @@ All card components (GitHubCard, NpmCard, ShowcaseCard) share these base attribu
 ### GitHubCard Specific Attributes
 
 ```html
-<span data-folio-language data-folio-language-color="#f1e05a">JavaScript</span>
+<span data-projex-language data-projex-language-color="#f1e05a">JavaScript</span>
 ```
 
 ### Stats Attributes
 
-Available `data-folio-stat` values:
+Available `data-projex-stat` values:
 - `stars` - GitHub stars
 - `forks` - GitHub forks
 - `downloads` - npm downloads
@@ -60,7 +60,7 @@ Available `data-folio-stat` values:
 
 ### Link Attributes
 
-Available `data-folio-link-type` values:
+Available `data-projex-link-type` values:
 - `github` - GitHub repository link
 - `live` - Live demo/site link
 - `docs` - Documentation link
@@ -70,16 +70,16 @@ Available `data-folio-link-type` values:
 - `youtube` - YouTube link
 - `app-store` - App Store link
 - `play-store` - Play Store link
-- `custom` - Custom link (see `data-folio-link-label`)
+- `custom` - Custom link (see `data-projex-link-label`)
 
 Custom links include:
 ```html
-<a href="..." data-folio-link data-folio-link-type="custom" data-folio-link-label="Blog">Blog</a>
+<a href="..." data-projex-link data-projex-link-type="custom" data-projex-link-label="Blog">Blog</a>
 ```
 
 ### Status Values
 
-Available `data-folio-status-value` values:
+Available `data-projex-status-value` values:
 - `active` - Project is actively maintained
 - `shipped` - Project has been released
 - `in-progress` - Work in progress
@@ -90,7 +90,7 @@ Available `data-folio-status-value` values:
 ### ProjectGrid
 
 ```html
-<div data-folio-grid>
+<div data-projex-grid>
   <!-- cards -->
 </div>
 ```
@@ -98,7 +98,7 @@ Available `data-folio-status-value` values:
 ### ProjectList
 
 ```html
-<div data-folio-list>
+<div data-projex-list>
   <!-- list items -->
 </div>
 ```
@@ -106,15 +106,15 @@ Available `data-folio-status-value` values:
 ### FeaturedProject & ProjectView
 
 ```html
-<div data-folio-featured>
-  <img data-folio-featured-image src="..." alt="..." />
-  <div data-folio-view>
+<div data-projex-featured>
+  <img data-projex-featured-image src="..." alt="..." />
+  <div data-projex-view>
     <h2>Project Name</h2>
-    <div data-folio-view-section data-folio-view-section-name="description">
+    <div data-projex-view-section data-projex-view-section-name="description">
       Description...
     </div>
-    <div data-folio-view-stats>...</div>
-    <div data-folio-view-links>...</div>
+    <div data-projex-view-stats>...</div>
+    <div data-projex-view-links>...</div>
   </div>
 </div>
 ```
@@ -123,34 +123,34 @@ Available `data-folio-status-value` values:
 
 ```html
 <!-- Struggles -->
-<div data-folio-struggle data-folio-struggle-type="warn">Warning text</div>
-<div data-folio-struggle data-folio-struggle-type="error">Error text</div>
+<div data-projex-struggle data-projex-struggle-type="warn">Warning text</div>
+<div data-projex-struggle data-projex-struggle-type="error">Error text</div>
 
 <!-- Timeline -->
 <div>
-  <span data-folio-timeline-date>2024-01</span>
-  <span data-folio-timeline-note>Initial design</span>
+  <span data-projex-timeline-date>2024-01</span>
+  <span data-projex-timeline-note>Initial design</span>
 </div>
 
 <!-- Posts -->
 <div>
-  <span data-folio-post-title>Blog Post Title</span>
-  <span data-folio-post-date>2024-01-15</span>
-  <a href="..." data-folio-post-link>Link</a>
+  <span data-projex-post-title>Blog Post Title</span>
+  <span data-projex-post-date>2024-01-15</span>
+  <a href="..." data-projex-post-link>Link</a>
 </div>
 ```
 
 ### Commits
 
 ```html
-<div data-folio-commits>
-  <div data-folio-commits-header>Commits</div>
+<div data-projex-commits>
+  <div data-projex-commits-header>Commits</div>
   <ul>
-    <li data-folio-commit>
-      <div data-folio-commit-message>Commit message...</div>
-      <div data-folio-commit-date>2024-01-15</div>
-      <a href="..." data-folio-commit-link>Link</a>
-      <span data-folio-commit-author>author-name</span>
+    <li data-projex-commit>
+      <div data-projex-commit-message>Commit message...</div>
+      <div data-projex-commit-date>2024-01-15</div>
+      <a href="..." data-projex-commit-link>Link</a>
+      <span data-projex-commit-author>author-name</span>
     </li>
   </ul>
 </div>
@@ -162,67 +162,67 @@ Available `data-folio-status-value` values:
 
 ```css
 /* All cards */
-[data-folio-card] { }
+[data-projex-card] { }
 
 /* Specific card types (requires adding data attribute yourself) */
-[data-folio-card][data-folio-type="github"] { }
-[data-folio-card][data-folio-type="npm"] { }
-[data-folio-card][data-folio-type="manual"] { }
+[data-projex-card][data-projex-type="github"] { }
+[data-projex-card][data-projex-type="npm"] { }
+[data-projex-card][data-projex-type="manual"] { }
 ```
 
 ### Targeting Card Sections
 
 ```css
 /* Headers */
-[data-folio-card-header] { }
+[data-projex-card-header] { }
 
 /* Descriptions */
-[data-folio-card-description] { }
+[data-projex-card-description] { }
 
 /* Tags container and individual tags */
-[data-folio-card-tags] { }
-[data-folio-tag] { }
+[data-projex-card-tags] { }
+[data-projex-tag] { }
 
 /* Stats container */
-[data-folio-card-stats] { }
+[data-projex-card-stats] { }
 
 /* Individual stats */
-[data-folio-stat="stars"] { }
-[data-folio-stat="forks"] { }
-[data-folio-stat="downloads"] { }
+[data-projex-stat="stars"] { }
+[data-projex-stat="forks"] { }
+[data-projex-stat="downloads"] { }
 
 /* Links container */
-[data-folio-card-links] { }
+[data-projex-card-links] { }
 
 /* Individual links by type */
-[data-folio-link-type="github"] { }
-[data-folio-link-type="live"] { }
-[data-folio-link-type="npm"] { }
+[data-projex-link-type="github"] { }
+[data-projex-link-type="live"] { }
+[data-projex-link-type="npm"] { }
 ```
 
 ### Targeting Status
 
 ```css
 /* All statuses */
-[data-folio-status] { }
+[data-projex-status] { }
 
 /* Specific statuses */
-[data-folio-status-value="active"] { }
-[data-folio-status-value="shipped"] { }
-[data-folio-status-value="in-progress"] { }
+[data-projex-status-value="active"] { }
+[data-projex-status-value="shipped"] { }
+[data-projex-status-value="in-progress"] { }
 ```
 
 ### Combining Selectors
 
 ```css
 /* Stars on GitHub cards */
-[data-folio-card][data-folio-type="github"] [data-folio-stat="stars"] { }
+[data-projex-card][data-projex-type="github"] [data-projex-stat="stars"] { }
 
 /* Downloads on npm cards */
-[data-folio-card][data-folio-type="npm"] [data-folio-stat="downloads"] { }
+[data-projex-card][data-projex-type="npm"] [data-projex-stat="downloads"] { }
 
 /* GitHub links on any card */
-[data-folio-link-type="github"] { }
+[data-projex-link-type="github"] { }
 ```
 
 ## Common Styling Patterns
@@ -230,32 +230,32 @@ Available `data-folio-status-value` values:
 ### Minimal Card Style
 
 ```css
-[data-folio-card] {
+[data-projex-card] {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 16px;
   background: #fff;
 }
 
-[data-folio-card-header] h3 {
+[data-projex-card-header] h3 {
   margin: 0 0 8px 0;
   font-size: 1.1em;
   font-weight: 600;
 }
 
-[data-folio-card-description] {
+[data-projex-card-description] {
   margin: 8px 0;
   color: #6b7280;
 }
 
-[data-folio-card-stats] {
+[data-projex-card-stats] {
   display: flex;
   gap: 16px;
   margin: 12px 0;
   color: #6b7280;
 }
 
-[data-folio-status] {
+[data-projex-status] {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 4px;
@@ -263,28 +263,28 @@ Available `data-folio-status-value` values:
   font-weight: 500;
 }
 
-[data-folio-status-value="active"] {
+[data-projex-status-value="active"] {
   background: #dcfce7;
   color: #166534;
 }
 
-[data-folio-status-value="shipped"] {
+[data-projex-status-value="shipped"] {
   background: #dbeafe;
   color: #1e40af;
 }
 
-[data-folio-card-links] {
+[data-projex-card-links] {
   display: flex;
   gap: 12px;
   margin-top: 12px;
 }
 
-[data-folio-link] {
+[data-projex-link] {
   color: #374151;
   text-decoration: none;
 }
 
-[data-folio-link]:hover {
+[data-projex-link]:hover {
   text-decoration: underline;
 }
 ```
@@ -292,13 +292,13 @@ Available `data-folio-status-value` values:
 ### Grid Layout
 
 ```css
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
-[data-folio-card] {
+[data-projex-card] {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -308,14 +308,14 @@ Available `data-folio-status-value` values:
 ### Tags Style
 
 ```css
-[data-folio-card-tags] {
+[data-projex-card-tags] {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 8px 0;
 }
 
-[data-folio-tag] {
+[data-projex-tag] {
   background: #f3f4f6;
   padding: 2px 8px;
   border-radius: 4px;
@@ -328,21 +328,21 @@ Available `data-folio-status-value` values:
 
 ```css
 /* Language with color dot */
-[data-folio-language]::before {
+[data-projex-language]::before {
   content: '';
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   margin-right: 6px;
-  background: var(--folio-language-color, #6b7280);
+  background: var(--projex-language-color, #6b7280);
 }
 
-[data-folio-language][data-folio-language-color="#f1e05a"]::before {
+[data-projex-language][data-projex-language-color="#f1e05a"]::before {
   background: #f1e05a; /* JavaScript */
 }
 
-[data-folio-language][data-folio-language-color="#3178c6"]::before {
+[data-projex-language][data-projex-language-color="#3178c6"]::before {
   background: #3178c6; /* TypeScript */
 }
 ```
@@ -352,7 +352,7 @@ Available `data-folio-status-value` values:
 You can add type-specific styling by wrapping cards with type attributes:
 
 ```tsx
-<div data-folio-card data-folio-type="github">
+<div data-projex-card data-projex-type="github">
   {/* card content */}
 </div>
 ```
@@ -361,17 +361,17 @@ Then style by type:
 
 ```css
 /* GitHub cards get a border with GitHub brand color */
-[data-folio-card][data-folio-type="github"] {
+[data-projex-card][data-projex-type="github"] {
   border-color: #24292f;
 }
 
 /* npm cards get npm brand color */
-[data-folio-card][data-folio-type="npm"] {
+[data-projex-card][data-projex-type="npm"] {
   border-color: #cb3837;
 }
 
 /* Showcase cards get a different style */
-[data-folio-card][data-folio-type="manual"] {
+[data-projex-card][data-projex-type="manual"] {
   border-color: #7c3aed;
 }
 ```
@@ -381,17 +381,17 @@ Then style by type:
 Add icons using pseudo-elements:
 
 ```css
-[data-folio-link-type="github"]::before {
+[data-projex-link-type="github"]::before {
   content: '📦';
   margin-right: 4px;
 }
 
-[data-folio-link-type="live"]::before {
+[data-projex-link-type="live"]::before {
   content: '🔗';
   margin-right: 4px;
 }
 
-[data-folio-link-type="npm"]::before {
+[data-projex-link-type="npm"]::before {
   content: 'npm';
   margin-right: 4px;
 }
@@ -401,21 +401,21 @@ Add icons using pseudo-elements:
 
 ```css
 @media (prefers-color-scheme: dark) {
-  [data-folio-card] {
+  [data-projex-card] {
     background: #1f2937;
     border-color: #374151;
     color: #f9fafb;
   }
 
-  [data-folio-card-description] {
+  [data-projex-card-description] {
     color: #9ca3af;
   }
 
-  [data-folio-card-stats] {
+  [data-projex-card-stats] {
     color: #9ca3af;
   }
 
-  [data-folio-link] {
+  [data-projex-link] {
     color: #d1d5db;
   }
 }
@@ -427,22 +427,22 @@ Use CSS variables to make your styles themeable:
 
 ```css
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-text: #374151;
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-text: #374151;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
 }
 
-[data-folio-card] {
-  background: var(--folio-card-bg);
-  border: 1px solid var(--folio-card-border);
-  color: var(--folio-card-text);
+[data-projex-card] {
+  background: var(--projex-card-bg);
+  border: 1px solid var(--projex-card-border);
+  color: var(--projex-card-text);
 }
 
-[data-folio-tag] {
-  background: var(--folio-tag-bg);
-  color: var(--folio-tag-text);
+[data-projex-tag] {
+  background: var(--projex-tag-bg);
+  color: var(--projex-tag-text);
 }
 ```
 
@@ -452,7 +452,7 @@ Here's a complete stylesheet for a modern card design:
 
 ```css
 /* Card base */
-[data-folio-card] {
+[data-projex-card] {
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -460,41 +460,41 @@ Here's a complete stylesheet for a modern card design:
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-[data-folio-card]:hover {
+[data-projex-card]:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Header */
-[data-folio-card-header] h3 {
+[data-projex-card-header] h3 {
   margin: 0 0 4px 0;
   font-size: 1.25em;
   font-weight: 600;
   color: #111827;
 }
 
-[data-folio-card-tagline] {
+[data-projex-card-tagline] {
   margin: 0 0 12px 0;
   color: #6b7280;
   font-size: 0.95em;
 }
 
 /* Description */
-[data-folio-card-description] {
+[data-projex-card-description] {
   margin: 12px 0;
   color: #4b5563;
   line-height: 1.6;
 }
 
 /* Tags */
-[data-folio-card-tags] {
+[data-projex-card-tags] {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 12px 0;
 }
 
-[data-folio-tag] {
+[data-projex-tag] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   padding: 4px 10px;
@@ -504,7 +504,7 @@ Here's a complete stylesheet for a modern card design:
 }
 
 /* Stats */
-[data-folio-card-stats] {
+[data-projex-card-stats] {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
@@ -514,13 +514,13 @@ Here's a complete stylesheet for a modern card design:
   border-bottom: 1px solid #f3f4f6;
 }
 
-[data-folio-stat] {
+[data-projex-stat] {
   color: #6b7280;
   font-size: 0.9em;
 }
 
 /* Status */
-[data-folio-status] {
+[data-projex-status] {
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
@@ -531,45 +531,45 @@ Here's a complete stylesheet for a modern card design:
   letter-spacing: 0.05em;
 }
 
-[data-folio-status-value="active"] {
+[data-projex-status-value="active"] {
   background: #ecfdf5;
   color: #047857;
 }
 
-[data-folio-status-value="shipped"] {
+[data-projex-status-value="shipped"] {
   background: #eff6ff;
   color: #1d4ed8;
 }
 
-[data-folio-status-value="in-progress"] {
+[data-projex-status-value="in-progress"] {
   background: #fef3c7;
   color: #b45309;
 }
 
-[data-folio-status-value="coming-soon"] {
+[data-projex-status-value="coming-soon"] {
   background: #f5f3ff;
   color: #7c3aed;
 }
 
-[data-folio-status-value="archived"] {
+[data-projex-status-value="archived"] {
   background: #f3f4f6;
   color: #4b5563;
 }
 
-[data-folio-status-value="for-sale"] {
+[data-projex-status-value="for-sale"] {
   background: #fee2e2;
   color: #b91c1c;
 }
 
 /* Links */
-[data-folio-card-links] {
+[data-projex-card-links] {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 16px;
 }
 
-[data-folio-link] {
+[data-projex-link] {
   display: inline-flex;
   align-items: center;
   padding: 8px 16px;
@@ -583,21 +583,21 @@ Here's a complete stylesheet for a modern card design:
   transition: all 0.2s;
 }
 
-[data-folio-link]:hover {
+[data-projex-link]:hover {
   background: #374151;
   color: #fff;
   border-color: #374151;
 }
 
 /* Grid */
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
 }
 
 /* List */
-[data-folio-list] {
+[data-projex-list] {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -610,33 +610,33 @@ All components use CSS custom properties with fallback values. This allows fine-
 
 ```css
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-radius: 8px;
-  --folio-card-padding: 16px;
-  --folio-card-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-radius: 8px;
+  --projex-card-padding: 16px;
+  --projex-card-text: #374151;
 
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
-  --folio-tag-radius: 4px;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
+  --projex-tag-radius: 4px;
 
-  --folio-stats-label: #6b7280;
-  --folio-stats-value: #374151;
+  --projex-stats-label: #6b7280;
+  --projex-stats-value: #374151;
 
-  --folio-link-text: #374151;
+  --projex-link-text: #374151;
 
-  --folio-status-active-bg: #dcfce7;
-  --folio-status-active-text: #166534;
-  --folio-status-shipped-bg: #dbeafe;
-  --folio-status-shipped-text: #1e40af;
-  --folio-status-in-progress-bg: #fef3c7;
-  --folio-status-in-progress-text: #92400e;
-  --folio-status-coming-soon-bg: #f3e8ff;
-  --folio-status-coming-soon-text: #7c3aed;
-  --folio-status-archived-bg: #f1f5f9;
-  --folio-status-archived-text: #475569;
-  --folio-status-for-sale-bg: #fee2e2;
-  --folio-status-for-sale-text: #991b1b;
+  --projex-status-active-bg: #dcfce7;
+  --projex-status-active-text: #166534;
+  --projex-status-shipped-bg: #dbeafe;
+  --projex-status-shipped-text: #1e40af;
+  --projex-status-in-progress-bg: #fef3c7;
+  --projex-status-in-progress-text: #92400e;
+  --projex-status-coming-soon-bg: #f3e8ff;
+  --projex-status-coming-soon-text: #7c3aed;
+  --projex-status-archived-bg: #f1f5f9;
+  --projex-status-archived-text: #475569;
+  --projex-status-for-sale-bg: #fee2e2;
+  --projex-status-for-sale-text: #991b1b;
 }
 ```
 
@@ -644,28 +644,28 @@ All components use CSS custom properties with fallback values. This allows fine-
 
 ```css
 /* Override only GitHub-type cards */
-[data-folio-type-value="github"] {
-  --folio-card-bg: #f0fdf4;
+[data-projex-type-value="github"] {
+  --projex-card-bg: #f0fdf4;
 }
 
 /* Override specific project by ID */
-[data-folio-card="my-project"] {
-  --folio-card-border: #10b981;
+[data-projex-card="my-project"] {
+  --projex-card-border: #10b981;
 }
 ```
 
 ## Best Practices
 
-1. **Use data attributes, not classes** - Folio provides semantic data attributes for all elements. Use these instead of adding your own classes for consistent styling.
+1. **Use data attributes, not classes** - Projex provides semantic data attributes for all elements. Use these instead of adding your own classes for consistent styling.
 
-2. **Start with base styles** - Define base styles for `[data-folio-card]`, `[data-folio-card-header]`, etc., then build type-specific styles on top.
+2. **Start with base styles** - Define base styles for `[data-projex-card]`, `[data-projex-card-header]`, etc., then build type-specific styles on top.
 
 3. **Use CSS variables** - Make your styles themeable with CSS variables for colors, spacing, and other values.
 
 4. **Consider responsive design** - Use `@media` queries to adjust layouts for different screen sizes, especially for grids.
 
-5. **Progressive enhancement** - Ensure your portfolio works and looks good even without JavaScript (Folio generates static HTML at build time).
+5. **Progressive enhancement** - Ensure your portfolio works and looks good even without JavaScript (Projex generates static HTML at build time).
 
-6. **Accessibility** - Use semantic HTML (provided by Folio) and ensure sufficient color contrast for text.
+6. **Accessibility** - Use semantic HTML (provided by Projex) and ensure sufficient color contrast for text.
 
 7. **Performance** - Keep CSS efficient by avoiding overly specific selectors and using the cascade wisely.

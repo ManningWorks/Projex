@@ -1,35 +1,35 @@
 # CLI Reference
 
-The Folio CLI helps you initialize projects, add components, and install themes. All commands can be run with `npx` without installing the package first.
+The Projex CLI helps you initialize projects, add components, and install themes. All commands can be run with `npx` without installing the package first.
 
 ## Installation
 
 Install the package for shorter commands:
 
 ```bash
-pnpm add @reallukemanning/folio
+pnpm add @manningworks/projex
 ```
 
 Now you can use:
 
 ```bash
-npx folio <command>
+npx projex <command>
 ```
 
 Or install globally:
 
 ```bash
-npm install -g @reallukemanning/folio
+npm install -g @manningworks/projex
 ```
 
 ## Commands
 
 ### `init`
 
-Initialize a new Folio project with a `folio.config.ts` file.
+Initialize a new Projex project with a `projex.config.ts` file.
 
 ```bash
-npx folio init
+npx projex init
 ```
 
 This creates a basic configuration template with a sample project.
@@ -37,15 +37,15 @@ This creates a basic configuration template with a sample project.
 **What it does:**
 
 1. Detects if you're in a Next.js project
-2. Creates `folio.config.ts` in your project root
-3. Ensures `@reallukemanning/folio` is installed
+2. Creates `projex.config.ts` in your project root
+3. Ensures `@manningworks/projex` is installed
 4. Shows next steps for getting started
 
 **Output:**
 
 ```ts
-// folio.config.ts
-import { defineProjects } from '@reallukemanning/folio'
+// projex.config.ts
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -71,7 +71,7 @@ export const projects = defineProjects([
 Auto-detect your GitHub repositories and create a pre-populated config.
 
 ```bash
-npx folio init --github
+npx projex init --github
 ```
 
 **What it does:**
@@ -80,7 +80,7 @@ npx folio init --github
 2. Fetches all your public repositories
 3. Filters out archived repos and templates
 4. Asks if you want to include forks
-5. Creates `folio.config.ts` with all your repos
+5. Creates `projex.config.ts` with all your repos
 
 **Options:**
 
@@ -92,7 +92,7 @@ npx folio init --github
 **Example with --yes:**
 
 ```bash
-npx folio init --github --yes
+npx projex init --github --yes
 ```
 
 This uses your git config username without prompting.
@@ -104,7 +104,7 @@ This uses your git config username without prompting.
 Create a config using git config without prompts.
 
 ```bash
-npx folio init --yes
+npx projex init --yes
 ```
 
 Uses your git `user.name` configuration for GitHub username when combined with `--github`.
@@ -113,10 +113,10 @@ Uses your git `user.name` configuration for GitHub username when combined with `
 
 ### `add <component-name>`
 
-Add a Folio component or theme to your project.
+Add a Projex component or theme to your project.
 
 ```bash
-npx folio add project-card
+npx projex add project-card
 ```
 
 **Available components:**
@@ -142,21 +142,21 @@ npx folio add project-card
 
 **What it does:**
 
-1. Copies component source code to `components/folio/<ComponentName>/`
+1. Copies component source code to `components/projex/<ComponentName>/`
 2. Transforms imports to use the installed package
-3. Ensures `@reallukemanning/folio` is installed
+3. Ensures `@manningworks/projex` is installed
 4. Shows import usage instructions
 
 **Example output:**
 
 ```
 📦 Adding project-card...
-  Installing @reallukemanning/folio...
-  ✓ @reallukemanning/folio installed
-✓ project-card added successfully
+  Installing @manningworks/projex...
+  ✓ @manningworks/projex installed
+  ✓ project-card added successfully
 
 Import usage:
-  import { ProjectCard } from './components/folio/ProjectCard'
+  import { ProjectCard } from './components/projex/ProjectCard'
 ```
 
 ---
@@ -166,7 +166,7 @@ Import usage:
 Overwrite existing component files without prompting.
 
 ```bash
-npx folio add project-card --force
+npx projex add project-card --force
 ```
 
 Useful when updating to a new version or re-adding components.
@@ -178,14 +178,14 @@ Useful when updating to a new version or re-adding components.
 Add a pre-built theme to your project.
 
 ```bash
-npx folio add theme-minimal
-npx folio add theme-dark
-npx folio add theme-gradient
+npx projex add theme-minimal
+npx projex add theme-dark
+npx projex add theme-gradient
 ```
 
 **What it does:**
 
-1. Copies theme CSS to `styles/folio-<theme-name>.css`
+1. Copies theme CSS to `styles/projex-<theme-name>.css`
 2. Shows import instructions
 
 **Example output:**
@@ -195,10 +195,10 @@ npx folio add theme-gradient
 ✓ theme-minimal added successfully
 
 Import usage:
-  import './styles/folio-theme-minimal.css'
+  import './styles/projex-theme-minimal.css'
 
   Or add to your CSS:
-  @import './styles/folio-theme-minimal.css';
+  @import './styles/projex-theme-minimal.css';
 ```
 
 ---
@@ -210,7 +210,7 @@ Import usage:
 Fine-grained personal access token for GitHub API.
 
 ```bash
-GITHUB_TOKEN=github_pat_xxx npx folio init --github
+GITHUB_TOKEN=github_pat_xxx npx projex init --github
 ```
 
 **Why use it:**
@@ -255,56 +255,56 @@ Only required if using `type: 'product-hunt'` in your config.
 
 ```bash
 # Initialize with your GitHub repos
-npx folio init --github
+npx projex init --github
 
 # Add the ProjectCard component
-npx folio add project-card
+npx projex add project-card
 
 # Install dependencies
 pnpm install
 
 # Add styling
-npx folio add theme-minimal
+npx projex add theme-minimal
 ```
 
 ### Manual Project Setup
 
 ```bash
 # Initialize basic config
-npx folio init
+npx projex init
 
 # Add components you need
-npx folio add project-card
-npx folio add project-view
-npx folio add project-grid
+npx projex add project-card
+npx projex add project-view
+npx projex add project-grid
 
 # Add dark mode theme
-npx folio add theme-dark
+npx projex add theme-dark
 ```
 
 ### Update Components
 
 ```bash
 # Force overwrite to update
-npx folio add project-card --force
+npx projex add project-card --force
 ```
 
 ---
 
 ## Troubleshooting
 
-### `folio: command not found`
+### `projex: command not found`
 
 Use the full package name:
 
 ```bash
-npx @reallukemanning/folio init
+npx @manningworks/projex init
 ```
 
 Or install globally:
 
 ```bash
-npm install -g @reallukemanning/folio
+npm install -g @manningworks/projex
 ```
 
 ### Permission Denied
@@ -312,7 +312,7 @@ npm install -g @reallukemanning/folio
 Check file permissions in your project directory:
 
 ```bash
-ls -la folio.config.ts
+ls -la projex.config.ts
 ```
 
 Ensure you have write permissions.
@@ -322,7 +322,7 @@ Ensure you have write permissions.
 Set a `GITHUB_TOKEN`:
 
 ```bash
-GITHUB_TOKEN=github_pat_xxx npx folio init --github
+GITHUB_TOKEN=github_pat_xxx npx projex init --github
 ```
 
 See [Fetch Strategy](./guides/fetch-strategy) for more details.
@@ -332,7 +332,7 @@ See [Fetch Strategy](./guides/fetch-strategy) for more details.
 Check available components:
 
 ```bash
-npx folio add
+npx projex add
 ```
 
 This lists all available components and themes.
@@ -341,15 +341,15 @@ This lists all available components and themes.
 
 ## CLI vs Package Imports
 
-You have two ways to use Folio:
+You have two ways to use Projex:
 
 ### CLI (Copy-Paste)
 
-Use `npx folio add` to copy components:
+Use `npx projex add` to copy components:
 
 ```tsx
 // Import from copied files
-import { ProjectCard } from './components/folio/ProjectCard'
+import { ProjectCard } from './components/projex/ProjectCard'
 ```
 
 ### Package Imports
@@ -358,7 +358,7 @@ Install and import directly:
 
 ```tsx
 // Import from package
-import { ProjectCard } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
 ```
 
 Both approaches work. The CLI gives you ownership of the code, while package imports are easier to update.

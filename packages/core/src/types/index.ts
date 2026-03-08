@@ -166,7 +166,7 @@ export interface HybridProjectInput extends BaseProjectInput {
   commits?: number
 }
 
-export type FolioProjectInput =
+export type ProjexProjectInput =
   | GitHubProjectInput
   | ManualProjectInput
   | NpmProjectInput
@@ -177,7 +177,7 @@ export type FolioProjectInput =
   | DevToProjectInput
   | HybridProjectInput
 
-export type FolioProjectInputCompat = Omit<BaseProjectInput, 'id'> & {
+export type ProjexProjectInputCompat = Omit<BaseProjectInput, 'id'> & {
   id: string
   type?: ProjectType
   repo?: string
@@ -185,7 +185,7 @@ export type FolioProjectInputCompat = Omit<BaseProjectInput, 'id'> & {
   slug?: string
 }
 
-export interface FolioProject {
+export interface ProjexProject {
   id: string
   type: ProjectType
   status: ProjectStatus

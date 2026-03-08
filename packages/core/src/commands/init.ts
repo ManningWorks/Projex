@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import { execSync } from 'node:child_process'
 import { fetchGitHubRepos } from '../lib/github.js'
 
-const CONFIG_FILE = 'folio.config.ts'
+const CONFIG_FILE = 'projex.config.ts'
 const PACKAGE_JSON = 'package.json'
 
 interface InitOptions {
@@ -45,7 +45,7 @@ export async function init(options: InitOptions = {}): Promise<void> {
 }
 
 async function runInit(options: InitOptions, workingDir: string, setTempPath: (path: string) => void): Promise<void> {
-  console.log(chalk.bold('🚀 Initializing Folio project...'))
+  console.log(chalk.bold('🚀 Initializing Projex project...'))
   console.log()
 
   try {
@@ -70,7 +70,7 @@ async function runInit(options: InitOptions, workingDir: string, setTempPath: (p
   if (isNextJs) {
     console.log(chalk.green('✓ Next.js project detected'))
   } else {
-    console.log(chalk.yellow('⚠ Next.js not detected. Folio is optimized for Next.js projects.'))
+    console.log(chalk.yellow('⚠ Next.js not detected. Projex is optimized for Next.js projects.'))
   }
 
   console.log()
@@ -95,20 +95,20 @@ async function runInit(options: InitOptions, workingDir: string, setTempPath: (p
 
     setTempPath('')
 
-    await ensureFolioInstalled()
+    await ensureProjexInstalled()
 
     console.log(chalk.green(`✓ ${CONFIG_FILE} created successfully`))
     console.log()
     console.log(chalk.bold('Next steps:'))
-    console.log(chalk.gray('1. Edit folio.config.ts to add your projects'))
-    console.log(chalk.gray('2. Import and use the components in your Next.js app'))
-    console.log(chalk.gray('3. See https://docs.folio.dev for usage examples'))
+    console.log(chalk.gray('1. Edit projex.config.ts to add your projects'))
+    console.log(chalk.gray('2. Import and use components in your Next.js app'))
+    console.log(chalk.gray('3. See https://docs.projex.dev for usage examples'))
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'EACCES') {
       console.error(chalk.red(`✖ Permission denied. Cannot write to ${CONFIG_FILE}`))
       console.error(chalk.gray('  Check file permissions and try again.'))
     } else {
-      console.error(chalk.red('✖ Failed to create folio.config.ts'))
+      console.error(chalk.red('✖ Failed to create projex.config.ts'))
       console.error(chalk.gray(`  ${error instanceof Error ? error.message : 'Unknown error'}`))
     }
     process.exit(1)
@@ -148,7 +148,7 @@ async function detectNextJs(workingDir: string): Promise<boolean> {
 }
 
 function generateConfigTemplate(): string {
-  return `import { defineProjects } from '@reallukemanning/folio'
+  return `import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -218,18 +218,18 @@ async function generateGitHubConfig(yes = false): Promise<string> {
         console.log(chalk.yellow('  Recommended: Set GITHUB_TOKEN for 5000 requests/hour'))
         console.log(chalk.yellow('  Create token: https://github.com/settings/personal-access-token/new'))
       }
-      console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
     } else if (result.error === 'network') {
       console.log(chalk.red('✖ Failed to fetch repositories from GitHub'))
       console.log(chalk.gray('  Check your network connection and try again.'))
-      console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
     } else if (result.error === 'not_found') {
       console.log(chalk.red(`✖ GitHub user "${username}" not found`))
-      console.log(chalk.gray('  Check the username and try again.'))
-      console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Check username and try again.'))
+      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
     } else {
       console.log(chalk.red('✖ Failed to fetch repositories from GitHub'))
-      console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
     }
     process.exit(1)
   }
@@ -243,7 +243,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
     console.log()
     console.log(chalk.gray('Suggestions:'))
     console.log(chalk.gray('  1. Set GITHUB_TOKEN (fine-grained PAT with Contents read-only)'))
-    console.log(chalk.gray('  2. Run "npx folio init" for a basic scaffold instead'))
+    console.log(chalk.gray('  2. Run "npx projex init" for a basic scaffold instead'))
     console.log(chalk.gray('  3. Check your GitHub username and try again'))
     process.exit(1)
   }
@@ -276,7 +276,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
   if (finalRepos.length === 0) {
     console.log(chalk.yellow('✖ No repositories match your criteria'))
     console.log(chalk.gray('  Try including forks or check your repository descriptions.'))
-    console.log(chalk.gray('  Run "npx folio init" for a basic scaffold instead.'))
+    console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
     process.exit(1)
   }
 
@@ -299,7 +299,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
     )
     .join('\n')
 
-  return `import { defineProjects } from '@reallukemanning/folio'
+  return `import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
 ${repoEntries}
@@ -307,13 +307,13 @@ ${repoEntries}
 `
 }
 
-async function ensureFolioInstalled(): Promise<void> {
+async function ensureProjexInstalled(): Promise<void> {
   const packageJsonPath = resolve(process.cwd(), 'package.json')
   const content = await readFile(packageJsonPath, 'utf-8')
   const pkg = JSON.parse(content)
 
   const deps = { ...pkg.dependencies, ...pkg.devDependencies }
-  if ('@reallukemanning/folio' in deps) {
+  if ('@manningworks/projex' in deps) {
     return
   }
 
@@ -322,7 +322,7 @@ async function ensureFolioInstalled(): Promise<void> {
 
   const installCmd = hasPnpm ? 'pnpm add' : hasYarn ? 'yarn add' : 'npm install'
 
-  console.log(chalk.gray(`  Installing @reallukemanning/folio...`))
-  execSync(`${installCmd} @reallukemanning/folio`, { stdio: 'inherit' })
-  console.log(chalk.gray(`  ✓ @reallukemanning/folio installed`))
+  console.log(chalk.gray(`  Installing @manningworks/projex...`))
+  execSync(`${installCmd} @manningworks/projex`, { stdio: 'inherit' })
+  console.log(chalk.gray(`  ✓ @manningworks/projex installed`))
 }

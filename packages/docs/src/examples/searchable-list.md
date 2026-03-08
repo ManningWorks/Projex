@@ -12,7 +12,7 @@ A searchable project list with real-time filtering using `ProjectSearch`.
 ## Code
 
 ```tsx
-import { ProjectSearch, ProjectList, ProjectCard } from '@reallukemanning/folio'
+import { ProjectSearch, ProjectList, ProjectCard } from '@manningworks/projex'
 import { useState } from 'react'
 
 function SearchableProjects() {
@@ -51,19 +51,19 @@ The components generate semantic HTML:
 
 ```html
 <!-- ProjectSearch -->
-<div data-folio-search>
+<div data-projex-search>
   <input type="search" placeholder="Search projects..." />
 </div>
 
 <!-- ProjectList -->
-<div data-folio-list>
-  <div data-folio-card>
-    <div data-folio-card-header>
+<div data-projex-list>
+  <div data-projex-card>
+    <div data-projex-card-header>
       <h3>Project Name</h3>
     </div>
-    <div data-folio-card-description>Description...</div>
+    <div data-projex-card-description>Description...</div>
   </div>
-  <div data-folio-card>
+  <div data-projex-card>
     <!-- Card content -->
   </div>
 </div>
@@ -75,7 +75,7 @@ CSS for the search input and list layout:
 
 ```css
 /* Search input */
-[data-folio-search] input {
+[data-projex-search] input {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #e5e7eb;
@@ -84,21 +84,21 @@ CSS for the search input and list layout:
   margin-bottom: 24px;
 }
 
-[data-folio-search] input:focus {
+[data-projex-search] input:focus {
   outline: none;
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 /* List layout */
-[data-folio-list] {
+[data-projex-list] {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 /* List cards */
-[data-folio-list] [data-folio-card] {
+[data-projex-list] [data-projex-card] {
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -108,7 +108,7 @@ CSS for the search input and list layout:
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-[data-folio-list] [data-folio-card]:hover {
+[data-projex-list] [data-projex-card]:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

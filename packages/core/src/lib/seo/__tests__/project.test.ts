@@ -1,9 +1,9 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { generateProjectSchema, type SoftwareApplicationSchema } from '../project'
-import type { FolioProject } from '../../../types'
+import type { ProjexProject } from '../../../types'
 import { cleanup } from '@testing-library/react'
 
-const createProject = (overrides: Partial<FolioProject> = {}): FolioProject => ({
+const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject => ({
   id: 'test-project',
   type: 'github',
   status: 'active',

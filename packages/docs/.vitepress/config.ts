@@ -9,10 +9,10 @@ export default defineConfig({
       }),
     ],
     ssr: {
-      noExternal: ['@reallukemanning/folio'],
+      noExternal: ['@manningworks/projex'],
     },
   },
-  title: 'Folio',
+  title: 'Projex',
   description: 'A shadcn-style component library for project showcase pages',
   srcDir: 'src',
   cleanUrls: true,
@@ -167,11 +167,11 @@ export default defineConfig({
             items: [
               {
                 text: '⭐ GitHub',
-                link: 'https://github.com/RealLukeManning/Folio'
+                link: 'https://github.com/ManningWorks/Projex'
               },
               {
                 text: '📦 npm',
-                link: 'https://www.npmjs.com/package/@reallukemanning/folio'
+                link: 'https://www.npmjs.com/package/@manningworks/projex'
               }
             ]
           }
@@ -179,7 +179,7 @@ export default defineConfig({
       }
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/RealLukeManning/Folio' }
+      { icon: 'github', link: 'https://github.com/ManningWorks/Projex' }
     ]
   }
 })

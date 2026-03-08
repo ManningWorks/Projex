@@ -1,5 +1,5 @@
 {
-  "name": "folio",
+  "name": "projex",
   "version": "1.0.1",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "typecheck": "pnpm --filter './packages/**' typecheck",
     "lint": "pnpm --filter './packages/**' lint",
     "test": "pnpm --filter './packages/**' test",
-    "benchmark": "pnpm --filter @reallukemanning/folio benchmark",
+    "benchmark": "pnpm --filter @manningworks/projex benchmark",
     "bundle-size": "tsx scripts/bundle-size.ts"
   },
   "devDependencies": {

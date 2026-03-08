@@ -35,9 +35,9 @@ interface ProjectLinks {
 ## Usage
 
 ```tsx
-import type { FolioProject } from '@reallukemanning/folio'
+import type { ProjexProject } from '@manningworks/projex'
 
-function renderLinks(project: FolioProject) {
+function renderLinks(project: ProjexProject) {
   const links = project.links
   
   return (
@@ -136,9 +136,9 @@ This allows customizing which links appear without requiring manual filtering in
 
 ## Data Attributes
 
-Each link element receives `data-folio-link` and `data-folio-link-type` attributes:
+Each link element receives `data-projex-link` and `data-projex-link-type` attributes:
 
-| Link Type | `data-folio-link-type` |
+| Link Type | `data-projex-link-type` |
 |-----------|------------------------|
 | `github` | `"github"` |
 | `live` | `"live"` |
@@ -150,7 +150,7 @@ Each link element receives `data-folio-link` and `data-folio-link-type` attribut
 | `productHunt` | `"product-hunt"` |
 | `custom` | `"custom"` |
 
-Custom links additionally receive `data-folio-link-label` with the label value.
+Custom links additionally receive `data-projex-link-label` with the label value.
 
 ## Override
 

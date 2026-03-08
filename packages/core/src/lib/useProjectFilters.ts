@@ -1,15 +1,15 @@
 import { useMemo } from 'react'
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 
 export interface UseProjectFiltersOptions {
   field?: 'stack'
 }
 
 export function useProjectFilters(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   selectedTags: string[],
   options: UseProjectFiltersOptions = {}
-): FolioProject[] {
+): ProjexProject[] {
   const { field = 'stack' } = options
 
   return useMemo(() => {

@@ -57,7 +57,7 @@ interface GitHubRepoData {
 ## Example
 
 ```tsx
-import { fetchGitHubRepo } from '@reallukemanning/folio'
+import { fetchGitHubRepo } from '@manningworks/projex'
 
 const data = await fetchGitHubRepo('facebook/react')
 
@@ -148,7 +148,7 @@ type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
 ### Example
 
 ```tsx
-import { fetchGitHubRepos } from '@reallukemanning/folio'
+import { fetchGitHubRepos } from '@manningworks/projex'
 
 const result = await fetchGitHubRepos('facebook')
 
@@ -173,11 +173,11 @@ if (result.data) {
 
 ### Usage in CLI
 
-This function is used internally by `npx folio init --github`:
+This function is used internally by `npx projex init --github`:
 
 ```bash
 # Interactive CLI uses fetchGitHubRepos
-npx folio init --github
+npx projex init --github
 
 # Prompts for username, fetches all repos, generates config
 ```

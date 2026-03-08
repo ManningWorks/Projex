@@ -1,4 +1,4 @@
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 import type { ProjectStatus } from '../../types'
 
 const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
@@ -12,17 +12,17 @@ const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
 
 interface ProjectCardProps {
   children?: React.ReactNode
-  project?: FolioProject
+  project?: ProjexProject
 }
 
 function ProjectCard({ children, project }: ProjectCardProps) {
   return (
     <div
-      data-folio-card={project?.id ?? ''}
-      data-folio-github-card={project?.type === 'github' ? true : undefined}
-      data-folio-og-image={project?.image || undefined}
-      data-folio-og-title={project?.name || undefined}
-      data-folio-og-description={project?.description || undefined}
+      data-projex-card={project?.id ?? ''}
+      data-projex-github-card={project?.type === 'github' ? true : undefined}
+      data-projex-og-image={project?.image || undefined}
+      data-projex-og-title={project?.name || undefined}
+      data-projex-og-description={project?.description || undefined}
       style={{
         backgroundColor: 'var(--folio-card-bg, #ffffff)',
         borderColor: 'var(--folio-card-border, #e5e7eb)',
@@ -36,30 +36,30 @@ function ProjectCard({ children, project }: ProjectCardProps) {
   )
 }
 
-ProjectCard.Header = function ProjectCardHeader({ project }: { project: FolioProject }) {
+ProjectCard.Header = function ProjectCardHeader({ project }: { project: ProjexProject }) {
   return (
-    <div data-folio-card-header>
+    <div data-projex-card-header>
       <h3>{project.name}</h3>
-      <div data-folio-type data-folio-type-value={project.type}>
+      <div data-projex-type data-projex-type-value={project.type}>
         {project.type}
       </div>
     </div>
   )
 }
 
-ProjectCard.Description = function ProjectCardDescription({ project }: { project: FolioProject }) {
+ProjectCard.Description = function ProjectCardDescription({ project }: { project: ProjexProject }) {
   if (!project.description) return null
-  return <div data-folio-card-description>{project.description}</div>
+  return <div data-projex-card-description>{project.description}</div>
 }
 
-ProjectCard.Tags = function ProjectCardTags({ project }: { project: FolioProject }) {
+ProjectCard.Tags = function ProjectCardTags({ project }: { project: ProjexProject }) {
   if (!project.stack || project.stack.length === 0) return null
   return (
-    <div data-folio-card-tags>
+    <div data-projex-card-tags>
       {project.stack.map((tag) => (
         <span
           key={tag}
-          data-folio-tag
+          data-projex-tag
           style={{
             backgroundColor: 'var(--folio-tag-bg, #f3f4f6)',
             color: 'var(--folio-tag-text, #374151)',
@@ -73,7 +73,7 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project: FolioProject
   )
 }
 
-ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProject }) {
+ProjectCard.Stats = function ProjectCardStats({ project }: { project: ProjexProject }) {
   if (
     !project.stats ||
     (!project.stats.stars &&
@@ -99,14 +99,14 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
   }
   return (
     <div
-      data-folio-card-stats
+      data-projex-card-stats
       style={{
         color: 'var(--folio-stats-label, #6b7280)',
       }}
     >
       {project.stats.stars && (
         <span
-          data-folio-stat="stars"
+          data-projex-stat="stars"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.stars} stars
@@ -114,7 +114,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.forks && (
         <span
-          data-folio-stat="forks"
+          data-projex-stat="forks"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.forks} forks
@@ -122,7 +122,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.downloads && (
         <span
-          data-folio-stat="downloads"
+          data-projex-stat="downloads"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.downloads} downloads
@@ -130,7 +130,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.version && (
         <span
-          data-folio-stat="version"
+          data-projex-stat="version"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.version}
@@ -138,7 +138,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.upvotes && (
         <span
-          data-folio-stat="upvotes"
+          data-projex-stat="upvotes"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.upvotes} upvotes
@@ -146,7 +146,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.comments && (
         <span
-          data-folio-stat="comments"
+          data-projex-stat="comments"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.comments} comments
@@ -154,7 +154,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.subscribers && (
         <span
-          data-folio-stat="subscribers"
+          data-projex-stat="subscribers"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.subscribers} subscribers
@@ -162,7 +162,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.views && (
         <span
-          data-folio-stat="views"
+          data-projex-stat="views"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.views} views
@@ -171,8 +171,8 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       {project.stats.latestVideoTitle && project.stats.latestVideoUrl && (
         <a
           href={project.stats.latestVideoUrl}
-          data-folio-link
-          data-folio-link-type="youtube"
+          data-projex-link
+          data-projex-link-type="youtube"
           style={{ color: 'var(--folio-link-text, #374151)' }}
           className="folio-link"
         >
@@ -181,7 +181,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.formattedRevenue && (
         <span
-          data-folio-stat="revenue"
+          data-projex-stat="revenue"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.formattedRevenue}
@@ -189,7 +189,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.salesCount && (
         <span
-          data-folio-stat="sales"
+          data-projex-stat="sales"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.salesCount} sales
@@ -197,7 +197,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.subscriberCount && (
         <span
-          data-folio-stat="subscribers"
+          data-projex-stat="subscribers"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.subscriberCount} subscribers
@@ -205,7 +205,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.formattedMRR && (
         <span
-          data-folio-stat="mrr"
+          data-projex-stat="mrr"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.formattedMRR} MRR
@@ -213,7 +213,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.orderCount && (
         <span
-          data-folio-stat="orders"
+          data-projex-stat="orders"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.orderCount} orders
@@ -221,7 +221,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.customerCount && (
         <span
-          data-folio-stat="customers"
+          data-projex-stat="customers"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.customerCount} customers
@@ -229,7 +229,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.articleCount && (
         <span
-          data-folio-stat="articles"
+          data-projex-stat="articles"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.articleCount} articles
@@ -237,7 +237,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.totalViews && (
         <span
-          data-folio-stat="total-views"
+          data-projex-stat="total-views"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.totalViews} views
@@ -245,7 +245,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
       )}
       {project.stats.averageReactions && (
         <span
-          data-folio-stat="reactions"
+          data-projex-stat="reactions"
           style={{ color: 'var(--folio-stats-value, #374151)' }}
         >
           {project.stats.averageReactions} reactions
@@ -255,12 +255,12 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: FolioProje
   )
 }
 
-ProjectCard.Status = function ProjectCardStatus({ project }: { project: FolioProject }) {
+ProjectCard.Status = function ProjectCardStatus({ project }: { project: ProjexProject }) {
   const colors = statusColors[project.status]
   return (
     <div
-      data-folio-status
-      data-folio-status-value={project.status}
+      data-projex-status
+      data-projex-status-value={project.status}
       style={{
         backgroundColor: colors.bg,
         color: colors.text,
@@ -271,7 +271,7 @@ ProjectCard.Status = function ProjectCardStatus({ project }: { project: FolioPro
   )
 }
 
-ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProject }) {
+ProjectCard.Links = function ProjectCardLinks({ project }: { project: ProjexProject }) {
   const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'youtube', 'custom'] as const
 
   const linkLabels: Record<string, string> = {
@@ -305,7 +305,7 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProje
 
   return (
     <div
-      data-folio-card-links
+      data-projex-card-links
       style={{
         color: 'var(--folio-link-text, #374151)',
       }}
@@ -316,9 +316,9 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProje
             <a
               key={link.label}
               href={link.url}
-              data-folio-link
-              data-folio-link-type="custom"
-              data-folio-link-label={link.label}
+              data-projex-link
+              data-projex-link-type="custom"
+              data-projex-link-label={link.label}
               style={{
                 color: 'var(--folio-link-text, #374151)',
               }}
@@ -336,8 +336,8 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: FolioProje
           <a
             key={linkType}
             href={url}
-            data-folio-link
-            data-folio-link-type={linkTypeAttr[linkType]}
+            data-projex-link
+            data-projex-link-type={linkTypeAttr[linkType]}
             style={{
               color: 'var(--folio-link-text, #374151)',
             }}

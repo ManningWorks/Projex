@@ -6,21 +6,21 @@ Sort GitHub projects by star count.
 
 ```tsx
 function sortByStars(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   order?: SortOrder
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| projects | `FolioProject[]` | - | Array of projects to sort |
+| projects | `ProjexProject[]` | - | Array of projects to sort |
 | order | `SortOrder` | `'desc'` | Sort order: `'asc'` or `'desc'` |
 
 ## Returns
 
-`FolioProject[]` - Sorted array of projects (new array, does not mutate input)
+`ProjexProject[]` - Sorted array of projects (new array, does not mutate input)
 
 ## Types
 
@@ -37,7 +37,7 @@ type SortOrder = 'asc' | 'desc'
 ## Example
 
 ```tsx
-import { sortByStars } from '@reallukemanning/folio'
+import { sortByStars } from '@manningworks/projex'
 
 // Most starred first (default)
 const popularFirst = sortByStars(projects)

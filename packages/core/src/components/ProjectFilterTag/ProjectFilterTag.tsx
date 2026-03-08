@@ -14,8 +14,8 @@ function ProjectFilterTag({ label, isActive = false, onClick }: ProjectFilterTag
   return (
     <button
       type="button"
-      data-folio-filter-tag
-      data-folio-filter-tag-active={isActive ? 'true' : undefined}
+      data-projex-filter-tag
+      data-projex-filter-tag-active={isActive ? 'true' : undefined}
       onClick={handleClick}
     >
       {label}

@@ -1,22 +1,22 @@
 # normalise
 
-Transform a `FolioProjectInput` into a normalized `FolioProject` by fetching external data.
+Transform a `ProjexProjectInput` into a normalized `ProjexProject` by fetching external data.
 
 ## Signature
 
 ```tsx
-function normalise(input: FolioProjectInput): Promise<FolioProject>
+function normalise(input: ProjexProjectInput): Promise<ProjexProject>
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| input | `FolioProjectInput` | Project input configuration |
+| input | `ProjexProjectInput` | Project input configuration |
 
 ## Returns
 
-`Promise<FolioProject>` - Normalized project with fetched data
+`Promise<ProjexProject>` - Normalized project with fetched data
 
 ## Behavior
 
@@ -48,7 +48,7 @@ The function handles fetch failures gracefully:
 ## Example
 
 ```tsx
-import { normalise, defineProjects } from '@reallukemanning/folio'
+import { normalise, defineProjects } from '@manningworks/projex'
 
 // Single project
 const project = await normalise({

@@ -5,7 +5,7 @@ Container component for displaying projects in a list layout.
 ## Import
 
 ```tsx
-import { ProjectList } from '@reallukemanning/folio'
+import { ProjectList } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -30,12 +30,12 @@ Returns `null` if `children` is falsy.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-folio-list` | List container |
+| `data-projex-list` | List container |
 
 ## Example
 
 ```tsx
-import { ProjectList, ProjectCard } from '@reallukemanning/folio'
+import { ProjectList, ProjectCard } from '@manningworks/projex'
 
 function ProjectsList({ projects }) {
   return (
@@ -57,13 +57,13 @@ function ProjectsList({ projects }) {
 Apply list-specific styles via the data attribute:
 
 ```css
-[data-folio-list] {
+[data-projex-list] {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-[data-folio-list] [data-folio-card] {
+[data-projex-list] [data-projex-card] {
   border-radius: 0;
   border-width: 0 0 1px 0;
 }

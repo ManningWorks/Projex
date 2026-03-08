@@ -5,7 +5,7 @@ Container component for grouping filter tags. Provides semantic grouping without
 ## Import
 
 ```tsx
-import { ProjectFilterBar } from '@reallukemanning/folio'
+import { ProjectFilterBar } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -27,13 +27,13 @@ import { ProjectFilterBar } from '@reallukemanning/folio'
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-filter-bar` | - | Root container |
+| `data-projex-filter-bar` | - | Root container |
 
 ## Example
 
 ```tsx
 import { useState } from 'react'
-import { ProjectFilterBar, ProjectFilterTag, useProjectFilters, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectFilterBar, ProjectFilterTag, useProjectFilters, ProjectGrid } from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js', 'Python']
 

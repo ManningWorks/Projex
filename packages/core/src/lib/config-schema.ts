@@ -132,7 +132,7 @@ const devToProjectInputSchema = baseProjectInputSchema.extend({
   username: z.string(),
 })
 
-export const folioProjectInputSchema = z.discriminatedUnion('type', [
+export const projexProjectInputSchema = z.discriminatedUnion('type', [
   gitHubProjectInputSchema,
   manualProjectInputSchema,
   npmProjectInputSchema,
@@ -144,4 +144,4 @@ export const folioProjectInputSchema = z.discriminatedUnion('type', [
   devToProjectInputSchema,
 ])
 
-export type FolioProjectInputZod = z.infer<typeof folioProjectInputSchema>
+export type ProjexProjectInputZod = z.infer<typeof projexProjectInputSchema>

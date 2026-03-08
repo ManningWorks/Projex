@@ -6,21 +6,21 @@ Filter projects by their featured status.
 
 ```tsx
 function filterByFeatured(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   featured: boolean | null | undefined
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to filter |
+| projects | `ProjexProject[]` | Array of projects to filter |
 | featured | `boolean \| null \| undefined` | Featured status to filter by |
 
 ## Returns
 
-`FolioProject[]` - Filtered array of projects (new array, does not mutate input)
+`ProjexProject[]` - Filtered array of projects (new array, does not mutate input)
 
 ## Behavior
 
@@ -31,7 +31,7 @@ function filterByFeatured(
 ## Example
 
 ```tsx
-import { filterByFeatured } from '@reallukemanning/folio'
+import { filterByFeatured } from '@manningworks/projex'
 
 // Featured projects only
 const featuredProjects = filterByFeatured(projects, true)

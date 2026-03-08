@@ -1,11 +1,11 @@
-# FolioProject
+# ProjexProject
 
 Normalized project object returned by the `normalise` function.
 
 ## Definition
 
 ```tsx
-interface FolioProject {
+interface ProjexProject {
   id: string
   type: ProjectType
   status: ProjectStatus
@@ -66,10 +66,10 @@ interface FolioProject {
 
 ## Creation
 
-`FolioProject` objects are created by the `normalise` function:
+`ProjexProject` objects are created by the `normalise` function:
 
 ```tsx
-import { normalise } from '@reallukemanning/folio'
+import { normalise } from '@manningworks/projex'
 
 const project = await normalise({
   id: 'my-project',
@@ -82,9 +82,9 @@ const project = await normalise({
 ## Usage with Components
 
 ```tsx
-import { ProjectCard, ProjectView } from '@reallukemanning/folio'
+import { ProjectCard, ProjectView } from '@manningworks/projex'
 
-function ProjectPage({ project }: { project: FolioProject }) {
+function ProjectPage({ project }: { project: ProjexProject }) {
   return (
     <ProjectCard>
       <ProjectCard.Header project={project} />

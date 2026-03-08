@@ -62,7 +62,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm --filter @reallukemanning/folio test:coverage
+      - run: pnpm --filter @manningworks/projex test:coverage
 
       - name: Check coverage threshold
         run: |

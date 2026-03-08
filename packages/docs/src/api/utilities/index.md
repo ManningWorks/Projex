@@ -1,6 +1,6 @@
 # Utilities
 
-Folio provides utility functions for filtering, sorting, and normalizing project data. All utilities are pure functions that can be used in build-time data preparation.
+Projex provides utility functions for filtering, sorting, and normalizing project data. All utilities are pure functions that can be used in build-time data preparation.
 
 ## Available Utilities
 
@@ -102,7 +102,7 @@ import {
   generatePortfolioMetadata,
   generateProjectMetadata,
   formatZodError
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 ```
 
 ## Common Patterns
@@ -110,7 +110,7 @@ import {
 ### Chaining Filters and Sorts
 
 ```tsx
-import { filterByStatus, filterByFeatured, sortByDate } from '@reallukemanning/folio'
+import { filterByStatus, filterByFeatured, sortByDate } from '@manningworks/projex'
 
 const activeProjects = filterByStatus(projects, 'active')
 const featuredActive = filterByFeatured(activeProjects, true)
@@ -120,7 +120,7 @@ const sorted = sortByDate(featuredActive, 'desc')
 ### Build-Time Data Preparation
 
 ```tsx
-import { defineProjects, normalise, sortByStars } from '@reallukemanning/folio'
+import { defineProjects, normalise, sortByStars } from '@manningworks/projex'
 
 export const projects = await Promise.all(
   defineProjects([

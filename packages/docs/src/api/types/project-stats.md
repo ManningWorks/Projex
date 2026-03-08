@@ -39,9 +39,9 @@ type ProjectStats = GitHubStats & NpmStats & ProductHuntStats
 ## Usage
 
 ```tsx
-import type { FolioProject } from '@reallukemanning/folio'
+import type { ProjexProject } from '@manningworks/projex'
 
-function formatStats(project: FolioProject): string[] {
+function formatStats(project: ProjexProject): string[] {
   const stats: string[] = []
   
   if (project.stats?.stars) {
@@ -57,7 +57,7 @@ function formatStats(project: FolioProject): string[] {
 
 ## Null Safety
 
-The `stats` property on `FolioProject` can be `null`:
+The `stats` property on `ProjexProject` can be `null`:
 
 ```tsx
 if (project.stats) {
@@ -71,7 +71,7 @@ if (project.stats) {
 Use `normalizeStats` to format stats for display:
 
 ```tsx
-import { normalizeStats } from '@reallukemanning/folio'
+import { normalizeStats } from '@manningworks/projex'
 
 const formattedStats = normalizeStats(project.stats || {}, project.type)
 // [{ label: 'Stars', value: '1.2K' }, ...]

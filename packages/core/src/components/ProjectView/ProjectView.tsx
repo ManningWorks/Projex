@@ -1,7 +1,7 @@
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 import { CommitList } from '../CommitList'
 
-type SectionName = keyof Pick<FolioProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts' | 'commits'>
+type SectionName = keyof Pick<ProjexProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts' | 'commits'>
 
 function isValidSectionName(name: string): name is SectionName {
   return ['description', 'background', 'why', 'stack', 'struggles', 'timeline', 'posts', 'commits'].includes(name)
@@ -12,12 +12,12 @@ function ProjectView({
   onBack,
   children
 }: {
-  project: FolioProject
+  project: ProjexProject
   onBack?: () => void
   children: React.ReactNode
 }) {
   return (
-    <div data-folio-view>
+    <div data-projex-view>
       {onBack && <button onClick={onBack}>Back</button>}
       <h2>{project.name}</h2>
       {children}
@@ -29,7 +29,7 @@ ProjectView.Section = function ProjectViewSection({
   project,
   name
 }: {
-  project: FolioProject
+  project: ProjexProject
   name: string
 }) {
   if (!isValidSectionName(name)) return null
@@ -39,17 +39,17 @@ ProjectView.Section = function ProjectViewSection({
   if (!sectionData) return null
 
   return (
-    <div data-folio-view-section data-folio-view-section-name={name}>
+    <div data-projex-view-section data-projex-view-section-name={name}>
       {typeof sectionData === 'string' && <>{sectionData}</>}
       {Array.isArray(sectionData) &&
         sectionData.map((item, index) => {
           if (typeof item === 'string') {
-            return <span key={index} data-folio-tag>{item}</span>
+            return <span key={index} data-projex-tag>{item}</span>
           }
           if ('type' in item && 'text' in item) {
             const struggle = item as { type: string; text: string }
             return (
-              <div key={index} data-folio-struggle data-folio-struggle-type={struggle.type}>
+              <div key={index} data-projex-struggle data-projex-struggle-type={struggle.type}>
                 {struggle.text}
               </div>
             )
@@ -59,8 +59,8 @@ ProjectView.Section = function ProjectViewSection({
               const timeline = item as { date: string; note: string }
               return (
                 <div key={index}>
-                  <span data-folio-timeline-date>{timeline.date}</span>
-                  <span data-folio-timeline-note>{timeline.note}</span>
+                  <span data-projex-timeline-date>{timeline.date}</span>
+                  <span data-projex-timeline-note>{timeline.note}</span>
                 </div>
               )
             }
@@ -68,10 +68,10 @@ ProjectView.Section = function ProjectViewSection({
               const post = item as { title: string; date: string; url?: string }
               return (
                 <div key={index}>
-                  <span data-folio-post-title>{post.title}</span>
-                  <span data-folio-post-date>{post.date}</span>
+                  <span data-projex-post-title>{post.title}</span>
+                  <span data-projex-post-date>{post.date}</span>
                   {post.url && (
-                    <a href={post.url} data-folio-post-link>
+                    <a href={post.url} data-projex-post-link>
                       Link
                     </a>
                   )}
@@ -88,7 +88,7 @@ ProjectView.Section = function ProjectViewSection({
   )
 }
 
-ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProject }) {
+ProjectView.Links = function ProjectViewLinks({ project }: { project: ProjexProject }) {
   const links = project.links
   const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'appStore', 'playStore', 'custom'] as const
 
@@ -124,16 +124,16 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProje
   if (!hasLinks) return null
 
   return (
-    <div data-folio-view-links>
+    <div data-projex-view-links>
       {order.map(linkType => {
         if (linkType === 'custom') {
           return links.custom?.map((link) => (
             <a
               key={link.label}
               href={link.url}
-              data-folio-link
-              data-folio-link-type="custom"
-              data-folio-link-label={link.label}
+              data-projex-link
+              data-projex-link-type="custom"
+              data-projex-link-label={link.label}
             >
               {link.label}
             </a>
@@ -144,7 +144,7 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProje
         if (!url) return null
 
         return (
-          <a key={linkType} href={url} data-folio-link data-folio-link-type={linkTypeAttr[linkType]}>
+          <a key={linkType} href={url} data-projex-link data-projex-link-type={linkTypeAttr[linkType]}>
             {linkLabels[linkType]}
           </a>
         )
@@ -153,7 +153,7 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: FolioProje
   )
 }
 
-ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProject }) {
+ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProject }) {
   if (!project.stats) {
     return null
   }
@@ -183,47 +183,47 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: FolioProje
   }
 
   return (
-    <div data-folio-view-stats>
-      {project.stats.stars && <span data-folio-stat="stars">{project.stats.stars} stars</span>}
-      {project.stats.forks && <span data-folio-stat="forks">{project.stats.forks} forks</span>}
+    <div data-projex-view-stats>
+      {project.stats.stars && <span data-projex-stat="stars">{project.stats.stars} stars</span>}
+      {project.stats.forks && <span data-projex-stat="forks">{project.stats.forks} forks</span>}
       {project.stats.downloads && (
-        <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
+        <span data-projex-stat="downloads">{project.stats.downloads} downloads</span>
       )}
-      {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
-      {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
-      {project.stats.comments && <span data-folio-stat="comments">{project.stats.comments} comments</span>}
-      {project.stats.subscribers && <span data-folio-stat="subscribers">{project.stats.subscribers} subscribers</span>}
-      {project.stats.views && <span data-folio-stat="views">{project.stats.views} views</span>}
+      {project.stats.version && <span data-projex-stat="version">{project.stats.version}</span>}
+      {project.stats.upvotes && <span data-projex-stat="upvotes">{project.stats.upvotes} upvotes</span>}
+      {project.stats.comments && <span data-projex-stat="comments">{project.stats.comments} comments</span>}
+      {project.stats.subscribers && <span data-projex-stat="subscribers">{project.stats.subscribers} subscribers</span>}
+      {project.stats.views && <span data-projex-stat="views">{project.stats.views} views</span>}
       {project.stats.latestVideoTitle && project.stats.latestVideoUrl && (
-        <a href={project.stats.latestVideoUrl} data-folio-link data-folio-link-type="youtube">
+        <a href={project.stats.latestVideoUrl} data-projex-link data-projex-link-type="youtube">
           {project.stats.latestVideoTitle}
         </a>
       )}
-      {project.stats.formattedRevenue && <span data-folio-stat="revenue">{project.stats.formattedRevenue}</span>}
-      {project.stats.salesCount && <span data-folio-stat="sales">{project.stats.salesCount} sales</span>}
+      {project.stats.formattedRevenue && <span data-projex-stat="revenue">{project.stats.formattedRevenue}</span>}
+      {project.stats.salesCount && <span data-projex-stat="sales">{project.stats.salesCount} sales</span>}
       {project.stats.subscriberCount && (
-        <span data-folio-stat="subscribers">{project.stats.subscriberCount} subscribers</span>
+        <span data-projex-stat="subscribers">{project.stats.subscriberCount} subscribers</span>
       )}
-      {project.stats.formattedMRR && <span data-folio-stat="mrr">{project.stats.formattedMRR} MRR</span>}
-      {project.stats.orderCount && <span data-folio-stat="orders">{project.stats.orderCount} orders</span>}
+      {project.stats.formattedMRR && <span data-projex-stat="mrr">{project.stats.formattedMRR} MRR</span>}
+      {project.stats.orderCount && <span data-projex-stat="orders">{project.stats.orderCount} orders</span>}
       {project.stats.customerCount && (
-        <span data-folio-stat="customers">{project.stats.customerCount} customers</span>
+        <span data-projex-stat="customers">{project.stats.customerCount} customers</span>
       )}
-      {project.stats.articleCount && <span data-folio-stat="articles">{project.stats.articleCount} articles</span>}
-      {project.stats.totalViews && <span data-folio-stat="total-views">{project.stats.totalViews} views</span>}
-      {project.stats.averageReactions && <span data-folio-stat="reactions">{project.stats.averageReactions} reactions</span>}
+      {project.stats.articleCount && <span data-projex-stat="articles">{project.stats.articleCount} articles</span>}
+      {project.stats.totalViews && <span data-projex-stat="total-views">{project.stats.totalViews} views</span>}
+      {project.stats.averageReactions && <span data-projex-stat="reactions">{project.stats.averageReactions} reactions</span>}
     </div>
   )
 }
 
-ProjectView.Commits = function ProjectViewCommits({ project }: { project: FolioProject }) {
+ProjectView.Commits = function ProjectViewCommits({ project }: { project: ProjexProject }) {
   if (!project.commits || project.commits.length === 0) {
     return null
   }
 
   return (
-    <div data-folio-commits>
-      <div data-folio-commits-header>Commits</div>
+    <div data-projex-commits>
+      <div data-projex-commits-header>Commits</div>
       <CommitList commits={project.commits} />
     </div>
   )

@@ -5,7 +5,7 @@ Component for displaying a list of project commits.
 ## Import
 
 ```tsx
-import { CommitList } from '@reallukemanning/folio'
+import { CommitList } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -26,28 +26,28 @@ Returns `null` if the commits array is empty or undefined.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-folio-commit-list` | Root commit list container |
-| `data-folio-commit` | Individual commit item |
-| `data-folio-commit-message` | Commit message |
-| `data-folio-commit-date` | Commit date |
-| `data-folio-commit-link` | Link to view commit |
-| `data-folio-commit-author` | Commit author name |
+| `data-projex-commit-list` | Root commit list container |
+| `data-projex-commit` | Individual commit item |
+| `data-projex-commit-message` | Commit message |
+| `data-projex-commit-date` | Commit date |
+| `data-projex-commit-link` | Link to view commit |
+| `data-projex-commit-author` | Commit author name |
 
 ## Styling
 
 Messages over 100 characters are truncated with an ellipsis.
 
 ```css
-[data-folio-commit-message] {
+[data-projex-commit-message] {
   margin-bottom: 0.5rem;
 }
 
-[data-folio-commit-date] {
+[data-projex-commit-date] {
   font-size: 0.875rem;
   color: #6b7280;
 }
 
-[data-folio-commit-link] {
+[data-projex-commit-link] {
   font-size: 0.875rem;
   color: #3b82f6;
 }

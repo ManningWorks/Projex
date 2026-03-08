@@ -1,10 +1,10 @@
-# Folio
+# Projex
 
-Folio is a shadcn-style component library for developers and solopreneurs who want a flexible, data-driven project showcase on their personal site.
+Projex is a shadcn-style component library for developers and solopreneurs who want a flexible, data-driven project showcase on their personal site.
 
 ## Links
 
-- **Documentation:** https://folio-guide.vercel.app
+- **Documentation:** https://projex-guide.vercel.app
 
 ## Problem
 
@@ -13,12 +13,12 @@ Every developer eventually builds a projects page, and almost every developer bu
 ## Quick Start
 
 ```bash
-pnpm add @reallukemanning/folio
+pnpm add @manningworks/projex
 ```
 
 ```ts
-// folio.config.ts
-import { defineProjects } from '@reallukemanning/folio'
+// projex.config.ts
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -33,10 +33,10 @@ export const projects = defineProjects([
 ```
 
 ```tsx
-import { ProjectCard } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
-export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
+export function ProjectsGrid({ projects }: { projects: ProjexProject[] }) {
   return (
     <div>
       {projects.map((project) => (
@@ -56,29 +56,29 @@ export function ProjectsGrid({ projects }: { projects: FolioProject[] }) {
 
 ## CLI
 
-Folio includes a CLI for copying components and themes into your project (shadcn-style):
+Projex includes a CLI for copying components and themes into your project (shadcn-style):
 
 ```bash
 # Initialize config
-npx folio init
+npx projex init
 
 # Copy components to your project
-npx folio add project-card
-npx folio add project-view
+npx projex add project-card
+npx projex add project-view
 
 # Add pre-built themes
-npx folio add theme-minimal
-npx folio add theme-dark
-npx folio add theme-gradient
+npx projex add theme-minimal
+npx projex add theme-dark
+npx projex add theme-gradient
 ```
 
-The CLI automatically installs the `@reallukemanning/folio` package as a dependency, and copied components import types directly from it.
+The CLI automatically installs the `@manningworks/projex` package as a dependency, and copied components import types directly from it.
 
-## folio.config.ts Reference
+## projex.config.ts Reference
 
 ### defineProjects(projects)
 
-Type-preserving identity function. Pass an array of `FolioProjectInput` objects.
+Type-preserving identity function. Pass an array of `ProjexProjectInput` objects.
 
 ```ts
 export const projects = defineProjects([
@@ -86,7 +86,7 @@ export const projects = defineProjects([
 ])
 ```
 
-### FolioProjectInput
+### ProjexProjectInput
 
 All fields are optional except where noted.
 
@@ -202,55 +202,55 @@ Compound component for expanded project detail view.
 
 ## Data Attributes
 
-Every rendered element has a `data-folio-*` attribute for styling.
+Every rendered element has a `data-projex-*` attribute for styling.
 
 ### ProjectCard
 
 | Element | Attribute |
 |---------|-----------|
-| Card container | `data-folio-card` |
-| Header | `data-folio-card-header` |
-| Type badge | `data-folio-type`, `data-folio-type-value` |
-| Description | `data-folio-card-description` |
-| Tags container | `data-folio-card-tags` |
-| Individual tag | `data-folio-tag` |
-| Stats container | `data-folio-card-stats` |
-| Individual stat | `data-folio-stat="stars|forks|downloads"` |
-| Status badge | `data-folio-status`, `data-folio-status-value` |
-| Links container | `data-folio-card-links` |
-| Individual link | `data-folio-link`, `data-folio-link-type="github|live|docs|demo|npm|product-hunt|custom"` |
+| Card container | `data-projex-card` |
+| Header | `data-projex-card-header` |
+| Type badge | `data-projex-type`, `data-projex-type-value` |
+| Description | `data-projex-card-description` |
+| Tags container | `data-projex-card-tags` |
+| Individual tag | `data-projex-tag` |
+| Stats container | `data-projex-card-stats` |
+| Individual stat | `data-projex-stat="stars|forks|downloads"` |
+| Status badge | `data-projex-status`, `data-projex-status-value` |
+| Links container | `data-projex-card-links` |
+| Individual link | `data-projex-link`, `data-projex-link-type="github|live|docs|demo|npm|product-hunt|custom"` |
 
 ### ProjectView
 
 | Element | Attribute |
 |---------|-----------|
-| View container | `data-folio-view` |
-| Section | `data-folio-view-section`, `data-folio-view-section-name` |
-| Timeline date | `data-folio-timeline-date` |
-| Timeline note | `data-folio-timeline-note` |
-| Post title | `data-folio-post-title` |
-| Post date | `data-folio-post-date` |
-| Post link | `data-folio-post-link` |
-| Struggle | `data-folio-struggle`, `data-folio-struggle-type` |
+| View container | `data-projex-view` |
+| Section | `data-projex-view-section`, `data-projex-view-section-name` |
+| Timeline date | `data-projex-timeline-date` |
+| Timeline note | `data-projex-timeline-note` |
+| Post title | `data-projex-post-title` |
+| Post date | `data-projex-post-date` |
+| Post link | `data-projex-post-link` |
+| Struggle | `data-projex-struggle`, `data-projex-struggle-type` |
 
 ## Bundle Size
 
-Folio is optimized for minimal bundle impact. Size measurements are taken with tree-shaking enabled and all dependencies minified.
+Projex is optimized for minimal bundle impact. Size measurements are taken with tree-shaking enabled and all dependencies minified.
 
 | Package | Target | Actual (gzipped) | Status |
 |---------|--------|------------------|--------|
-| @reallukemanning/folio | < 10 KB | **2.74 KB** | ✓ |
+| @manningworks/projex | < 10 KB | **2.74 KB** | ✓ |
 
 ### Tree-Shaking
 
-Folio exports are fully tree-shakeable. Importing only what you need significantly reduces bundle size:
+Projex exports are fully tree-shakeable. Importing only what you need significantly reduces bundle size:
 
 ```tsx
 // Import only the component you need
-import { ProjectCard } from '@reallukemanning/folio'  // ~320 B gzipped
+import { ProjectCard } from '@manningworks/projex'  // ~320 B gzipped
 
 // Or import everything
-import * as Folio from '@reallukemanning/folio'  // ~2.74 KB gzipped
+import * as Projex from '@manningworks/projex'  // ~2.74 KB gzipped
 ```
 
 ### Measuring Bundle Size
@@ -263,7 +263,7 @@ This command measures both packages and saves results to `.bundle-size.json` for
 
 ## GitHub API Setup
 
-Folio fetches GitHub repo data at build time for projects with `type: 'github'` or `type: 'hybrid'`.
+Projex fetches GitHub repo data at build time for projects with `type: 'github'` or `type: 'hybrid'`.
 
 ### Environment Variable
 
@@ -277,7 +277,7 @@ GITHUB_TOKEN=ghp_xxxxxxxxxxxxx
 - **Unauthenticated**: 60 requests/hour
 - **Authenticated**: 5,000 requests/hour
 
-Without a token, Folio logs a warning and continues with unauthenticated requests.
+Without a token, Projex logs a warning and continues with unauthenticated requests.
 
 ### What Gets Fetched
 
@@ -288,7 +288,7 @@ Without a token, Folio logs a warning and continues with unauthenticated request
 
 ## Styling
 
-Folio ships with zero styling. Use the data attributes to style components however you want.
+Projex ships with zero styling. Use the data attributes to style components however you want.
 
 ### Pre-Built Themes
 
@@ -296,16 +296,16 @@ Get started quickly with pre-built themes:
 
 ```bash
 # Install themes via CLI
-npx folio add theme-minimal    # Light theme
-npx folio add theme-dark        # Dark mode with system preference
-npx folio add theme-gradient    # Gradient theme
+npx projex add theme-minimal    # Light theme
+npx projex add theme-dark        # Dark mode with system preference
+npx projex add theme-gradient    # Gradient theme
 ```
 
-Themes are copied to `styles/folio-<theme-name>.css`. Import in your app:
+Themes are copied to `styles/projex-<theme-name>.css`. Import in your app:
 
 ```tsx
 // app/layout.tsx (Next.js)
-import './styles/folio-theme-minimal.css'
+import './styles/projex-theme-minimal.css'
 ```
 
 ### Custom Styling
@@ -313,27 +313,27 @@ import './styles/folio-theme-minimal.css'
 Use the data attributes to style components however you want:
 
 ```css
-[data-folio-card] {
+[data-projex-card] {
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 1rem;
 }
 
-[data-folio-card-header] {
+[data-projex-card-header] {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
 }
 
-[data-folio-status-value="active"] {
+[data-projex-status-value="active"] {
   background: #10b981;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
 }
 
-[data-folio-tag] {
+[data-projex-tag] {
   background: #f3f4f6;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -347,33 +347,33 @@ All components use CSS custom properties with fallback values. Override them for
 
 ```css
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-radius: 8px;
-  --folio-card-padding: 16px;
-  --folio-card-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-radius: 8px;
+  --projex-card-padding: 16px;
+  --projex-card-text: #374151;
 
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
-  --folio-tag-radius: 4px;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
+  --projex-tag-radius: 4px;
 
-  --folio-stats-label: #6b7280;
-  --folio-stats-value: #374151;
+  --projex-stats-label: #6b7280;
+  --projex-stats-value: #374151;
 
-  --folio-link-text: #374151;
+  --projex-link-text: #374151;
 
-  --folio-status-active-bg: #dcfce7;
-  --folio-status-active-text: #166534;
-  --folio-status-shipped-bg: #dbeafe;
-  --folio-status-shipped-text: #1e40af;
-  --folio-status-in-progress-bg: #fef3c7;
-  --folio-status-in-progress-text: #92400e;
-  --folio-status-coming-soon-bg: #f3e8ff;
-  --folio-status-coming-soon-text: #7c3aed;
-  --folio-status-archived-bg: #f1f5f9;
-  --folio-status-archived-text: #475569;
-  --folio-status-for-sale-bg: #fee2e2;
-  --folio-status-for-sale-text: #991b1b;
+  --projex-status-active-bg: #dcfce7;
+  --projex-status-active-text: #166534;
+  --projex-status-shipped-bg: #dbeafe;
+  --projex-status-shipped-text: #1e40af;
+  --projex-status-in-progress-bg: #fef3c7;
+  --projex-status-in-progress-text: #92400e;
+  --projex-status-coming-soon-bg: #f3e8ff;
+  --projex-status-coming-soon-text: #7c3aed;
+  --projex-status-archived-bg: #f1f5f9;
+  --projex-status-archived-text: #475569;
+  --projex-status-for-sale-bg: #fee2e2;
+  --projex-status-for-sale-text: #991b1b;
 }
 ```
 
@@ -396,7 +396,7 @@ Use `theme-dark.css` for automatic dark mode based on system preference, or manu
 - GitHub, npm, and Product Hunt API integration
 - Build-time data fetching with caching
 - Filtering and sorting utilities
-- CLI tooling (`npx folio init`, `npx folio add`)
+- CLI tooling (`npx projex init`, `npx projex add`)
 - Comprehensive documentation
 - Full test coverage
 - Bundle size optimization (< 3 KB gzipped)
@@ -412,7 +412,7 @@ Use `theme-dark.css` for automatic dark mode based on system preference, or manu
 
 ## Contributing
 
-Folio is in active development. We welcome contributions from experienced developers who understand the shadcn philosophy: own your code, use good defaults, avoid opinions.
+Projex is in active development. We welcome contributions from experienced developers who understand the shadcn philosophy: own your code, use good defaults, avoid opinions.
 
 Check the [AGENTS.md](./AGENTS.md) for development guidelines.
 

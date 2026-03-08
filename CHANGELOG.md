@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **Auto-populated live link suppression** - GitHub and hybrid projects now respect `linkOrder` for link inclusion. When `linkOrder` is specified without `live`, the auto-generated `live` link from GitHub's homepage is removed. Previously, auto-generated `live` links would appear even when using custom `linkOrder` to control display. Fixes [#1](https://github.com/reallukemanning/folio/issues/1)
+- **Auto-populated live link suppression** - GitHub and hybrid projects now respect `linkOrder` for link inclusion. When `linkOrder` is specified without `live`, the auto-generated `live` link from GitHub's homepage is removed. Previously, auto-generated `live` links would appear even when using custom `linkOrder` to control display. Fixes [#1](https://github.com/ManningWorks/Projex/issues/1)
 
 ---
 
@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **generateProjectSchema()** - Generate Schema.org SoftwareApplication JSON-LD structured data for project pages
 - **generatePortfolioMetadata()** - Generate Next.js App Router metadata for portfolio homepage with OpenGraph tags
 - **generateProjectMetadata()** - Generate Next.js App Router metadata for individual project pages
-- **Build-time data attributes** - ProjectCard now includes `data-folio-og-image`, `data-folio-og-title`, `data-folio-og-description` for OG image generation and analytics
+- **Build-time data attributes** - ProjectCard now includes `data-projex-og-image`, `data-projex-og-title`, `data-projex-og-description` for OG image generation and analytics
 - **Structured data validation** - All SEO functions validate inputs and return null with warnings for invalid data
 - **URL priority handling** - Metadata functions use different URL priorities for OpenGraph (live > github) vs schema (github > live)
 
@@ -55,9 +55,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **New Functions:**
 - `generatePersonSchema(options: GeneratePersonSchemaOptions): PersonSchema | null`
-- `generateProjectSchema(project: FolioProject): SoftwareApplicationSchema | null`
+- `generateProjectSchema(project: ProjexProject): SoftwareApplicationSchema | null`
 - `generatePortfolioMetadata(options: GeneratePortfolioMetadataOptions): Metadata | null`
-- `generateProjectMetadata(project: FolioProject): Metadata | null`
+- `generateProjectMetadata(project: ProjexProject): Metadata | null`
 
 **New Types:**
 - `PersonSchema` - Schema.org Person object
@@ -66,9 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GeneratePortfolioMetadataOptions` - Options for portfolio metadata generation
 
 **New Data Attributes:**
-- `data-folio-og-image` - Project image URL for OG image generation
-- `data-folio-og-title` - Project title for metadata extraction
-- `data-folio-og-description` - Project description for metadata extraction
+- `data-projex-og-image` - Project image URL for OG image generation
+- `data-projex-og-title` - Project title for metadata extraction
+- `data-projex-og-description` - Project description for metadata extraction
 
 **Modified Component Behavior:**
 - `ProjectCard` - Now accepts optional `project` prop and adds OG metadata attributes when provided
@@ -90,17 +90,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `theme-minimal.css` - Clean light theme with neutral colors
   - `theme-dark.css` - Dark mode with system preference and manual toggle support
   - `theme-gradient.css` - Purple gradient theme with modern aesthetic
-- **CLI Theme Installation** - `npx folio add theme-<name>` to install themes to `styles/` directory
+- **CLI Theme Installation** - `npx projex add theme-<name>` to install themes to `styles/` directory
 - **Dark Mode Support** - Automatic system preference detection and manual toggle via `[data-theme="dark"]` attribute
-- **Theme Exports** - Theme files exportable from package via `@reallukemanning/folio/themes/theme-*.css`
+- **Theme Exports** - Theme files exportable from package via `@manningworks/projex/themes/theme-*.css`
 
 #### CSS Custom Properties
 All component styles now themeable via CSS variables:
-- Card: `--folio-card-bg`, `--folio-card-border`, `--folio-card-radius`, `--folio-card-padding`, `--folio-card-text`
-- Tags: `--folio-tag-bg`, `--folio-tag-text`, `--folio-tag-radius`
-- Stats: `--folio-stats-label`, `--folio-stats-value`
-- Links: `--folio-link-text`
-- Status (per status type): `--folio-status-<type>-bg`, `--folio-status-<type>-text`
+- Card: `--projex-card-bg`, `--projex-card-border`, `--projex-card-radius`, `--projex-card-padding`, `--projex-card-text`
+- Tags: `--projex-tag-bg`, `--projex-tag-text`, `--projex-tag-radius`
+- Stats: `--projex-stats-label`, `--projex-stats-value`
+- Links: `--projex-link-text`
+- Status (per status type): `--projex-status-<type>-bg`, `--projex-status-<type>-text`
 
 #### CLI Features
 - Theme installation with confirmation prompt for existing files
@@ -111,9 +111,9 @@ All component styles now themeable via CSS variables:
 ### Public API Surface
 
 **New CSS Exports:**
-- `@reallukemanning/folio/themes/theme-minimal.css`
-- `@reallukemanning/folio/themes/theme-dark.css`
-- `@reallukemanning/folio/themes/theme-gradient.css`
+- `@manningworks/projex/themes/theme-minimal.css`
+- `@manningworks/projex/themes/theme-dark.css`
+- `@manningworks/projex/themes/theme-gradient.css`
 
 **New CSS Custom Properties:**
 All components now support CSS custom properties with fallback values. See documentation for full list.
@@ -148,9 +148,9 @@ All components now support CSS custom properties with fallback values. See docum
 - `ShowcaseCard` - Pre-built card component for manual projects with live link and tech stack
 
 #### CLI
-- `npx folio add github-card` - Install GitHubCard preset to your project
-- `npx folio add npm-card` - Install NpmCard preset to your project
-- `npx folio add showcase-card` - Install ShowcaseCard preset to your project
+- `npx projex add github-card` - Install GitHubCard preset to your project
+- `npx projex add npm-card` - Install NpmCard preset to your project
+- `npx projex add showcase-card` - Install ShowcaseCard preset to your project
 - `--force` flag to overwrite existing files without prompting
 - Confirmation prompt when preset files already exist
 
@@ -175,10 +175,10 @@ All components now support CSS custom properties with fallback values. See docum
 - `ShowcaseCardProps`
 
 **New Data Attributes (for CSS styling):**
-- `data-folio-language` - Language label
-- `data-folio-language-color` - Language color indicator
-- `data-folio-card-tagline` - Tagline text
-- `data-folio-card-footer` - Custom footer content container
+- `data-projex-language` - Language label
+- `data-projex-language-color` - Language color indicator
+- `data-projex-card-tagline` - Tagline text
+- `data-projex-card-footer` - Custom footer content container
 
 ### Testing
 - Added unit tests for CLI add command with presets
@@ -231,12 +231,12 @@ All components now support CSS custom properties with fallback values. See docum
 - `SortValue`
 
 **New Data Attributes (for CSS styling):**
-- `data-folio-search` - Search input container
-- `data-folio-filter-bar` - Filter bar container
-- `data-folio-filter-tag` - Individual filter chip
-- `data-folio-filter-tag-active` - Active filter chip indicator
-- `data-folio-sort` - Sort dropdown container
-- `data-folio-sort-value` - Selected sort value indicator
+- `data-projex-search` - Search input container
+- `data-projex-filter-bar` - Filter bar container
+- `data-projex-filter-tag` - Individual filter chip
+- `data-projex-filter-tag-active` - Active filter chip indicator
+- `data-projex-sort` - Sort dropdown container
+- `data-projex-sort-value` - Selected sort value indicator
 
 ### Documentation
 - Added documentation for search component with debouncing examples
@@ -261,12 +261,12 @@ All components now support CSS custom properties with fallback values. See docum
 #### Architecture
 - Eliminated component duplication - removed `cli-components/` directory
 - Single source of truth: `components/` directory now serves both package and CLI
-- CLI automatically installs `@reallukemanning/folio` package as dependency
-- Copied components import types from `@reallukemanning/folio` package (via import path transformation)
+- CLI automatically installs `@manningworks/projex` package as dependency
+- Copied components import types from `@manningworks/projex` package (via import path transformation)
 
 #### CLI
-- `init` command now auto-installs `@reallukemanning/folio` if not present
-- `add` command now auto-installs `@reallukemanning/folio` if not present
+- `init` command now auto-installs `@manningworks/projex` if not present
+- `add` command now auto-installs `@manningworks/projex` if not present
 - Removed `types.ts` file copying - components now import from package
 - Import path transformation: relative imports → npm package imports
 
@@ -299,7 +299,7 @@ All components now support CSS custom properties with fallback values. See docum
 - Link ordering control via `linkOrder` config option (per-project)
 
 #### Configuration
-- `linkOrder?: string[]` field on `FolioProject` and all project input types
+- `linkOrder?: string[]` field on `ProjexProject` and all project input types
 - Default link order: github → live → docs → demo → npm → productHunt → appStore → playStore → custom
 
 #### Types
@@ -319,14 +319,14 @@ All components now support CSS custom properties with fallback values. See docum
 
 **Modified Types:**
 - `ProjectLinks` - Added optional `docs`, `demo`, and `custom` fields
-- `FolioProject` - Added optional `linkOrder?: string[]` field
+- `ProjexProject` - Added optional `linkOrder?: string[]` field
 - `BaseProjectInput` - Added optional `linkOrder?: string[]` field
 
 **New Data Attributes (for CSS styling):**
-- `data-folio-link-type="docs"` - Documentation link
-- `data-folio-link-type="demo"` - Demo link
-- `data-folio-link-type="custom"` - Custom link (type indicator)
-- `data-folio-link-label` - Custom link label value
+- `data-projex-link-type="docs"` - Documentation link
+- `data-projex-link-type="demo"` - Demo link
+- `data-projex-link-type="custom"` - Custom link (type indicator)
+- `data-projex-link-label` - Custom link label value
 
 ---
 
@@ -372,18 +372,18 @@ All components now support CSS custom properties with fallback values. See docum
 
 **Modified:**
 - `defineProjects()` - Now accepts optional `DefineProjectsOptions` parameter
-- `FolioProject` - Added optional `commits: ProjectCommit[]` field
+- `ProjexProject` - Added optional `commits: ProjectCommit[]` field
 - `GitHubProjectInput` - Added optional `commits: number` field
 - `HybridProjectInput` - Added optional `commits: number` field
 
 **New Data Attributes (for CSS styling):**
-- `data-folio-commits` - Commits section container
-- `data-folio-commits-header` - Commits section header
-- `data-folio-commit` - Individual commit item
-- `data-folio-commit-message` - Commit message (truncated at 100 chars)
-- `data-folio-commit-date` - Commit date
-- `data-folio-commit-link` - Link to view commit
-- `data-folio-commit-author` - Commit author name
+- `data-projex-commits` - Commits section container
+- `data-projex-commits-header` - Commits section header
+- `data-projex-commit` - Individual commit item
+- `data-projex-commit-message` - Commit message (truncated at 100 chars)
+- `data-projex-commit-date` - Commit date
+- `data-projex-commit-link` - Link to view commit
+- `data-projex-commit-author` - Commit author name
 
 ---
 
@@ -393,7 +393,7 @@ All components now support CSS custom properties with fallback values. See docum
 
 - Export `normalizeStats` utility (was documented but not exported)
 - Export `NormalizedStat` type alongside `normalizeStats`
-- Fix README package name references (`@folio/core` → `@reallukemanning/folio`)
+- Fix README package name references (`@folio/core` → `@manningworks/projex`)
 - Add `ProjectView.Stats` subcomponent to CLI-copied components
 - Add `productHunt` link support to CLI `ProjectView.Links`
 - Add missing fields to CLI types (`createdAt`, `updatedAt`, `repo`, `package`, `slug`)
@@ -430,8 +430,8 @@ All components now support CSS custom properties with fallback values. See docum
 - `sortByStars(projects, order)` - Sort projects by GitHub stars
 
 #### Types
-- `FolioProject` - Complete project type with all resolved fields
-- `FolioProjectInput` - Union type for all project input variants
+- `ProjexProject` - Complete project type with all resolved fields
+- `ProjexProjectInput` - Union type for all project input variants
 - `GitHubProjectInput`, `ManualProjectInput`, `NpmProjectInput`, `ProductHuntProjectInput`, `HybridProjectInput` - Specific project input types
 - `ProjectType` - Discriminated union: `'github' | 'manual' | 'npm' | 'product-hunt' | 'hybrid'`
 - `ProjectStatus` - Discriminated union: `'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'archived' | 'for-sale'`
@@ -439,7 +439,7 @@ All components now support CSS custom properties with fallback values. See docum
 - `ProjectLinks`, `ProjectStats`, `ProjectStruggle`, `ProjectTimelineEntry`, `ProjectPost` - Supporting types
 
 #### CLI
-- `@folio/cli` package with `folio init` and `folio add` commands
+- `@projex/cli` package with `projex init` and `projex add` commands
 - Interactive project scaffolding
 - Component copy functionality
 
@@ -469,9 +469,9 @@ The following exports are considered part of the stable public API and will not 
 - `LANGUAGE_COLORS`
 
 **Types:**
-- `FolioProject`
-- `FolioProjectInput`
-- `FolioProjectInputCompat`
+- `ProjexProject`
+- `ProjexProjectInput`
+- `ProjexProjectInputCompat`
 - `GitHubProjectInput`
 - `ManualProjectInput`
 - `NpmProjectInput`
@@ -494,7 +494,7 @@ The following exports are considered part of the stable public API and will not 
 - `SortOrder`
 
 **Data Attributes (for CSS styling):**
-All `data-folio-*` attributes on rendered elements are part of the stable API for CSS targeting.
+All `data-projex-*` attributes on rendered elements are part of the stable API for CSS targeting.
 
 ---
 

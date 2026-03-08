@@ -6,21 +6,21 @@ Filter projects by their status value.
 
 ```tsx
 function filterByStatus(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   status: ProjectStatus | 'all' | ProjectStatus[] | undefined
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to filter |
+| projects | `ProjexProject[]` | Array of projects to filter |
 | status | `ProjectStatus \| 'all' \| ProjectStatus[] \| undefined` | Status to filter by |
 
 ## Returns
 
-`FolioProject[]` - Filtered array of projects (new array, does not mutate input)
+`ProjexProject[]` - Filtered array of projects (new array, does not mutate input)
 
 ## Behavior
 
@@ -32,7 +32,7 @@ function filterByStatus(
 ## Example
 
 ```tsx
-import { filterByStatus } from '@reallukemanning/folio'
+import { filterByStatus } from '@manningworks/projex'
 
 // Single status
 const activeProjects = filterByStatus(projects, 'active')

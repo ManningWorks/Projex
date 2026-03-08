@@ -1,21 +1,21 @@
 # Using Components
 
-Guide for integrating Folio components in Next.js pages and building layouts.
+Guide for integrating Projex components in Next.js pages and building layouts.
 
 ## Component Patterns
 
-Folio uses compound components for maximum flexibility. Compose your own layout using modular pieces.
+Projex uses compound components for maximum flexibility. Compose your own layout using modular pieces.
 
 ## Data Fetching Pattern
 
 Fetch data at build time using `normalise`:
 
 ```tsx
-import { normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../folio.config'
 
-async function getProjects(): Promise<FolioProject[]> {
+async function getProjects(): Promise<ProjexProject[]> {
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
 ```
@@ -25,12 +25,12 @@ async function getProjects(): Promise<FolioProject[]> {
 ### Portfolio Page (App Router)
 
 ```tsx
-import { ProjectCard } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
-async function getProjects(): Promise<FolioProject[]> {
+async function getProjects(): Promise<ProjexProject[]> {
   const { projects: projectInputs } = await import('../folio.config')
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
 
@@ -61,11 +61,11 @@ export default async function PortfolioPage() {
 
 ```tsx
 import { GetServerSideProps } from 'next'
-import { ProjectCard } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../folio.config'
 
-export default function PortfolioPage({ projects }: { projects: FolioProject[] }) {
+export default function PortfolioPage({ projects }: { projects: ProjexProject[] }) {
   return (
     <main>
       <h1>My Projects</h1>
@@ -86,7 +86,7 @@ export default function PortfolioPage({ projects }: { projects: FolioProject[] }
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   const projects = await Promise.all(projectInputs.map((input) => normalise(input)))
 
   return {
@@ -102,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 Use `ProjectGrid` for responsive card grids:
 
 ```tsx
-import { ProjectGrid } from '@reallukemanning/folio'
+import { ProjectGrid } from '@manningworks/projex'
 
 <div className="portfolio">
   <ProjectGrid>
@@ -123,7 +123,7 @@ import { ProjectGrid } from '@reallukemanning/folio'
 Use `ProjectList` for compact project lists:
 
 ```tsx
-import { ProjectList } from '@reallukemanning/folio'
+import { ProjectList } from '@manningworks/projex'
 
 <div className="portfolio">
   <ProjectList>
@@ -143,7 +143,7 @@ import { ProjectList } from '@reallukemanning/folio'
 Use `FeaturedProject` for hero sections:
 
 ```tsx
-import { FeaturedProject } from '@reallukemanning/folio'
+import { FeaturedProject } from '@manningworks/projex'
 
 const featuredProject = projects.find(p => p.featured)
 
@@ -181,7 +181,7 @@ import {
   ProjectFilterTag,
   useProjectSearch,
   useProjectFilters,
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 
 function InteractivePortfolio({ projects }) {
   const [query, setQuery] = useState('')
@@ -240,8 +240,8 @@ Add sorting capabilities:
 'use client'
 
 import { useState } from 'react'
-import { ProjectSort } from '@reallukemanning/folio'
-import { sortByName, sortByDate, sortByStars } from '@reallukemanning/folio'
+import { ProjectSort } from '@manningworks/projex'
+import { sortByName, sortByDate, sortByStars } from '@manningworks/projex'
 
 function SortedPortfolio({ projects }) {
   const [sortBy, setSortBy] = useState('name')
@@ -284,15 +284,15 @@ Create dynamic routes for individual projects:
 
 ```tsx
 import { notFound } from 'next/navigation'
-import { ProjectView } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectView } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../../folio.config'
 
-async function getProject(id: string): Promise<FolioProject | null> {
+async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)
   if (!input) return null
 
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   return normalise(input)
 }
 
@@ -342,13 +342,13 @@ Components render nothing for empty data:
 All components render semantic HTML with data attributes. Style with CSS:
 
 ```css
-[data-folio-card] {
+[data-projex-card] {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1.5rem;
 }
 
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;

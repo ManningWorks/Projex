@@ -33,18 +33,18 @@ jobs:
 
       - run: pnpm lint
 
-      - run: pnpm --filter @reallukemanning/folio test:coverage
+      - run: pnpm --filter @manningworks/projex test:coverage
 
       - run: pnpm build
 
-      - name: Publish @reallukemanning/folio
+      - name: Publish @manningworks/projex
         working-directory: packages/core
         run: npm publish --access public --provenance
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          body: See [CHANGELOG.md](https://github.com/reallukemanning/folio/blob/main/CHANGELOG.md) for full details.
+          body: See [CHANGELOG.md](https://github.com/manningworks/projex/blob/main/CHANGELOG.md) for full details.
           draft: false
           prerelease: false
         env:

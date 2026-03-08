@@ -1,6 +1,6 @@
 # Getting Started: Build a Solo Developer Portfolio
 
-Complete walkthrough for building a portfolio website with Folio. This tutorial covers GitHub repos, npm packages, and manual projects.
+Complete walkthrough for building a portfolio website with Projex. This tutorial covers GitHub repos, npm packages, and manual projects.
 
 ## What You'll Build
 
@@ -27,25 +27,25 @@ npx create-next-app@latest my-portfolio --typescript --tailwind --app
 cd my-portfolio
 ```
 
-## Step 2: Initialize Folio
+## Step 2: Initialize Projex
 
 Run the CLI to auto-detect your GitHub repositories:
 
 ```bash
-npx @reallukemanning/folio init --github
+npx @manningworks/projex init --github
 ```
 
-When prompted, enter your GitHub username. Folio will:
+When prompted, enter your GitHub username. Projex will:
 1. Fetch all your public repositories
 2. Filter out archived repos and templates
 3. Ask if you want to include forks
-4. Create `folio.config.ts` with all your repos
+4. Create `projex.config.ts` with all your repos
 
 This creates a config file like:
 
 ```ts
-// folio.config.ts
-import { defineProjects } from '@reallukemanning/folio'
+// projex.config.ts
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -125,9 +125,9 @@ Add `featured: true` to your best project:
 Add the components you'll need:
 
 ```bash
-npx folio add project-card
-npx folio add project-grid
-npx folio add featured-project
+npx projex add project-card
+npx projex add project-grid
+npx projex add featured-project
 ```
 
 Install dependencies:
@@ -141,7 +141,7 @@ pnpm install
 Install a pre-built theme:
 
 ```bash
-npx folio add theme-minimal
+npx projex add theme-minimal
 ```
 
 Import the theme in your layout:
@@ -150,7 +150,7 @@ Import the theme in your layout:
 // app/layout.tsx
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './styles/folio-theme-minimal.css'
+import './styles/projex-theme-minimal.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -178,12 +178,12 @@ Create the main portfolio page with data fetching:
 
 ```tsx
 // app/page.tsx
-import { ProjectCard, ProjectGrid, FeaturedProject } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard, ProjectGrid, FeaturedProject } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
-async function getProjects(): Promise<FolioProject[]> {
+async function getProjects(): Promise<ProjexProject[]> {
   const { projects: projectInputs } = await import('../folio.config')
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
 
@@ -267,7 +267,7 @@ Add custom CSS to match your brand:
 
 ```css
 /* styles/globals.css (or your CSS file) */
-[data-folio-featured] {
+[data-projex-featured] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 3rem;
   border-radius: 1rem;
@@ -275,17 +275,17 @@ Add custom CSS to match your brand:
   color: white;
 }
 
-[data-folio-featured] h2 {
+[data-projex-featured] h2 {
   color: white;
 }
 
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
 }
 
-[data-folio-card] {
+[data-projex-card] {
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
@@ -293,7 +293,7 @@ Add custom CSS to match your brand:
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
-[data-folio-card]:hover {
+[data-projex-card]:hover {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
@@ -326,8 +326,8 @@ my-portfolio/
 │   ├── page.tsx
 │   └── globals.css
 ├── styles/
-│   └── folio-theme-minimal.css
-├── folio.config.ts
+│   └── projex-theme-minimal.css
+├── projex.config.ts
 ├── .env.local
 ├── package.json
 └── tsconfig.json
@@ -346,15 +346,15 @@ mkdir -p app/projects/[id]
 ```tsx
 // app/projects/[id]/page.tsx
 import { notFound } from 'next/navigation'
-import { ProjectView } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { ProjectView } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
 async function getProject(id: string) {
   const { projects: projectInputs } = await import('../../folio.config')
   const input = projectInputs.find((p) => p.id === id)
   if (!input) return null
 
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   return normalise(input)
 }
 
@@ -385,7 +385,7 @@ import {
   ProjectFilterTag,
   useProjectSearch,
   useProjectFilters,
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 
 function InteractivePortfolio({ projects }) {
   const [query, setQuery] = useState('')
@@ -438,7 +438,7 @@ Add proper metadata for search engines:
 
 ```tsx
 // app/page.tsx
-import { generatePortfolioMetadata } from '@reallukemanning/folio'
+import { generatePortfolioMetadata } from '@manningworks/projex'
 
 export const metadata = generatePortfolioMetadata({
   name: 'Your Name',
@@ -474,9 +474,9 @@ GitHub stats might be missing if:
 
 If build fails:
 
-1. Check `folio.config.ts` has valid syntax
+1. Check `projex.config.ts` has valid syntax
 2. Verify GitHub repos exist and are public
-3. Ensure `@reallukemanning/folio` is installed
+3. Ensure `@manningworks/projex` is installed
 4. Check TypeScript config includes `moduleResolution: "bundler"`
 
 ## Additional Resources

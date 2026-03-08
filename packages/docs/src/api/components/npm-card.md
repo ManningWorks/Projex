@@ -5,7 +5,7 @@ Pre-built card component for npm packages. Displays project name, description, d
 ## Installation
 
 ```bash
-npx folio add npm-card
+npx projex add npm-card
 ```
 
 ## Import
@@ -44,7 +44,7 @@ import { NpmCard } from './components/folio/NpmCard'
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| project | `FolioProject` | No | - | Project data to display (renders children only if omitted) |
+| project | `ProjexProject` | No | - | Project data to display (renders children only if omitted) |
 | showVersion | `boolean` | No | `true` | Whether to display version string |
 | children | `React.ReactNode` | No | - | Content to render in card footer |
 
@@ -52,13 +52,13 @@ import { NpmCard } from './components/folio/NpmCard'
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 ### NpmCard.Description
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if `project.description` is empty.
 
@@ -66,7 +66,7 @@ Returns `null` if `project.description` is empty.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if `project.stack` is empty.
 
@@ -74,7 +74,7 @@ Returns `null` if `project.stack` is empty.
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| project | `FolioProject` | Yes | - | Project data to display |
+| project | `ProjexProject` | Yes | - | Project data to display |
 | showVersion | `boolean` | No | `true` | Whether to display version string |
 
 Returns `null` if no stats are available.
@@ -83,13 +83,13 @@ Returns `null` if no stats are available.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 ### NpmCard.Links
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if no links are available.
 
@@ -105,19 +105,19 @@ Returns `null` if no children are provided.
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-card` | - | Root card container |
-| `data-folio-card-header` | - | Header section |
-| `data-folio-card-description` | - | Description section |
-| `data-folio-card-tags` | - | Tags container |
-| `data-folio-card-stats` | - | Stats container |
-| `data-folio-card-footer` | - | Footer content container |
-| `data-folio-status` | - | Status badge |
-| `data-folio-status-value` | `active` \| `shipped` \| ... | Current status |
-| `data-folio-tag` | - | Individual tag |
-| `data-folio-link` | - | Link element |
-| `data-folio-link-type` | `npm` \| `github` \| `docs` | Link type |
-| `data-folio-stat` | `downloads` \| `version` | Stat type |
-| `data-folio-stat-icon` | `downloads` | Stat icon indicator |
+| `data-projex-card` | - | Root card container |
+| `data-projex-card-header` | - | Header section |
+| `data-projex-card-description` | - | Description section |
+| `data-projex-card-tags` | - | Tags container |
+| `data-projex-card-stats` | - | Stats container |
+| `data-projex-card-footer` | - | Footer content container |
+| `data-projex-status` | - | Status badge |
+| `data-projex-status-value` | `active` \| `shipped` \| ... | Current status |
+| `data-projex-tag` | - | Individual tag |
+| `data-projex-link` | - | Link element |
+| `data-projex-link-type` | `npm` \| `github` \| `docs` | Link type |
+| `data-projex-stat` | `downloads` \| `version` | Stat type |
+| `data-projex-stat-icon` | `downloads` | Stat icon indicator |
 
 ## Example
 

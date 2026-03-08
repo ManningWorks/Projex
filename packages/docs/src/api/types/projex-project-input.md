@@ -1,11 +1,11 @@
-# FolioProjectInput
+# ProjexProjectInput
 
-Project input configuration for defining projects. Passed to `normalise` to create `FolioProject` objects.
+Project input configuration for defining projects. Passed to `normalise` to create `ProjexProject` objects.
 
 ## Definition
 
 ```tsx
-type FolioProjectInput =
+type ProjexProjectInput =
   | GitHubProjectInput
   | ManualProjectInput
   | NpmProjectInput
@@ -96,7 +96,7 @@ interface ManualProjectInput extends BaseProjectInput {
 ## Example
 
 ```tsx
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 const projects = defineProjects([
   // GitHub project

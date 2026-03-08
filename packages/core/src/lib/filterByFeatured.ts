@@ -1,9 +1,9 @@
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 
 export function filterByFeatured(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   featured: boolean | null | undefined
-): FolioProject[] {
+): ProjexProject[] {
   if (projects.length === 0) {
     return []
   }

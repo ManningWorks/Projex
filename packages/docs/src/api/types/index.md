@@ -1,6 +1,6 @@
 # Types
 
-Folio exports TypeScript types for all data structures. Import types from the main entry point.
+Projex exports TypeScript types for all data structures. Import types from the main entry point.
 
 ## Available Types
 
@@ -8,8 +8,8 @@ Folio exports TypeScript types for all data structures. Import types from the ma
 
 | Type | Description |
 |------|-------------|
-| [FolioProject](./folio-project) | Normalized project object |
-| [FolioProjectInput](./folio-project-input) | Project input configuration |
+| [ProjexProject](./projex-project) | Normalized project object |
+| [ProjexProjectInput](./projex-project-input) | Project input configuration |
 | [ProjectType](./project-type) | Project type union |
 | [ProjectStatus](./project-status) | Project status union |
 
@@ -56,14 +56,14 @@ Folio exports TypeScript types for all data structures. Import types from the ma
 | Type | Description |
 |------|-------------|
 | SortValue | Allowed sort values for sortProjects |
-| FolioProjectInputZod | Zod schema type for project validation |
+| ProjexProjectInputZod | Zod schema type for project validation |
 | FuseOptions | Fuse.js configuration options |
 
 ### Schema Types
 
 | Type | Description |
 |------|-------------|
-| folioProjectInputSchema | Zod validation schema for FolioProjectInput |
+| projexProjectInputSchema | Zod validation schema for ProjexProjectInput |
 | PersonSchema | Schema.org Person JSON-LD |
 | SoftwareApplicationSchema | Schema.org SoftwareApplication JSON-LD |
 | GeneratePersonSchemaOptions | Options for generatePersonSchema |
@@ -73,17 +73,17 @@ Folio exports TypeScript types for all data structures. Import types from the ma
 
 ```tsx
 import type { 
-  FolioProject, 
-  FolioProjectInput, 
+  ProjexProject, 
+  ProjexProjectInput, 
   ProjectType, 
   ProjectStatus 
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 ```
 
 ## Type Relationships
 
 ```
-FolioProjectInput ──normalise()──> FolioProject
+ProjexProjectInput ──normalise()──> ProjexProject
        │                                 │
        ├── GitHubProjectInput            ├── stats: ProjectStats
        ├── NpmProjectInput               ├── links: ProjectLinks

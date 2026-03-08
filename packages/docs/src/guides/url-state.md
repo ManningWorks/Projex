@@ -19,7 +19,7 @@ Persist filter, search, and layout state to URL query parameters. This creates s
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ProjectCard, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectCard, ProjectGrid } from '@manningworks/projex'
 
 function Portfolio({ projects }) {
   const searchParams = useSearchParams()
@@ -138,7 +138,7 @@ function Portfolio({ projects }) {
 ```tsx
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { ProjectCard, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectCard, ProjectGrid } from '@manningworks/projex'
 
 function Portfolio({ projects }) {
   const router = useRouter()
@@ -383,9 +383,9 @@ Combining server-side data fetching with client-side URL state:
 
 ```tsx
 // app/page.tsx
-import { ProjectCard, ProjectGrid } from '@reallukemanning/folio'
-import { FolioProject } from '@reallukemanning/folio'
-import { FolioClient } from './folio-client'
+import { ProjectCard, ProjectGrid } from '@manningworks/projex'
+import { ProjexProject } from '@manningworks/projex'
+import { ProjexClient } from './projex-client'
 
 export default async function PortfolioPage({
   searchParams
@@ -395,28 +395,28 @@ export default async function PortfolioPage({
   const projects = await getProjects()
 
   // Pass searchParams to client component
-  return <FolioClient projects={projects} initialParams={searchParams} />
+  return <ProjexClient projects={projects} initialParams={searchParams} />
 }
 
-async function getProjects(): Promise<FolioProject[]> {
+async function getProjects(): Promise<ProjexProject[]> {
   const { projects: projectInputs } = await import('../../folio.config')
-  const { normalise } = await import('@reallukemanning/folio')
+  const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map(normalise))
 }
 
-// app/folio-client.tsx
+// app/projex-client.tsx
 'use client'
 
-import { ProjectCard, ProjectGrid } from '@reallukemanning/folio'
-import { FolioProject } from '@reallukemanning/folio'
+import { ProjectCard, ProjectGrid } from '@manningworks/projex'
+import { ProjexProject } from '@manningworks/projex'
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-export function FolioClient({
+export function ProjexClient({
   projects,
   initialParams
 }: {
-  projects: FolioProject[]
+  projects: ProjexProject[]
   initialParams: { q?: string; type?: string; status?: string }
 }) {
   const searchParams = useSearchParams()

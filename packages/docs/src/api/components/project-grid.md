@@ -5,7 +5,7 @@ Container component for displaying projects in a grid layout.
 ## Import
 
 ```tsx
-import { ProjectGrid } from '@reallukemanning/folio'
+import { ProjectGrid } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -30,12 +30,12 @@ Returns `null` if `children` is falsy.
 
 | Attribute | Description |
 |-----------|-------------|
-| `data-folio-grid` | Grid container |
+| `data-projex-grid` | Grid container |
 
 ## Example
 
 ```tsx
-import { ProjectGrid, ProjectCard } from '@reallukemanning/folio'
+import { ProjectGrid, ProjectCard } from '@manningworks/projex'
 
 function ProjectsGrid({ projects }) {
   return (
@@ -57,7 +57,7 @@ function ProjectsGrid({ projects }) {
 Apply CSS Grid or Flexbox via the data attribute:
 
 ```css
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;

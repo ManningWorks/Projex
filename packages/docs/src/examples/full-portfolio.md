@@ -1,6 +1,6 @@
 # Full Portfolio Example
 
-A complete portfolio page showcasing all major Folio components working together.
+A complete portfolio page showcasing all major Projex components working together.
 
 ## Features
 
@@ -14,7 +14,7 @@ A complete portfolio page showcasing all major Folio components working together
 ## Code
 
 ```tsx
-import { FeaturedProject, ProjectGrid, ProjectCard } from '@reallukemanning/folio'
+import { FeaturedProject, ProjectGrid, ProjectCard } from '@manningworks/projex'
 import { useState } from 'react'
 
 function Portfolio() {
@@ -60,40 +60,40 @@ The components generate semantic HTML with data attributes for styling:
 
 ```html
 <!-- FeaturedProject -->
-<div data-folio-featured>
-  <img data-folio-featured-image src="..." alt="Featured Project" />
-  <div data-folio-view>
+<div data-projex-featured>
+  <img data-projex-featured-image src="..." alt="Featured Project" />
+  <div data-projex-view>
     <h2>Featured Project</h2>
-    <div data-folio-view-section data-folio-view-section-name="background">
+    <div data-projex-view-section data-projex-view-section-name="background">
       Background story...
     </div>
-    <div data-folio-view-section data-folio-view-section-name="why">
+    <div data-projex-view-section data-projex-view-section-name="why">
       Why I built this...
     </div>
-    <div data-folio-view-stats>
-      <span data-folio-stat="stars">1000 stars</span>
-      <span data-folio-stat="forks">200 forks</span>
+    <div data-projex-view-stats>
+      <span data-projex-stat="stars">1000 stars</span>
+      <span data-projex-stat="forks">200 forks</span>
     </div>
-    <div data-folio-view-links>
-      <a href="..." data-folio-link data-folio-link-type="github">GitHub</a>
-      <a href="..." data-folio-link data-folio-link-type="live">Live</a>
+    <div data-projex-view-links>
+      <a href="..." data-projex-link data-projex-link-type="github">GitHub</a>
+      <a href="..." data-projex-link data-projex-link-type="live">Live</a>
     </div>
   </div>
 </div>
 
 <!-- ProjectGrid -->
-<div data-folio-grid>
-  <div data-folio-card>
+<div data-projex-grid>
+  <div data-projex-card>
     <!-- Card content -->
   </div>
-  <div data-folio-card>
+  <div data-projex-card>
     <!-- Card content -->
   </div>
 </div>
 
 <!-- List view -->
 <div class="list">
-  <div data-folio-card>
+  <div data-projex-card>
     <!-- Card content -->
   </div>
 </div>
@@ -105,7 +105,7 @@ CSS for the featured section and layouts:
 
 ```css
 /* Featured section */
-[data-folio-featured] {
+[data-projex-featured] {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 48px;
   border-radius: 16px;
@@ -113,13 +113,13 @@ CSS for the featured section and layouts:
   color: #fff;
 }
 
-[data-folio-featured] h2 {
+[data-projex-featured] h2 {
   margin: 0 0 16px 0;
   font-size: 2em;
 }
 
 /* Grid layout */
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
@@ -132,7 +132,7 @@ CSS for the featured section and layouts:
   gap: 16px;
 }
 
-.list [data-folio-card] {
+.list [data-projex-card] {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 16px;

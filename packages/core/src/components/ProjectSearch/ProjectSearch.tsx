@@ -32,13 +32,13 @@ function ProjectSearch({ onSearch, placeholder }: ProjectSearchProps) {
   }
 
   return (
-    <div data-folio-search>
+    <div data-projex-search>
       <input
         type="text"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
-        data-folio-search-input
+        data-projex-search-input
       />
     </div>
   )

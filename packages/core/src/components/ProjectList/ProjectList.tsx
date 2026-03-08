@@ -1,6 +1,6 @@
 function ProjectList({ children }: { children: React.ReactNode }) {
   if (!children) return null
-  return <div data-folio-list>{children}</div>
+  return <div data-projex-list>{children}</div>
 }
 
 export { ProjectList }

@@ -6,23 +6,23 @@ React hook for fuzzy searching projects by name, description, and stack using Fu
 
 ```tsx
 function useProjectSearch(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   query: string | undefined | null,
   options?: UseProjectSearchOptions
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to search |
+| projects | `ProjexProject[]` | Array of projects to search |
 | query | `string \| undefined \| null` | Search query string |
 | options | `UseProjectSearchOptions` | Optional configuration |
 
 ## Returns
 
-`FolioProject[]` - Filtered array of projects matching the query
+`ProjexProject[]` - Filtered array of projects matching the query
 
 ## Options
 
@@ -42,7 +42,7 @@ function useProjectSearch(
 
 ```tsx
 import { useState } from 'react'
-import { useProjectSearch, ProjectSearch, ProjectGrid } from '@reallukemanning/folio'
+import { useProjectSearch, ProjectSearch, ProjectGrid } from '@manningworks/projex'
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')
@@ -61,7 +61,7 @@ function ProjectShowcase({ projects }) {
 
 ```tsx
 import { useState } from 'react'
-import { useProjectSearch, ProjectSearch, ProjectGrid } from '@reallukemanning/folio'
+import { useProjectSearch, ProjectSearch, ProjectGrid } from '@manningworks/projex'
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')

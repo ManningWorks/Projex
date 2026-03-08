@@ -88,23 +88,23 @@ interface PackageResult {
 }
 
 async function measureCorePackage(): Promise<PackageResult> {
-  console.log('Measuring @reallukemanning/folio...')
-  
-  const result = execSync('pnpm size-limit --json 2>/dev/null', { 
-    cwd: ROOT, 
+  console.log('Measuring @manningworks/projex...')
+
+  const result = execSync('pnpm size-limit --json 2>/dev/null', {
+    cwd: ROOT,
     encoding: 'utf-8',
     stdio: ['pipe', 'pipe', 'pipe']
   })
-  
+
   const parsed = JSON.parse(result)
   const allExports = parsed.find((p: { name: string }) => p.name.includes('all exports'))
-  
+
   const size = allExports?.size ?? 0
   const gzipped = size
   const limit = 10 * 1024
-  
+
   return {
-    name: '@reallukemanning/folio',
+    name: '@manningworks/projex',
     target: '< 10 KB gzipped',
     uncompressed: size,
     gzipped: gzipped,
@@ -115,7 +115,7 @@ async function measureCorePackage(): Promise<PackageResult> {
 
 
 async function main() {
-  console.log('\n📦 Folio Bundle Size Measurement\n')
+  console.log('\n📦 Projex Bundle Size Measurement\n')
   console.log('='.repeat(70))
   
   const results: PackageResult[] = []
@@ -123,7 +123,7 @@ async function main() {
   try {
     results.push(await measureCorePackage())
   } catch (error) {
-    console.error('Failed to measure @reallukemanning/folio:', error)
+    console.error('Failed to measure @manningworks/projex:', error)
   }
   
   console.log('\n' + '='.repeat(70))

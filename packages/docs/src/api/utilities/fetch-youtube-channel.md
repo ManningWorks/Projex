@@ -60,7 +60,7 @@ interface YouTubeChannelData {
 ## Example
 
 ```tsx
-import { fetchYouTubeChannel } from '@reallukemanning/folio'
+import { fetchYouTubeChannel } from '@manningworks/projex'
 
 const data = await fetchYouTubeChannel('UC_x5XG1OV2P6uZZ5FSM9Ttw')
 

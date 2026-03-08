@@ -33,7 +33,7 @@ describe('add command', () => {
       vi.mocked(readFile).mockImplementation((path: string | Buffer) => {
         const pathStr = path.toString()
         if (pathStr.includes('package.json')) {
-          return Promise.resolve(JSON.stringify({ dependencies: { '@reallukemanning/folio': '1.0.0' } }))
+          return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('GitHubCard.tsx')) {
           return Promise.resolve("import type { FolioProject } from '../../types'")
@@ -75,7 +75,7 @@ describe('add command', () => {
       vi.mocked(readFile).mockImplementation((path: string | Buffer) => {
         const pathStr = path.toString()
         if (pathStr.includes('package.json')) {
-          return Promise.resolve(JSON.stringify({ dependencies: { '@reallukemanning/folio': '1.0.0' } }))
+          return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('NpmCard.tsx')) {
           return Promise.resolve("import type { FolioProject } from '../../types'")
@@ -116,7 +116,7 @@ describe('add command', () => {
       vi.mocked(readFile).mockImplementation((path: string | Buffer) => {
         const pathStr = path.toString()
         if (pathStr.includes('package.json')) {
-          return Promise.resolve(JSON.stringify({ dependencies: { '@reallukemanning/folio': '1.0.0' } }))
+          return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('ShowcaseCard.tsx')) {
           return Promise.resolve("import type { FolioProject } from '../../types'")

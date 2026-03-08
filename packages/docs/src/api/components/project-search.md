@@ -5,7 +5,7 @@ Search input component with built-in debouncing (300ms). Triggers callback with 
 ## Import
 
 ```tsx
-import { ProjectSearch } from '@reallukemanning/folio'
+import { ProjectSearch } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -34,14 +34,14 @@ import { ProjectSearch } from '@reallukemanning/folio'
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-search` | - | Root container |
-| `data-folio-search-input` | - | Input element |
+| `data-projex-search` | - | Root container |
+| `data-projex-search-input` | - | Input element |
 
 ## Example
 
 ```tsx
 import { useState } from 'react'
-import { ProjectSearch, useProjectSearch, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectSearch, useProjectSearch, ProjectGrid } from '@manningworks/projex'
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')

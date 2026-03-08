@@ -55,7 +55,7 @@ interface GumroadProductData {
 ## Example
 
 ```tsx
-import { fetchGumroadProduct } from '@reallukemanning/folio'
+import { fetchGumroadProduct } from '@manningworks/projex'
 
 const data = await fetchGumroadProduct('prod_test123')
 

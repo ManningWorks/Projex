@@ -6,7 +6,7 @@ interface ProjectFilterBarProps {
 
 function ProjectFilterBar({ children }: ProjectFilterBarProps) {
   return (
-    <div data-folio-filter-bar>
+    <div data-projex-filter-bar>
       {children}
     </div>
   )

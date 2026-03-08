@@ -4,22 +4,22 @@ function CommitList({ commits }: { commits: ProjectCommit[] }) {
   if (!commits || commits.length === 0) return null
 
   return (
-    <div data-folio-commit-list>
+    <div data-projex-commit-list>
       {commits.map((commit) => (
-        <div key={commit.url} data-folio-commit>
-          <div data-folio-commit-message>
+        <div key={commit.url} data-projex-commit>
+          <div data-projex-commit-message>
             {commit.message.length > 100
               ? `${commit.message.slice(0, 100)}...`
               : commit.message}
           </div>
-          <div data-folio-commit-date>{commit.date}</div>
+          <div data-projex-commit-date>{commit.date}</div>
           {commit.url && (
-            <a href={commit.url} data-folio-commit-link>
+            <a href={commit.url} data-projex-commit-link>
               View Commit
             </a>
           )}
           {commit.author && 'name' in commit.author && commit.author.name && (
-            <div data-folio-commit-author>{commit.author.name}</div>
+            <div data-projex-commit-author>{commit.author.name}</div>
           )}
         </div>
       ))}

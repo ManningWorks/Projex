@@ -109,7 +109,7 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
 
     if (sourceFiles.length === 0) {
       console.error(chalk.red(`✖ No files found for ${componentName}`))
-      console.error(chalk.gray('  Try reinstalling @folio/cli'))
+      console.error(chalk.gray('  Try reinstalling @manningworks/projex'))
       process.exit(1)
     }
 
@@ -152,7 +152,7 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
         process.exit(1)
       } else if (error.code === 'ENOENT') {
         console.error(chalk.red(`✖ Source files not found`))
-        console.error(chalk.gray('  Try reinstalling @folio/cli'))
+        console.error(chalk.gray('  Try reinstalling @manningworks/projex'))
         process.exit(1)
       }
     }
@@ -204,7 +204,7 @@ async function ensureFolioInstalled(): Promise<void> {
   const pkg = JSON.parse(content)
 
   const deps = { ...pkg.dependencies, ...pkg.devDependencies }
-  if ('@reallukemanning/folio' in deps) {
+  if ('@manningworks/projex' in deps) {
     return
   }
 
@@ -213,9 +213,9 @@ async function ensureFolioInstalled(): Promise<void> {
 
   const installCmd = hasPnpm ? 'pnpm add' : hasYarn ? 'yarn add' : 'npm install'
 
-  console.log(chalk.gray(`  Installing @reallukemanning/folio...`))
-  execSync(`${installCmd} @reallukemanning/folio`, { stdio: 'inherit' })
-  console.log(chalk.gray(`  ✓ @reallukemanning/folio installed`))
+  console.log(chalk.gray(`  Installing @manningworks/projex...`))
+  execSync(`${installCmd} @manningworks/projex`, { stdio: 'inherit' })
+  console.log(chalk.gray(`  ✓ @manningworks/projex installed`))
 }
 
 async function transformImports(filePath: string): Promise<void> {
@@ -224,12 +224,12 @@ async function transformImports(filePath: string): Promise<void> {
 
   transformed = transformed.replace(
     /from ['"]\.\.\/types['"]/g,
-    "from '@reallukemanning/folio'"
+    "from '@manningworks/projex'"
   )
 
   transformed = transformed.replace(
     /from ['"]\.\.\/\.\.\/types['"]/g,
-    "from '@reallukemanning/folio'"
+    "from '@manningworks/projex'"
   )
 
   const { writeFile } = await import('node:fs/promises')

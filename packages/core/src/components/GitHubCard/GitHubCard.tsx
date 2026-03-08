@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 
 export interface GitHubCardProps {
-  project?: FolioProject
+  project?: ProjexProject
   showForks?: boolean
   statsComponent?: ReactNode
   children?: ReactNode
@@ -11,20 +11,20 @@ export interface GitHubCardProps {
 function GitHubCard({ project, showForks = true, statsComponent, children }: GitHubCardProps) {
   if (project) {
     return (
-      <div data-folio-card>
-        <div data-folio-card-header>
+      <div data-projex-card>
+        <div data-projex-card-header>
           <h3>{project.repo || project.name}</h3>
           {project.language && (
-            <span data-folio-language data-folio-language-color={project.languageColor || undefined}>
+            <span data-projex-language data-projex-language-color={project.languageColor || undefined}>
               {project.language}
             </span>
           )}
         </div>
-        {project.description && <div data-folio-card-description>{project.description}</div>}
+        {project.description && <div data-projex-card-description>{project.description}</div>}
         {project.stack && project.stack.length > 0 && (
-          <div data-folio-card-tags>
+          <div data-projex-card-tags>
             {project.stack.map((tag) => (
-              <span key={tag} data-folio-tag>
+              <span key={tag} data-projex-tag>
                 {tag}
               </span>
             ))}
@@ -35,24 +35,24 @@ function GitHubCard({ project, showForks = true, statsComponent, children }: Git
         ) : (
           <GitHubCard.Stats project={project} showForks={showForks} />
         )}
-        <div data-folio-card-status data-folio-status-value={project.status}>
+        <div data-projex-card-status data-projex-status-value={project.status}>
           {project.status}
         </div>
         <GitHubCard.Links project={project} />
-        {children && <div data-folio-card-footer>{children}</div>}
+        {children && <div data-projex-card-footer>{children}</div>}
       </div>
     )
   }
 
-  return <div data-folio-card>{children}</div>
+  return <div data-projex-card>{children}</div>
 }
 
-GitHubCard.Header = function GitHubCardHeader({ project }: { project: FolioProject }) {
+GitHubCard.Header = function GitHubCardHeader({ project }: { project: ProjexProject }) {
   return (
-    <div data-folio-card-header>
+    <div data-projex-card-header>
       <h3>{project.repo || project.name}</h3>
       {project.language && (
-        <span data-folio-language data-folio-language-color={project.languageColor || undefined}>
+        <span data-projex-language data-projex-language-color={project.languageColor || undefined}>
           {project.language}
         </span>
       )}
@@ -60,17 +60,17 @@ GitHubCard.Header = function GitHubCardHeader({ project }: { project: FolioProje
   )
 }
 
-GitHubCard.Description = function GitHubCardDescription({ project }: { project: FolioProject }) {
+GitHubCard.Description = function GitHubCardDescription({ project }: { project: ProjexProject }) {
   if (!project.description) return null
-  return <div data-folio-card-description>{project.description}</div>
+  return <div data-projex-card-description>{project.description}</div>
 }
 
-GitHubCard.Tags = function GitHubCardTags({ project }: { project: FolioProject }) {
+GitHubCard.Tags = function GitHubCardTags({ project }: { project: ProjexProject }) {
   if (!project.stack || project.stack.length === 0) return null
   return (
-    <div data-folio-card-tags>
+    <div data-projex-card-tags>
       {project.stack.map((tag) => (
-        <span key={tag} data-folio-tag>
+        <span key={tag} data-projex-tag>
           {tag}
         </span>
       ))}
@@ -78,27 +78,27 @@ GitHubCard.Tags = function GitHubCardTags({ project }: { project: FolioProject }
   )
 }
 
-GitHubCard.Stats = function GitHubCardStats({ project, showForks = true }: { project: FolioProject; showForks?: boolean }) {
+GitHubCard.Stats = function GitHubCardStats({ project, showForks = true }: { project: ProjexProject; showForks?: boolean }) {
   const hasStats = project.stats?.stars || (showForks && project.stats?.forks) || project.commits?.length
   if (!hasStats) return null
 
   return (
-    <div data-folio-card-stats>
+    <div data-projex-card-stats>
       {project.stats?.stars && (
-        <span data-folio-stat="stars">
-          <span data-folio-stat-icon="stars" />
+        <span data-projex-stat="stars">
+          <span data-projex-stat-icon="stars" />
           {project.stats.stars} stars
         </span>
       )}
       {showForks && project.stats?.forks && (
-        <span data-folio-stat="forks">
-          <span data-folio-stat-icon="forks" />
+        <span data-projex-stat="forks">
+          <span data-projex-stat-icon="forks" />
           {project.stats.forks} forks
         </span>
       )}
       {project.commits && project.commits.length > 0 && (
-        <span data-folio-stat="commits">
-          <span data-folio-stat-icon="commits" />
+        <span data-projex-stat="commits">
+          <span data-projex-stat-icon="commits" />
           {project.commits.length} commits
         </span>
       )}
@@ -106,29 +106,29 @@ GitHubCard.Stats = function GitHubCardStats({ project, showForks = true }: { pro
   )
 }
 
-GitHubCard.Status = function GitHubCardStatus({ project }: { project: FolioProject }) {
+GitHubCard.Status = function GitHubCardStatus({ project }: { project: ProjexProject }) {
   return (
-    <div data-folio-status data-folio-status-value={project.status}>
+    <div data-projex-status data-projex-status-value={project.status}>
       {project.status}
     </div>
   )
 }
 
-GitHubCard.Links = function GitHubCardLinks({ project }: { project: FolioProject }) {
+GitHubCard.Links = function GitHubCardLinks({ project }: { project: ProjexProject }) {
   const hasGitHubLink = project.links.github !== undefined
   const hasLiveLink = project.links.live !== undefined
 
   if (!hasGitHubLink && !hasLiveLink) return null
 
   return (
-    <div data-folio-card-links>
+    <div data-projex-card-links>
       {project.links.github && (
-        <a href={project.links.github} data-folio-link data-folio-link-type="github">
+        <a href={project.links.github} data-projex-link data-projex-link-type="github">
           GitHub
         </a>
       )}
       {project.links.live && (
-        <a href={project.links.live} data-folio-link data-folio-link-type="live">
+        <a href={project.links.live} data-projex-link data-projex-link-type="live">
           Live
         </a>
       )}
@@ -138,7 +138,7 @@ GitHubCard.Links = function GitHubCardLinks({ project }: { project: FolioProject
 
 GitHubCard.Footer = function GitHubCardFooter({ children }: { children?: ReactNode }) {
   if (!children) return null
-  return <div data-folio-card-footer>{children}</div>
+  return <div data-projex-card-footer>{children}</div>
 }
 
 export { GitHubCard }

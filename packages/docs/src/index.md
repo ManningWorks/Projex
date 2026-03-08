@@ -1,4 +1,4 @@
-Folio is a shadcn-style component library for building developer portfolio pages. Drop in pre-built project cards that auto-fetch data from GitHub, npm, and Product Hunt — no API glue required. Built for Next.js. Zero CSS shipped by default.
+Projex is a shadcn-style component library for building developer portfolio pages. Drop in pre-built project cards that auto-fetch data from GitHub, npm, and Product Hunt — no API glue required. Built for Next.js. Zero CSS shipped by default.
 
 **Open-source (MIT licensed) and free to use.**
 
@@ -7,27 +7,27 @@ Folio is a shadcn-style component library for building developer portfolio pages
 ## Quick Start
 
 ```bash
-npx @reallukemanning/folio init --github
+npx @manningworks/projex init --github
 ```
 
-Enter your GitHub username when prompted. Folio automatically fetches your public repositories and generates a `folio.config.ts` file pre-populated with all your projects.
+Enter your GitHub username when prompted. Projex automatically fetches your public repositories and generates a `projex.config.ts` file pre-populated with all your projects.
 
 ### Quick Start Checklist
 
-- [ ] **Initialize project** — Run `npx folio init --github` to create your config
-- [ ] **Install dependencies** — Run `pnpm install` to install Folio package
-- [ ] **Add components** — Run `npx folio add project-card` to add components
-- [ ] **Add styling** — Run `npx folio add theme-minimal` for a theme, or add custom CSS
-- [ ] **Update config** — Edit `folio.config.ts` with your projects
+- [ ] **Initialize project** — Run `npx projex init --github` to create your config
+- [ ] **Install dependencies** — Run `pnpm install` to install Projex package
+- [ ] **Add components** — Run `npx projex add project-card` to add components
+- [ ] **Add styling** — Run `npx projex add theme-minimal` for a theme, or add custom CSS
+- [ ] **Update config** — Edit `projex.config.ts` with your projects
 - [ ] **Import components** — Import and use components in your Next.js pages
 - [ ] **Build and deploy** — Run `pnpm build` to generate your portfolio
 
 [Continue → Getting Started](./guides/getting-started)
 
-## How Folio works
+## How Projex works
 
-- **Copy-paste components** — Run `npx folio add project-card` to get the source code. You own it.
-- **Style with data attributes** — Target elements like `[data-folio-card]` or use pre-built themes.
+- **Copy-paste components** — Run `npx projex add project-card` to get the source code. You own it.
+- **Style with data attributes** — Target elements like `[data-projex-card]` or use pre-built themes.
 - **Fetch data at build time** — GitHub, npm, Product Hunt data is fetched when your site builds. No runtime API calls, no rate limits at runtime, fresh data on every rebuild.
 
 ## The API
@@ -47,9 +47,9 @@ Folio uses compound components for maximum flexibility:
 
 Each part is optional. Use only what you need, compose your own layout.
 
-## Who is Folio for?
+## Who is Projex for?
 
-**OSS maintainers** — Auto-detect all your GitHub repositories with `npx folio init --github`. Stars, forks, and language data populate automatically.
+**OSS maintainers** — Auto-detect all your GitHub repositories with `npx projex init --github`. Stars, forks, and language data populate automatically.
 
 **Freelancers** — Showcase client work with manual projects. Full control over descriptions, tags, and links. Mix with GitHub repos for open source contributions.
 
@@ -71,15 +71,15 @@ Portfolios using Folio in production:
 
 ---
 
-# About Folio
+# About Projex
 
-Folio is built and maintained by [Luke Manning](https://lukemanning.ie), a solo developer building tools for developers who ship small products and open source projects.
+Projex is built and maintained by [Luke Manning](https://lukemanning.ie), a solo developer building tools for developers who ship small products and open source projects.
 
-**Active development** — Folio is actively maintained. Check [GitHub commits](https://github.com/RealLukeManning/Folio/commits/main) for recent activity.
+**Active development** — Projex is actively maintained. Check [GitHub commits](https://github.com/ManningWorks/Projex/commits/main) for recent activity.
 
-**Version history** — See the [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md) for detailed release notes and [GitHub Releases](https://github.com/RealLukeManning/Folio/releases) for all published versions.
+**Version history** — See the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for detailed release notes and [GitHub Releases](https://github.com/ManningWorks/Projex/releases) for all published versions.
 
-**Why Folio exists** — No existing solution handled the reality of a solo developer's project mix: GitHub repos, npm packages, Product Hunt launches, and client work all in one place. Folio lets you showcase everything without fighting your tools.
+**Why Projex exists** — No existing solution handled the reality of a solo developer's project mix: GitHub repos, npm packages, Product Hunt launches, and client work all in one place. Projex lets you showcase everything without fighting your tools.
 
 ---
 

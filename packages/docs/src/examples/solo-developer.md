@@ -19,7 +19,7 @@ This example is perfect for solo developers who:
 ## Code
 
 ```tsx
-import { GitHubCard, NpmCard, ShowcaseCard, ProjectGrid } from '@reallukemanning/folio'
+import { GitHubCard, NpmCard, ShowcaseCard, ProjectGrid } from '@manningworks/projex'
 
 function SoloPortfolio() {
   return (
@@ -51,10 +51,10 @@ function SoloPortfolio() {
 
 ## Configuration
 
-Define your projects in `folio.config.ts`:
+Define your projects in `projex.config.ts`:
 
 ```typescript
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -87,60 +87,60 @@ export const projects = defineProjects([
 
 ## HTML Output
 
-The components generate semantic HTML with `data-folio-*` attributes for styling:
+The components generate semantic HTML with `data-projex-*` attributes for styling:
 
 ```html
-<div data-folio-grid>
+<div data-projex-grid>
   <!-- GitHubCard generates -->
-  <div data-folio-card>
-    <div data-folio-card-header>
+  <div data-projex-card>
+    <div data-projex-card-header>
       <h3>facebook/react</h3>
-      <span data-folio-language data-folio-language-color="#f1e05a">JavaScript</span>
+      <span data-projex-language data-projex-language-color="#f1e05a">JavaScript</span>
     </div>
-    <div data-folio-card-description>The library for web and native user interfaces.</div>
-    <div data-folio-card-stats>
-      <span data-folio-stat="stars">243694 stars</span>
-      <span data-folio-stat="forks">50666 forks</span>
+    <div data-projex-card-description>The library for web and native user interfaces.</div>
+    <div data-projex-card-stats>
+      <span data-projex-stat="stars">243694 stars</span>
+      <span data-projex-stat="forks">50666 forks</span>
     </div>
-    <div data-folio-status data-folio-status-value="active">active</div>
-    <div data-folio-card-links>
-      <a href="..." data-folio-link data-folio-link-type="github">GitHub</a>
-      <a href="..." data-folio-link data-folio-link-type="live">Live</a>
+    <div data-projex-status data-projex-status-value="active">active</div>
+    <div data-projex-card-links>
+      <a href="..." data-projex-link data-projex-link-type="github">GitHub</a>
+      <a href="..." data-projex-link data-projex-link-type="live">Live</a>
     </div>
   </div>
 
   <!-- NpmCard generates -->
-  <div data-folio-card>
-    <div data-folio-card-header>
+  <div data-projex-card>
+    <div data-projex-card-header>
       <h3>lodash</h3>
     </div>
-    <div data-folio-card-stats>
-      <span data-folio-stat="downloads">480058614 downloads</span>
-      <span data-folio-stat="version">v4.17.23</span>
+    <div data-projex-card-stats>
+      <span data-projex-stat="downloads">480058614 downloads</span>
+      <span data-projex-stat="version">v4.17.23</span>
     </div>
-    <div data-folio-status data-folio-status-value="active">active</div>
-    <div data-folio-card-links>
-      <a href="..." data-folio-link data-folio-link-type="npm">npm</a>
+    <div data-projex-status data-projex-status-value="active">active</div>
+    <div data-projex-card-links>
+      <a href="..." data-projex-link data-projex-link-type="npm">npm</a>
     </div>
   </div>
 
   <!-- ShowcaseCard generates -->
-  <div data-folio-card>
-    <div data-folio-card-header>
+  <div data-projex-card>
+    <div data-projex-card-header>
       <h3>My Portfolio</h3>
-      <p data-folio-card-tagline>Personal project showcase</p>
+      <p data-projex-card-tagline>Personal project showcase</p>
     </div>
-    <div data-folio-card-description>A complete portfolio website showcasing my projects and work.</div>
-    <div data-folio-card-tags>
-      <span data-folio-tag>Next.js</span>
-      <span data-folio-tag>React</span>
-      <span data-folio-tag>TypeScript</span>
-      <span data-folio-tag>Tailwind</span>
+    <div data-projex-card-description>A complete portfolio website showcasing my projects and work.</div>
+    <div data-projex-card-tags>
+      <span data-projex-tag>Next.js</span>
+      <span data-projex-tag>React</span>
+      <span data-projex-tag>TypeScript</span>
+      <span data-projex-tag>Tailwind</span>
     </div>
-    <div data-folio-status data-folio-status-value="active">active</div>
-    <div data-folio-card-links>
-      <a href="..." data-folio-link data-folio-link-type="live">Live</a>
-      <a href="..." data-folio-link data-folio-link-type="github">GitHub</a>
+    <div data-projex-status data-projex-status-value="active">active</div>
+    <div data-projex-card-links>
+      <a href="..." data-projex-link data-projex-link-type="live">Live</a>
+      <a href="..." data-projex-link data-projex-link-type="github">GitHub</a>
     </div>
   </div>
 </div>
@@ -154,7 +154,7 @@ Basic CSS to style the cards:
 
 ```css
 /* Card base */
-[data-folio-card] {
+[data-projex-card] {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 16px;
@@ -162,27 +162,27 @@ Basic CSS to style the cards:
 }
 
 /* Header */
-[data-folio-card-header] h3 {
+[data-projex-card-header] h3 {
   margin: 0 0 8px 0;
   font-size: 1.1em;
   font-weight: 600;
 }
 
 /* Description */
-[data-folio-card-description] {
+[data-projex-card-description] {
   margin: 8px 0;
   color: #6b7280;
 }
 
 /* Tags */
-[data-folio-card-tags] {
+[data-projex-card-tags] {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 8px 0;
 }
 
-[data-folio-tag] {
+[data-projex-tag] {
   background: #f3f4f6;
   padding: 2px 8px;
   border-radius: 4px;
@@ -190,7 +190,7 @@ Basic CSS to style the cards:
 }
 
 /* Stats */
-[data-folio-card-stats] {
+[data-projex-card-stats] {
   display: flex;
   gap: 16px;
   margin: 12px 0;
@@ -198,32 +198,32 @@ Basic CSS to style the cards:
 }
 
 /* Status */
-[data-folio-status] {
+[data-projex-status] {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.85em;
 }
 
-[data-folio-status-value="active"] {
+[data-projex-status-value="active"] {
   background: #dcfce7;
   color: #166534;
 }
 
 /* Links */
-[data-folio-card-links] {
+[data-projex-card-links] {
   display: flex;
   gap: 12px;
   margin-top: 12px;
 }
 
-[data-folio-link] {
+[data-projex-link] {
   color: #374151;
   text-decoration: none;
 }
 
 /* Grid */
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;

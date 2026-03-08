@@ -1,6 +1,6 @@
-# folioProjectInputSchema & FolioProjectInputZod
+# folioProjectInputSchema & ProjexProjectInputZod
 
-Zod validation schema for `FolioProjectInput` configuration. Provides runtime type checking for project configurations.
+Zod validation schema for `ProjexProjectInput` configuration. Provides runtime type checking for project configurations.
 
 ## folioProjectInputSchema
 
@@ -83,24 +83,24 @@ All link URLs are validated as proper URL strings:
 | `productHunt` | URL format required |
 | `custom` | Each link must have `label: string` and `url: URL` |
 
-## FolioProjectInputZod
+## ProjexProjectInputZod
 
 Inferred TypeScript type from the Zod schema.
 
 ### Definition
 
 ```tsx
-type FolioProjectInputZod = z.infer<typeof folioProjectInputSchema>
+type ProjexProjectInputZod = z.infer<typeof folioProjectInputSchema>
 ```
 
-This type is identical to `FolioProjectInput` but explicitly typed as the inferred schema type.
+This type is identical to `ProjexProjectInput` but explicitly typed as the inferred schema type.
 
 ## Usage
 
 ### Validating Configuration
 
 ```tsx
-import { folioProjectInputSchema } from '@reallukemanning/folio'
+import { folioProjectInputSchema } from '@manningworks/projex'
 
 const result = folioProjectInputSchema.safeParse({
   id: 'my-project',
@@ -119,7 +119,7 @@ if (!result.success) {
 Create custom validation with Zod:
 
 ```tsx
-import { folioProjectInputSchema } from '@reallukemanning/folio'
+import { folioProjectInputSchema } from '@manningworks/projex'
 
 const strictSchema = folioProjectInputSchema
   .refine(
@@ -134,12 +134,12 @@ const strictSchema = folioProjectInputSchema
 
 ### Type Inference
 
-Use `FolioProjectInputZod` for type-safe config handling:
+Use `ProjexProjectInputZod` for type-safe config handling:
 
 ```tsx
-import type { FolioProjectInputZod } from '@reallukemanning/folio'
+import type { ProjexProjectInputZod } from '@manningworks/projex'
 
-function validateConfig(config: FolioProjectInputZod): boolean {
+function validateConfig(config: ProjexProjectInputZod): boolean {
   return folioProjectInputSchema.safeParse(config).success
 }
 ```
@@ -171,11 +171,11 @@ if (!result.success) {
 
 ## CLI Integration
 
-The schema is used internally by the CLI for `folio.config.ts` validation:
+The schema is used internally by the CLI for `projex.config.ts` validation:
 
 ```bash
 # Invalid config
-npx folio init
+npx projex init
 
 # Output:
 # ✖ Validation failed
@@ -185,7 +185,7 @@ npx folio init
 #   Received: production
 #   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 #
-# Tip: Check your folio.config.ts for errors above.
+# Tip: Check your projex.config.ts for errors above.
 ```
 
 ## Related

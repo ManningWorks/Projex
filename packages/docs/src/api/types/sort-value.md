@@ -19,8 +19,8 @@ type SortValue = 'stars' | 'name' | 'date'
 ## Usage
 
 ```tsx
-import { sortProjects } from '@reallukemanning/folio'
-import type { SortValue } from '@reallukemanning/folio'
+import { sortProjects } from '@manningworks/projex'
+import type { SortValue } from '@manningworks/projex'
 
 const sortBy: SortValue = 'stars'
 
@@ -73,8 +73,8 @@ Use with `ProjectSort` component for user-selectable sorting:
 
 ```tsx
 import { useState } from 'react'
-import { ProjectSort, sortProjects } from '@reallukemanning/folio'
-import type { SortValue } from '@reallukemanning/folio'
+import { ProjectSort, sortProjects } from '@manningworks/projex'
+import type { SortValue } from '@manningworks/projex'
 
 function ProjectsPage({ projects }) {
   const [sortBy, setSortBy] = useState<SortValue>('name')

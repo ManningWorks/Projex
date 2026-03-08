@@ -44,7 +44,7 @@ type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
 ## Usage
 
 ```tsx
-import { fetchGitHubRepos } from '@reallukemanning/folio'
+import { fetchGitHubRepos } from '@manningworks/projex'
 
 const result = await fetchGitHubRepos('facebook')
 
@@ -63,7 +63,7 @@ if (result.data) {
 Each error type has a specific handling strategy:
 
 ```tsx
-import { fetchGitHubRepos, type FetchReposError } from '@reallukemanning/folio'
+import { fetchGitHubRepos, type FetchReposError } from '@manningworks/projex'
 
 const result = await fetchGitHubRepos('username')
 

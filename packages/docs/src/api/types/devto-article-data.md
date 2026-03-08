@@ -33,8 +33,8 @@ interface DevToArticleData {
 Article data is returned as an array within `DevToUserData`:
 
 ```tsx
-import { fetchDevToUser } from '@reallukemanning/folio'
-import type { DevToUserData } from '@reallukemanning/folio'
+import { fetchDevToUser } from '@manningworks/projex'
+import type { DevToUserData } from '@manningworks/projex'
 
 const data: DevToUserData | null = await fetchDevToUser('username')
 

@@ -5,19 +5,19 @@ Utility function that dispatches to appropriate sorting functions based on sort 
 ## Signature
 
 ```tsx
-function sortProjects(projects: FolioProject[], sortValue: SortValue): FolioProject[]
+function sortProjects(projects: ProjexProject[], sortValue: SortValue): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to sort |
+| projects | `ProjexProject[]` | Array of projects to sort |
 | sortValue | `SortValue` | Sort direction and field |
 
 ## Returns
 
-`FolioProject[]` - Sorted array of projects
+`ProjexProject[]` - Sorted array of projects
 
 ## Sort Values
 
@@ -41,7 +41,7 @@ type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
 ## Example
 
 ```tsx
-import { sortProjects, ProjectSort, ProjectGrid } from '@reallukemanning/folio'
+import { sortProjects, ProjectSort, ProjectGrid } from '@manningworks/projex'
 
 const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']
 
@@ -75,7 +75,7 @@ import {
   ProjectFilterTag,
   ProjectSort,
   ProjectGrid
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js']
 const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']

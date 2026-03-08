@@ -48,7 +48,7 @@ interface ProductHuntPostData {
 ## Example
 
 ```tsx
-import { fetchProductHuntPost } from '@reallukemanning/folio'
+import { fetchProductHuntPost } from '@manningworks/projex'
 
 const data = await fetchProductHuntPost('my-product')
 

@@ -6,7 +6,7 @@ import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 
-const CONFIG_FILE = 'folio.config.ts'
+const CONFIG_FILE = 'projex.config.ts'
 
 const PROJECT_TYPES = [
   { value: 'github', label: 'GitHub Repository', description: 'Track a GitHub repo' },
@@ -30,8 +30,8 @@ export interface InitInteractiveOptions {
 }
 
 export async function initInteractive(options: InitInteractiveOptions = {}): Promise<void> {
-  console.log(chalk.bold('🚀 Interactive Folio Setup'))
-  console.log(chalk.gray('Let\'s create your folio.config.ts together'))
+  console.log(chalk.bold('🚀 Interactive Projex Setup'))
+  console.log(chalk.gray('Let\'s create your projex.config.ts together'))
   console.log()
 
   const workingDir = process.cwd()
@@ -90,15 +90,15 @@ export async function initInteractive(options: InitInteractiveOptions = {}): Pro
     console.log(chalk.green(`✓ ${CONFIG_FILE} created with ${projects.length} project(s)`))
     console.log()
     console.log(chalk.bold('Next steps:'))
-    console.log(chalk.gray('1. Edit folio.config.ts to add more details'))
+    console.log(chalk.gray('1. Edit projex.config.ts to add more details'))
     console.log(chalk.gray('2. Import and use the components in your Next.js app'))
-    console.log(chalk.gray('3. See https://docs.folio.dev for usage examples'))
+    console.log(chalk.gray('3. See https://docs.projex.dev for usage examples'))
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === 'EACCES') {
       console.error(chalk.red(`✖ Permission denied. Cannot write to ${CONFIG_FILE}`))
       console.error(chalk.gray('  Check file permissions and try again.'))
     } else {
-      console.error(chalk.red('✖ Failed to create folio.config.ts'))
+      console.error(chalk.red('✖ Failed to create projex.config.ts'))
       console.error(chalk.gray(`  ${error instanceof Error ? error.message : 'Unknown error'}`))
     }
     process.exit(1)
@@ -233,7 +233,7 @@ function generateProjectConfig(project: ProjectAnswers): string {
 }
 
 function generateConfigFile(projects: string[]): string {
-  return `import { defineProjects } from '@reallukemanning/folio'
+  return `import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
 ${projects.join(',\n')}
@@ -253,7 +253,7 @@ async function ensureFolioInstalled(): Promise<void> {
     const pkg = JSON.parse(content)
 
     const deps = { ...pkg.dependencies, ...pkg.devDependencies }
-    if ('@reallukemanning/folio' in deps) {
+    if ('@manningworks/projex' in deps) {
       return
     }
 
@@ -262,9 +262,9 @@ async function ensureFolioInstalled(): Promise<void> {
 
     const installCmd = hasPnpm ? 'pnpm add' : hasYarn ? 'yarn add' : 'npm install'
 
-    console.log(chalk.gray(`  Installing @reallukemanning/folio...`))
-    execSync(`${installCmd} @reallukemanning/folio`, { stdio: 'inherit' })
-    console.log(chalk.gray(`  ✓ @reallukemanning/folio installed`))
+    console.log(chalk.gray(`  Installing @manningworks/projex...`))
+    execSync(`${installCmd} @manningworks/projex`, { stdio: 'inherit' })
+    console.log(chalk.gray(`  ✓ @manningworks/projex installed`))
   } catch {
   }
 }

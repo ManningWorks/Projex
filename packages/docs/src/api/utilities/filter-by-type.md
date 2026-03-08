@@ -6,21 +6,21 @@ Filter projects by their type value.
 
 ```tsx
 function filterByType(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   type: ProjectType | 'all' | undefined
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to filter |
+| projects | `ProjexProject[]` | Array of projects to filter |
 | type | `ProjectType \| 'all' \| undefined` | Type to filter by |
 
 ## Returns
 
-`FolioProject[]` - Filtered array of projects (new array, does not mutate input)
+`ProjexProject[]` - Filtered array of projects (new array, does not mutate input)
 
 ## Behavior
 
@@ -31,7 +31,7 @@ function filterByType(
 ## Example
 
 ```tsx
-import { filterByType } from '@reallukemanning/folio'
+import { filterByType } from '@manningworks/projex'
 
 // Single type
 const githubProjects = filterByType(projects, 'github')

@@ -1,9 +1,9 @@
-import type { FolioProject, ProjectStatus } from '../types'
+import type { ProjexProject, ProjectStatus } from '../types'
 
 export function filterByStatus(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   status: ProjectStatus | 'all' | ProjectStatus[] | undefined
-): FolioProject[] {
+): ProjexProject[] {
   if (projects.length === 0) {
     return []
   }

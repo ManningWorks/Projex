@@ -25,7 +25,7 @@ type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'youtube' | 'g
 ## Usage
 
 ```tsx
-import type { ProjectType } from '@reallukemanning/folio'
+import type { ProjectType } from '@manningworks/projex'
 
 function getIcon(type: ProjectType): string {
   switch (type) {

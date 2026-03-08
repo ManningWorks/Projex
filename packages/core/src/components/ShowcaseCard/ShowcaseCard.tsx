@@ -1,35 +1,35 @@
 import type { ReactNode } from 'react'
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 
 export interface ShowcaseCardProps {
-  project: FolioProject
+  project: ProjexProject
   children?: ReactNode
 }
 
 function ShowcaseCard({ children }: { children?: ReactNode }) {
-  return <div data-folio-card>{children}</div>
+  return <div data-projex-card>{children}</div>
 }
 
-ShowcaseCard.Header = function ShowcaseCardHeader({ project }: { project: FolioProject }) {
+ShowcaseCard.Header = function ShowcaseCardHeader({ project }: { project: ProjexProject }) {
   return (
-    <div data-folio-card-header>
+    <div data-projex-card-header>
       <h3>{project.name}</h3>
-      {project.tagline && <p data-folio-card-tagline>{project.tagline}</p>}
+      {project.tagline && <p data-projex-card-tagline>{project.tagline}</p>}
     </div>
   )
 }
 
-ShowcaseCard.Description = function ShowcaseCardDescription({ project }: { project: FolioProject }) {
+ShowcaseCard.Description = function ShowcaseCardDescription({ project }: { project: ProjexProject }) {
   if (!project.description) return null
-  return <div data-folio-card-description>{project.description}</div>
+  return <div data-projex-card-description>{project.description}</div>
 }
 
-ShowcaseCard.Tags = function ShowcaseCardTags({ project }: { project: FolioProject }) {
+ShowcaseCard.Tags = function ShowcaseCardTags({ project }: { project: ProjexProject }) {
   if (!project.stack || project.stack.length === 0) return null
   return (
-    <div data-folio-card-tags>
+    <div data-projex-card-tags>
       {project.stack.map((tag) => (
-        <span key={tag} data-folio-tag>
+        <span key={tag} data-projex-tag>
           {tag}
         </span>
       ))}
@@ -37,7 +37,7 @@ ShowcaseCard.Tags = function ShowcaseCardTags({ project }: { project: FolioProje
   )
 }
 
-ShowcaseCard.Stats = function ShowcaseCardStats({ project }: { project: FolioProject }) {
+ShowcaseCard.Stats = function ShowcaseCardStats({ project }: { project: ProjexProject }) {
   if (
     !project.stats ||
     (!project.stats.stars &&
@@ -50,30 +50,30 @@ ShowcaseCard.Stats = function ShowcaseCardStats({ project }: { project: FolioPro
     return null
   }
   return (
-    <div data-folio-card-stats>
-      {project.stats.stars && <span data-folio-stat="stars">{project.stats.stars} stars</span>}
-      {project.stats.forks && <span data-folio-stat="forks">{project.stats.forks} forks</span>}
+    <div data-projex-card-stats>
+      {project.stats.stars && <span data-projex-stat="stars">{project.stats.stars} stars</span>}
+      {project.stats.forks && <span data-projex-stat="forks">{project.stats.forks} forks</span>}
       {project.stats.downloads && (
-        <span data-folio-stat="downloads">{project.stats.downloads} downloads</span>
+        <span data-projex-stat="downloads">{project.stats.downloads} downloads</span>
       )}
-      {project.stats.version && <span data-folio-stat="version">{project.stats.version}</span>}
-      {project.stats.upvotes && <span data-folio-stat="upvotes">{project.stats.upvotes} upvotes</span>}
+      {project.stats.version && <span data-projex-stat="version">{project.stats.version}</span>}
+      {project.stats.upvotes && <span data-projex-stat="upvotes">{project.stats.upvotes} upvotes</span>}
       {project.stats.comments && (
-        <span data-folio-stat="comments">{project.stats.comments} comments</span>
+        <span data-projex-stat="comments">{project.stats.comments} comments</span>
       )}
     </div>
   )
 }
 
-ShowcaseCard.Status = function ShowcaseCardStatus({ project }: { project: FolioProject }) {
+ShowcaseCard.Status = function ShowcaseCardStatus({ project }: { project: ProjexProject }) {
   return (
-    <div data-folio-status data-folio-status-value={project.status}>
+    <div data-projex-status data-projex-status-value={project.status}>
       {project.status}
     </div>
   )
 }
 
-ShowcaseCard.Links = function ShowcaseCardLinks({ project }: { project: FolioProject }) {
+ShowcaseCard.Links = function ShowcaseCardLinks({ project }: { project: ProjexProject }) {
   const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'appStore', 'playStore', 'custom'] as const
 
   const linkLabels: Record<string, string> = {
@@ -109,16 +109,16 @@ ShowcaseCard.Links = function ShowcaseCardLinks({ project }: { project: FolioPro
   if (!hasLinks) return null
 
   return (
-    <div data-folio-card-links>
+    <div data-projex-card-links>
       {order.map(linkType => {
         if (linkType === 'custom') {
           return project.links.custom?.map((link) => (
             <a
               key={link.label}
               href={link.url}
-              data-folio-link
-              data-folio-link-type="custom"
-              data-folio-link-label={link.label}
+              data-projex-link
+              data-projex-link-type="custom"
+              data-projex-link-label={link.label}
             >
               {link.label}
             </a>
@@ -131,7 +131,7 @@ ShowcaseCard.Links = function ShowcaseCardLinks({ project }: { project: FolioPro
         if (!url) return null
 
         return (
-          <a key={linkType} href={url} data-folio-link data-folio-link-type={linkTypeAttr[linkType]}>
+          <a key={linkType} href={url} data-projex-link data-projex-link-type={linkTypeAttr[linkType]}>
             {linkLabels[linkType]}
           </a>
         )
@@ -142,7 +142,7 @@ ShowcaseCard.Links = function ShowcaseCardLinks({ project }: { project: FolioPro
 
 ShowcaseCard.Footer = function ShowcaseCardFooter({ children }: { children?: ReactNode }) {
   if (!children) return null
-  return <div data-folio-card-footer>{children}</div>
+  return <div data-projex-card-footer>{children}</div>
 }
 
 export { ShowcaseCard }

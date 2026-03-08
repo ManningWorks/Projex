@@ -1,10 +1,10 @@
 # SEO Integration
 
-Add metadata and structured data to your portfolio using Folio's SEO utilities. These functions generate proper Next.js metadata objects and JSON-LD schema for search engines and social media.
+Add metadata and structured data to your portfolio using Projex's SEO utilities. These functions generate proper Next.js metadata objects and JSON-LD schema for search engines and social media.
 
 ## Overview
 
-Folio provides four SEO utilities:
+Projex provides four SEO utilities:
 
 | Function | Purpose |
 |----------|---------|
@@ -23,9 +23,9 @@ Generate metadata for your portfolio homepage:
 
 ```tsx
 // app/page.tsx
-import { generatePortfolioMetadata } from '@reallukemanning/folio'
-import { ProjectCard } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { generatePortfolioMetadata } from '@manningworks/projex'
+import { ProjectCard } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
 export const metadata = generatePortfolioMetadata({
   name: 'Your Name',
@@ -62,12 +62,12 @@ Generate metadata for individual project pages:
 
 ```tsx
 // app/projects/[id]/page.tsx
-import { generateProjectMetadata } from '@reallukemanning/folio'
-import { normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { generateProjectMetadata } from '@manningworks/projex'
+import { normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../../../folio.config'
 
-async function getProject(id: string): Promise<FolioProject | null> {
+async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)
   if (!input) return null
   return normalise(input)
@@ -106,10 +106,10 @@ Combine with data fetching for dynamic metadata:
 
 ```tsx
 // app/projects/[id]/page.tsx
-import { generateProjectMetadata, normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { generateProjectMetadata, normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 
-async function getProject(id: string): Promise<FolioProject> {
+async function getProject(id: string): Promise<ProjexProject> {
   const response = await fetch(`${process.env.API_URL}/projects/${id}`)
   const data = await response.json()
   return normalise(data)
@@ -142,9 +142,9 @@ Add Person schema to your portfolio homepage:
 
 ```tsx
 // pages/index.tsx
-import { generatePersonSchema } from '@reallukemanning/folio'
+import { generatePersonSchema } from '@manningworks/projex'
 import Head from 'next/head'
-import type { PersonSchema } from '@reallukemanning/folio'
+import type { PersonSchema } from '@manningworks/projex'
 
 const schema = generatePersonSchema({
   name: 'Your Name',
@@ -191,12 +191,12 @@ Add SoftwareApplication schema to project pages:
 
 ```tsx
 // pages/projects/[id].tsx
-import { generateProjectSchema, normalise } from '@reallukemanning/folio'
+import { generateProjectSchema, normalise } from '@manningworks/projex'
 import Head from 'next/head'
-import type { FolioProject, SoftwareApplicationSchema } from '@reallukemanning/folio'
+import type { ProjexProject, SoftwareApplicationSchema } from '@manningworks/projex'
 import { projects as projectInputs } from '../../folio.config'
 
-function getProject(id: string): FolioProject {
+function getProject(id: string): ProjexProject {
   const input = projectInputs.find((p) => p.id === id)
   return normalise(input!)
 }
@@ -365,10 +365,10 @@ Functions never throw - they return `null` for invalid inputs and log warnings.
 
 Here's a complete Next.js App Router setup with SEO:
 
-### folio.config.ts
+### projex.config.ts
 
 ```ts
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -385,9 +385,9 @@ export const projects = defineProjects([
 ### app/page.tsx
 
 ```tsx
-import { generatePortfolioMetadata } from '@reallukemanning/folio'
-import { ProjectCard, normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { generatePortfolioMetadata } from '@manningworks/projex'
+import { ProjectCard, normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../folio.config'
 
 export const metadata = generatePortfolioMetadata({
@@ -401,7 +401,7 @@ export const metadata = generatePortfolioMetadata({
   ]
 })
 
-async function getProjects(): Promise<FolioProject[]> {
+async function getProjects(): Promise<ProjexProject[]> {
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
 
@@ -412,7 +412,7 @@ export default async function PortfolioPage() {
     <main>
       <h1>Your Name</h1>
       <p>Full-stack developer specializing in React, Next.js, and TypeScript</p>
-      <div data-folio-grid>
+      <div data-projex-grid>
         {projects.map((project) => (
           <ProjectCard key={project.id}>
             <ProjectCard.Header project={project} />
@@ -432,11 +432,11 @@ export default async function PortfolioPage() {
 ### app/projects/[id]/page.tsx
 
 ```tsx
-import { generateProjectMetadata, normalise } from '@reallukemanning/folio'
-import type { FolioProject } from '@reallukemanning/folio'
+import { generateProjectMetadata, normalise } from '@manningworks/projex'
+import type { ProjexProject } from '@manningworks/projex'
 import { projects as projectInputs } from '../../../folio.config'
 
-async function getProject(id: string): Promise<FolioProject | null> {
+async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)
   if (!input) return null
   return normalise(input)

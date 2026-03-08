@@ -5,7 +5,7 @@ Dropdown component for selecting sort options. Renders a native select element f
 ## Import
 
 ```tsx
-import { ProjectSort } from '@reallukemanning/folio'
+import { ProjectSort } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -30,16 +30,16 @@ import { ProjectSort } from '@reallukemanning/folio'
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-sort` | - | Root container |
-| `data-folio-sort-select` | - | Select element |
-| `data-folio-sort-option` | - | Option element |
-| `data-folio-sort-value` | `string` | Present on selected option |
+| `data-projex-sort` | - | Root container |
+| `data-projex-sort-select` | - | Select element |
+| `data-projex-sort-option` | - | Option element |
+| `data-projex-sort-value` | `string` | Present on selected option |
 
 ## Example
 
 ```tsx
 import { useState } from 'react'
-import { ProjectSort, sortProjects, ProjectGrid } from '@reallukemanning/folio'
+import { ProjectSort, sortProjects, ProjectGrid } from '@manningworks/projex'
 
 const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']
 

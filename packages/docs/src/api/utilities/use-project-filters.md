@@ -6,23 +6,23 @@ React hook for filtering projects by tags. Performs case-insensitive matching ag
 
 ```tsx
 function useProjectFilters(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   selectedTags: string[],
   options?: UseProjectFiltersOptions
-): FolioProject[]
+): ProjexProject[]
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProject[]` | Array of projects to filter |
+| projects | `ProjexProject[]` | Array of projects to filter |
 | selectedTags | `string[]` | Array of selected tag strings |
 | options | `UseProjectFiltersOptions` | Optional configuration |
 
 ## Returns
 
-`FolioProject[]` - Filtered array of projects matching any selected tag
+`ProjexProject[]` - Filtered array of projects matching any selected tag
 
 ## Options
 
@@ -46,7 +46,7 @@ import {
   ProjectFilterBar, 
   ProjectFilterTag, 
   ProjectGrid 
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js', 'Python']
 
@@ -92,7 +92,7 @@ import {
   ProjectFilterBar, 
   ProjectFilterTag, 
   ProjectGrid 
-} from '@reallukemanning/folio'
+} from '@manningworks/projex'
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')

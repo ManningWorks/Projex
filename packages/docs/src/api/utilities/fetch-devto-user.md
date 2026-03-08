@@ -48,7 +48,7 @@ No environment variables required. Dev.to public API does not require authentica
 ## Example
 
 ```tsx
-import { fetchDevToUser } from '@reallukemanning/folio'
+import { fetchDevToUser } from '@manningworks/projex'
 
 const data = await fetchDevToUser('ben')
 

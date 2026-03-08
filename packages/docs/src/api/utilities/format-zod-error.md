@@ -30,7 +30,7 @@ function formatZodError(error: z.ZodError): string
 ## Example
 
 ```tsx
-import { folioProjectInputSchema, formatZodError } from '@reallukemanning/folio'
+import { folioProjectInputSchema, formatZodError } from '@manningworks/projex'
 import { z } from 'zod'
 
 const result = folioProjectInputSchema.safeParse({
@@ -53,7 +53,7 @@ status: Invalid enum value. Expected one of: active, shipped, in-progress, comin
   Received: invalid-status
   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 
-Tip: Check your folio.config.ts for errors above.
+Tip: Check your projex.config.ts for errors above.
 Refer to docs: https://folio.dev/docs/config
 ```
 
@@ -83,7 +83,7 @@ This function is used internally by the CLI to display helpful validation errors
 
 ```bash
 # User provides invalid config
-npx folio init
+npx projex init
 
 # CLI outputs formatted error
 ✖ Validation failed
@@ -97,7 +97,7 @@ status: Invalid enum value. Expected one of: active, shipped, in-progress, comin
   Received: production
   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 
-Tip: Check your folio.config.ts for errors above.
+Tip: Check your projex.config.ts for errors above.
 ```
 
 ## Related

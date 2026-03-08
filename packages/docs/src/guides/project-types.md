@@ -1,6 +1,6 @@
 # Project Types
 
-Folio supports multiple project types, each suited to different scenarios.
+Projex supports multiple project types, each suited to different scenarios.
 
 ## GitHub (`github`)
 

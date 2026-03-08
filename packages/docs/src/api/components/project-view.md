@@ -5,7 +5,7 @@ Full page view for displaying detailed project information. Uses compound compon
 ## Import
 
 ```tsx
-import { ProjectView } from '@reallukemanning/folio'
+import { ProjectView } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ import { ProjectView } from '@reallukemanning/folio'
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 | onBack | `() => void` | No | Callback for back button click |
 | children | `React.ReactNode` | Yes | Child components to render |
 
@@ -38,7 +38,7 @@ import { ProjectView } from '@reallukemanning/folio'
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 | name | `string` | Yes | Section name: `background`, `why`, `stack`, `struggles`, `timeline`, `posts` |
 
 Returns `null` if the specified section data is empty.
@@ -47,7 +47,7 @@ Returns `null` if the specified section data is empty.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if `project.stats` is empty.
 
@@ -55,7 +55,7 @@ Returns `null` if `project.stats` is empty.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if no links are available.
 
@@ -63,7 +63,7 @@ Returns `null` if no links are available.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `FolioProject` | Yes | Project data to display |
+| project | `ProjexProject` | Yes | Project data to display |
 
 Returns `null` if `project.commits` is empty or undefined. Available for GitHub and hybrid project types only.
 
@@ -86,36 +86,36 @@ defineProjects([...projects], { commits: 5 })
 
 | Attribute | Value | Description |
 |-----------|-------|-------------|
-| `data-folio-view` | - | Root view container |
-| `data-folio-view-section` | - | Section container |
-| `data-folio-view-section-name` | `background` \| `why` \| ... | Section name |
-| `data-folio-view-stats` | - | Stats container |
-| `data-folio-view-links` | - | Links container |
-| `data-folio-tag` | - | Individual tag (for stack) |
-| `data-folio-struggle` | - | Struggle item |
-| `data-folio-struggle-type` | `warn` \| `error` | Struggle severity |
-| `data-folio-timeline-date` | - | Timeline date |
-| `data-folio-timeline-note` | - | Timeline note |
-| `data-folio-post-title` | - | Post title |
-| `data-folio-post-date` | - | Post date |
-| `data-folio-post-link` | - | Post link |
-| `data-folio-link` | - | Link element |
-| `data-folio-link-type` | `github` \| `live` \| `docs` \| `demo` \| `npm` \| `app-store` \| `play-store` \| `product-hunt` \| `custom` | Link type |
-| `data-folio-link-label` | `string` | Custom link label |
-| `data-folio-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
-| `data-folio-commits` | - | Commits container |
-| `data-folio-commits-header` | - | Commits section header |
-| `data-folio-commit-list` | - | Commit list container |
-| `data-folio-commit` | - | Individual commit item |
-| `data-folio-commit-message` | - | Commit message |
-| `data-folio-commit-date` | - | Commit date |
-| `data-folio-commit-link` | - | Commit link |
-| `data-folio-commit-author` | - | Commit author |
+| `data-projex-view` | - | Root view container |
+| `data-projex-view-section` | - | Section container |
+| `data-projex-view-section-name` | `background` \| `why` \| ... | Section name |
+| `data-projex-view-stats` | - | Stats container |
+| `data-projex-view-links` | - | Links container |
+| `data-projex-tag` | - | Individual tag (for stack) |
+| `data-projex-struggle` | - | Struggle item |
+| `data-projex-struggle-type` | `warn` \| `error` | Struggle severity |
+| `data-projex-timeline-date` | - | Timeline date |
+| `data-projex-timeline-note` | - | Timeline note |
+| `data-projex-post-title` | - | Post title |
+| `data-projex-post-date` | - | Post date |
+| `data-projex-post-link` | - | Post link |
+| `data-projex-link` | - | Link element |
+| `data-projex-link-type` | `github` \| `live` \| `docs` \| `demo` \| `npm` \| `app-store` \| `play-store` \| `product-hunt` \| `custom` | Link type |
+| `data-projex-link-label` | `string` | Custom link label |
+| `data-projex-stat` | `stars` \| `forks` \| `downloads` \| `version` \| `upvotes` \| `comments` | Stat type |
+| `data-projex-commits` | - | Commits container |
+| `data-projex-commits-header` | - | Commits section header |
+| `data-projex-commit-list` | - | Commit list container |
+| `data-projex-commit` | - | Individual commit item |
+| `data-projex-commit-message` | - | Commit message |
+| `data-projex-commit-date` | - | Commit date |
+| `data-projex-commit-link` | - | Commit link |
+| `data-projex-commit-author` | - | Commit author |
 
 ## Example
 
 ```tsx
-import { ProjectView } from '@reallukemanning/folio'
+import { ProjectView } from '@manningworks/projex'
 import { useRouter } from 'next/navigation'
 
 function ProjectPage({ project }) {

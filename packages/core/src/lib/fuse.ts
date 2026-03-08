@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 
 export interface FuseOptions {
   threshold: number
@@ -17,7 +17,7 @@ export function getFuseOptions(threshold: number = 0.3): FuseOptions {
   }
 }
 
-export function createFuseSearch(projects: FolioProject[], threshold: number = 0.3): Fuse<FolioProject> {
+export function createFuseSearch(projects: ProjexProject[], threshold: number = 0.3): Fuse<ProjexProject> {
   const options = getFuseOptions(threshold)
 
   return new Fuse(projects, options)

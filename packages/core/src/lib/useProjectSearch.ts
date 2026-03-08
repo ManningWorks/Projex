@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import Fuse from 'fuse.js'
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 import { getFuseOptions } from './fuse'
 
 export interface UseProjectSearchOptions {
@@ -8,10 +8,10 @@ export interface UseProjectSearchOptions {
 }
 
 export function useProjectSearch(
-  projects: FolioProject[],
+  projects: ProjexProject[],
   query: string | undefined | null,
   options: UseProjectSearchOptions = {}
-): FolioProject[] {
+): ProjexProject[] {
   const { threshold = 0.3 } = options
 
   const fuse = useMemo(() => {

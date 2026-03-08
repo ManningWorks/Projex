@@ -1,13 +1,13 @@
-# Contributing to Folio
+# Contributing to Projex
 
-Folio is in active development. We welcome contributions from experienced developers who understand the shadcn philosophy: own your code, use good defaults, avoid opinions.
+Projex is in active development. We welcome contributions from experienced developers who understand the shadcn philosophy: own your code, use good defaults, avoid opinions.
 
 ## Development Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/folio.git
-cd folio
+git clone https://github.com/your-username/projex.git
+cd projex
 
 # Install dependencies
 pnpm install
@@ -28,7 +28,7 @@ pnpm build
 ## Project Structure
 
 ```
-folio/
+projex/
 ├── packages/
 │   ├── core/          # Main component library (includes CLI)
 │   └── docs/          # VitePress documentation
@@ -76,10 +76,10 @@ We maintain high test coverage (>97% lines). All contributions must include test
 pnpm test
 
 # Run tests with coverage
-pnpm --filter @folio/core test:coverage
+pnpm --filter @projex/core test:coverage
 
 # Run tests in watch mode
-pnpm --filter @folio/core test:watch
+pnpm --filter @projex/core test:watch
 
 # Run benchmarks
 pnpm benchmark
@@ -112,8 +112,8 @@ The public API is documented in `CHANGELOG.md`. Breaking changes to public expor
 
 - Components: `ProjectCard`, `ProjectView`, `ProjectList`, `FeaturedProject`
 - Utilities: `defineProjects`, `normalise`, all filter/sort functions, API fetchers
-- Types: `FolioProject`, `FolioProjectInput`, all discriminated union types
-- Data attributes: All `data-folio-*` attributes for CSS targeting
+- Types: `ProjexProject`, `ProjexProjectInput`, all discriminated union types
+- Data attributes: All `data-projex-*` attributes for CSS targeting
 
 ### What's Implementation Detail
 
@@ -140,14 +140,14 @@ The CI pipeline will:
 
 ## Bundle Size
 
-Folio is optimized for minimal bundle impact. Check bundle size before contributing:
+Projex is optimized for minimal bundle impact. Check bundle size before contributing:
 
 ```bash
 pnpm bundle-size
 ```
 
 Bundle size limits:
-- `@reallukemanning/folio`: < 10 KB (target: < 3 KB)
+- `@manningworks/projex`: < 10 KB (target: < 3 KB)
 
 ## Documentation
 
@@ -155,7 +155,7 @@ Documentation lives in `packages/docs/` using VitePress.
 
 ```bash
 # Run docs locally
-pnpm --filter @folio/docs dev
+pnpm --filter @projex/docs dev
 ```
 
 When contributing new features:

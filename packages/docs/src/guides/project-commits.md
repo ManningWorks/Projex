@@ -7,7 +7,7 @@ Display recent GitHub commits in your project view. Available for GitHub and hyb
 Set a global default for all GitHub/hybrid projects:
 
 ```ts
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   { id: 'my-lib', type: 'github', repo: 'username/repo' },
@@ -41,7 +41,7 @@ See the [Fetch Strategy guide](./fetch-strategy) for details on setting up GitHu
 Use `ProjectView.Commits` in your project detail page:
 
 ```tsx
-import { ProjectView } from '@reallukemanning/folio'
+import { ProjectView } from '@manningworks/projex'
 
 export default function ProjectDetailPage({ project }) {
   return (

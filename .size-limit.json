@@ -1,26 +1,26 @@
 [
   {
-    "name": "@folio/core (all exports)",
+    "name": "@manningworks/projex (all exports)",
     "path": "packages/core/src/index.ts",
     "import": "*",
     "limit": "10 KB",
     "ignore": ["react", "react-dom"]
   },
   {
-    "name": "@folio/core (tree-shaken: ProjectCard)",
+    "name": "@manningworks/projex (tree-shaken: ProjectCard)",
     "path": "packages/core/src/components/ProjectCard/ProjectCard.tsx",
     "import": "{ ProjectCard }",
     "limit": "2 KB",
     "ignore": ["react", "react-dom"]
   },
   {
-    "name": "@folio/core (tree-shaken: utilities only)",
+    "name": "@manningworks/projex (tree-shaken: utilities only)",
     "path": "packages/core/src/lib/index.ts",
     "import": "{ defineProjects }",
     "limit": "3 KB"
   },
   {
-    "name": "@folio/core (tree-shaken: ProjectSearch only)",
+    "name": "@manningworks/projex (tree-shaken: ProjectSearch only)",
     "path": "packages/core/src/components/ProjectSearch/ProjectSearch.tsx",
     "import": "{ ProjectSearch }",
     "limit": "6 KB",

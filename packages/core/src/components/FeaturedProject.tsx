@@ -1,8 +1,8 @@
-import type { FolioProject } from '../types'
+import type { ProjexProject } from '../types'
 import { ProjectView } from './ProjectView'
 
 interface FeaturedProjectProps {
-  project: FolioProject | null | undefined
+  project: ProjexProject | null | undefined
 }
 
 function FeaturedProject({ project }: FeaturedProjectProps) {
@@ -11,8 +11,8 @@ function FeaturedProject({ project }: FeaturedProjectProps) {
   }
 
   return (
-    <div data-folio-featured>
-      {project.image && <img data-folio-featured-image src={project.image} alt={project.name} />}
+    <div data-projex-featured>
+      {project.image && <img data-projex-featured-image src={project.image} alt={project.name} />}
       <ProjectView project={project}>
         <ProjectView.Section name="background" project={project} />
         <ProjectView.Section name="why" project={project} />

@@ -5,32 +5,32 @@ Type-safe helper for defining project configurations.
 ## Signature
 
 ```tsx
-function defineProjects(projects: FolioProjectInput[], options?: DefineProjectsOptions): DefineProjectsResult
+function defineProjects(projects: ProjexProjectInput[], options?: DefineProjectsOptions): DefineProjectsResult
 ```
 
 ## Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| projects | `FolioProjectInput[]` | Array of project input configurations |
+| projects | `ProjexProjectInput[]` | Array of project input configurations |
 | options | `DefineProjectsOptions` | Optional configuration options |
 
 ## Returns
 
 `DefineProjectsResult` - Object containing:
-- `projects`: `FolioProjectInput[]` - The same array (identity function for type inference)
+- `projects`: `ProjexProjectInput[]` - The same array (identity function for type inference)
 - `options`: `DefineProjectsOptions` - The options passed in
 
 ## Commits Configuration
 
-Folio can fetch recent commits from GitHub repositories for GitHub and hybrid project types.
+Projex can fetch recent commits from GitHub repositories for GitHub and hybrid project types.
 
 ### Global Default
 
 Set a default number of commits for all GitHub/hybrid projects:
 
 ```tsx
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   { id: 'my-project', type: 'github', repo: 'user/repo', status: 'active' },
@@ -73,7 +73,7 @@ This is an identity function that provides TypeScript type inference and autocom
 ## Example
 
 ```tsx
-import { defineProjects } from '@reallukemanning/folio'
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   {
@@ -115,8 +115,8 @@ export const projects = defineProjects([
 ## With Next.js
 
 ```tsx
-// folio.config.ts
-import { defineProjects } from '@reallukemanning/folio'
+// projex.config.ts
+import { defineProjects } from '@manningworks/projex'
 
 export const projects = defineProjects([
   // ...projects
@@ -124,7 +124,7 @@ export const projects = defineProjects([
 
 // lib/projects.ts
 import { projects } from '@/folio.config'
-import { normalise } from '@reallukemanning/folio'
+import { normalise } from '@manningworks/projex'
 
 export async function getProjects() {
   return Promise.all(projects.map(normalise))

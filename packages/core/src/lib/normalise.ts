@@ -5,16 +5,16 @@ import { fetchYouTubeChannel } from './youtube'
 import { fetchGumroadProduct } from './gumroad'
 import { fetchLemonSqueezyStore } from './lemonsqueezy'
 import { fetchDevToUser } from './devto'
-import { folioProjectInputSchema } from './config-schema'
+import { projexProjectInputSchema } from './config-schema'
 import { formatZodError } from './format-error'
 import type { DefineProjectsOptions } from './defineProjects'
-import type { FolioProject, FolioProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
+import type { ProjexProject, ProjexProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
 
 export async function normalise(
-  input: FolioProjectInput,
+  input: ProjexProjectInput,
   options?: DefineProjectsOptions,
-): Promise<FolioProject> {
-  const validationResult = folioProjectInputSchema.safeParse(input)
+): Promise<ProjexProject> {
+  const validationResult = projexProjectInputSchema.safeParse(input)
 
   if (!validationResult.success) {
     throw new Error(formatZodError(validationResult.error))
@@ -169,7 +169,7 @@ export async function normalise(
     finalStack = inputStack || []
   }
 
-  let finalLinks: FolioProject['links'] = {}
+  let finalLinks: ProjexProject['links'] = {}
   if (type === 'github') {
     if (githubData) {
       finalLinks = {
@@ -198,7 +198,7 @@ export async function normalise(
     delete finalLinks.live
   }
 
-  let finalStats: FolioProject['stats'] | null = null
+  let finalStats: ProjexProject['stats'] | null = null
   if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt' || type === 'youtube' || type === 'gumroad' || type === 'lemonsqueezy' || type === 'devto') {
     if (githubData) {
       finalStats = {
@@ -262,10 +262,10 @@ export async function normalise(
     finalStats = inputStats || null
   }
 
-  let finalLanguage: FolioProject['language'] = null
-  let finalLanguageColor: FolioProject['languageColor'] = null
-  let finalCreatedAt: FolioProject['createdAt'] = null
-  let finalUpdatedAt: FolioProject['updatedAt'] = null
+  let finalLanguage: ProjexProject['language'] = null
+  let finalLanguageColor: ProjexProject['languageColor'] = null
+  let finalCreatedAt: ProjexProject['createdAt'] = null
+  let finalUpdatedAt: ProjexProject['updatedAt'] = null
 
   if (type === 'github') {
     finalLanguage = githubData?.language || null

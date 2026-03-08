@@ -1,27 +1,27 @@
 # Migration Guide
 
-This guide helps you upgrade between versions of Folio. Follow the instructions for the version you're upgrading from and to.
+This guide helps you upgrade between versions of Projex. Follow the instructions for the version you're upgrading from and to.
 
 ## Version Policy
 
-Folio follows [Semantic Versioning](https://semver.org/):
+Projex follows [Semantic Versioning](https://semver.org/):
 
 - **Major (X.0.0)** — Breaking changes, may require code changes
 - **Minor (1.X.0)** — New features, backward compatible
 - **Patch (1.0.X)** — Bug fixes, backward compatible
 
-See the [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md) for detailed release notes.
+See the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md) for detailed release notes.
 
-## Upgrading Folio
+## Upgrading Projex
 
 ### Update the Package
 
 ```bash
 # Check current version
-npm list @reallukemanning/folio
+npm list @manningworks/projex
 
 # Update to latest
-pnpm update @reallukemanning/folio
+pnpm update @manningworks/projex
 ```
 
 ### Update CLI Components
@@ -30,8 +30,8 @@ If you copied components using the CLI, re-add them after updating:
 
 ```bash
 # Re-add components to get latest versions
-npx folio add project-card --force
-npx folio add project-view --force
+npx projex add project-card --force
+npx projex add project-view --force
 ```
 
 The `--force` flag overwrites existing files with the latest versions.
@@ -58,12 +58,12 @@ The theming system is optional. Your existing CSS will continue to work. To use 
 
 ```bash
 # Add a pre-built theme
-npx folio add theme-minimal
+npx projex add theme-minimal
 
 # Or use CSS custom properties in your existing styles
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
 }
 ```
 
@@ -76,9 +76,9 @@ npx folio add theme-minimal
 Presets are new optional components. Existing ProjectCard usage is unchanged. To use presets:
 
 ```bash
-npx folio add github-card
-npx folio add npm-card
-npx folio add showcase-card
+npx projex add github-card
+npx projex add npm-card
+npx projex add showcase-card
 ```
 
 ### Upgrading to 1.4.x
@@ -98,10 +98,10 @@ New components are optional. Existing filtering/sorting code continues to work.
 Your code is unchanged. If using CLI-copied components, re-add them:
 
 ```bash
-npx folio add project-card --force
+npx projex add project-card --force
 ```
 
-The CLI now installs `@reallukemanning/folio` automatically if not present.
+The CLI now installs `@manningworks/projex` automatically if not present.
 
 ### Upgrading to 1.2.x
 
@@ -158,10 +158,10 @@ defineProjects(projects, { commits: 5 })
 
 If upgrading from beta versions:
 
-1. Update the package: `pnpm update @reallukemanning/folio`
-2. Re-add CLI components: `npx folio add project-card --force`
-3. Review your `folio.config.ts` for any type changes
-4. Check the [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md) for breaking changes
+1. Update the package: `pnpm update @manningworks/projex`
+2. Re-add CLI components: `npx projex add project-card --force`
+3. Review your `projex.config.ts` for any type changes
+4. Check the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md) for breaking changes
 
 ---
 
@@ -182,7 +182,7 @@ If upgrading from beta versions:
 
 3. If using CLI-copied components, re-add them:
    ```bash
-   npx folio add project-card --force
+   npx projex add project-card --force
    ```
 
 ### Missing Features After Upgrade
@@ -193,17 +193,17 @@ If upgrading from beta versions:
 
 1. Ensure you've updated to the latest version:
    ```bash
-   pnpm update @reallukemanning/folio
+   pnpm update @manningworks/projex
    ```
 
 2. Verify the version:
    ```bash
-   npm list @reallukemanning/folio
+   npm list @manningworks/projex
    ```
 
 3. If using CLI-copied components, re-add them to get latest code:
    ```bash
-   npx folio add <component-name> --force
+   npx projex add <component-name> --force
    ```
 
 ### Build Fails After Upgrade
@@ -230,7 +230,7 @@ If upgrading from beta versions:
 
 ### CLI Commands Not Working
 
-**Problem:** `npx folio` commands fail after upgrade.
+**Problem:** `npx projex` commands fail after upgrade.
 
 **Solution:**
 
@@ -243,12 +243,12 @@ If upgrading from beta versions:
 
 2. Try the full package name:
    ```bash
-   npx @reallukemanning/folio init
+   npx @manningworks/projex init
    ```
 
 3. If that fails, install globally:
    ```bash
-   npm install -g @reallukemanning/folio
+   npm install -g @manningworks/projex
    folio init
    ```
 
@@ -264,7 +264,7 @@ First stable release. Breaking changes from beta versions:
 - Component imports changed from relative paths to package imports
 - Type names standardized (e.g., `ProjectStatus`, `ProjectType`)
 
-See [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md#100---2026-02-22) for details.
+See [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md#100---2026-02-22) for details.
 
 ---
 
@@ -273,8 +273,8 @@ See [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md#
 If you encounter issues not covered here:
 
 1. Check the [Troubleshooting Guide](./troubleshooting)
-2. Review the [CHANGELOG](https://github.com/RealLukeManning/Folio/blob/main/CHANGELOG.md)
-3. Search [GitHub Issues](https://github.com/RealLukeManning/Folio/issues)
+2. Review the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md)
+3. Search [GitHub Issues](https://github.com/RealLukeManning/Projex/issues)
 4. Open a new issue if the problem isn't documented
 
 ---
@@ -283,8 +283,8 @@ If you encounter issues not covered here:
 
 To stay informed about new releases:
 
-- Watch the [GitHub Repository](https://github.com/RealLukeManning/Folio)
-- Follow [GitHub Releases](https://github.com/RealLukeManning/Folio/releases)
-- Subscribe to [npm releases](https://www.npmjs.com/package/@reallukemanning/folio)
+- Watch the [GitHub Repository](https://github.com/RealLukeManning/Projex)
+- Follow [GitHub Releases](https://github.com/RealLukeManning/Projex/releases)
+- Subscribe to [npm releases](https://www.npmjs.com/package/@manningworks/projex)
 
 Enable Dependabot or Renovate to automatically receive pull requests for updates.

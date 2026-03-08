@@ -1,6 +1,6 @@
 # Components
 
-Folio provides compound components for building project showcase pages. All components ship with zero styling - only semantic HTML with data attributes for CSS targeting.
+Projex provides compound components for building project showcase pages. All components ship with zero styling - only semantic HTML with data attributes for CSS targeting.
 
 ## Available Components
 
@@ -40,16 +40,16 @@ Components use the compound pattern for maximum flexibility. Consumers compose t
 
 ### Data Attributes
 
-Every rendered element includes a `data-folio-*` attribute for styling hooks:
+Every rendered element includes a `data-projex-*` attribute for styling hooks:
 
 ```css
-[data-folio-card] {
+[data-projex-card] {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 1.5rem;
 }
 
-[data-folio-card-header] {
+[data-projex-card-header] {
   display: flex;
   justify-content: space-between;
 }

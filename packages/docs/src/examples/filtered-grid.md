@@ -12,7 +12,7 @@ A filterable project grid with type and status filters using `ProjectFilterBar` 
 ## Code
 
 ```tsx
-import { ProjectFilterBar, ProjectFilterTag, ProjectGrid, ProjectCard } from '@reallukemanning/folio'
+import { ProjectFilterBar, ProjectFilterTag, ProjectGrid, ProjectCard } from '@manningworks/projex'
 import { useState } from 'react'
 
 function FilteredProjects() {
@@ -79,23 +79,23 @@ The components generate semantic HTML with data attributes:
 
 ```html
 <!-- ProjectFilterBar -->
-<div data-folio-filter-bar>
+<div data-projex-filter-bar>
   <div>
-    <button data-folio-filter-tag data-folio-filter-active>All</button>
-    <button data-folio-filter-tag data-folio-filter-active="false">github</button>
-    <button data-folio-filter-tag data-folio-filter-active="false">npm</button>
-    <button data-folio-filter-tag data-folio-filter-active="false">manual</button>
+    <button data-projex-filter-tag data-projex-filter-active>All</button>
+    <button data-projex-filter-tag data-projex-filter-active="false">github</button>
+    <button data-projex-filter-tag data-projex-filter-active="false">npm</button>
+    <button data-projex-filter-tag data-projex-filter-active="false">manual</button>
   </div>
   <div>
-    <button data-folio-filter-tag data-folio-filter-active>All</button>
-    <button data-folio-filter-tag data-folio-filter-active="false">active</button>
-    <button data-folio-filter-tag data-folio-filter-active="false">shipped</button>
+    <button data-projex-filter-tag data-projex-filter-active>All</button>
+    <button data-projex-filter-tag data-projex-filter-active="false">active</button>
+    <button data-projex-filter-tag data-projex-filter-active="false">shipped</button>
   </div>
 </div>
 
 <!-- ProjectGrid -->
-<div data-folio-grid>
-  <div data-folio-card>
+<div data-projex-grid>
+  <div data-projex-card>
     <!-- Card content -->
   </div>
 </div>
@@ -107,7 +107,7 @@ CSS for the filter bar and active states:
 
 ```css
 /* Filter bar container */
-[data-folio-filter-bar] {
+[data-projex-filter-bar] {
   display: flex;
   gap: 24px;
   margin-bottom: 24px;
@@ -115,7 +115,7 @@ CSS for the filter bar and active states:
 }
 
 /* Filter tags */
-[data-folio-filter-tag] {
+[data-projex-filter-tag] {
   padding: 8px 16px;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
@@ -126,23 +126,23 @@ CSS for the filter bar and active states:
 }
 
 /* Active filter */
-[data-folio-filter-active="true"] {
+[data-projex-filter-active="true"] {
   background: #374151;
   color: #fff;
   border-color: #374151;
 }
 
 /* Hover state */
-[data-folio-filter-tag]:hover {
+[data-projex-filter-tag]:hover {
   background: #f9fafb;
 }
 
-[data-folio-filter-active="true"]:hover {
+[data-projex-filter-active="true"]:hover {
   background: #1f2937;
 }
 
 /* Grid layout */
-[data-folio-grid] {
+[data-projex-grid] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
