@@ -35,7 +35,10 @@ jobs:
       - run: pnpm build
 
       - name: Publish @reallukemanning/folio
-        run: npm publish packages/core --access public
+        run: |
+          cd packages/core
+          npm config set registry https://registry.npmjs.org/
+          npm publish --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
