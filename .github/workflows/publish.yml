@@ -24,6 +24,9 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm typecheck
