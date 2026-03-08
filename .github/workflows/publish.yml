@@ -33,12 +33,9 @@ jobs:
 
       - run: pnpm build
 
-      - name: Set .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Publish @manningworks/projex
         working-directory: packages/core
-        run: npm publish --access public
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }} && npm publish --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
