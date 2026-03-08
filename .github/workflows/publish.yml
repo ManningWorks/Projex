@@ -40,8 +40,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          body: See [CHANGELOG.md](https://github.com/manningworks/projex/blob/main/CHANGELOG.md) for full details.
+          body: See [CHANGELOG.md](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for full details.
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
