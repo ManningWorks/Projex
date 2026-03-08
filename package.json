@@ -1,6 +1,7 @@
 {
   "name": "projex",
   "version": "1.0.1",
+  "description": "Show Everything You Ship",
   "private": true,
   "scripts": {
     "build": "pnpm --filter './packages/**' build",

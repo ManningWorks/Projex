@@ -1,3 +1,7 @@
+![Banner](https://raw.githubusercontent.com/ManningWorks/Projex/main/assets/projex_banner.svg)
+
+# Show Everything You Ship
+
 Projex is a shadcn-style component library for building developer portfolio pages. Drop in pre-built project cards that auto-fetch data from GitHub, npm, and Product Hunt — no API glue required. Built for Next.js. Zero CSS shipped by default.
 
 **Open-source (MIT licensed) and free to use.**

@@ -1,6 +1,7 @@
 {
   "name": "@manningworks/projex",
   "version": "1.0.1",
+  "description": "Show Everything You Ship",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

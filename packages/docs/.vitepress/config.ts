@@ -13,12 +13,21 @@ export default defineConfig({
     },
   },
   title: 'Projex',
-  description: 'A shadcn-style component library for project showcase pages',
+  description: 'Show Everything You Ship',
   srcDir: 'src',
   cleanUrls: true,
   base: '/',
   appearance: 'dark',
-  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/favicon.svg' }],
+    ['meta', { property: 'og:title', content: 'Projex - Show Everything You Ship' }],
+    ['meta', { property: 'og:description', content: 'Show Everything You Ship' }],
+    ['meta', { property: 'og:image', content: 'https://raw.githubusercontent.com/ManningWorks/Projex/main/assets/projex_banner.svg' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Projex - Show Everything You Ship' }],
+    ['meta', { name: 'twitter:description', content: 'Show Everything You Ship' }],
+    ['meta', { name: 'twitter:image', content: 'https://raw.githubusercontent.com/ManningWorks/Projex/main/assets/projex_banner.svg' }]
+  ],
   themeConfig: {
     nav: [
       { text: 'Getting Started', link: '/' },
