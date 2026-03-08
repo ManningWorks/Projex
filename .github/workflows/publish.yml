@@ -35,7 +35,7 @@ jobs:
       - run: pnpm build
 
       - name: Publish @reallukemanning/folio
-        run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public
+        run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public --provenance
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

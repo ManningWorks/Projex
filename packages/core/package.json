@@ -25,6 +25,10 @@
     "test:components": "vitest run --config vitest.config.ts src/components",
     "benchmark": "vitest bench --config vitest.config.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RealLukeManning/Folio.git"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
