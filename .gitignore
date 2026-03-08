@@ -11,7 +11,8 @@
 packages/*/coverage/
 node_modules/.vite/
 packages/*/node_modules/.vite/
-**/node_modules
+packages/*/test-results/
+packages/*/playwright-report/
 # next.js
 /.next/
 /out/
@@ -19,7 +20,6 @@ packages/*/node_modules/.vite/
 # production
 /build
 packages/*/dist/
-
 
 # misc
 .DS_Store
@@ -29,6 +29,7 @@ packages/*/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 *.tgz
 
 # local env files
@@ -47,12 +48,18 @@ project_docs/
 .ralph-tui/
 tasks/
 
-
-# bundle size tracking
-.bundle-size.json
+# vitepress
 packages/docs/.vitepress/dist/
+packages/docs/.vitepress/cache/
 
-# opencode
-.opencode/
+# editor & caches
+*.swp
+*.swo
+*~
+*.bak
+.eslintcache
+.cache
+.turbo
+.yarn/install-state.gz
 
 

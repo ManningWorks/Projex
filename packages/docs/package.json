@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build && node scripts/fix-paths.js",
+    "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "dependencies": {

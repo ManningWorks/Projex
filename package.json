@@ -7,14 +7,9 @@
     "typecheck": "pnpm --filter './packages/**' typecheck",
     "lint": "pnpm --filter './packages/**' lint",
     "test": "pnpm --filter './packages/**' test",
-    "benchmark": "pnpm --filter @manningworks/projex benchmark",
-    "bundle-size": "tsx scripts/bundle-size.ts"
+    "benchmark": "pnpm --filter @manningworks/projex benchmark"
   },
   "devDependencies": {
-    "@size-limit/esbuild": "^12.0.0",
-    "@size-limit/file": "^12.0.0",
-    "@size-limit/preset-small-lib": "^12.0.0",
-    "size-limit": "^12.0.0",
     "tsx": "^4.21.0",
     "typescript": "^5.7.3"
   },

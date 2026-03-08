@@ -6,23 +6,8 @@ Projex is in active development. We welcome contributions from experienced devel
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/projex.git
-cd projex
-
-# Install dependencies
-pnpm install
-
-# Run tests
-pnpm test
-
-# Run type checking
-pnpm typecheck
-
-# Run linting
-pnpm lint
-
-# Build all packages
-pnpm build
+git clone https://github.com/ManningWorks/Projex.git
+cd Projex
 ```
 
 ## Project Structure
@@ -76,10 +61,10 @@ We maintain high test coverage (>97% lines). All contributions must include test
 pnpm test
 
 # Run tests with coverage
-pnpm --filter @projex/core test:coverage
+pnpm --filter @manningworks/projex test:coverage
 
 # Run tests in watch mode
-pnpm --filter @projex/core test:watch
+pnpm --filter @manningworks/projex test:watch
 
 # Run benchmarks
 pnpm benchmark
@@ -138,24 +123,13 @@ The CI pipeline will:
 2. Build all packages
 3. Publish to npm
 
-## Bundle Size
-
-Projex is optimized for minimal bundle impact. Check bundle size before contributing:
-
-```bash
-pnpm bundle-size
-```
-
-Bundle size limits:
-- `@manningworks/projex`: < 10 KB (target: < 3 KB)
-
 ## Documentation
 
 Documentation lives in `packages/docs/` using VitePress.
 
 ```bash
 # Run docs locally
-pnpm --filter @projex/docs dev
+pnpm --filter @manningworks/docs dev
 ```
 
 When contributing new features:

@@ -1,18 +1,6 @@
 # Performance
 
-Projex is designed to add minimal overhead to your project. This page documents bundle sizes, tree-shaking behavior, and optimization strategies.
-
-## Bundle Size
-
-Size measurements are taken with tree-shaking enabled, all dependencies minified and brotlied.
-
-| Package | Target | Actual (gzipped) | Status |
-|---------|--------|------------------|--------|
-| @manningworks/projex | < 10 KB | **2.74 KB** | ✓ |
-
-::: tip
-The package is well under its size target. We track this limit to prevent accidental bloat.
-:::
+Projex is designed to add minimal overhead to your project. This page documents component render performance and API fetch efficiency.
 
 ## Benchmarks
 
@@ -149,26 +137,6 @@ chalk        - Terminal colors (~10 KB)
 ```
 
 These CLI dependencies are only used when running `npx projex` commands - they don't impact your production bundle.
-
-## Measuring Bundle Size
-
-Run the bundle size measurement script:
-
-```bash
-pnpm bundle-size
-```
-
-This measures both packages and saves results to `.bundle-size.json` for tracking over time.
-
-### CI Integration
-
-Add to your CI pipeline to catch size regressions:
-
-```yaml
-# .github/workflows/bundle-size.yml
-- name: Check bundle size
-  run: pnpm bundle-size
-```
 
 ## Optimization Tips
 
