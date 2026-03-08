@@ -26,6 +26,8 @@ The workflow uses [JS-DevTools/npm-publish](https://github.com/marketplace/actio
 3. Secret: Paste your npm automation token
 4. Click "Add secret"
 
+**IMPORTANT**: Since `@manningworks/projex` is a scoped package, npm defaults to restricted access. The workflow must explicitly set `access: public` to publish publicly.
+
 ### Step 3: Publish
 
 To publish a new version:

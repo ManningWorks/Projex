@@ -15,23 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9.15.0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        working-directory: packages/core
-        run: pnpm install --frozen-lockfile
-
-      - name: Build package
-        working-directory: packages/core
-        run: pnpm run build
-
       - uses: JS-DevTools/npm-publish@v4
         id: publish
         with:
@@ -40,11 +23,7 @@ jobs:
           registry: "https://registry.npmjs.org"
           greater-version-only: false
           access: "public"
-
-      - name: Create GitHub Release
-        if: steps.publish.outputs.type != 'none'
-        uses: softprops/action-gh-release@v2
-        with:
-          body: See [CHANGELOG.md](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for full details.
-          draft: false
-          prerelease: false
+          create_release: true
+          release_name: "@manningworks/projex@${{ version }}"
+          release_tag: "v${{ version }}"
+          generate_changelog: false
