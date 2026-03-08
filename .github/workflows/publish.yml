@@ -24,6 +24,6 @@ jobs:
           greater-version-only: false
           access: "public"
           create_release: true
-          release_name: "@manningworks/projex@${{ version }}"
-          release_tag: "v${{ version }}"
+          release_name: "@manningworks/projex@${{ steps.publish.outputs.version }}"
+          release_tag: "v${{ steps.publish.outputs.version }}"
           generate_changelog: false
