@@ -24,8 +24,8 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install latest npm
-        run: npm install -g npm@latest
+      - name: Install npm for OIDC
+        run: npm install -g npm@11.5.1
 
       - run: pnpm install --frozen-lockfile
 
@@ -38,7 +38,8 @@ jobs:
       - run: pnpm build
 
       - name: Publish @reallukemanning/folio
-        run: pnpm --filter @reallukemanning/folio publish --no-git-checks --access public --provenance
+        working-directory: packages/core
+        run: npm publish --access public --provenance
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
