@@ -25,7 +25,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install npm for OIDC
-        run: npm install -g npm@11.5.1
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         working-directory: packages/core
@@ -41,7 +41,6 @@ jobs:
           package: "packages/core"
           registry: "https://registry.npmjs.org"
           access: "public"
-          provenance: true
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
