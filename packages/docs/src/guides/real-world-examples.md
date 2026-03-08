@@ -8,8 +8,8 @@ See Projex in action on real portfolios. These examples demonstrate what's possi
 
 A personal portfolio showcasing open source projects, npm packages, and personal work.
 
-- **Live Site**: [lukemanning.ie](https://lukemanning.ie)
-- **Demonstrates**: Mixed project types (GitHub, npm, manual), custom styling, responsive grid layout
+- **Live Site**: [lukemanning.ie](https://lukemanning.ie/projects)
+- **Demonstrates**: Mixed project types, custom styling, responsive grid layout, search
 - **Tech Stack**: Next.js, React, TypeScript, Tailwind CSS
 
 ## Submit Your Portfolio
@@ -22,7 +22,7 @@ Have you built a portfolio using Projex? We'd love to feature it!
 - Demonstrates interesting use of the library
 
 **To submit:**
-1. Open an issue or PR on the [Projex GitHub repository](https://github.com/yourusername/folio)
+1. Open an issue or PR on the [Projex GitHub repository](https://github.com/ManningWorks/Projex)
 2. Include:
    - Portfolio URL
    - Brief description of what it demonstrates

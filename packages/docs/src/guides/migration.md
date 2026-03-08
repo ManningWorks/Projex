@@ -1,6 +1,6 @@
 # Migration Guide
 
-This guide helps you upgrade between versions of Projex. Follow the instructions for the version you're upgrading from and to.
+This guide helps you upgrade between versions of Projex and migrate from earlier versions. Follow the instructions for the version you're upgrading from and to.
 
 ## Version Policy
 
@@ -10,7 +10,129 @@ Projex follows [Semantic Versioning](https://semver.org/):
 - **Minor (1.X.0)** — New features, backward compatible
 - **Patch (1.0.X)** — Bug fixes, backward compatible
 
-See the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md) for detailed release notes.
+See the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for detailed release notes.
+
+---
+
+## Table of Contents
+
+- [Project Rename (Folio → Projex)](#project-rename-folio--projex)
+- [Upgrading Projex](#upgrading-projex)
+- [Common Upgrade Issues](#common-upgrade-issues)
+- [Need Help?](#need-help)
+- [Staying Updated](#staying-updated)
+
+---
+
+## Project Rename (Folio → Projex)
+
+If you were using this library when it was named **Folio**, follow these steps to migrate to **Projex**.
+
+### Package Installation
+
+```bash
+# Uninstall old package
+pnpm remove @reallukemanning/folio
+
+# Install new package
+pnpm add @manningworks/projex
+```
+
+### Config File Rename
+
+```bash
+mv folio.config.ts projex.config.ts
+```
+
+### Import Updates
+
+Update your imports:
+
+```typescript
+// Old
+import { defineProjects } from '@reallukemanning/folio'
+import type { FolioProject, FolioProjectInput } from '@reallukemanning/folio'
+
+// New
+import { defineProjects } from '@manningworks/projex'
+import type { ProjexProject, ProjexProjectInput } from '@manningworks/projex'
+```
+
+### Type Updates
+
+Update all type references in your code:
+
+```typescript
+// Old
+const project: FolioProject = ...
+const input: FolioProjectInput = ...
+
+// New
+const project: ProjexProject = ...
+const input: ProjexProjectInput = ...
+```
+
+### CLI Command Updates
+
+```bash
+# Old
+npx folio init
+npx folio add
+
+# New
+npx projex init
+npx projex add
+```
+
+### CSS Styling Updates
+
+All data attributes have been renamed from `data-folio-*` to `data-projex-*`. Update your CSS selectors:
+
+**Global CSS Replace:**
+
+**Find:** `data-folio-`
+**Replace with:** `data-projex-`
+
+Or use command-line tools:
+
+```bash
+# Using sed (Linux/Mac)
+find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-projex-/g'
+
+# Using PowerShell (Windows)
+Get-ChildItem -Recurse -Include *.css,*.scss | ForEach-Object {
+  (Get-Content $_) -replace 'data-folio-', 'data-projex-' | Set-Content $_
+}
+```
+
+**Common Attribute Changes:**
+
+| Old Attribute | New Attribute |
+|--------------|--------------|
+| `data-folio-card` | `data-projex-card` |
+| `data-folio-card-header` | `data-projex-card-header` |
+| `data-folio-card-description` | `data-projex-card-description` |
+| `data-folio-card-tags` | `data-projex-card-tags` |
+| `data-folio-card-stats` | `data-projex-card-stats` |
+| `data-folio-card-links` | `data-projex-card-links` |
+| `data-folio-featured` | `data-projex-featured` |
+| `data-folio-grid` | `data-projex-grid` |
+| `data-folio-list` | `data-projex-list` |
+| `data-folio-tag` | `data-projex-tag` |
+| `data-folio-link` | `data-projex-link` |
+| `data-folio-stat` | `data-projex-stat` |
+
+### URL Updates
+
+Update any documentation or repository URLs:
+
+| Old URL | New URL |
+|----------|----------|
+| `https://github.com/RealLukeManning/Folio` | `https://github.com/ManningWorks/Projex` |
+| `https://folio-guide.vercel.app` | `https://projex-guide.vercel.app` |
+| `https://www.npmjs.com/package/@reallukemanning/folio` | `https://www.npmjs.com/package/@manningworks/projex` |
+
+---
 
 ## Upgrading Projex
 
@@ -26,10 +148,9 @@ pnpm update @manningworks/projex
 
 ### Update CLI Components
 
-If you copied components using the CLI, re-add them after updating:
+If you copied components using the CLI, re-add them after updating to get the latest versions:
 
 ```bash
-# Re-add components to get latest versions
 npx projex add project-card --force
 npx projex add project-view --force
 ```
@@ -38,134 +159,67 @@ The `--force` flag overwrites existing files with the latest versions.
 
 ---
 
-## Version-Specific Migrations
-
-### Upgrading to 1.7.x
-
-**No migration required** — Version 1.7.1 is a patch release with backward-compatible bug fixes.
-
-**What's new in 1.7.0:** SEO utilities and metadata functions
-
-New features are opt-in and don't require changes to existing code. See [SEO Integration Guide](./seo) for usage.
-
-### Upgrading to 1.6.x
-
-**No migration required** — Version 1.6.0 adds theming system with CSS custom properties.
-
-**What's new:** Pre-built themes and CSS custom properties
-
-The theming system is optional. Your existing CSS will continue to work. To use new features:
-
-```bash
-# Add a pre-built theme
-npx projex add theme-minimal
-
-# Or use CSS custom properties in your existing styles
-:root {
-  --projex-card-bg: #ffffff;
-  --projex-card-border: #e5e7eb;
-}
-```
-
-### Upgrading to 1.5.x
-
-**No migration required** — Version 1.5.0 adds preset components.
-
-**What's new:** GitHubCard, NpmCard, ShowcaseCard presets
-
-Presets are new optional components. Existing ProjectCard usage is unchanged. To use presets:
-
-```bash
-npx projex add github-card
-npx projex add npm-card
-npx projex add showcase-card
-```
-
-### Upgrading to 1.4.x
-
-**No migration required** — Version 1.4.0 adds search and filter components.
-
-**What's new:** ProjectSearch, ProjectFilterBar, ProjectSort, useProjectSearch, useProjectFilters
-
-New components are optional. Existing filtering/sorting code continues to work.
-
-### Upgrading to 1.3.x
-
-**No migration required** — Version 1.3.0 is an internal refactoring.
-
-**What changed:** Single source of truth for components, CLI auto-installs package
-
-Your code is unchanged. If using CLI-copied components, re-add them:
-
-```bash
-npx projex add project-card --force
-```
-
-The CLI now installs `@manningworks/projex` automatically if not present.
-
-### Upgrading to 1.2.x
-
-**No migration required** — Version 1.2.0 adds new link types.
-
-**What's new:** `docs` and `demo` link types, custom links, link ordering
-
-New features are opt-in. Existing links continue to work. To use new features:
-
-```ts
-{
-  id: 'my-project',
-  type: 'github',
-  repo: 'user/repo',
-  status: 'active',
-  links: {
-    github: 'https://github.com/user/repo',
-    live: 'https://myapp.dev',
-    docs: 'https://docs.myapp.dev', // new
-    demo: 'https://demo.myapp.dev', // new
-    custom: [ // new
-      { label: 'Blog', url: 'https://blog.myapp.dev' }
-    ],
-    linkOrder: ['github', 'docs', 'demo', 'live'] // new
-  }
-}
-```
-
-### Upgrading to 1.1.x
-
-**No migration required** — Version 1.1.0 adds GitHub commits support.
-
-**What's new:** Commit fetching, CommitList component, commits configuration
-
-New features are opt-in. To enable commits:
-
-```ts
-// Global default for all GitHub projects
-defineProjects(projects, { commits: 5 })
-
-// Per-project override
-{
-  id: 'my-project',
-  type: 'github',
-  repo: 'user/repo',
-  status: 'active',
-  commits: 10 // fetch 10 commits
-}
-```
-
-### Upgrading to 1.0.x
-
-**No migration required** — Version 1.0.0 is the first stable release.
-
-If upgrading from beta versions:
-
-1. Update the package: `pnpm update @manningworks/projex`
-2. Re-add CLI components: `npx projex add project-card --force`
-3. Review your `projex.config.ts` for any type changes
-4. Check the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md) for breaking changes
-
----
-
 ## Common Upgrade Issues
+
+### Import Errors After Folio → Projex Migration
+
+**Problem:** Cannot find module '@reallukemanning/folio'
+
+**Solution:** Update all import statements:
+
+```typescript
+import { defineProjects } from '@manningworks/projex'
+```
+
+**Problem:** Type 'FolioProject' not found
+
+**Solution:** Update type names:
+
+```typescript
+import type { ProjexProject, ProjexProjectInput } from '@manningworks/projex'
+```
+
+### Config File Not Found After Migration
+
+**Problem:** Could not find folio.config.ts
+
+**Solution:** Rename your config file:
+
+```bash
+mv folio.config.ts projex.config.ts
+```
+
+### Build Errors After Folio Migration
+
+**Problem:** Module not found: Error: Can't resolve '@reallukemanning/folio'
+
+**Solution:**
+
+1. Clear cache and reinstall:
+```bash
+rm -rf node_modules .next
+pnpm install
+```
+
+2. Verify all imports are updated to `@manningworks/projex`
+
+3. Rebuild:
+```bash
+pnpm build
+```
+
+### Styles Not Applying After Migration
+
+**Problem:** Styles not applying after Folio → Projex migration
+
+**Cause:** CSS selectors still reference old data attributes.
+
+**Solution:** Run global find and replace in CSS files:
+
+```bash
+# Using sed (Linux/Mac)
+find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-projex-/g'
+```
 
 ### TypeScript Errors After Upgrade
 
@@ -247,24 +301,10 @@ If upgrading from beta versions:
    ```
 
 3. If that fails, install globally:
-   ```bash
-   npm install -g @manningworks/projex
-   folio init
-   ```
-
----
-
-## Breaking Changes History
-
-### Version 1.0.0
-
-First stable release. Breaking changes from beta versions:
-
-- Public API stabilized
-- Component imports changed from relative paths to package imports
-- Type names standardized (e.g., `ProjectStatus`, `ProjectType`)
-
-See [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md#100---2026-02-22) for details.
+    ```bash
+    npm install -g @manningworks/projex
+    projex init
+    ```
 
 ---
 
@@ -273,8 +313,8 @@ See [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md
 If you encounter issues not covered here:
 
 1. Check the [Troubleshooting Guide](./troubleshooting)
-2. Review the [CHANGELOG](https://github.com/RealLukeManning/Projex/blob/main/CHANGELOG.md)
-3. Search [GitHub Issues](https://github.com/RealLukeManning/Projex/issues)
+2. Review the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md)
+3. Search [GitHub Issues](https://github.com/ManningWorks/Projex/issues)
 4. Open a new issue if the problem isn't documented
 
 ---
@@ -283,8 +323,8 @@ If you encounter issues not covered here:
 
 To stay informed about new releases:
 
-- Watch the [GitHub Repository](https://github.com/RealLukeManning/Projex)
-- Follow [GitHub Releases](https://github.com/RealLukeManning/Projex/releases)
+- Watch the [GitHub Repository](https://github.com/ManningWorks/Projex)
+- Follow [GitHub Releases](https://github.com/ManningWorks/Projex/releases)
 - Subscribe to [npm releases](https://www.npmjs.com/package/@manningworks/projex)
 
 Enable Dependabot or Renovate to automatically receive pull requests for updates.
