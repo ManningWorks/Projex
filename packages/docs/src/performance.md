@@ -114,7 +114,7 @@ import type { ProjexProject, ProjectType } from '@manningworks/projex'
 
 ## Zero Styling Overhead
 
-Folio ships with **zero CSS**. All styling hooks are provided through data attributes:
+Projex ships with **zero CSS**. All styling hooks are provided through data attributes:
 
 ```css
 /* You control every byte of CSS */

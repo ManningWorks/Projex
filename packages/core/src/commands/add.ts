@@ -93,16 +93,16 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
       console.log(chalk.gray(`  - ${name}`))
     })
     console.log()
-    console.log(chalk.gray('Usage: npx folio add <component-name>'))
+    console.log(chalk.gray('Usage: npx projex add <component-name>'))
     process.exit(1)
   }
 
-  const destDir = resolve(workingDir, 'components', 'folio', component.destName)
+  const destDir = resolve(workingDir, 'components', 'projex', component.destName)
 
   console.log(chalk.bold(`📦 Adding ${componentName}...`))
   console.log()
 
-  await ensureFolioInstalled()
+  await ensureProjexInstalled()
 
   try {
     const sourceFiles = await getSourceFiles(component.sourcePath)
@@ -142,7 +142,7 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
     console.log(chalk.green(`✓ ${componentName} added successfully`))
     console.log()
     console.log(chalk.bold('Import usage:'))
-    console.log(chalk.gray(`  import { ${component.destName} } from './components/folio/${component.destName}'`))
+    console.log(chalk.gray(`  import { ${component.destName} } from './components/projex/${component.destName}'`))
   } catch (error) {
     if (error instanceof Error && 'code' in error) {
       if (error.code === 'EACCES') {
@@ -198,7 +198,7 @@ async function checkExistingFiles(destDir: string, sourceFiles: string[]): Promi
   return existing
 }
 
-async function ensureFolioInstalled(): Promise<void> {
+async function ensureProjexInstalled(): Promise<void> {
   const packageJsonPath = resolve(process.cwd(), 'package.json')
   const content = await readFile(packageJsonPath, 'utf-8')
   const pkg = JSON.parse(content)
@@ -269,18 +269,18 @@ async function addTheme(
 ): Promise<void> {
   const themeName = theme.destName.replace('.css', '')
   const destDir = resolve(workingDir, 'styles')
-  const destPath = resolve(destDir, `folio-${theme.destName}`)
+  const destPath = resolve(destDir, `projex-${theme.destName}`)
 
   console.log(chalk.bold(`🎨 Adding ${themeName}...`))
   console.log()
 
-  await ensureFolioInstalled()
+  await ensureProjexInstalled()
 
   try {
     await access(theme.sourcePath)
   } catch {
     console.error(chalk.red(`✖ Theme "${themeName}" not found`))
-    console.error(chalk.gray('  Try reinstalling @folio/cli'))
+      console.error(chalk.gray('  Try reinstalling @manningworks/projex'))
     process.exit(1)
   }
 
@@ -288,7 +288,7 @@ async function addTheme(
     await access(destPath)
     if (!options.force) {
       console.log(chalk.yellow(`⚠ Found existing file:`))
-      console.log(chalk.gray(`  - styles/folio-${theme.destName}`))
+      console.log(chalk.gray(`  - styles/projex-${theme.destName}`))
       console.log()
 
       const overwrite = await confirm({
@@ -312,8 +312,8 @@ async function addTheme(
   console.log(chalk.green(`✓ ${themeName} added successfully`))
   console.log()
   console.log(chalk.bold('Import usage:'))
-  console.log(chalk.gray(`  import './styles/folio-${theme.destName}'`))
-  console.log()
-  console.log(chalk.gray('  Or add to your CSS:'))
-  console.log(chalk.gray(`  @import './styles/folio-${theme.destName}';`))
+    console.log(chalk.gray(`  import './styles/projex-${theme.destName}'`))
+    console.log()
+    console.log(chalk.gray('  Or add to your CSS:'))
+    console.log(chalk.gray(`  @import './styles/projex-${theme.destName}';`))
 }

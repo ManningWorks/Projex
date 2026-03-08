@@ -1,9 +1,9 @@
 import { bench, describe, beforeAll } from 'vitest'
 import { render } from '@testing-library/react'
 import { ProjectCard } from '../../components/ProjectCard'
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 
-const createProject = (id: number): FolioProject => ({
+const createProject = (id: number): ProjexProject => ({
   id: `test-project-${id}`,
   type: 'github',
   status: 'active',
@@ -36,7 +36,7 @@ const createProject = (id: number): FolioProject => ({
 })
 
 describe('ProjectCard render performance', () => {
-  let projects: FolioProject[]
+  let projects: ProjexProject[]
 
   beforeAll(() => {
     projects = Array.from({ length: 100 }, (_, i) => createProject(i))

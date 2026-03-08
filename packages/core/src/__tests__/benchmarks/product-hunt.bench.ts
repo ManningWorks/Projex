@@ -2,14 +2,14 @@ import { bench, describe, beforeAll, vi } from 'vitest'
 
 const mockProductHuntResponse = {
   post: {
-    name: 'Folio',
+    name: 'Projex',
     tagline: 'Beautiful project showcases',
     description: 'A component library for developers and solopreneurs building project showcase pages.',
     votes_count: 456,
     comments_count: 78,
     featured_at: '2024-06-01T00:00:00Z',
-    website: 'https://folio.dev',
-    url: 'https://producthunt.com/posts/folio',
+    website: 'https://projex.dev',
+    url: 'https://producthunt.com/posts/projex',
   },
 }
 
@@ -22,7 +22,7 @@ describe('fetchProductHuntPost performance', () => {
   })
 
   bench('fetchProductHuntPost (authenticated)', async () => {
-    const response = await fetch('https://api.producthunt.com/v2/posts/folio', {
+    const response = await fetch('https://api.producthunt.com/v2/posts/projex', {
       headers: {
         Authorization: 'Bearer test-token',
         Accept: 'application/json',

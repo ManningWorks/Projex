@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { filterByStatus } from '../filterByStatus'
-import type { FolioProject, ProjectStatus } from '../../types'
+import type { ProjexProject, ProjectStatus } from '../../types'
 
-function createProject(overrides: Partial<FolioProject> = {}): FolioProject {
+function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
   return {
     id: 'test-id',
     type: 'github',

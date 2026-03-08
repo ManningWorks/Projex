@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { defineProjects } from '../defineProjects'
-import type { FolioProjectInput } from '../../types'
+import type { ProjexProjectInput } from '../../types'
 
 describe('defineProjects', () => {
   it('should return the input array unchanged', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       {
         id: 'project-1',
         type: 'github',
@@ -33,7 +33,7 @@ describe('defineProjects', () => {
   })
 
   it('should handle single project', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       {
         id: 'single',
         type: 'npm',
@@ -50,7 +50,7 @@ describe('defineProjects', () => {
   })
 
   it('should handle all project types', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       { id: 'gh', type: 'github', repo: 'user/repo', status: 'active' },
       { id: 'man', type: 'manual', status: 'active' },
       { id: 'npm', type: 'npm', package: 'pkg', status: 'active' },
@@ -65,7 +65,7 @@ describe('defineProjects', () => {
   })
 
   it('should preserve all project properties', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       {
         id: 'full-project',
         type: 'github',
@@ -95,7 +95,7 @@ describe('defineProjects', () => {
   })
 
   it('should provide type safety for project configs', () => {
-    const githubProject: FolioProjectInput = {
+    const githubProject: ProjexProjectInput = {
       id: 'typed-project',
       type: 'github',
       repo: 'user/repo',
@@ -111,7 +111,7 @@ describe('defineProjects', () => {
   })
 
   it('should accept optional options parameter with commits config', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       { id: 'test', type: 'github', repo: 'user/repo', status: 'active' },
     ]
 
@@ -122,7 +122,7 @@ describe('defineProjects', () => {
   })
 
   it('should default options.commits to 0 when not provided', () => {
-    const projects: FolioProjectInput[] = [
+    const projects: ProjexProjectInput[] = [
       { id: 'test', type: 'github', repo: 'user/repo', status: 'active' },
     ]
 
@@ -146,7 +146,7 @@ describe('defineProjects', () => {
           type: 'github',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -157,7 +157,7 @@ describe('defineProjects', () => {
           type: 'manual',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -169,7 +169,7 @@ describe('defineProjects', () => {
           type: 'manual',
           status: 'invalid-status',
         },
-      ] as unknown as FolioProjectInput[]
+      ] as unknown as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -181,7 +181,7 @@ describe('defineProjects', () => {
           type: 'github',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -193,7 +193,7 @@ describe('defineProjects', () => {
           type: 'npm',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -208,7 +208,7 @@ describe('defineProjects', () => {
             live: 'not-a-url',
           },
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -220,7 +220,7 @@ describe('defineProjects', () => {
           type: 'github',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow(/repo/)
       expect(() => defineProjects(invalidProjects)).toThrow(/Validation failed/)
@@ -233,7 +233,7 @@ describe('defineProjects', () => {
           type: 'manual',
           status: 'bad-status',
         },
-      ] as unknown as FolioProjectInput[]
+      ] as unknown as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -244,7 +244,7 @@ describe('defineProjects', () => {
           type: 'manual',
           status: 'bad-status',
         },
-      ] as unknown as FolioProjectInput[]
+      ] as unknown as ProjexProjectInput[]
 
       expect(() => defineProjects(invalidProjects)).toThrow()
     })
@@ -262,7 +262,7 @@ describe('defineProjects', () => {
           type: 'github',
           status: 'active',
         },
-      ] as FolioProjectInput[]
+      ] as ProjexProjectInput[]
 
       expect(() => defineProjects(mixedProjects)).toThrow()
     })

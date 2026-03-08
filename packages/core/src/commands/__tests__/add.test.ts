@@ -15,7 +15,7 @@ describe('add command', () => {
   })
 
   describe('COMPONENTS mapping', () => {
-    it('should copy github-card preset to components/folio/GitHubCard/', async () => {
+    it('should copy github-card preset to components/projex/GitHubCard/', async () => {
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
       const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       const processExitSpy = vi.spyOn(process, 'exit').mockImplementation((() => {}) as () => never)
@@ -36,7 +36,7 @@ describe('add command', () => {
           return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('GitHubCard.tsx')) {
-          return Promise.resolve("import type { FolioProject } from '../../types'")
+          return Promise.resolve("import type { ProjexProject } from '../../types'")
         }
         return Promise.resolve('')
       })
@@ -50,7 +50,7 @@ describe('add command', () => {
         expect.stringContaining('github-card added successfully')
       )
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining("import { GitHubCard } from './components/folio/GitHubCard'")
+        expect.stringContaining("import { GitHubCard } from './components/projex/GitHubCard'")
       )
 
       consoleSpy.mockRestore()
@@ -58,7 +58,7 @@ describe('add command', () => {
       processExitSpy.mockRestore()
     })
 
-    it('should copy npm-card preset to components/folio/NpmCard/', async () => {
+    it('should copy npm-card preset to components/projex/NpmCard/', async () => {
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
       const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -78,7 +78,7 @@ describe('add command', () => {
           return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('NpmCard.tsx')) {
-          return Promise.resolve("import type { FolioProject } from '../../types'")
+          return Promise.resolve("import type { ProjexProject } from '../../types'")
         }
         return Promise.resolve('')
       })
@@ -92,14 +92,14 @@ describe('add command', () => {
         expect.stringContaining('npm-card added successfully')
       )
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining("import { NpmCard } from './components/folio/NpmCard'")
+        expect.stringContaining("import { NpmCard } from './components/projex/NpmCard'")
       )
 
       consoleSpy.mockRestore()
       errorSpy.mockRestore()
     })
 
-    it('should copy showcase-card preset to components/folio/ShowcaseCard/', async () => {
+    it('should copy showcase-card preset to components/projex/ShowcaseCard/', async () => {
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
       const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -119,7 +119,7 @@ describe('add command', () => {
           return Promise.resolve(JSON.stringify({ dependencies: { '@manningworks/projex': '1.0.0' } }))
         }
         if (pathStr.includes('ShowcaseCard.tsx')) {
-          return Promise.resolve("import type { FolioProject } from '../../types'")
+          return Promise.resolve("import type { ProjexProject } from '../../types'")
         }
         return Promise.resolve('')
       })
@@ -133,7 +133,7 @@ describe('add command', () => {
         expect.stringContaining('showcase-card added successfully')
       )
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining("import { ShowcaseCard } from './components/folio/ShowcaseCard'")
+        expect.stringContaining("import { ShowcaseCard } from './components/projex/ShowcaseCard'")
       )
 
       consoleSpy.mockRestore()

@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { useProjectFilters } from '../useProjectFilters'
-import type { FolioProject } from '../../types'
+import type { ProjexProject } from '../../types'
 
-function createProject(overrides: Partial<FolioProject> = {}): FolioProject {
+function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
   return {
     id: 'test-id',
     type: 'github',

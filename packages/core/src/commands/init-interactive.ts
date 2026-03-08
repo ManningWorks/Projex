@@ -84,7 +84,7 @@ export async function initInteractive(options: InitInteractiveOptions = {}): Pro
     const configPath = resolve(workingDir, CONFIG_FILE)
     await writeFile(configPath, configContent, 'utf-8')
 
-    await ensureFolioInstalled()
+    await ensureProjexInstalled()
 
     console.log()
     console.log(chalk.green(`✓ ${CONFIG_FILE} created with ${projects.length} project(s)`))
@@ -245,7 +245,7 @@ function escapeString(str: string): string {
   return str.replace(/'/g, "\\'").replace(/\n/g, ' ')
 }
 
-async function ensureFolioInstalled(): Promise<void> {
+async function ensureProjexInstalled(): Promise<void> {
   const packageJsonPath = resolve(process.cwd(), 'package.json')
 
   try {

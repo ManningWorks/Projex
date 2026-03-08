@@ -32,7 +32,7 @@ Enter your GitHub username when prompted. Projex automatically fetches your publ
 
 ## The API
 
-Folio uses compound components for maximum flexibility:
+Projex uses compound components for maximum flexibility:
 
 ```tsx
 <ProjectCard>
@@ -61,9 +61,9 @@ Each part is optional. Use only what you need, compose your own layout.
 
 [Choose your path → Getting Started](./guides/getting-started)
 
-## Built with Folio
+## Built with Projex
 
-Portfolios using Folio in production:
+Portfolios using Projex in production:
 
 - [lukemanning.ie](https://lukemanning.ie) — Personal portfolio showcasing open source projects and npm packages
 

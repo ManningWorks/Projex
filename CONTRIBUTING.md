@@ -38,7 +38,7 @@ projex/
 
 ## Code Style Guidelines
 
-Folio follows strict code style conventions to maintain consistency and quality. Please review `AGENTS.md` for detailed guidelines.
+Projex follows strict code style conventions to maintain consistency and quality. Please review `AGENTS.md` for detailed guidelines.
 
 ### TypeScript
 

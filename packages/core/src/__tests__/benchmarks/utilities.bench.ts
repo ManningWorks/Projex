@@ -5,9 +5,9 @@ import { filterByFeatured } from '../../lib/filterByFeatured'
 import { sortByName } from '../../lib/sortByName'
 import { sortByDate } from '../../lib/sortByDate'
 import { sortByStars } from '../../lib/sortByStars'
-import type { FolioProject, ProjectStatus, ProjectType } from '../../types'
+import type { ProjexProject, ProjectStatus, ProjectType } from '../../types'
 
-const createProject = (id: number): FolioProject => ({
+const createProject = (id: number): ProjexProject => ({
   id: `project-${id}`,
   type: (['github', 'npm', 'product-hunt', 'manual', 'hybrid'] as ProjectType[])[id % 5],
   status: (['active', 'shipped', 'in-progress', 'archived'] as ProjectStatus[])[id % 4],
@@ -37,7 +37,7 @@ const createProject = (id: number): FolioProject => ({
 })
 
 describe('Utility functions performance (1000 projects)', () => {
-  let projects: FolioProject[]
+  let projects: ProjexProject[]
 
   beforeAll(() => {
     projects = Array.from({ length: 1000 }, (_, i) => createProject(i))
