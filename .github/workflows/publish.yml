@@ -38,5 +38,14 @@ jobs:
           package: "packages/core"
           registry: "https://registry.npmjs.org"
           access: "public"
-          strategy: "all"
-          create_release: true
+          provenance: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: ${{ steps.publish.outputs.type == 'success' }}
+        with:
+          body: See [CHANGELOG.md](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for full details.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
