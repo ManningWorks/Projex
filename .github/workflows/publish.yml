@@ -35,7 +35,6 @@ jobs:
       - uses: JS-DevTools/npm-publish@v4
         id: publish
         with:
-          token: ${{ secrets.NPM_TOKEN }}
           package: "packages/core"
           registry: "https://registry.npmjs.org"
           access: "public"
