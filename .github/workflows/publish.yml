@@ -40,10 +40,3 @@ jobs:
           registry: "https://registry.npmjs.org"
           access: "public"
           strategy: "all"
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          body: See [CHANGELOG.md](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for full details.
-          draft: false
-          prerelease: false
