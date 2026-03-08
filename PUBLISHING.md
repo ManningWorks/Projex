@@ -1,8 +1,16 @@
 # Publishing @manningworks/projex
 
-## First Publish: Use NPM_TOKEN
+## Current Setup: npm-publish-action
 
-When publishing for the first time (or after breaking changes to the publish workflow), you must use an NPM token.
+The workflow uses [pascalgn/npm-publish-action](https://github.com/marketplace/actions/publish-to-npm) which automatically:
+- Detects version changes in `package.json`
+- Creates a git tag
+- Publishes to npm
+- Creates a GitHub release
+
+This is a simple, all-in-one solution that doesn't require OIDC configuration.
+
+## Setup Steps
 
 ### Step 1: Create NPM Automation Token
 
@@ -20,64 +28,58 @@ When publishing for the first time (or after breaking changes to the publish wor
 3. Secret: Paste your npm automation token
 4. Click "Add secret"
 
-### Step 3: Publish Manually
+### Step 3: Publish
 
-Run from your local machine:
+To publish a new version:
 
-```bash
-cd packages/core
-npm publish --access public
-```
+1. Update the version in `packages/core/package.json`
+2. Commit the change with a message like "Release 1.0.1"
+3. Push to the `main` branch
 
-Or push a tag to trigger the workflow (it will use NPM_TOKEN secret).
+The workflow will automatically:
+- Create a tag `v1.0.1`
+- Publish to npm
+- Create a GitHub release
 
-## Subsequent Publishes: OIDC
+## Why Not OIDC?
 
-After the package has been published once, OIDC will work for future publishes.
+OIDC (OpenID Connect) is a more secure method for publishing, but it requires:
+- Package already exists on npm
+- Additional GitHub Actions permissions configuration
+- `npm@11.5.1` to be installed globally
 
-### Working OIDC Workflow Configuration
+The npm-publish-action is simpler and works for the first publish of a new package without requiring any prior setup.
 
-The workflow uses:
+## Alternative: OIDC Setup (Optional)
+
+If you want to switch to OIDC after the first publish, you can modify the workflow to:
 
 ```yaml
-permissions:
-  id-token: write      # Required for OIDC
-  contents: read
+on:
+  push:
+    tags:
+      - 'v*'
 
-steps:
-  - name: Install npm for OIDC
-    run: npm install -g npm@11.5.1
+jobs:
+  publish:
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Install npm for OIDC
+        run: npm install -g npm@11.5.1
 
-  - name: Publish @manningworks/projex
-    working-directory: packages/core
-    run: npm publish --access public --provenance
+      - name: Publish
+        run: npm publish --access public --provenance
 ```
-
-### Why OIDC Doesn't Work Initially
-
-OIDC (OpenID Connect) allows GitHub to obtain a short-lived token to publish to npm. However, this only works if:
-
-1. The package **already exists** on npmjs.org
-2. The GitHub Actions workflow has `id-token: write` permission
-3. The workflow runs `npm install -g npm@11.5.1` to enable OIDC
-
-For a brand new package or scoped package that hasn't been published yet, npm requires explicit authentication (NPM_TOKEN).
-
-## Switching Back to OIDC After First Publish
-
-Once the package exists on npmjs.org:
-
-1. The workflow is already configured for OIDC (see above)
-2. Just push a new version tag (e.g., `v1.0.1`)
-3. The workflow will use OIDC automatically - no NPM_TOKEN secret needed
 
 ## Troubleshooting
 
-### Error: "404 Not Found" or "404 package not found"
+### Error: "404 Not Found" or "package not found"
 
 **Cause**: Package doesn't exist on npm yet.
 
-**Solution**: Use NPM_TOKEN and publish manually first.
+**Solution**: The first publish will create the package. Make sure NPM_TOKEN is set.
 
 ### Error: "E401 Unauthorized" or "need auth"
 
@@ -86,18 +88,9 @@ Once the package exists on npmjs.org:
 **Solution**:
 - Check secret exists at: https://github.com/ManningWorks/Projex/settings/secrets/actions
 - Regenerate token if expired
-- Check workflow is using: `npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }} && npm publish`
 
-### Error: "Automatic provenance generation not supported"
+### Error: "No version changes detected"
 
-**Cause**: Using `--provenance` flag with NPM_TOKEN auth method.
+**Cause**: package.json version hasn't changed.
 
-**Solution**:
-- Remove `--provenance` flag when using NPM_TOKEN
-- OR use OIDC (after first publish) which supports provenance
-
-## Current Workflow Status
-
-The workflow at `.github/workflows/publish.yml` is currently configured for OIDC. This is the correct long-term setup.
-
-For the first publish, use NPM_TOKEN method. For all subsequent publishes, OIDC will work automatically.
+**Solution**: Update the version in `packages/core/package.json` and commit the change.
