@@ -10,7 +10,6 @@ jobs:
     name: Publish Package
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
     steps:
       - uses: actions/checkout@v4
@@ -24,9 +23,6 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install npm for OIDC
-        run: npm install -g npm@11.5.1
-
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm typecheck
@@ -37,9 +33,12 @@ jobs:
 
       - run: pnpm build
 
+      - name: Set .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Publish @manningworks/projex
         working-directory: packages/core
-        run: npm publish --access public --provenance
+        run: npm publish --access public
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
