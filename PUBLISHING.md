@@ -1,14 +1,12 @@
 # Publishing @manningworks/projex
 
-## Current Setup: npm-publish-action
+## Current Setup: npm-publish
 
-The workflow uses [pascalgn/npm-publish-action](https://github.com/marketplace/actions/publish-to-npm) which automatically:
-- Detects version changes in `package.json`
-- Creates a git tag
-- Publishes to npm
-- Creates a GitHub release
-
-This is a simple, all-in-one solution that doesn't require OIDC configuration.
+The workflow uses [JS-DevTools/npm-publish](https://github.com/marketplace/actions/npm-publish) which:
+- Publishes directly to npm on every push to `main` branch
+- Creates GitHub releases when publishing succeeds
+- Works with OIDC or NPM token
+- More actively maintained than npm-publish-action
 
 ## Setup Steps
 
@@ -37,41 +35,10 @@ To publish a new version:
 3. Push to the `main` branch
 
 The workflow will automatically:
-- Create a tag `v1.0.1`
 - Publish to npm
 - Create a GitHub release
 
-## Why Not OIDC?
-
-OIDC (OpenID Connect) is a more secure method for publishing, but it requires:
-- Package already exists on npm
-- Additional GitHub Actions permissions configuration
-- `npm@11.5.1` to be installed globally
-
-The npm-publish-action is simpler and works for the first publish of a new package without requiring any prior setup.
-
-## Alternative: OIDC Setup (Optional)
-
-If you want to switch to OIDC after the first publish, you can modify the workflow to:
-
-```yaml
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  publish:
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Install npm for OIDC
-        run: npm install -g npm@11.5.1
-
-      - name: Publish
-        run: npm publish --access public --provenance
-```
+**Note**: The workflow runs on every push to `main`, so you must actually update the version in `package.json` for it to publish.
 
 ## Troubleshooting
 
@@ -89,8 +56,8 @@ jobs:
 - Check secret exists at: https://github.com/ManningWorks/Projex/settings/secrets/actions
 - Regenerate token if expired
 
-### Error: "No version changes detected"
+### Error: "No package published"
 
-**Cause**: package.json version hasn't changed.
+**Cause**: Version didn't actually change in `package.json`.
 
-**Solution**: Update the version in `packages/core/package.json` and commit the change.
+**Solution**: Update the version in `packages/core/package.json` and commit the change. The workflow publishes on every `main` push, so the version must actually change.

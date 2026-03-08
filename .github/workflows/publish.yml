@@ -9,17 +9,23 @@ jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pascalgn/npm-publish-action@1.3.9
+      - uses: JS-DevTools/npm-publish@v4
+        id: publish
         with:
-          tag_name: "v%s"
-          tag_message: "v%s"
-          create_tag: "true"
-          workspace: "packages/core"
-          publish_command: "npm"
-          publish_args: "--access public"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          token: ${{ secrets.NPM_TOKEN }}
+          package: "packages/core"
+          registry: "https://registry.npmjs.org"
+
+      - name: Create GitHub Release
+        if: steps.publish.outputs.type != 'none'
+        uses: softprops/action-gh-release@v2
+        with:
+          body: See [CHANGELOG.md](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.md) for full details.
+          draft: false
+          prerelease: false
