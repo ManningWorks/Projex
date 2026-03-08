@@ -15,8 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Build package
-        run: cd packages/core && npm run build
+        working-directory: packages/core
+        run: npm run build
 
       - uses: JS-DevTools/npm-publish@v4
         id: publish
