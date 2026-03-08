@@ -1,8 +1,23 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { normalise } from '../normalise'
 import type { NpmProjectInput } from '../../types'
 
+const mockFetch = vi.fn()
+vi.stubGlobal('fetch', mockFetch)
+
 describe('npm config recognition', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockFetch.mockResolvedValue({
+      ok: false,
+      json: () => Promise.resolve({}),
+    })
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('should recognize an npm project when type is "npm"', async () => {
     const input: NpmProjectInput = {
       id: 'test-npm',
