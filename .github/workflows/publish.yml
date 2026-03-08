@@ -39,6 +39,7 @@ jobs:
           package: "packages/core"
           registry: "https://registry.npmjs.org"
           greater-version-only: false
+          access: "public"
 
       - name: Create GitHub Release
         if: steps.publish.outputs.type != 'none'
