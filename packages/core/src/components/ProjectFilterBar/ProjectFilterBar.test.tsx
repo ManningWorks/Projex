@@ -7,10 +7,10 @@ afterEach(() => {
 })
 
 describe('ProjectFilterBar', () => {
-  it('renders with data-folio-filter-bar attribute', () => {
+  it('renders with data-projex-filter-bar attribute', () => {
     const { container } = render(<ProjectFilterBar>children</ProjectFilterBar>)
 
-    expect(container.querySelector('[data-folio-filter-bar]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-filter-bar]')).toBeInTheDocument()
   })
 
   it('renders children', () => {

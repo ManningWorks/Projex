@@ -7,10 +7,10 @@ afterEach(() => {
 })
 
 describe('ProjectFilterTag', () => {
-  it('renders with data-folio-filter-tag attribute', () => {
+  it('renders with data-projex-filter-tag attribute', () => {
     const { container } = render(<ProjectFilterTag label="React" />)
 
-    expect(container.querySelector('[data-folio-filter-tag]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-filter-tag]')).toBeInTheDocument()
   })
 
   it('displays the label text', () => {
@@ -28,18 +28,18 @@ describe('ProjectFilterTag', () => {
     expect(onClick).toHaveBeenCalledWith('React')
   })
 
-  it('does not have data-folio-filter-tag-active when inactive', () => {
+  it('does not have data-projex-filter-tag-active when inactive', () => {
     const { container } = render(<ProjectFilterTag label="React" isActive={false} />)
 
-    const tag = container.querySelector('[data-folio-filter-tag]')
-    expect(tag).not.toHaveAttribute('data-folio-filter-tag-active')
+    const tag = container.querySelector('[data-projex-filter-tag]')
+    expect(tag).not.toHaveAttribute('data-projex-filter-tag-active')
   })
 
-  it('has data-folio-filter-tag-active when active', () => {
+  it('has data-projex-filter-tag-active when active', () => {
     const { container } = render(<ProjectFilterTag label="React" isActive={true} />)
 
-    const tag = container.querySelector('[data-folio-filter-tag]')
-    expect(tag).toHaveAttribute('data-folio-filter-tag-active', 'true')
+    const tag = container.querySelector('[data-projex-filter-tag]')
+    expect(tag).toHaveAttribute('data-projex-filter-tag-active', 'true')
   })
 
   it('renders as a button element', () => {

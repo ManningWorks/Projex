@@ -8,16 +8,16 @@ afterEach(() => {
 })
 
 describe('ProjectSearch', () => {
-  it('renders with data-folio-search attribute', () => {
+  it('renders with data-projex-search attribute', () => {
     const { container } = render(<ProjectSearch onSearch={vi.fn()} />)
 
-    expect(container.querySelector('[data-folio-search]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-search]')).toBeInTheDocument()
   })
 
-  it('renders input with data-folio-search-input attribute', () => {
+  it('renders input with data-projex-search-input attribute', () => {
     const { container } = render(<ProjectSearch onSearch={vi.fn()} />)
 
-    expect(container.querySelector('[data-folio-search-input]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-search-input]')).toBeInTheDocument()
   })
 
   it('shows placeholder text when provided', () => {
@@ -29,7 +29,7 @@ describe('ProjectSearch', () => {
   it('does not show placeholder when not provided', () => {
     const { container } = render(<ProjectSearch onSearch={vi.fn()} />)
 
-    expect(container.querySelector('[data-folio-search-input]')).not.toHaveAttribute('placeholder')
+    expect(container.querySelector('[data-projex-search-input]')).not.toHaveAttribute('placeholder')
   })
 })
 

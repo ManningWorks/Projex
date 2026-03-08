@@ -53,7 +53,7 @@ describe('ProjectCard', () => {
     )
 
     expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent('Test Project')
-    expect(container.querySelector('[data-folio-card-description]')).toHaveTextContent('This is a test project description')
+    expect(container.querySelector('[data-projex-card-description]')).toHaveTextContent('This is a test project description')
     expect(screen.getByText('100 stars')).toBeInTheDocument()
     expect(screen.getByText('20 forks')).toBeInTheDocument()
   })
@@ -68,8 +68,8 @@ describe('ProjectCard', () => {
 
     expect(screen.getByText('500 stars')).toBeInTheDocument()
     expect(screen.getByText('50 forks')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-stat="downloads"]')).not.toBeInTheDocument()
-    expect(container.querySelector('[data-folio-stat="upvotes"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-stat="downloads"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-stat="upvotes"]')).not.toBeInTheDocument()
   })
 
   it('displays npm-specific stats', () => {
@@ -82,7 +82,7 @@ describe('ProjectCard', () => {
 
     expect(screen.getByText('10000 downloads')).toBeInTheDocument()
     expect(screen.getByText('2.0.0')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-stat="stars"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-stat="stars"]')).not.toBeInTheDocument()
   })
 
   it('displays product-hunt-specific stats', () => {
@@ -95,7 +95,7 @@ describe('ProjectCard', () => {
 
     expect(screen.getByText('250 upvotes')).toBeInTheDocument()
     expect(screen.getByText('30 comments')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-stat="stars"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-stat="stars"]')).not.toBeInTheDocument()
   })
 
   it('renders nothing when Description has no description', () => {
@@ -103,7 +103,7 @@ describe('ProjectCard', () => {
 
     const { container } = render(<ProjectCard.Description project={project} />)
 
-    expect(container.querySelector('[data-folio-card-description]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-description]')).not.toBeInTheDocument()
   })
 
   it('renders nothing when Tags has empty stack', () => {
@@ -111,7 +111,7 @@ describe('ProjectCard', () => {
 
     const { container } = render(<ProjectCard.Tags project={project} />)
 
-    expect(container.querySelector('[data-folio-card-tags]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-tags]')).not.toBeInTheDocument()
   })
 
   it('renders nothing when Stats has no stats', () => {
@@ -119,7 +119,7 @@ describe('ProjectCard', () => {
 
     const { container } = render(<ProjectCard.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-card-stats]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-stats]')).not.toBeInTheDocument()
   })
 
   it('renders nothing when Links has no links', () => {
@@ -127,22 +127,22 @@ describe('ProjectCard', () => {
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    expect(container.querySelector('[data-folio-card-links]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-links]')).not.toBeInTheDocument()
   })
 })
 
 describe('ProjectCard data attributes', () => {
-  it('has correct data-folio-card attribute on root', () => {
+  it('has correct data-projex-card attribute on root', () => {
     const { container } = render(
       <ProjectCard>
         <span>Content</span>
       </ProjectCard>
     )
 
-    expect(container.querySelector('[data-folio-card]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card]')).toBeInTheDocument()
   })
 
-  it('has data-folio-card with project id when project is provided', () => {
+  it('has data-projex-card with project id when project is provided', () => {
     const project = createProject({ id: 'my-custom-project' })
 
     const { container } = render(
@@ -151,8 +151,8 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).toHaveAttribute('data-folio-card', 'my-custom-project')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).toHaveAttribute('data-projex-card', 'my-custom-project')
   })
 
   it('allows targeting specific card by project id with CSS selector', () => {
@@ -164,10 +164,10 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    expect(container.querySelector('[data-folio-card="specific-project"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card="specific-project"]')).toBeInTheDocument()
   })
 
-  it('has data-folio-github-card attribute when project type is github', () => {
+  it('has data-projex-github-card attribute when project type is github', () => {
     const project = createProject({ type: 'github' })
 
     const { container } = render(
@@ -176,10 +176,10 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    expect(container.querySelector('[data-folio-github-card]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-github-card]')).toBeInTheDocument()
   })
 
-  it('does not have data-folio-github-card attribute when project type is not github', () => {
+  it('does not have data-projex-github-card attribute when project type is not github', () => {
     const project = createProject({ type: 'npm' })
 
     const { container } = render(
@@ -188,7 +188,7 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    expect(container.querySelector('[data-folio-github-card]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-github-card]')).not.toBeInTheDocument()
   })
 
   it('allows targeting all github cards with CSS selector', () => {
@@ -200,83 +200,83 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    expect(container.querySelector('[data-folio-github-card]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-github-card]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-card-header attribute', () => {
+  it('has correct data-projex-card-header attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Header project={project} />)
 
-    expect(container.querySelector('[data-folio-card-header]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-header]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-type attributes', () => {
+  it('has correct data-projex-type attributes', () => {
     const project = createProject({ type: 'github' })
 
     const { container } = render(<ProjectCard.Header project={project} />)
 
-    const typeEl = container.querySelector('[data-folio-type]')
+    const typeEl = container.querySelector('[data-projex-type]')
     expect(typeEl).toBeInTheDocument()
-    expect(typeEl).toHaveAttribute('data-folio-type-value', 'github')
+    expect(typeEl).toHaveAttribute('data-projex-type-value', 'github')
   })
 
-  it('has correct data-folio-card-description attribute', () => {
+  it('has correct data-projex-card-description attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Description project={project} />)
 
-    expect(container.querySelector('[data-folio-card-description]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-description]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-card-tags attribute', () => {
+  it('has correct data-projex-card-tags attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Tags project={project} />)
 
-    expect(container.querySelector('[data-folio-card-tags]')).toBeInTheDocument()
-    expect(container.querySelectorAll('[data-folio-tag]')).toHaveLength(2)
+    expect(container.querySelector('[data-projex-card-tags]')).toBeInTheDocument()
+    expect(container.querySelectorAll('[data-projex-tag]')).toHaveLength(2)
   })
 
-  it('has correct data-folio-card-stats attribute', () => {
+  it('has correct data-projex-card-stats attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-card-stats]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-stats]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-status attributes', () => {
+  it('has correct data-projex-status attributes', () => {
     const project = createProject({ status: 'active' })
 
     const { container } = render(<ProjectCard.Status project={project} />)
 
-    const statusEl = container.querySelector('[data-folio-status]')
+    const statusEl = container.querySelector('[data-projex-status]')
     expect(statusEl).toBeInTheDocument()
-    expect(statusEl).toHaveAttribute('data-folio-status-value', 'active')
+    expect(statusEl).toHaveAttribute('data-projex-status-value', 'active')
   })
 
-  it('has correct data-folio-card-links attribute', () => {
+  it('has correct data-projex-card-links attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    expect(container.querySelector('[data-folio-card-links]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-card-links]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-link attributes', () => {
+  it('has correct data-projex-link attributes', () => {
     const project = createProject()
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    const githubLink = container.querySelector('[data-folio-link-type="github"]')
+    const githubLink = container.querySelector('[data-projex-link-type="github"]')
     expect(githubLink).toBeInTheDocument()
-    expect(githubLink).toHaveAttribute('data-folio-link')
+    expect(githubLink).toHaveAttribute('data-projex-link')
     expect(githubLink).toHaveAttribute('href', 'https://github.com/test/project')
 
-    const liveLink = container.querySelector('[data-folio-link-type="live"]')
+    const liveLink = container.querySelector('[data-projex-link-type="live"]')
     expect(liveLink).toBeInTheDocument()
-    expect(liveLink).toHaveAttribute('data-folio-link')
+    expect(liveLink).toHaveAttribute('data-projex-link')
     expect(liveLink).toHaveAttribute('href', 'https://test-project.com')
   })
 
@@ -287,7 +287,7 @@ describe('ProjectCard data attributes', () => {
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    const npmLink = container.querySelector('[data-folio-link-type="npm"]')
+    const npmLink = container.querySelector('[data-projex-link-type="npm"]')
     expect(npmLink).toBeInTheDocument()
     expect(npmLink).toHaveAttribute('href', 'https://npmjs.com/package/test')
   })
@@ -299,12 +299,12 @@ describe('ProjectCard data attributes', () => {
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    const phLink = container.querySelector('[data-folio-link-type="product-hunt"]')
+    const phLink = container.querySelector('[data-projex-link-type="product-hunt"]')
     expect(phLink).toBeInTheDocument()
     expect(phLink).toHaveAttribute('href', 'https://producthunt.com/posts/test')
   })
 
-  it('has data-folio-og-image attribute when project has image', () => {
+  it('has data-projex-og-image attribute when project has image', () => {
     const project = createProject({ image: 'https://example.com/project-image.png' })
 
     const { container } = render(
@@ -313,11 +313,11 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).toHaveAttribute('data-folio-og-image', 'https://example.com/project-image.png')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).toHaveAttribute('data-projex-og-image', 'https://example.com/project-image.png')
   })
 
-  it('omits data-folio-og-image attribute when project has no image', () => {
+  it('omits data-projex-og-image attribute when project has no image', () => {
     const project = createProject({ image: null })
 
     const { container } = render(
@@ -326,11 +326,11 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).not.toHaveAttribute('data-folio-og-image')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).not.toHaveAttribute('data-projex-og-image')
   })
 
-  it('has data-folio-og-title attribute with project name', () => {
+  it('has data-projex-og-title attribute with project name', () => {
     const project = createProject({ name: 'My Awesome Project' })
 
     const { container } = render(
@@ -339,11 +339,11 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).toHaveAttribute('data-folio-og-title', 'My Awesome Project')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).toHaveAttribute('data-projex-og-title', 'My Awesome Project')
   })
 
-  it('has data-folio-og-description attribute with project description', () => {
+  it('has data-projex-og-description attribute with project description', () => {
     const project = createProject({ description: 'An amazing project for testing' })
 
     const { container } = render(
@@ -352,11 +352,11 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).toHaveAttribute('data-folio-og-description', 'An amazing project for testing')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).toHaveAttribute('data-projex-og-description', 'An amazing project for testing')
   })
 
-  it('omits data-folio-og-description attribute when project has no description', () => {
+  it('omits data-projex-og-description attribute when project has no description', () => {
     const project = createProject({ description: '' })
 
     const { container } = render(
@@ -365,8 +365,8 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card).not.toHaveAttribute('data-folio-og-description')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card).not.toHaveAttribute('data-projex-og-description')
   })
 
   it('allows extracting OG metadata via DOM query', () => {
@@ -382,20 +382,20 @@ describe('ProjectCard data attributes', () => {
       </ProjectCard>
     )
 
-    const card = container.querySelector('[data-folio-card]')
-    expect(card?.getAttribute('data-folio-og-image')).toBe('https://example.com/image.png')
-    expect(card?.getAttribute('data-folio-og-title')).toBe('Test Project')
-    expect(card?.getAttribute('data-folio-og-description')).toBe('Test description')
+    const card = container.querySelector('[data-projex-card]')
+    expect(card?.getAttribute('data-projex-og-image')).toBe('https://example.com/image.png')
+    expect(card?.getAttribute('data-projex-og-title')).toBe('Test Project')
+    expect(card?.getAttribute('data-projex-og-description')).toBe('Test description')
   })
 
-  it('data-folio-link-type="live" exists when live link is present', () => {
+  it('data-projex-link-type="live" exists when live link is present', () => {
     const project = createProject({
       links: { live: 'https://live-project.com' }
     })
 
     const { container } = render(<ProjectCard.Links project={project} />)
 
-    const liveLink = container.querySelector('[data-folio-link-type="live"]')
+    const liveLink = container.querySelector('[data-projex-link-type="live"]')
     expect(liveLink).toBeInTheDocument()
     expect(liveLink).toHaveAttribute('href', 'https://live-project.com')
   })
@@ -412,8 +412,8 @@ describe('ProjectCard status values', () => {
 
       const { container } = render(<ProjectCard.Status project={project} />)
 
-      const statusEl = container.querySelector('[data-folio-status]')
-      expect(statusEl).toHaveAttribute('data-folio-status-value', status)
+      const statusEl = container.querySelector('[data-projex-status]')
+      expect(statusEl).toHaveAttribute('data-projex-status-value', status)
       expect(statusEl).toHaveTextContent(status)
     })
   }
@@ -430,8 +430,8 @@ describe('ProjectCard type values', () => {
 
       const { container } = render(<ProjectCard.Header project={project} />)
 
-      const typeEl = container.querySelector('[data-folio-type]')
-      expect(typeEl).toHaveAttribute('data-folio-type-value', type)
+      const typeEl = container.querySelector('[data-projex-type]')
+      expect(typeEl).toHaveAttribute('data-projex-type-value', type)
       expect(typeEl).toHaveTextContent(type)
     })
   }

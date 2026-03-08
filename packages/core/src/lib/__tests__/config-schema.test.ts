@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { folioProjectInputSchema as schema } from '../config-schema'
+import { projexProjectInputSchema as schema } from '../config-schema'
 import { formatZodError } from '../format-error'
 
 describe('config-schema', () => {

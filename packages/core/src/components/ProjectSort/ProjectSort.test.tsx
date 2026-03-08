@@ -7,12 +7,12 @@ afterEach(() => {
 })
 
 describe('ProjectSort', () => {
-  it('renders with data-folio-sort attribute', () => {
+  it('renders with data-projex-sort attribute', () => {
     const { container } = render(
       <ProjectSort options={['date', 'stars', 'name']} value="date" onChange={vi.fn()} />
     )
 
-    expect(container.querySelector('[data-folio-sort]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-sort]')).toBeInTheDocument()
   })
 
   it('renders dropdown with provided options', () => {
@@ -62,15 +62,15 @@ describe('ProjectSort', () => {
     expect(onChange).toHaveBeenCalledWith('name')
   })
 
-  it('selected option has data-folio-sort-value attribute', () => {
+  it('selected option has data-projex-sort-value attribute', () => {
     render(
       <ProjectSort options={['date', 'stars', 'name']} value="stars" onChange={vi.fn()} />
     )
 
     const options = screen.getAllByRole('option')
-    const selectedOption = options.find(opt => opt.getAttribute('data-folio-sort-value'))
+    const selectedOption = options.find(opt => opt.getAttribute('data-projex-sort-value'))
 
     expect(selectedOption).toBeInTheDocument()
-    expect(selectedOption).toHaveAttribute('data-folio-sort-value', 'stars')
+    expect(selectedOption).toHaveAttribute('data-projex-sort-value', 'stars')
   })
 })

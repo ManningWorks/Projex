@@ -1,14 +1,14 @@
 import { describe, it, expect } from 'vitest'
-import { folioProjectInputSchema, type FolioProjectInputZod } from '../index'
+import { projexProjectInputSchema, type ProjexProjectInputZod } from '../index'
 
 describe('lib index exports', () => {
-  it('should export folioProjectInputSchema from lib/index', () => {
-    expect(folioProjectInputSchema).toBeDefined()
-    expect(typeof folioProjectInputSchema.parse).toBe('function')
+  it('should export projexProjectInputSchema from lib/index', () => {
+    expect(projexProjectInputSchema).toBeDefined()
+    expect(typeof projexProjectInputSchema.parse).toBe('function')
   })
 
-  it('should export FolioProjectInputZod type from lib/index', () => {
-    const typeCheck: FolioProjectInputZod = {
+  it('should export ProjexProjectInputZod type from lib/index', () => {
+    const typeCheck: ProjexProjectInputZod = {
       id: 'test',
       type: 'github',
       repo: 'user/repo',
@@ -18,7 +18,7 @@ describe('lib index exports', () => {
   })
 
   it('should validate a valid project using schema from lib/index', () => {
-    const result = folioProjectInputSchema.safeParse({
+    const result = projexProjectInputSchema.safeParse({
       id: 'test',
       type: 'github',
       repo: 'user/repo',

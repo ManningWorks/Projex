@@ -58,7 +58,7 @@ describe('ProjectView', () => {
     )
 
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Test Project')
-    expect(container.querySelector('[data-folio-view-section-name="background"]')).toHaveTextContent(/This is the background story/)
+    expect(container.querySelector('[data-projex-view-section-name="background"]')).toHaveTextContent(/This is the background story/)
     expect(screen.getByText('Why I built this project.')).toBeInTheDocument()
   })
 
@@ -94,7 +94,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="background" />)
 
-    expect(container.querySelector('[data-folio-view-section]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section]')).not.toBeInTheDocument()
   })
 
   it('does not render section when data is empty string', () => {
@@ -102,7 +102,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="background" />)
 
-    expect(container.querySelector('[data-folio-view-section]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section]')).not.toBeInTheDocument()
   })
 
   it('renders empty section wrapper when data is empty array', () => {
@@ -110,8 +110,8 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="struggles" />)
 
-    expect(container.querySelector('[data-folio-view-section]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-struggle]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-struggle]')).not.toBeInTheDocument()
   })
 
   it('renders background section when present', () => {
@@ -119,7 +119,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="background" />)
 
-    expect(container.querySelector('[data-folio-view-section]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section]')).toBeInTheDocument()
     expect(screen.getByText('Background info')).toBeInTheDocument()
   })
 
@@ -128,7 +128,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="why" />)
 
-    expect(container.querySelector('[data-folio-view-section]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section]')).toBeInTheDocument()
     expect(screen.getByText('Why this matters')).toBeInTheDocument()
   })
 
@@ -137,13 +137,13 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="struggles" />)
 
-    expect(container.querySelectorAll('[data-folio-struggle]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-struggle]')).toHaveLength(2)
     
-    const warnStruggle = container.querySelector('[data-folio-struggle-type="warn"]')
+    const warnStruggle = container.querySelector('[data-projex-struggle-type="warn"]')
     expect(warnStruggle).toBeInTheDocument()
     expect(warnStruggle).toHaveTextContent('First challenge faced')
 
-    const errorStruggle = container.querySelector('[data-folio-struggle-type="error"]')
+    const errorStruggle = container.querySelector('[data-projex-struggle-type="error"]')
     expect(errorStruggle).toBeInTheDocument()
     expect(errorStruggle).toHaveTextContent('Critical issue encountered')
   })
@@ -153,8 +153,8 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="timeline" />)
 
-    expect(container.querySelectorAll('[data-folio-timeline-date]')).toHaveLength(2)
-    expect(container.querySelectorAll('[data-folio-timeline-note]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-timeline-date]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-timeline-note]')).toHaveLength(2)
     expect(screen.getByText('2024-01-01')).toBeInTheDocument()
     expect(screen.getByText('Project started')).toBeInTheDocument()
   })
@@ -164,12 +164,12 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="posts" />)
 
-    expect(container.querySelectorAll('[data-folio-post-title]')).toHaveLength(2)
-    expect(container.querySelectorAll('[data-folio-post-date]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-post-title]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-post-date]')).toHaveLength(2)
     
     expect(screen.getByText('Announcement Post')).toBeInTheDocument()
 
-    const postLink = container.querySelector('[data-folio-post-link]')
+    const postLink = container.querySelector('[data-projex-post-link]')
     expect(postLink).toBeInTheDocument()
     expect(postLink).toHaveAttribute('href', 'https://blog.com/post1')
   })
@@ -181,7 +181,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="posts" />)
 
-    expect(container.querySelector('[data-folio-post-link]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-post-link]')).not.toBeInTheDocument()
     expect(screen.getByText('No URL Post')).toBeInTheDocument()
   })
 
@@ -190,7 +190,7 @@ describe('ProjectView sections conditional rendering', () => {
 
     const { container } = render(<ProjectView.Section project={project} name="stack" />)
 
-    expect(container.querySelectorAll('[data-folio-tag]')).toHaveLength(3)
+    expect(container.querySelectorAll('[data-projex-tag]')).toHaveLength(3)
   })
 })
 
@@ -200,9 +200,9 @@ describe('ProjectView Links', () => {
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    expect(container.querySelector('[data-folio-view-links]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-link-type="github"]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-link-type="live"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-links]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-link-type="github"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-link-type="live"]')).toBeInTheDocument()
   })
 
   it('does not render when no links', () => {
@@ -210,7 +210,7 @@ describe('ProjectView Links', () => {
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    expect(container.querySelector('[data-folio-view-links]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-links]')).not.toBeInTheDocument()
   })
 
   it('renders app store link', () => {
@@ -220,7 +220,7 @@ describe('ProjectView Links', () => {
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    const link = container.querySelector('[data-folio-link-type="app-store"]')
+    const link = container.querySelector('[data-projex-link-type="app-store"]')
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', 'https://apps.apple.com/app/test')
   })
@@ -232,7 +232,7 @@ describe('ProjectView Links', () => {
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    const link = container.querySelector('[data-folio-link-type="play-store"]')
+    const link = container.querySelector('[data-projex-link-type="play-store"]')
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', 'https://play.google.com/store/apps/test')
   })
@@ -244,7 +244,7 @@ describe('ProjectView Links', () => {
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    const link = container.querySelector('[data-folio-link-type="product-hunt"]')
+    const link = container.querySelector('[data-projex-link-type="product-hunt"]')
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', 'https://producthunt.com/posts/test')
   })
@@ -256,7 +256,7 @@ describe('ProjectView Stats', () => {
 
     const { container } = render(<ProjectView.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-view-stats]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).toBeInTheDocument()
     expect(screen.getByText('100 stars')).toBeInTheDocument()
     expect(screen.getByText('20 forks')).toBeInTheDocument()
   })
@@ -266,7 +266,7 @@ describe('ProjectView Stats', () => {
 
     const { container } = render(<ProjectView.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-view-stats]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).not.toBeInTheDocument()
   })
 
   it('does not render when stats object has no values', () => {
@@ -274,7 +274,7 @@ describe('ProjectView Stats', () => {
 
     const { container } = render(<ProjectView.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-view-stats]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).not.toBeInTheDocument()
   })
 
   it('renders npm stats', () => {
@@ -314,7 +314,7 @@ describe('ProjectView Commits', () => {
 
     const { container } = render(<ProjectView.Commits project={project} />)
 
-    expect(container.querySelector('[data-folio-commits]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-commits]')).toBeInTheDocument()
   })
 
   it('does not render when commits is undefined', () => {
@@ -322,7 +322,7 @@ describe('ProjectView Commits', () => {
 
     const { container } = render(<ProjectView.Commits project={project} />)
 
-    expect(container.querySelector('[data-folio-commits]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-commits]')).not.toBeInTheDocument()
   })
 
   it('does not render when commits is empty array', () => {
@@ -330,7 +330,7 @@ describe('ProjectView Commits', () => {
 
     const { container } = render(<ProjectView.Commits project={project} />)
 
-    expect(container.querySelector('[data-folio-commits]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-commits]')).not.toBeInTheDocument()
   })
 
   it('renders commits header', () => {
@@ -342,7 +342,7 @@ describe('ProjectView Commits', () => {
 
     const { container } = render(<ProjectView.Commits project={project} />)
 
-    expect(container.querySelector('[data-folio-commits-header]')).toHaveTextContent('Commits')
+    expect(container.querySelector('[data-projex-commits-header]')).toHaveTextContent('Commits')
   })
 
   it('uses CommitList component for rendering commits', () => {
@@ -355,12 +355,12 @@ describe('ProjectView Commits', () => {
 
     const { container } = render(<ProjectView.Commits project={project} />)
 
-    expect(container.querySelectorAll('[data-folio-commit]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-commit]')).toHaveLength(2)
   })
 })
 
 describe('ProjectView data attributes', () => {
-  it('has correct data-folio-view attribute on root', () => {
+  it('has correct data-projex-view attribute on root', () => {
     const project = createProject()
 
     const { container } = render(
@@ -369,32 +369,32 @@ describe('ProjectView data attributes', () => {
       </ProjectView>
     )
 
-    expect(container.querySelector('[data-folio-view]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view-section attributes', () => {
+  it('has correct data-projex-view-section attributes', () => {
     const project = createProject()
 
     const { container } = render(<ProjectView.Section project={project} name="background" />)
 
-    const section = container.querySelector('[data-folio-view-section]')
+    const section = container.querySelector('[data-projex-view-section]')
     expect(section).toBeInTheDocument()
-    expect(section).toHaveAttribute('data-folio-view-section-name', 'background')
+    expect(section).toHaveAttribute('data-projex-view-section-name', 'background')
   })
 
-  it('has correct data-folio-view-links attribute', () => {
+  it('has correct data-projex-view-links attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectView.Links project={project} />)
 
-    expect(container.querySelector('[data-folio-view-links]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-links]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view-stats attribute', () => {
+  it('has correct data-projex-view-stats attribute', () => {
     const project = createProject()
 
     const { container } = render(<ProjectView.Stats project={project} />)
 
-    expect(container.querySelector('[data-folio-view-stats]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).toBeInTheDocument()
   })
 })

@@ -1,14 +1,14 @@
 import { describe, it, expect } from 'vitest'
-import { folioProjectInputSchema } from '../config-schema'
+import { projexProjectInputSchema } from '../config-schema'
 
 describe('config schema exports', () => {
-  it('should export folioProjectInputSchema', () => {
-    expect(folioProjectInputSchema).toBeDefined()
-    expect(typeof folioProjectInputSchema.parse).toBe('function')
+  it('should export projexProjectInputSchema', () => {
+    expect(projexProjectInputSchema).toBeDefined()
+    expect(typeof projexProjectInputSchema.parse).toBe('function')
   })
 
   it('should validate a valid GitHub project', () => {
-    const result = folioProjectInputSchema.safeParse({
+    const result = projexProjectInputSchema.safeParse({
       id: 'test',
       type: 'github',
       repo: 'user/repo',
@@ -18,7 +18,7 @@ describe('config schema exports', () => {
   })
 
   it('should validate a valid manual project', () => {
-    const result = folioProjectInputSchema.safeParse({
+    const result = projexProjectInputSchema.safeParse({
       id: 'test',
       type: 'manual',
       status: 'active',

@@ -44,21 +44,21 @@ describe('FeaturedProject', () => {
     const { container } = render(<FeaturedProject project={project} />)
 
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Featured Project')
-    expect(container.querySelector('[data-folio-view-section-name="background"]')).toHaveTextContent(/Background of the featured project/)
+    expect(container.querySelector('[data-projex-view-section-name="background"]')).toHaveTextContent(/Background of the featured project/)
     expect(screen.getByText('Why this project is featured.')).toBeInTheDocument()
   })
 
   it('renders nothing without project', () => {
     const { container } = render(<FeaturedProject project={undefined} />)
 
-    expect(container.querySelector('[data-folio-featured]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).not.toBeInTheDocument()
     expect(container.firstChild).toBeNull()
   })
 
   it('renders nothing with null project', () => {
     const { container } = render(<FeaturedProject project={null} />)
 
-    expect(container.querySelector('[data-folio-featured]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).not.toBeInTheDocument()
   })
 
   it('displays image when project has image', () => {
@@ -66,7 +66,7 @@ describe('FeaturedProject', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    const image = container.querySelector('[data-folio-featured-image]')
+    const image = container.querySelector('[data-projex-featured-image]')
     expect(image).toBeInTheDocument()
     expect(image).toHaveAttribute('src', 'https://example.com/image.png')
     expect(image).toHaveAttribute('alt', 'Featured Project')
@@ -77,7 +77,7 @@ describe('FeaturedProject', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured-image]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured-image]')).not.toBeInTheDocument()
   })
 
   it('displays stats when available', () => {
@@ -94,59 +94,59 @@ describe('FeaturedProject', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-link-type="github"]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-link-type="live"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-link-type="github"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-link-type="live"]')).toBeInTheDocument()
   })
 })
 
 describe('FeaturedProject data attributes', () => {
-  it('has correct data-folio-featured attribute on root', () => {
+  it('has correct data-projex-featured attribute on root', () => {
     const project = createProject()
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-featured-image attribute', () => {
+  it('has correct data-projex-featured-image attribute', () => {
     const project = createProject({ image: 'https://example.com/image.png' })
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured-image]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured-image]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view attribute from ProjectView', () => {
+  it('has correct data-projex-view attribute from ProjectView', () => {
     const project = createProject()
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view-section attributes', () => {
+  it('has correct data-projex-view-section attributes', () => {
     const project = createProject()
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view-section-name="background"]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-view-section-name="why"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section-name="background"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section-name="why"]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view-stats attribute', () => {
+  it('has correct data-projex-view-stats attribute', () => {
     const project = createProject()
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view-stats]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).toBeInTheDocument()
   })
 
-  it('has correct data-folio-view-links attribute', () => {
+  it('has correct data-projex-view-links attribute', () => {
     const project = createProject()
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view-links]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-links]')).toBeInTheDocument()
   })
 })
 
@@ -156,7 +156,7 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view]')).toBeInTheDocument()
   })
 
   it('renders background section via ProjectView.Section', () => {
@@ -164,7 +164,7 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view-section-name="background"]')).toHaveTextContent('Custom background')
+    expect(container.querySelector('[data-projex-view-section-name="background"]')).toHaveTextContent('Custom background')
   })
 
   it('renders why section via ProjectView.Section', () => {
@@ -172,7 +172,7 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-view-section-name="why"]')).toHaveTextContent('Custom why')
+    expect(container.querySelector('[data-projex-view-section-name="why"]')).toHaveTextContent('Custom why')
   })
 
   it('handles project with no background gracefully', () => {
@@ -180,8 +180,8 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-view-section-name="background"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section-name="background"]')).not.toBeInTheDocument()
   })
 
   it('handles project with no why gracefully', () => {
@@ -189,8 +189,8 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-view-section-name="why"]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-section-name="why"]')).not.toBeInTheDocument()
   })
 
   it('handles project with no stats gracefully', () => {
@@ -198,7 +198,7 @@ describe('FeaturedProject composition', () => {
 
     const { container } = render(<FeaturedProject project={project} />)
 
-    expect(container.querySelector('[data-folio-featured]')).toBeInTheDocument()
-    expect(container.querySelector('[data-folio-view-stats]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-featured]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-view-stats]')).not.toBeInTheDocument()
   })
 })

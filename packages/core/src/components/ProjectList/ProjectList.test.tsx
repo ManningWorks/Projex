@@ -15,7 +15,7 @@ describe('ProjectList', () => {
       </ProjectList>
     )
 
-    const list = container.querySelector('[data-folio-list]')
+    const list = container.querySelector('[data-projex-list]')
     expect(list).toBeInTheDocument()
     expect(screen.getByText('Project 1')).toBeInTheDocument()
     expect(screen.getByText('Project 2')).toBeInTheDocument()
@@ -24,32 +24,32 @@ describe('ProjectList', () => {
   it('renders nothing without children', () => {
     const { container } = render(<ProjectList>{undefined}</ProjectList>)
 
-    expect(container.querySelector('[data-folio-list]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-list]')).not.toBeInTheDocument()
     expect(container.firstChild).toBeNull()
   })
 
   it('renders nothing with null children', () => {
     const { container } = render(<ProjectList children={null} />)
 
-    expect(container.querySelector('[data-folio-list]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-list]')).not.toBeInTheDocument()
   })
 
   it('renders nothing with empty string children', () => {
     const { container } = render(<ProjectList>{''}</ProjectList>)
 
-    expect(container.querySelector('[data-folio-list]')).not.toBeInTheDocument()
+    expect(container.querySelector('[data-projex-list]')).not.toBeInTheDocument()
   })
 })
 
 describe('ProjectList data attributes', () => {
-  it('has correct data-folio-list attribute on root', () => {
+  it('has correct data-projex-list attribute on root', () => {
     const { container } = render(
       <ProjectList>
         <span>Content</span>
       </ProjectList>
     )
 
-    expect(container.querySelector('[data-folio-list]')).toBeInTheDocument()
+    expect(container.querySelector('[data-projex-list]')).toBeInTheDocument()
   })
 })
 
@@ -57,13 +57,13 @@ describe('ProjectList composition', () => {
   it('composes correctly with ProjectCard children', () => {
     const { container } = render(
       <ProjectList>
-        <div data-folio-card>Card 1</div>
-        <div data-folio-card>Card 2</div>
+        <div data-projex-card>Card 1</div>
+        <div data-projex-card>Card 2</div>
       </ProjectList>
     )
 
-    const list = container.querySelector('[data-folio-list]')
+    const list = container.querySelector('[data-projex-list]')
     expect(list).toBeInTheDocument()
-    expect(container.querySelectorAll('[data-folio-card]')).toHaveLength(2)
+    expect(container.querySelectorAll('[data-projex-card]')).toHaveLength(2)
   })
 })
