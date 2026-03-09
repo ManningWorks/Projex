@@ -79,6 +79,10 @@ export default defineConfig({
               {
                 text: 'Searchable List',
                 link: '/examples/searchable-list'
+              },
+              {
+                text: 'Creator Portfolio',
+                link: '/examples/creator-portfolio'
               }
             ]
           },
