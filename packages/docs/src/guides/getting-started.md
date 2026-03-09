@@ -106,6 +106,82 @@ export const projects = defineProjects([
 ])
 ```
 
+## Step 4a: Add YouTube Channels (Optional)
+
+If you have a YouTube channel, add it to display subscriber count, views, and latest video:
+
+```ts
+export const projects = defineProjects([
+  {
+    id: 'tech-channel',
+    type: 'youtube',
+    channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+    status: 'active',
+    featured: true,
+  },
+])
+```
+
+**Getting your Channel ID:**
+
+1. Go to your YouTube channel page
+2. Check the URL: `youtube.com/channel/[CHANNEL_ID]` or `youtube.com/@username`
+3. For custom URLs, use the [channel lookup tool](https://commentpicker.com/youtube-channel-id.php) or inspect the page source
+
+**Setting up the API Key:**
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create a new project or select existing
+3. Enable "YouTube Data API v3"
+4. Create credentials → API key
+5. Add to your environment:
+
+```bash
+# .env.local
+YOUTUBE_TOKEN=your_api_key_here
+```
+
+**Note:** YouTube API has a quota of 10,000 units per day. Channel fetches use ~2 units (1 for channel data, 1 for latest video).
+
+## Step 4b: Add Gumroad Products (Optional)
+
+For digital products sold on Gumroad, add them to display revenue and sales:
+
+```ts
+export const projects = defineProjects([
+  {
+    id: 'design-course',
+    type: 'gumroad',
+    productId: 'prod_test123',
+    status: 'shipped',
+    name: 'Advanced Design Patterns',
+    tagline: 'Master modern UI/UX principles',
+    description: 'Comprehensive course on component design...',
+  },
+])
+```
+
+**Getting your Product ID:**
+
+1. Go to [Gumroad Products](https://app.gumroad.com/products)
+2. Click on a product
+3. Copy the ID from the URL: `gumroad.com/l/[PRODUCT_SLUG]` or from the product settings
+4. Product IDs typically start with `prod_`
+
+**Setting up the Access Token:**
+
+1. Go to [Gumroad Settings](https://app.gumroad.com/settings/api_tokens)
+2. Click "Create Access Token"
+3. Give it a name (e.g., "Projex Portfolio")
+4. Copy the token and add to your environment:
+
+```bash
+# .env.local
+GUMROAD_TOKEN=your_access_token_here
+```
+
+**Note:** Gumroad API is rate limited. Returns `null` on rate limit errors with a console warning.
+
 ## Step 5: Mark Featured Project
 
 Add `featured: true` to your best project:
@@ -182,7 +258,7 @@ import { ProjectCard, ProjectGrid, FeaturedProject } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
 
 async function getProjects(): Promise<ProjexProject[]> {
-  const { projects: projectInputs } = await import('../folio.config')
+  const { projects: projectInputs } = await import('../projex.config')
   const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
@@ -350,7 +426,7 @@ import { ProjectView } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
 
 async function getProject(id: string) {
-  const { projects: projectInputs } = await import('../../folio.config')
+  const { projects: projectInputs } = await import('../../projex.config')
   const input = projectInputs.find((p) => p.id === id)
   if (!input) return null
 

@@ -11,7 +11,7 @@ npx projex add showcase-card
 ## Import
 
 ```tsx
-import { ShowcaseCard } from './components/folio/ShowcaseCard'
+import { ShowcaseCard } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -117,7 +117,7 @@ Returns `null` if no children are provided.
 ## Example
 
 ```tsx
-import { ShowcaseCard } from './components/folio/ShowcaseCard'
+import { ShowcaseCard } from '@manningworks/projex'
 
 function ManualProjects({ projects }) {
   return (

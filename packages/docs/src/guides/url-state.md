@@ -305,10 +305,34 @@ function AdvancedPortfolio({ projects }) {
       </div>
 
       {filters.layout === 'grid' ? (
-        <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
       ) : (
-        <ProjectList projects={filteredProjects} />
-      )}
+      <ProjectList>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectFilterBar>
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
     </div>
   )
 }
@@ -399,7 +423,7 @@ export default async function PortfolioPage({
 }
 
 async function getProjects(): Promise<ProjexProject[]> {
-  const { projects: projectInputs } = await import('../../folio.config')
+  const { projects: projectInputs } = await import('../../projex.config')
   const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map(normalise))
 }
@@ -463,7 +487,15 @@ export function ProjexClient({
   return (
     <div>
       <ProjectSearch onSearch={(q) => updateFilter('search', q)} />
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
     </div>
   )
 }

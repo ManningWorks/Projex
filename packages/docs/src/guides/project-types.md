@@ -80,6 +80,74 @@ Full control with no automatic data fetching. Use for client work, private proje
 }
 ```
 
+## YouTube (`youtube`)
+
+Fetches channel data from YouTube API.
+
+```ts
+{
+  id: 'my-channel',
+  type: 'youtube',
+  channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+  status: 'active',
+}
+```
+
+**Auto-populated fields:** subscribers, views, latest video title, latest video URL, latest video published date
+
+**Environment variable:** `YOUTUBE_TOKEN` (required) - Create an API key at [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+
+## Gumroad (`gumroad`)
+
+Fetches product data from Gumroad API.
+
+```ts
+{
+  id: 'my-product',
+  type: 'gumroad',
+  productId: 'prod_test123',
+  status: 'shipped',
+}
+```
+
+**Auto-populated fields:** formatted revenue, sales count, subscriber count
+
+**Environment variable:** `GUMROAD_TOKEN` (required) - Create an access token at [Gumroad Settings](https://app.gumroad.com/settings/api_tokens)
+
+## Lemon Squeezy (`lemonsqueezy`)
+
+Fetches store data from Lemon Squeezy API.
+
+```ts
+{
+  id: 'my-store',
+  type: 'lemonsqueezy',
+  storeId: '12345',
+  status: 'active',
+}
+```
+
+**Auto-populated fields:** formatted MRR, order count, customer count
+
+**Environment variable:** `LEMONSQUEEZY_TOKEN` (required) - Get from [Lemon Squeezy Settings](https://app.lemonsqueezy.com/settings/api)
+
+## Dev.to (`devto`)
+
+Fetches user data from Dev.to API.
+
+```ts
+{
+  id: 'my-devto',
+  type: 'devto',
+  username: 'your-username',
+  status: 'active',
+}
+```
+
+**Auto-populated fields:** article count, total views, average reactions
+
+**Environment variable:** Not required (Dev.to has generous public API limits)
+
 ## Project Status
 
 Each project has a status that indicates its current state:

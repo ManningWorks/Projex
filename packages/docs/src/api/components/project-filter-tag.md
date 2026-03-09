@@ -66,7 +66,15 @@ function ProjectShowcase({ projects }) {
           />
         ))}
       </ProjectFilterBar>
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
     </div>
   )
 }

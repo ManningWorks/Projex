@@ -11,8 +11,10 @@ Projex is a shadcn-style component library for building developer portfolio page
 ## Quick Start
 
 ```bash
-npx @manningworks/projex init --github
+npx projex init --github
 ```
+
+> **Note:** You can also use the full package name: `npx @manningworks/projex init --github`
 
 Enter your GitHub username when prompted. Projex automatically fetches your public repositories and generates a `projex.config.ts` file pre-populated with all your projects.
 

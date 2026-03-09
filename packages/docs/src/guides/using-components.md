@@ -13,7 +13,7 @@ Fetch data at build time using `normalise`:
 ```tsx
 import { normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../folio.config'
+import { projects as projectInputs } from '../projex.config'
 
 async function getProjects(): Promise<ProjexProject[]> {
   return Promise.all(projectInputs.map((input) => normalise(input)))
@@ -29,7 +29,7 @@ import { ProjectCard } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
 
 async function getProjects(): Promise<ProjexProject[]> {
-  const { projects: projectInputs } = await import('../folio.config')
+  const { projects: projectInputs } = await import('../projex.config')
   const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
@@ -63,7 +63,7 @@ export default async function PortfolioPage() {
 import { GetServerSideProps } from 'next'
 import { ProjectCard } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../folio.config'
+import { projects as projectInputs } from '../projex.config'
 
 export default function PortfolioPage({ projects }: { projects: ProjexProject[] }) {
   return (
@@ -239,7 +239,7 @@ Add sorting capabilities:
 ```tsx
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { ProjectSort } from '@manningworks/projex'
 import { sortByName, sortByDate, sortByStars } from '@manningworks/projex'
 
@@ -286,7 +286,7 @@ Create dynamic routes for individual projects:
 import { notFound } from 'next/navigation'
 import { ProjectView } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../../folio.config'
+import { projects as projectInputs } from '../../projex.config'
 
 async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)

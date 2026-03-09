@@ -54,7 +54,15 @@ function ProjectShowcase({ projects }) {
         value={sortValue}
         onChange={setSortValue}
       />
-      <ProjectGrid projects={sortedProjects} />
+      <ProjectGrid>
+        {sortedProjects.map(project => (
+          <ProjectCard key={project.id}>
+            <ProjectCard.Header project={project} />
+            <ProjectCard.Description project={project} />
+            <ProjectCard.Stats project={project} />
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
     </div>
   )
 }

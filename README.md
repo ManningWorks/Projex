@@ -100,9 +100,13 @@ Projex supports multiple project types out of the box:
 - **GitHub** — Auto-fetch stars, forks, language, topics
 - **npm** — Display downloads, version, package info
 - **Product Hunt** — Show upvotes, comments, launch date
+- **YouTube** — Show subscribers, views, latest video
+- **Gumroad** — Display revenue, sales, subscribers
 - **Manual** — Full control over client work, side projects
 - **Hybrid** — Mix GitHub + npm, or any combination
-- [And more](https://projex-guide.vercel.app/guides/project-types) — YouTube, Gumroad, Lemon Squeezy, Dev.to
+
+**Additional types:** Lemon Squeezy (store data), Dev.to (articles)
+[View full documentation →](https://projex-guide.vercel.app/guides/project-types)
 
 ## Styling
 

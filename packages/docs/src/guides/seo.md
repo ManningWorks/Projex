@@ -65,7 +65,7 @@ Generate metadata for individual project pages:
 import { generateProjectMetadata } from '@manningworks/projex'
 import { normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../../../folio.config'
+import { projects as projectInputs } from '../../../projex.config'
 
 async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)
@@ -194,7 +194,7 @@ Add SoftwareApplication schema to project pages:
 import { generateProjectSchema, normalise } from '@manningworks/projex'
 import Head from 'next/head'
 import type { ProjexProject, SoftwareApplicationSchema } from '@manningworks/projex'
-import { projects as projectInputs } from '../../folio.config'
+import { projects as projectInputs } from '../../projex.config'
 
 function getProject(id: string): ProjexProject {
   const input = projectInputs.find((p) => p.id === id)
@@ -388,7 +388,7 @@ export const projects = defineProjects([
 import { generatePortfolioMetadata } from '@manningworks/projex'
 import { ProjectCard, normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../folio.config'
+import { projects as projectInputs } from '../projex.config'
 
 export const metadata = generatePortfolioMetadata({
   name: 'Your Name',
@@ -434,7 +434,7 @@ export default async function PortfolioPage() {
 ```tsx
 import { generateProjectMetadata, normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../../../folio.config'
+import { projects as projectInputs } from '../../../projex.config'
 
 async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)

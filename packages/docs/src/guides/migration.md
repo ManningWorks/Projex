@@ -26,6 +26,8 @@ See the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.m
 
 ## Project Rename (Folio → Projex)
 
+> **Note:** This section is only for users migrating from the old Folio package. If you're a new user, skip to [Upgrading Projex](#upgrading-projex).
+
 If you were using this library when it was named **Folio**, follow these steps to migrate to **Projex**.
 
 ### Package Installation

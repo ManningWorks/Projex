@@ -11,7 +11,7 @@ npx projex add github-card
 ## Import
 
 ```tsx
-import { GitHubCard } from './components/folio/GitHubCard'
+import { GitHubCard } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -131,7 +131,7 @@ Returns `null` if no children are provided.
 ## Example
 
 ```tsx
-import { GitHubCard } from './components/folio/GitHubCard'
+import { GitHubCard } from '@manningworks/projex'
 
 function GitHubProjects({ projects }) {
   return (

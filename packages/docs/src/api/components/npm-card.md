@@ -11,7 +11,7 @@ npx projex add npm-card
 ## Import
 
 ```tsx
-import { NpmCard } from './components/folio/NpmCard'
+import { NpmCard } from '@manningworks/projex'
 ```
 
 ## Usage
@@ -122,7 +122,7 @@ Returns `null` if no children are provided.
 ## Example
 
 ```tsx
-import { NpmCard } from './components/folio/NpmCard'
+import { NpmCard } from '@manningworks/projex'
 
 function NpmPackages({ projects }) {
   return (

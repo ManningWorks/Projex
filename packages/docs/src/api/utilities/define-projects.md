@@ -123,7 +123,7 @@ export const projects = defineProjects([
 ])
 
 // lib/projects.ts
-import { projects } from '@/folio.config'
+import { projects } from '@/projex.config'
 import { normalise } from '@manningworks/projex'
 
 export async function getProjects() {
