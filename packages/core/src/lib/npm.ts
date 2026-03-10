@@ -2,6 +2,8 @@ export interface NpmPackageData {
   name: string
   version: string
   downloads: number
+  createdAt?: string
+  modifiedAt?: string
 }
 
 export async function fetchNpmPackage(packageName: string): Promise<NpmPackageData | null> {
@@ -31,6 +33,8 @@ export async function fetchNpmPackage(packageName: string): Promise<NpmPackageDa
       name: downloadsData.package || packageName,
       version,
       downloads: downloadsData.downloads || 0,
+      createdAt: registryData.time?.created,
+      modifiedAt: registryData.time?.modified,
     }
   } catch {
     return null

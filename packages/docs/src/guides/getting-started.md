@@ -84,6 +84,16 @@ export const projects = defineProjects([
 ])
 ```
 
+**Tip:** Enable npm timestamps to sort your packages by when they were last updated:
+
+```ts
+export const projects = defineProjects([
+  // ...projects
+], {
+  fetchNpmTimestamps: true,  // Extracts createdAt/updatedAt from npm registry
+})
+```
+
 ## Step 4: Add Manual Projects
 
 Add client work or personal projects:

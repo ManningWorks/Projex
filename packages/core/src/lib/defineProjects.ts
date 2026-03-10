@@ -6,6 +6,7 @@ const projectsArraySchema = projexProjectInputSchema.array()
 
 export interface DefineProjectsOptions {
   commits?: number
+  fetchNpmTimestamps?: boolean
 }
 
 export interface DefineProjectsResult {

@@ -39,7 +39,7 @@ export const projects = defineProjects([
 
 ### Per-Project Override
 
-Override the global default for specific projects:
+Override global default for specific projects:
 
 ```tsx
 export const projects = defineProjects([
@@ -51,8 +51,8 @@ export const projects = defineProjects([
 ### Available Types
 
 Commits are supported for:
-- `github` - Fetches commits from the GitHub repository
-- `hybrid` - Fetches commits from the GitHub repository
+- `github` - Fetches commits from GitHub repository
+- `hybrid` - Fetches commits from GitHub repository
 
 Other project types (`manual`, `npm`, `product-hunt`) do not support commits.
 
@@ -65,6 +65,68 @@ GITHUB_TOKEN=github_pat_xxx pnpm build
 ```
 
 This increases your rate limit to 5,000 requests/hour.
+
+## NPM Timestamps Configuration
+
+By default, npm projects do not use timestamps from the npm registry for sorting. You can opt-in to extract `createdAt` and `updatedAt` timestamps from the npm registry.
+
+### Enable NPM Timestamps
+
+```tsx
+import { defineProjects } from '@manningworks/projex'
+
+export const projects = defineProjects([
+  {
+    id: 'my-npm-package',
+    type: 'npm',
+    package: 'my-package',
+    status: 'active',
+  },
+], {
+  fetchNpmTimestamps: true,  // Extract timestamps from npm registry
+})
+```
+
+### Behavior by Project Type
+
+| Type | Timestamp Source | Requires `fetchNpmTimestamps` |
+|------|-----------------|-----------------------------|
+| `github` | GitHub API (`created_at`, `updated_at`) | No |
+| `hybrid` | GitHub API, npm `time` (max of both) | For npm timestamps |
+| `npm` | npm `time.created`, `time.modified` | Yes |
+| `product-hunt` | Product Hunt API `featured_at` | No |
+| `youtube` | YouTube API `latestVideoPublishedAt` | No |
+| `devto` | Latest article `published_at` | No |
+| `manual` | Manual `createdAt`/`updatedAt` only | N/A |
+| `gumroad` | Manual `createdAt`/`updatedAt` only | N/A |
+| `lemonsqueezy` | Manual `createdAt`/`updatedAt` only | N/A |
+
+### Hybrid Projects
+
+For hybrid projects, when `fetchNpmTimestamps` is enabled, `updatedAt` is set to the most recent of:
+- GitHub's `updated_at`
+- npm's `time.modified`
+
+This accurately reflects the last activity whether it was a code change or a new package version.
+
+### Manual Override
+
+You can always manually specify timestamps regardless of the `fetchNpmTimestamps` setting:
+
+```tsx
+{
+  id: 'my-npm-package',
+  type: 'npm',
+  package: 'my-package',
+  status: 'active',
+  createdAt: '2024-01-01',
+  updatedAt: '2024-06-01',
+}
+```
+
+### Performance Note
+
+The npm registry data is already being fetched to get version and download counts. Enabling `fetchNpmTimestamps` extracts additional metadata from the existing response with **zero extra API calls**.
 
 ## Purpose
 

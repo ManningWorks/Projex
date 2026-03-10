@@ -19,7 +19,7 @@ Fetches repo data from the GitHub API automatically.
 
 ## NPM (`npm`)
 
-Fetches package data from the npm registry.
+Fetches package data from npm registry.
 
 ```ts
 {
@@ -31,6 +31,18 @@ Fetches package data from the npm registry.
 ```
 
 **Auto-populated fields:** downloads, version, npm link
+
+**Note:** By default, npm projects do not have automatic timestamps for sorting. Enable them with `fetchNpmTimestamps: true` in `defineProjects`:
+
+```ts
+defineProjects([
+  { id: 'my-package', type: 'npm', package: 'my-package', status: 'active' },
+], {
+  fetchNpmTimestamps: true,  // Extracts `createdAt` and `updatedAt` from npm registry
+})
+```
+
+When enabled, timestamps come from npm's `time.created` and `time.modified` fields.
 
 ## Product Hunt (`product-hunt`)
 
@@ -62,6 +74,8 @@ Combines GitHub and NPM data for packages with both repo and registry presence.
 ```
 
 **Auto-populated fields:** Combined from both sources
+
+**Note:** When `fetchNpmTimestamps: true` is enabled, `updatedAt` is set to the most recent of GitHub's `updated_at` and npm's `time.modified`. This accurately reflects the last activity whether it was a code change or a new package version.
 
 ## Manual (`manual`)
 

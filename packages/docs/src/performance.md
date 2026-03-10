@@ -94,6 +94,18 @@ import { defineProjects, sortByStars } from '@manningworks/projex'
 import type { ProjexProject, ProjectType } from '@manningworks/projex'
 ```
 
+### NPM Timestamps Option
+
+The `fetchNpmTimestamps` option extracts timestamps from the npm registry with **zero extra API calls**:
+
+```tsx
+defineProjects(projects, {
+  fetchNpmTimestamps: true,  // No additional network requests
+})
+```
+
+The npm registry response already includes `time.created` and `time.modified` fields. Enabling this option simply extracts the data from the existing response.
+
 ### What Gets Tree-Shaken
 
 - **Unused components** are completely eliminated

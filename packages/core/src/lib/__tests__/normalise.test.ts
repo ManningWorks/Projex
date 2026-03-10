@@ -658,6 +658,76 @@ describe('normalise', () => {
       expect(result.name).toBe('Package Name')
       expect(result.stats).toBeNull()
     })
+
+    it('should not use npm timestamps by default', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'my-package',
+        version: '2.0.0',
+        downloads: 10000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-06-01T00:00:00Z',
+      })
+
+      const input: NpmProjectInput = {
+        id: 'test-npm-timestamps',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+        createdAt: '2023-01-01',
+        updatedAt: '2023-06-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2023-01-01')
+      expect(result.updatedAt).toBe('2023-06-01')
+    })
+
+    it('should use npm timestamps when fetchNpmTimestamps is true', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'my-package',
+        version: '2.0.0',
+        downloads: 10000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-06-01T00:00:00Z',
+      })
+
+      const input: NpmProjectInput = {
+        id: 'test-npm-timestamps-opt-in',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+        createdAt: '2023-01-01',
+        updatedAt: '2023-06-01',
+      }
+
+      const result = await normalise(input, { fetchNpmTimestamps: true })
+
+      expect(result.createdAt).toBe('2024-01-01T00:00:00Z')
+      expect(result.updatedAt).toBe('2024-06-01T00:00:00Z')
+    })
+
+    it('should fallback to input timestamps when npm timestamps are missing', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'my-package',
+        version: '2.0.0',
+        downloads: 10000,
+      })
+
+      const input: NpmProjectInput = {
+        id: 'test-npm-fallback',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+        createdAt: '2023-01-01',
+        updatedAt: '2023-06-01',
+      }
+
+      const result = await normalise(input, { fetchNpmTimestamps: true })
+
+      expect(result.createdAt).toBe('2023-01-01')
+      expect(result.updatedAt).toBe('2023-06-01')
+    })
   })
 
   describe('Product Hunt project normalization', () => {
@@ -712,6 +782,116 @@ describe('normalise', () => {
 
       expect(result.name).toBe('Fallback Name')
       expect(result.stats).toBeNull()
+    })
+  })
+
+  describe('hybrid project normalization', () => {
+    it('should use npm modified timestamp when more recent than github', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'hybrid-repo',
+        description: 'Hybrid description',
+        stargazers_count: 50,
+        forks_count: 10,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/hybrid-repo',
+        homepage: 'https://hybrid.example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-05-01T00:00:00Z',
+      })
+
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'hybrid-package',
+        version: '2.0.0',
+        downloads: 1000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-06-01T00:00:00Z',
+      })
+
+      const input = {
+        id: 'test-hybrid',
+        type: 'hybrid' as const,
+        repo: 'user/hybrid-repo',
+        package: 'hybrid-package',
+        status: 'active' as const,
+      }
+
+      const result = await normalise(input, { fetchNpmTimestamps: true })
+
+      expect(result.createdAt).toBe('2024-01-01T00:00:00Z')
+      expect(result.updatedAt).toBe('2024-06-01T00:00:00Z')
+    })
+
+    it('should use github updated timestamp when more recent than npm', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'hybrid-repo',
+        description: 'Hybrid description',
+        stargazers_count: 50,
+        forks_count: 10,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/hybrid-repo',
+        homepage: 'https://hybrid.example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-07-01T00:00:00Z',
+      })
+
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'hybrid-package',
+        version: '2.0.0',
+        downloads: 1000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-05-01T00:00:00Z',
+      })
+
+      const input = {
+        id: 'test-hybrid',
+        type: 'hybrid' as const,
+        repo: 'user/hybrid-repo',
+        package: 'hybrid-package',
+        status: 'active' as const,
+      }
+
+      const result = await normalise(input, { fetchNpmTimestamps: true })
+
+      expect(result.createdAt).toBe('2024-01-01T00:00:00Z')
+      expect(result.updatedAt).toBe('2024-07-01T00:00:00Z')
+    })
+
+    it('should not use npm timestamps when fetchNpmTimestamps is false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'hybrid-repo',
+        description: 'Hybrid description',
+        stargazers_count: 50,
+        forks_count: 10,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/hybrid-repo',
+        homepage: 'https://hybrid.example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-05-01T00:00:00Z',
+      })
+
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'hybrid-package',
+        version: '2.0.0',
+        downloads: 1000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-06-01T00:00:00Z',
+      })
+
+      const input = {
+        id: 'test-hybrid',
+        type: 'hybrid' as const,
+        repo: 'user/hybrid-repo',
+        package: 'hybrid-package',
+        status: 'active' as const,
+      }
+
+      const result = await normalise(input, { fetchNpmTimestamps: false })
+
+      expect(result.createdAt).toBe('2024-01-01T00:00:00Z')
+      expect(result.updatedAt).toBe('2024-05-01T00:00:00Z')
     })
   })
 

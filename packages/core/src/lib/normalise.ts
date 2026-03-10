@@ -1,5 +1,5 @@
 import { fetchGitHubCommits, fetchGitHubRepo, LANGUAGE_COLORS } from './github'
-import { fetchNpmPackage } from './npm'
+import { fetchNpmPackage, type NpmPackageData } from './npm'
 import { fetchProductHuntPost } from './product-hunt'
 import { fetchYouTubeChannel } from './youtube'
 import { fetchGumroadProduct } from './gumroad'
@@ -54,7 +54,7 @@ export async function normalise(
 
   const npmPackage = 'package' in input ? input.package : undefined
 
-  let npmData = null
+  let npmData: NpmPackageData | null = null
 
   if (type === 'npm' || type === 'hybrid') {
     if (npmPackage) {
@@ -267,6 +267,8 @@ export async function normalise(
   let finalCreatedAt: ProjexProject['createdAt'] = null
   let finalUpdatedAt: ProjexProject['updatedAt'] = null
 
+  const fetchNpmTimestamps = options?.fetchNpmTimestamps ?? false
+
   if (type === 'github') {
     finalLanguage = githubData?.language || null
     finalLanguageColor = githubData?.language ? LANGUAGE_COLORS[githubData.language] || null : null
@@ -275,8 +277,21 @@ export async function normalise(
   } else if (type === 'hybrid') {
     finalLanguage = githubData?.language || null
     finalLanguageColor = githubData?.language ? LANGUAGE_COLORS[githubData.language] || null : null
-    finalCreatedAt = githubData?.created_at || inputCreatedAt || null
-    finalUpdatedAt = githubData?.updated_at || inputUpdatedAt || null
+    finalCreatedAt = githubData?.created_at || npmData?.createdAt || inputCreatedAt || null
+    if (fetchNpmTimestamps && npmData?.modifiedAt && githubData?.updated_at) {
+      finalUpdatedAt = new Date(npmData.modifiedAt) > new Date(githubData.updated_at)
+        ? npmData.modifiedAt
+        : githubData.updated_at
+    } else if (fetchNpmTimestamps && npmData?.modifiedAt) {
+      finalUpdatedAt = npmData.modifiedAt || githubData?.updated_at || inputUpdatedAt || null
+    } else {
+      finalUpdatedAt = githubData?.updated_at || inputUpdatedAt || null
+    }
+  } else if (type === 'npm') {
+    finalLanguage = null
+    finalLanguageColor = null
+    finalCreatedAt = fetchNpmTimestamps ? npmData?.createdAt || inputCreatedAt || null : inputCreatedAt || null
+    finalUpdatedAt = fetchNpmTimestamps ? npmData?.modifiedAt || inputUpdatedAt || null : inputUpdatedAt || null
   } else {
     finalLanguage = null
     finalLanguageColor = null

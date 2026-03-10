@@ -9,6 +9,8 @@ interface NpmPackageData {
   name: string
   version: string
   downloads: number
+  createdAt?: string
+  modifiedAt?: string
 }
 ```
 
@@ -19,6 +21,8 @@ interface NpmPackageData {
 | `name` | `string` | Package name |
 | `version` | `string` | Latest version |
 | `downloads` | `number` | Monthly download count |
+| `createdAt` | `string \| undefined` | When package was first published (ISO 8601) |
+| `modifiedAt` | `string \| undefined` | When package was last updated (ISO 8601) |
 
 ## Usage
 
