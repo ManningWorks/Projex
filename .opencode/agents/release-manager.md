@@ -16,12 +16,25 @@ permission:
     "packages/docs/**/*": allow
     "*": ask
   bash:
-    "pnpm *": allow
-    "git status *": allow
-    "git diff *": allow
-    "git log *": allow
-    "git tag *": allow
+    "pnpm --filter * build": allow
+    "pnpm --filter * lint": allow
+    "pnpm --filter * typecheck": allow
+    "pnpm --filter * test": allow
     "head *": allow
+    "ls *": allow
+    "ls -la *": allow
+    "find *": allow
+    "grep *": allow
+    "rg *": allow
+    "cat *": allow
+    "tail *": allow
+    "wc *": allow
+    "wc -l *": allow
+    "sort *": allow
+    "uniq *": allow
+    "git log -- *": allow
+    "git diff -- *": allow
+    "git status": allow
     "*": ask
   webfetch: deny
 color: success
