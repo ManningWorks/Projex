@@ -94,6 +94,23 @@ Full control with no automatic data fetching. Use for client work, private proje
 }
 ```
 
+**Note:** Manual projects have no automatic data fetching, including timestamps. If you want to sort manual projects by date, you must manually specify `createdAt` and `updatedAt`:
+
+```ts
+{
+  id: 'client-project',
+  type: 'manual',
+  status: 'shipped',
+  name: 'Client E-commerce',
+  tagline: 'Custom storefront build',
+  description: 'Full rebuild of a Shopify storefront...',
+  links: { live: 'https://example.com' },
+  stack: ['Next.js', 'Shopify'],
+  createdAt: '2024-01-01',
+  updatedAt: '2024-06-01',
+}
+```
+
 ## YouTube (`youtube`)
 
 Fetches channel data from YouTube API.
@@ -128,6 +145,19 @@ Fetches product data from Gumroad API.
 
 **Environment variable:** `GUMROAD_TOKEN` (required) - Create an access token at [Gumroad Settings](https://app.gumroad.com/settings/api_tokens)
 
+**Note:** Gumroad API does not provide timestamp fields. If you want to sort Gumroad projects by date, you must manually specify `createdAt` and `updatedAt`:
+
+```ts
+{
+  id: 'my-product',
+  type: 'gumroad',
+  productId: 'prod_test123',
+  status: 'shipped',
+  createdAt: '2024-01-01',
+  updatedAt: '2024-06-01',
+}
+```
+
 ## Lemon Squeezy (`lemonsqueezy`)
 
 Fetches store data from Lemon Squeezy API.
@@ -144,6 +174,19 @@ Fetches store data from Lemon Squeezy API.
 **Auto-populated fields:** formatted MRR, order count, customer count
 
 **Environment variable:** `LEMONSQUEEZY_TOKEN` (required) - Get from [Lemon Squeezy Settings](https://app.lemonsqueezy.com/settings/api)
+
+**Note:** Lemon Squeezy API does not provide timestamp fields. If you want to sort Lemon Squeezy projects by date, you must manually specify `createdAt` and `updatedAt`:
+
+```ts
+{
+  id: 'my-store',
+  type: 'lemonsqueezy',
+  storeId: '12345',
+  status: 'active',
+  createdAt: '2024-01-01',
+  updatedAt: '2024-06-01',
+}
+```
 
 ## Dev.to (`devto`)
 
