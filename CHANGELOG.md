@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-03-10
+
+### Fixed
+
+- **Incomplete timestamp mappings for sortByDate** - `sortByDate` now works for 7/9 project types (78%) instead of 5/9 (56%)
+- **Product Hunt timestamp mapping** - Map `featured_at` to `updatedAt` (zero API cost)
+- **YouTube timestamp mapping** - Map `latestVideoPublishedAt` to `updatedAt` (zero API cost)
+
+The `sortByDate` utility was documented to support sorting by date, but only worked for GitHub and Hybrid projects. This fix adds timestamp mappings for Product Hunt and YouTube using data already being fetched, completing the zero-cost timestamp mappings from issue #2.
+
+---
+
 ## [1.1.0] - 2026-03-10
 
 ### Added
