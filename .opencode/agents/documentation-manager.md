@@ -27,7 +27,6 @@ permission:
     "grep *": allow
     "rg *": allow
     "cat *": allow
-    "head *": allow
     "tail *": allow
     "wc *": allow
     "wc -l *": allow
