@@ -292,6 +292,16 @@ export async function normalise(
     finalLanguageColor = null
     finalCreatedAt = fetchNpmTimestamps ? npmData?.createdAt || inputCreatedAt || null : inputCreatedAt || null
     finalUpdatedAt = fetchNpmTimestamps ? npmData?.modifiedAt || inputUpdatedAt || null : inputUpdatedAt || null
+  } else if (type === 'product-hunt') {
+    finalLanguage = null
+    finalLanguageColor = null
+    finalCreatedAt = inputCreatedAt || null
+    finalUpdatedAt = productHuntData?.featured_at || inputUpdatedAt || null
+  } else if (type === 'youtube') {
+    finalLanguage = null
+    finalLanguageColor = null
+    finalCreatedAt = inputCreatedAt || null
+    finalUpdatedAt = youtubeData?.latestVideoPublishedAt || inputUpdatedAt || null
   } else {
     finalLanguage = null
     finalLanguageColor = null

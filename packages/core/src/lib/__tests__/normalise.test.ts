@@ -1,18 +1,21 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { normalise, normalizeStats } from '../normalise'
-import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput } from '../../types'
+import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput, YouTubeProjectInput } from '../../types'
 import { fetchGitHubRepo, fetchGitHubCommits } from '../github'
 import { fetchNpmPackage } from '../npm'
 import { fetchProductHuntPost } from '../product-hunt'
+import { fetchYouTubeChannel } from '../youtube'
 
 vi.mock('../github')
 vi.mock('../npm')
 vi.mock('../product-hunt')
+vi.mock('../youtube')
 
 const mockedFetchGitHubRepo = vi.mocked(fetchGitHubRepo)
 const mockedFetchGitHubCommits = vi.mocked(fetchGitHubCommits)
 const mockedFetchNpmPackage = vi.mocked(fetchNpmPackage)
 const mockedFetchProductHuntPost = vi.mocked(fetchProductHuntPost)
+const mockedFetchYouTubeChannel = vi.mocked(fetchYouTubeChannel)
 
 describe('normalise', () => {
   beforeEach(() => {
@@ -782,6 +785,115 @@ describe('normalise', () => {
 
       expect(result.name).toBe('Fallback Name')
       expect(result.stats).toBeNull()
+    })
+
+    it('should use featured_at as updatedAt for Product Hunt projects', async () => {
+      mockedFetchProductHuntPost.mockResolvedValue({
+        name: 'Product Name',
+        tagline: 'Product tagline',
+        description: 'Product description',
+        votes_count: 500,
+        comments_count: 50,
+        featured_at: '2024-03-15T00:00:00Z',
+        website: 'https://example.com',
+        url: 'https://producthunt.com/posts/product',
+      })
+
+      const input: ProductHuntProjectInput = {
+        id: 'test-ph-timestamp',
+        type: 'product-hunt',
+        slug: 'my-product',
+        status: 'shipped',
+        name: 'Input Name',
+        createdAt: '2024-01-01',
+        updatedAt: '2024-02-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2024-01-01')
+      expect(result.updatedAt).toBe('2024-03-15T00:00:00Z')
+    })
+
+    it('should fallback to input updatedAt when Product Hunt fetch fails', async () => {
+      mockedFetchProductHuntPost.mockResolvedValue(null)
+
+      const input: ProductHuntProjectInput = {
+        id: 'test-ph-fallback',
+        type: 'product-hunt',
+        slug: 'nonexistent',
+        status: 'active',
+        name: 'Fallback Name',
+        updatedAt: '2024-05-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.updatedAt).toBe('2024-05-01')
+    })
+  })
+
+  describe('YouTube project normalization', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('should use latestVideoPublishedAt as updatedAt for YouTube projects', async () => {
+      mockedFetchYouTubeChannel.mockResolvedValue({
+        subscriberCount: 10000,
+        viewCount: 500000,
+        latestVideoTitle: 'My Latest Video',
+        latestVideoUrl: 'https://youtube.com/watch?v=abc123',
+        latestVideoPublishedAt: '2024-04-20T10:00:00Z',
+      })
+
+      const input: YouTubeProjectInput = {
+        id: 'test-youtube-timestamp',
+        type: 'youtube',
+        channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+        status: 'active',
+        createdAt: '2024-01-01',
+        updatedAt: '2024-02-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2024-01-01')
+      expect(result.updatedAt).toBe('2024-04-20T10:00:00Z')
+    })
+
+    it('should fallback to input updatedAt when YouTube fetch fails', async () => {
+      mockedFetchYouTubeChannel.mockResolvedValue(null)
+
+      const input: YouTubeProjectInput = {
+        id: 'test-youtube-fallback',
+        type: 'youtube',
+        channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+        status: 'active',
+        name: 'My Channel',
+        updatedAt: '2024-05-15',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.updatedAt).toBe('2024-05-15')
+    })
+
+    it('should have no automatic timestamp when both fetch fails and no input', async () => {
+      mockedFetchYouTubeChannel.mockResolvedValue(null)
+
+      const input: YouTubeProjectInput = {
+        id: 'test-youtube-no-timestamp',
+        type: 'youtube',
+        channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+        status: 'active',
+        name: 'My Channel',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBeNull()
+      expect(result.updatedAt).toBeNull()
     })
   })
 
