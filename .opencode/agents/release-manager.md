@@ -16,17 +16,12 @@ permission:
     "packages/docs/**/*": allow
     "*": ask
   bash:
-    "pnpm typecheck": allow
-    "pnpm lint": allow
-    "pnpm test": allow
-    "pnpm --filter * test": allow
-    "pnpm test:coverage": allow
-    "pnpm build": allow
-    "pnpm --filter * build": allow
-    "pnpm benchmark": allow
-    "git status": allow
-    "git diff": allow
-    "git log": allow
+    "pnpm *": allow
+    "git status *": allow
+    "git diff *": allow
+    "git log *": allow
+    "git tag *": allow
+    "head *": allow
     "*": ask
   webfetch: deny
 color: success

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-10
+
+### Added
+
+- **Opt-in npm timestamps** - New `fetchNpmTimestamps` option in `defineProjects` for enabling npm timestamp extraction from npm registry `time` field
+- **NpmPackageData type enhancements** - Added optional `createdAt` and `modifiedAt` fields to `NpmPackageData` type
+- **Smart hybrid timestamp behavior** - Hybrid projects intelligently pick the most recent timestamp from GitHub `updated_at` and npm `time.modified` when `fetchNpmTimestamps` is enabled
+- **Comprehensive timestamp documentation** - Updated 6 documentation files covering npm timestamp extraction, hybrid behavior, and sorting improvements
+
+### Changed
+
+- **Improved project sorting** - All 9 project types now support automatic timestamps when configured appropriately (npm requires opt-in, manual types require manual timestamps)
+- **Zero API cost for npm timestamps** - Timestamp data is extracted from existing npm registry responses, requiring no additional API calls
+
+---
+
 ## [1.0.1] - 2026-03-08
 
 ### Fixed
