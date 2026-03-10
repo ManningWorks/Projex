@@ -20,6 +20,7 @@ permission:
     "pnpm --filter * lint": allow
     "pnpm --filter * typecheck": allow
     "pnpm --filter * test": allow
+    "head *": allow
     "ls *": allow
     "ls -la *": allow
     "find *": allow
@@ -29,6 +30,7 @@ permission:
     "head *": allow
     "tail *": allow
     "wc *": allow
+    "wc -l *": allow
     "sort *": allow
     "uniq *": allow
     "git log -- *": allow
@@ -64,6 +66,14 @@ Invoke when:
 - Edit source code files beyond reading for API verification
 - Create GitHub issues or PRs (provide recommendations instead)
 - Make decisions about feature inclusion (document what exists)
+
+## Self-Verification
+
+Before issuing findings:
+1. Formulate your feedback
+2. Verify each claim against the actual documentation you've read
+3. Sanity check your findings - is the issue real or a misreading?
+4. Only then issue feedback
 
 ## Documentation Structure
 

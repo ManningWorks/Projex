@@ -427,22 +427,22 @@ Use CSS variables to make your styles themeable:
 
 ```css
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-text: #374151;
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-text: #374151;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
 }
 
 [data-projex-card] {
-  background: var(--folio-card-bg);
-  border: 1px solid var(--folio-card-border);
-  color: var(--folio-card-text);
+  background: var(--projex-card-bg);
+  border: 1px solid var(--projex-card-border);
+  color: var(--projex-card-text);
 }
 
 [data-projex-tag] {
-  background: var(--folio-tag-bg);
-  color: var(--folio-tag-text);
+  background: var(--projex-tag-bg);
+  color: var(--projex-tag-text);
 }
 ```
 

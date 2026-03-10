@@ -10,6 +10,10 @@ type ProjexProjectInput =
   | ManualProjectInput
   | NpmProjectInput
   | ProductHuntProjectInput
+  | YouTubeProjectInput
+  | GumroadProjectInput
+  | LemonSqueezyProjectInput
+  | DevToProjectInput
   | HybridProjectInput
 ```
 
@@ -93,6 +97,42 @@ interface ManualProjectInput extends BaseProjectInput {
 }
 ```
 
+### YouTubeProjectInput
+
+```tsx
+interface YouTubeProjectInput extends BaseProjectInput {
+  type: 'youtube'
+  channelId: string  // Required: YouTube channel ID
+}
+```
+
+### GumroadProjectInput
+
+```tsx
+interface GumroadProjectInput extends BaseProjectInput {
+  type: 'gumroad'
+  productId: string  // Required: Gumroad product ID
+}
+```
+
+### LemonSqueezyProjectInput
+
+```tsx
+interface LemonSqueezyProjectInput extends BaseProjectInput {
+  type: 'lemonsqueezy'
+  storeId: string  // Required: Lemon Squeezy store ID
+}
+```
+
+### DevToProjectInput
+
+```tsx
+interface DevToProjectInput extends BaseProjectInput {
+  type: 'devto'
+  username: string  // Required: Dev.to username
+}
+```
+
 ## Example
 
 ```tsx
@@ -131,6 +171,38 @@ const projects = defineProjects([
     type: 'hybrid',
     repo: 'user/repo',
     package: 'my-package',
+    status: 'active',
+  },
+
+  // YouTube channel project
+  {
+    id: 'youtube-channel',
+    type: 'youtube',
+    channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
+    status: 'active',
+  },
+
+  // Gumroad product project
+  {
+    id: 'gumroad-product',
+    type: 'gumroad',
+    productId: 'prod_test123',
+    status: 'shipped',
+  },
+
+  // Lemon Squeezy store project
+  {
+    id: 'lemonsqueezy-store',
+    type: 'lemonsqueezy',
+    storeId: '12345',
+    status: 'active',
+  },
+
+  // Dev.to user project
+  {
+    id: 'devto-user',
+    type: 'devto',
+    username: 'your-username',
     status: 'active',
   },
 ])
