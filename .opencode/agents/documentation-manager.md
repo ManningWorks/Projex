@@ -9,21 +9,33 @@ tools:
   bash: true
 permission:
   edit:
-    "README.md": allow
-    "packages/core/README.md": allow
+    "**/*.md": allow
     "packages/docs/**/*": allow
-    "CHANGELOG.md": allow
+    "**/*.tsx": ask
+    "**/*.ts": ask
+    "**/package.json": ask
     "*": ask
   bash:
     "pnpm --filter * build": allow
     "pnpm --filter * lint": allow
     "pnpm --filter * typecheck": allow
+    "pnpm --filter * test": allow
     "ls *": allow
+    "ls -la *": allow
     "find *": allow
     "grep *": allow
+    "rg *": allow
     "cat *": allow
+    "head *": allow
+    "tail *": allow
+    "wc *": allow
+    "sort *": allow
+    "uniq *": allow
+    "git log -- *": allow
+    "git diff -- *": allow
+    "git status": allow
     "*": ask
-  webfetch: deny
+  webfetch: ask
 color: info
 ---
 

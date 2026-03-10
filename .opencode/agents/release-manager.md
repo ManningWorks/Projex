@@ -7,7 +7,7 @@ tools:
   write: true
   edit: true
   bash: true
-  permission:
+permission:
   edit:
     "packages/core/package.json": allow
     "CHANGELOG.md": allow

@@ -1,6 +1,6 @@
 # NpmCard
 
-Pre-built card component for npm packages. Displays project name, description, downloads, version, and package link in a single component.
+Compound card component for npm packages. Use subcomponents to build custom npm package cards with full control over layout and styling.
 
 ## Installation
 
@@ -19,22 +19,41 @@ import { NpmCard } from '@manningworks/projex'
 ### Basic Usage
 
 ```tsx
-<NpmCard project={project} />
+<NpmCard>
+  <NpmCard.Header project={project} />
+  <NpmCard.Description project={project} />
+  <NpmCard.Stats project={project} />
+  <NpmCard.Status project={project} />
+  <NpmCard.Links project={project} />
+</NpmCard>
 ```
 
 ### Hide Version
 
 ```tsx
-<NpmCard project={project} showVersion={false} />
+<NpmCard>
+  <NpmCard.Header project={project} />
+  <NpmCard.Description project={project} />
+  <NpmCard.Stats project={project} showVersion={false} />
+  <NpmCard.Status project={project} />
+  <NpmCard.Links project={project} />
+</NpmCard>
 ```
 
 ### With Footer Content
 
 ```tsx
-<NpmCard project={project}>
-  <div className="mt-4">
-    <button>Read Documentation</button>
-  </div>
+<NpmCard>
+  <NpmCard.Header project={project} />
+  <NpmCard.Description project={project} />
+  <NpmCard.Stats project={project} />
+  <NpmCard.Status project={project} />
+  <NpmCard.Links project={project} />
+  <NpmCard.Footer>
+    <div className="mt-4">
+      <button>Read Documentation</button>
+    </div>
+  </NpmCard.Footer>
 </NpmCard>
 ```
 
@@ -44,9 +63,7 @@ import { NpmCard } from '@manningworks/projex'
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| project | `ProjexProject` | No | - | Project data to display (renders children only if omitted) |
-| showVersion | `boolean` | No | `true` | Whether to display version string |
-| children | `React.ReactNode` | No | - | Content to render in card footer |
+| children | `React.ReactNode` | No | - | Card subcomponents (Header, Description, Stats, Status, Links, Footer) |
 
 ### NpmCard.Header
 
@@ -130,7 +147,13 @@ function NpmPackages({ projects }) {
       {projects
         .filter((p) => p.type === 'npm' || p.type === 'hybrid')
         .map((project) => (
-          <NpmCard key={project.id} project={project} />
+          <NpmCard key={project.id}>
+            <NpmCard.Header project={project} />
+            <NpmCard.Description project={project} />
+            <NpmCard.Stats project={project} />
+            <NpmCard.Status project={project} />
+            <NpmCard.Links project={project} />
+          </NpmCard>
         ))}
     </div>
   )
@@ -139,10 +162,10 @@ function NpmPackages({ projects }) {
 
 ## Customization
 
-As a preset component, `NpmCard` is copied to your project and can be freely modified:
+`NpmCard` is copied to your project and can be freely modified to customize card structure and behavior:
 
 ```tsx
-// components/folio/NpmCard/NpmCard.tsx
+// components/projex/NpmCard/NpmCard.tsx
 function NpmCard({ children }: { children?: ReactNode }) {
   // Your customizations here
 }
