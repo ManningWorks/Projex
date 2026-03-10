@@ -15,8 +15,8 @@ const createProject = (id: number): ProjexProject => ({
   why: `Why this project matters ${id}.`,
   image: null,
   struggles: [
-    { type: 'warn', text: 'First challenge faced' },
-    { type: 'error', text: 'Major obstacle encountered' },
+    { type: 'challenge', text: 'First challenge faced' },
+    { type: 'learning', text: 'Major obstacle encountered' },
   ],
   timeline: [
     { date: '2024-01', note: 'Project started' },

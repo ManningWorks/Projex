@@ -136,6 +136,132 @@ Update any documentation or repository URLs:
 
 ---
 
+## ProjectStruggle Type Changes
+
+> **Version:** Latest
+> **Impact:** Breaking change for users with `struggles` in their project configurations
+
+The `ProjectStruggle` type has been updated from log-level terminology to semantic content categories that better represent project narratives.
+
+### What Changed
+
+**Old types (log-level terminology):**
+- `'warn'` — Warnings or cautionary notes
+- `'error'` — Errors or critical issues
+
+**New types (semantic content categories):**
+- `'challenge'` — Obstacles or struggles overcome during the project
+- `'learning'` — Insights and growth from the project
+
+### Why This Change
+
+The old types (`'warn'` | `'error'`) were borrowed from logging systems and didn't make semantic sense for project showcases. A project portfolio isn't a log file—it's a narrative about your work. The new types (`'challenge'` | `'learning'`) represent the actual content you want to showcase: the obstacles you overcame and the lessons you learned.
+
+### Migration Steps
+
+1. **Search for all struggle definitions in your config:**
+
+   ```bash
+   grep -r "struggles:" projex.config.ts
+   ```
+
+2. **Update struggle type values:**
+
+   **Before:**
+   ```typescript
+   {
+     id: 'my-project',
+     type: 'github',
+     repo: 'user/repo',
+     status: 'shipped',
+     struggles: [
+       { type: 'warn', text: 'API rate limits were tight' },
+       { type: 'error', text: 'Initial architecture was flawed' },
+     ]
+   }
+   ```
+
+   **After:**
+   ```typescript
+   {
+     id: 'my-project',
+     type: 'github',
+     repo: 'user/repo',
+     status: 'shipped',
+     struggles: [
+       { type: 'challenge', text: 'API rate limits were tight' },
+       { type: 'learning', text: 'Initial architecture was flawed' },
+     ]
+   }
+   ```
+
+3. **Review your content:**
+
+   The new types are semantically different, so consider whether each struggle is better described as:
+   - A **challenge** you overcame (something difficult that required effort/solution)
+   - A **learning** you gained (insight, growth, or surprising discovery)
+
+   Some `'error'` entries may be better as `'learning'` since they represent something you learned from, not just a technical error.
+
+4. **Update your CSS (if styling struggles):**
+
+   **Before:**
+   ```css
+   [data-projex-struggle-type="warn"] {
+     background: #fef3c7;
+   }
+   [data-projex-struggle-type="error"] {
+     background: #fee2e2;
+   }
+   ```
+
+   **After:**
+   ```css
+   [data-projex-struggle-type="challenge"] {
+     background: #fef3c7;
+   }
+   [data-projex-struggle-type="learning"] {
+     background: #dbeafe;
+   }
+   ```
+
+### Type Mapping
+
+| Old Type | New Type | When to Use |
+|----------|----------|-------------|
+| `'warn'` | `'challenge'` | Obstacles, blockers, difficulties faced |
+| `'error'` | `'challenge'` OR `'learning'` | Use `'challenge'` if it was an obstacle to overcome, or `'learning'` if it represents insight gained |
+
+### Example Migration
+
+**Before:**
+```typescript
+struggles: [
+  { type: 'warn', text: 'Limited API calls required smart caching' },
+  { type: 'error', text: 'First database design had performance issues' },
+  { type: 'warn', text: 'Browser compatibility took extra time' },
+]
+```
+
+**After:**
+```typescript
+struggles: [
+  { type: 'challenge', text: 'Limited API calls required smart caching' },
+  { type: 'learning', text: 'First database design had performance issues—learned the importance of indexing' },
+  { type: 'challenge', text: 'Browser compatibility took extra time' },
+]
+```
+
+Note how the second entry was converted to `'learning'` with a more descriptive text that emphasizes what was learned.
+
+### See Also
+
+- [ProjectStruggle API Reference](../api/types/project-struggle) — Complete type documentation with examples
+- [Project Types Guide](./project-types) — Using struggles in project configurations
+- [Styling Guide](./styling) — CSS patterns for struggles
+
+---
+
 ## Upgrading Projex
 
 ### Update the Package

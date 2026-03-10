@@ -97,8 +97,8 @@ describe('config-schema', () => {
         why: 'Why I built this',
         image: 'https://example.com/image.png',
         struggles: [
-          { type: 'warn', text: 'Warning text' },
-          { type: 'error', text: 'Error text' },
+          { type: 'challenge', text: 'Warning text' },
+          { type: 'learning', text: 'Error text' },
         ],
         timeline: [{ date: '2024-01-01', note: 'Started' }],
         posts: [{ title: 'Post', date: '2024-01-01', url: 'https://example.com/post' }],
@@ -289,8 +289,8 @@ describe('config-schema', () => {
       if (!result.success) {
         const error = formatZodError(result.error)
         expect(error).toContain('struggles')
-        expect(error).toContain('warn')
-        expect(error).toContain('error')
+        expect(error).toContain('challenge')
+        expect(error).toContain('learning')
       }
     })
 

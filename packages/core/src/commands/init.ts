@@ -171,8 +171,8 @@ export const projects = defineProjects([
 // Optional fields to add context to your project:
 // background: The story behind the project - what problem does it solve?
 // why: Your motivation for building it - why does this matter to you?
-// struggles: Current challenges or technical hurdles faced
-//   - type: 'warn' (minor issues) or 'error' (blockers)
+// struggles: Challenges faced and lessons learned during development
+//   - type: 'challenge' (obstacles overcome) or 'learning' (insights and growth)
 //   - text: Description of the challenge
 // timeline: Milestones and important dates in the project's journey
 //   - date: Formatted date string (e.g., '2025-01-15')

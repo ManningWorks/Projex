@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-03-10
+
+### Breaking Changes
+
+- **Renamed `ProjectStruggle.type` values** - Changed from log-level terminology (`warn` | `error`) to semantic content categories (`challenge` | `learning`) for better narrative representation in project showcases
+
+### Changed
+
+- Updated Zod schema validation to use new `challenge` | `learning` types
+- Updated all test fixtures to use new type values
+
+### Migration Guide
+
+If you're using the `struggles` array in your project configurations, you need to update the `type` values:
+
+```typescript
+// Before
+struggles: [
+  { type: 'warn', text: '...' },
+  { type: 'error', text: '...' }
+]
+
+// After
+struggles: [
+  { type: 'challenge', text: '...' },  // obstacles or struggles overcome
+  { type: 'learning', text: '...' }     // insights and growth
+]
+```
+
+---
+
 ## [1.1.1] - 2026-03-10
 
 ### Fixed

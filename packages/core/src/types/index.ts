@@ -3,7 +3,7 @@ export type ProjectType = 'github' | 'manual' | 'npm' | 'product-hunt' | 'youtub
 export type ProjectStatus = 'active' | 'shipped' | 'in-progress' | 'coming-soon' | 'archived' | 'for-sale'
 
 export interface ProjectStruggle {
-  type: 'warn' | 'error'
+  type: 'challenge' | 'learning'
   text: string
 }
 

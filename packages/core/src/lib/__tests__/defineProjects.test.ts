@@ -78,7 +78,7 @@ describe('defineProjects', () => {
         background: 'Background',
         why: 'Why',
         image: 'image.png',
-        struggles: [{ type: 'warn', text: 'Warning' }],
+        struggles: [{ type: 'challenge', text: 'Warning' }],
         timeline: [{ date: '2024-01-01', note: 'Start' }],
         posts: [{ title: 'Post', date: '2024-01-01' }],
         stack: ['React', 'TypeScript'],

@@ -93,7 +93,7 @@ defineProjects([...projects], { commits: 5 })
 | `data-projex-view-links` | - | Links container |
 | `data-projex-tag` | - | Individual tag (for stack) |
 | `data-projex-struggle` | - | Struggle item |
-| `data-projex-struggle-type` | `warn` \| `error` | Struggle severity |
+| `data-projex-struggle-type` | `challenge` \| `learning` | Struggle type |
 | `data-projex-timeline-date` | - | Timeline date |
 | `data-projex-timeline-note` | - | Timeline note |
 | `data-projex-post-title` | - | Post title |

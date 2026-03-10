@@ -19,8 +19,8 @@ const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject =>
   why: 'Why I built this project.',
   image: null,
   struggles: [
-    { type: 'warn', text: 'First challenge faced' },
-    { type: 'error', text: 'Critical issue encountered' },
+    { type: 'challenge', text: 'First challenge faced' },
+    { type: 'learning', text: 'Critical issue encountered' },
   ],
   timeline: [
     { date: '2024-01-01', note: 'Project started' },
@@ -138,14 +138,14 @@ describe('ProjectView sections conditional rendering', () => {
     const { container } = render(<ProjectView.Section project={project} name="struggles" />)
 
     expect(container.querySelectorAll('[data-projex-struggle]')).toHaveLength(2)
-    
-    const warnStruggle = container.querySelector('[data-projex-struggle-type="warn"]')
-    expect(warnStruggle).toBeInTheDocument()
-    expect(warnStruggle).toHaveTextContent('First challenge faced')
 
-    const errorStruggle = container.querySelector('[data-projex-struggle-type="error"]')
-    expect(errorStruggle).toBeInTheDocument()
-    expect(errorStruggle).toHaveTextContent('Critical issue encountered')
+    const challengeStruggle = container.querySelector('[data-projex-struggle-type="challenge"]')
+    expect(challengeStruggle).toBeInTheDocument()
+    expect(challengeStruggle).toHaveTextContent('First challenge faced')
+
+    const learningStruggle = container.querySelector('[data-projex-struggle-type="learning"]')
+    expect(learningStruggle).toBeInTheDocument()
+    expect(learningStruggle).toHaveTextContent('Critical issue encountered')
   })
 
   it('renders timeline with correct attributes', () => {

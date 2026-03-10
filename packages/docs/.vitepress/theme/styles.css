@@ -195,23 +195,23 @@
   font-weight: 600;
 }
 
-[data-folio-struggle] {
+[data-projex-struggle] {
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
   border-radius: 0.375rem;
   font-size: 0.875rem;
 }
 
-[data-folio-struggle-type="warn"] {
+[data-projex-struggle-type="challenge"] {
   background: #fef3c7;
   color: #92400e;
   border-left: 3px solid #f59e0b;
 }
 
-[data-folio-struggle-type="error"] {
-  background: #fee2e2;
-  color: #991b1b;
-  border-left: 3px solid #ef4444;
+[data-projex-struggle-type="learning"] {
+  background: #dbeafe;
+  color: #1e40af;
+  border-left: 3px solid #3b82f6;
 }
 
 [data-folio-timeline-date] {

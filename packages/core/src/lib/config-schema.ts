@@ -9,7 +9,7 @@ const projectStatusSchema = z.enum([
   'for-sale',
 ])
 
-const projectStruggleTypeSchema = z.enum(['warn', 'error'])
+const projectStruggleTypeSchema = z.enum(['challenge', 'learning'])
 
 const projectStruggleSchema = z.object({
   type: projectStruggleTypeSchema,

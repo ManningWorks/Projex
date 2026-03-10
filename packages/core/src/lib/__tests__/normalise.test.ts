@@ -53,7 +53,7 @@ describe('normalise', () => {
         background: 'Background info',
         why: 'Why I built this',
         image: 'https://example.com/image.png',
-        struggles: [{ type: 'warn', text: 'A warning' }],
+        struggles: [{ type: 'challenge', text: 'A warning' }],
         timeline: [{ date: '2024-01-01', note: 'Started' }],
         posts: [{ title: 'Post', date: '2024-01-01', url: 'https://example.com' }],
         stack: ['React', 'TypeScript'],
@@ -71,7 +71,7 @@ describe('normalise', () => {
       expect(result.background).toBe('Background info')
       expect(result.why).toBe('Why I built this')
       expect(result.image).toBe('https://example.com/image.png')
-      expect(result.struggles).toEqual([{ type: 'warn', text: 'A warning' }])
+      expect(result.struggles).toEqual([{ type: 'challenge', text: 'A warning' }])
       expect(result.timeline).toEqual([{ date: '2024-01-01', note: 'Started' }])
       expect(result.posts).toEqual([{ title: 'Post', date: '2024-01-01', url: 'https://example.com' }])
       expect(result.stack).toEqual(['React', 'TypeScript'])

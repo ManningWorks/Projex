@@ -32,7 +32,7 @@ Projex exports TypeScript types for all data structures. Import types from the m
 | Type | Description |
 |------|-------------|
 | [ProjectLinks](./project-links) | Project link URLs |
-| ProjectStruggle | Struggle/warning object |
+| [ProjectStruggle](./project-struggle) | Challenge or learning from the project |
 | ProjectTimelineEntry | Timeline entry object |
 | ProjectPost | Blog post reference |
 

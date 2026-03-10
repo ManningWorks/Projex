@@ -123,8 +123,8 @@ Available `data-projex-status-value` values:
 
 ```html
 <!-- Struggles -->
-<div data-projex-struggle data-projex-struggle-type="warn">Warning text</div>
-<div data-projex-struggle data-projex-struggle-type="error">Error text</div>
+<div data-projex-struggle data-projex-struggle-type="challenge">Challenge text</div>
+<div data-projex-struggle data-projex-struggle-type="learning">Learning text</div>
 
 <!-- Timeline -->
 <div>

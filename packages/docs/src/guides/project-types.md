@@ -238,8 +238,8 @@ Beyond the basic fields, you can add rich metadata to your projects:
   stack: ['TypeScript', 'React', 'Next.js'],
   
   struggles: [
-    { type: 'warn', text: 'First challenge we faced' },
-    { type: 'info', text: 'Technical decision explanation' },
+    { type: 'challenge', text: 'First challenge we faced' },
+    { type: 'learning', text: 'Technical decision explanation' },
   ],
   
   timeline: [
@@ -255,5 +255,5 @@ Beyond the basic fields, you can add rich metadata to your projects:
 - `background: string` — Longer description for project detail pages
 - `why: string` — Motivation or problem this project solves
 - `stack: string[]` — Technologies used in the project
-- `struggles: Array<{type: 'warn' | 'info', text: string}>` — Challenges faced during development
+- `struggles: Array<{type: 'challenge' | 'learning', text: string}>` — Challenges faced and lessons learned
 - `timeline: Array<{date: string, note: string}>` — Project milestones and history

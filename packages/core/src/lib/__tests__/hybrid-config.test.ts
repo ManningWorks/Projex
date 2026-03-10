@@ -342,7 +342,7 @@ describe('hybrid config recognition', () => {
       description: 'Description of the project',
       background: 'Background info',
       why: 'Why I built it',
-      struggles: [{ type: 'warn', text: 'A warning' }],
+      struggles: [{ type: 'challenge', text: 'A warning' }],
       timeline: [{ date: '2024-01-01', note: 'Started' }],
       posts: [{ title: 'First Post', date: '2024-01-01' }],
       stack: ['TypeScript', 'React'],
@@ -361,7 +361,7 @@ describe('hybrid config recognition', () => {
     expect(result.description).toBe('Description of the project')
     expect(result.background).toBe('Background info')
     expect(result.why).toBe('Why I built it')
-    expect(result.struggles).toEqual([{ type: 'warn', text: 'A warning' }])
+      expect(result.struggles).toEqual([{ type: 'challenge', text: 'A warning' }])
     expect(result.timeline).toEqual([{ date: '2024-01-01', note: 'Started' }])
     expect(result.posts).toEqual([{ title: 'First Post', date: '2024-01-01' }])
     expect(result.stack).toEqual(['TypeScript', 'React'])
