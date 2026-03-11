@@ -35,6 +35,7 @@ permission:
     "git log -- *": allow
     "git diff -- *": allow
     "git status": allow
+	"git tag *": allow
     "*": ask
   webfetch: deny
 color: success

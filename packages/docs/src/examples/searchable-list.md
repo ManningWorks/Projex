@@ -12,20 +12,14 @@ A searchable project list with real-time filtering using `ProjectSearch`.
 ## Code
 
 ```tsx
-import { ProjectSearch, ProjectList, ProjectCard } from '@manningworks/projex'
+import { ProjectSearch, ProjectList, ProjectCard, useProjectSearch } from '@manningworks/projex'
 import { useState } from 'react'
 
 function SearchableProjects() {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredProjects = projects.filter(project => {
-    const query = searchQuery.toLowerCase()
-    return (
-      project.name.toLowerCase().includes(query) ||
-      project.tagline?.toLowerCase().includes(query) ||
-      project.description?.toLowerCase().includes(query) ||
-      project.stack?.some(tag => tag.toLowerCase().includes(query))
-    )
+  const filteredProjects = useProjectSearch(projects, searchQuery, {
+    threshold: 0.2
   })
 
   return (
@@ -122,3 +116,41 @@ See the [Styling Guide](../guides/styling.md) for more CSS examples.
 2. **Search multiple fields** for better results
 3. **Highlight matches** in UI for better UX
 4. **Combine with filters** for advanced search functionality
+
+## Customizing Search Sensitivity
+
+The `useProjectSearch` hook uses Fuse.js fuzzy search with a default threshold of 0.2. You can adjust this for different behaviors:
+
+```tsx
+import { useProjectSearch } from '@manningworks/projex'
+
+function CustomSearch() {
+  const [searchQuery, setSearchQuery] = useState('')
+
+  // More precise matches (fewer results, fewer false positives)
+  const strictResults = useProjectSearch(projects, searchQuery, {
+    threshold: 0.1
+  })
+
+  // More lenient matches (allows more typos, more results)
+  const lenientResults = useProjectSearch(projects, searchQuery, {
+    threshold: 0.4
+  })
+
+  // Default behavior (balanced)
+  const defaultResults = useProjectSearch(projects, searchQuery)
+
+  // ...
+}
+```
+
+### When to Adjust Threshold
+
+| Threshold | Use Case | Example |
+|-----------|----------|---------|
+| `0.1` | Exact/near-exact matches | Search for specific package names or technical terms |
+| `0.2` (default) | Balanced search | General project showcase with good precision |
+| `0.3` | More lenient | User-facing search with typos allowed |
+| `0.4+` | Very fuzzy | Broad discovery searches |
+
+For detailed information on search configuration, see [Fuse Search Utilities](../api/utilities/fuse-search).
