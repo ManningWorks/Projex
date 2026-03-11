@@ -28,14 +28,15 @@ function useProjectSearch(
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| threshold | `number` | `0.3` | Fuse.js fuzzy match threshold (lower = stricter) |
+| threshold | `number` | `0.2` | Fuse.js fuzzy match threshold (lower = stricter) |
 
 ## Behavior
 
 - Returns all projects if query is empty, null, or undefined
 - Searches across name, description, and stack fields
 - Name field has highest weight, then description, then stack
-- Threshold of 0.3 allows typos while remaining accurate
+- Threshold of 0.2 allows typos while remaining accurate
+- Uses `ignoreLocation: true` for better substring matching
 - Results maintain original project order (sorted by relevance)
 
 ## Example

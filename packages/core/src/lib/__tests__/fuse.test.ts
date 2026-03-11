@@ -29,10 +29,10 @@ function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
 }
 
 describe('getFuseOptions', () => {
-  it('should return default threshold of 0.3', () => {
+  it('should return default threshold of 0.2', () => {
     const options = getFuseOptions()
 
-    expect(options.threshold).toBe(0.3)
+    expect(options.threshold).toBe(0.2)
   })
 
   it('should accept custom threshold', () => {
