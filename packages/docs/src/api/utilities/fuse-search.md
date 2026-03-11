@@ -16,7 +16,7 @@ function getFuseOptions(threshold?: number): FuseOptions
 
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
-| threshold | `number` | `0.3` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
+| threshold | `number` | `0.2` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
 
 ### Returns
 
@@ -27,6 +27,7 @@ function getFuseOptions(threshold?: number): FuseOptions
 ```tsx
 interface FuseOptions {
   threshold: number
+  ignoreLocation: boolean
   keys: Array<{ name: string; weight: number }>
 }
 ```
@@ -39,18 +40,25 @@ interface FuseOptions {
 | `description` | 1.5 | Project description (medium priority) |
 | `stack` | 1 | Technology stack (lowest priority) |
 
+### Default Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `threshold` | `number` | `0.2` | Match threshold (lower = stricter) |
+| `ignoreLocation` | `boolean` | `true` | Find matches anywhere in field content (not just at start) |
+
 ### Example
 
 ```tsx
 import { getFuseOptions } from '@manningworks/projex'
 
-// Default threshold (0.3)
+// Default threshold (0.2) with ignoreLocation enabled
 const options = getFuseOptions()
-// { threshold: 0.3, keys: [{ name: 'name', weight: 2 }, ...] }
+// { threshold: 0.2, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
 
 // Custom threshold for stricter matching
 const strictOptions = getFuseOptions(0.1)
-// { threshold: 0.1, keys: [{ name: 'name', weight: 2 }, ...] }
+// { threshold: 0.1, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
 ```
 
 ### Threshold Values
@@ -59,7 +67,7 @@ const strictOptions = getFuseOptions(0.1)
 |-------|----------|
 | `0.0` | Perfect match only (exact matches) |
 | `0.1` | Very strict (near-exact matches) |
-| `0.3` | Balanced (default, good balance) |
+| `0.2` | Balanced (default, good balance) |
 | `0.5` | Moderate (fuzzy matching) |
 | `1.0` | Very lenient (matches anything) |
 
@@ -78,7 +86,7 @@ function createFuseSearch(projects: ProjexProject[], threshold?: number): Fuse<P
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
 | projects | `ProjexProject[]` | - | Array of projects to search |
-| threshold | `number` | `0.3` | Match threshold (0.0 = perfect, 1.0 = match anything) |
+| threshold | `number` | `0.2` | Match threshold (0.0 = perfect, 1.0 = match anything) |
 
 ### Returns
 

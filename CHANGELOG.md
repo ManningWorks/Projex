@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-03-11
+
+### Fixed
+
+- **Fuse.js search false positives** - Improved search precision by reducing threshold from 0.3 to 0.2 and adding `ignoreLocation: true`
+- **Incorrect match behavior** - Fixes issue where short queries like 'aest' incorrectly matched projects containing the query anywhere in field content
+- **Search threshold documentation** - Updated API docs to reflect new default threshold value
+
+With the new threshold (0.2) and `ignoreLocation` enabled, search now provides more precise matching:
+- 'a': matches all relevant projects ✓
+- 'ae' to 'aesthetic': only matches projects with those character sequences ✓
+- Eliminates false positive matches on substrings (e.g., 'aest' no longer matches 'Vitest')
+
+Aligns with Fuse.js best practices and scoring theory documentation.
+
+---
+
 ## [1.1.2] - 2026-03-10
 
 ### Breaking Changes
