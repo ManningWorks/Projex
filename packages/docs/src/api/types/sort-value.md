@@ -1,20 +1,21 @@
 # SortValue
 
-Allowed sort values for `sortProjects` function. Defines how projects can be sorted.
+Allowed sort values for the `sortProjects` function. Defines how projects can be sorted in the UI.
 
 ## Definition
 
 ```tsx
-type SortValue = 'stars' | 'name' | 'date'
+type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
 ```
 
 ## Values
 
-| Value | Description | Usage |
-|-------|-------------|--------|
-| `stars` | Sort by GitHub stars (highest first) | GitHub and hybrid projects |
-| `name` | Sort alphabetically by project name | All project types |
-| `date` | Sort by `updatedAt` or `createdAt` | All project types |
+| Value | Description | Direction | Usage |
+|-------|-------------|-----------|--------|
+| `stars` | Sort by GitHub stars | Descending (highest first) | GitHub and hybrid projects |
+| `name` | Sort alphabetically by project name | Ascending (A-Z) | All project types |
+| `date` | Sort by `updatedAt` or `createdAt` | Descending (newest first) | All project types |
+| `date-asc` | Sort by `updatedAt` or `createdAt` | Ascending (oldest first) | All project types |
 
 ## Usage
 
@@ -23,53 +24,61 @@ import { sortProjects } from '@manningworks/projex'
 import type { SortValue } from '@manningworks/projex'
 
 const sortBy: SortValue = 'stars'
-
-const sorted = sortProjects(projects, sortBy, 'desc')
+const sorted = sortProjects(projects, sortBy)
 ```
 
 ## Sort Behavior
 
-Each sort value has specific behavior:
+### `stars`
 
-### stars
-
-- Only sorts GitHub and hybrid projects
+- Only GitHub and hybrid projects have star counts
 - Projects without stars are placed at the end
-- Descending order (highest stars first)
+- Non-GitHub/non-hybrid projects are treated as having 0 stars
+- Always sorts descending (highest stars first)
 
 ```tsx
-// Sort by stars descending
-const sorted = sortProjects(projects, 'stars', 'desc')
+const sorted = sortProjects(projects, 'stars')
 // [1000 stars, 500 stars, 200 stars, 0 stars, manual project, npm project]
 ```
 
-### name
+### `name`
 
-- Alphabetical sort (case-insensitive)
+- Alphabetical sort using `localeCompare` with `sensitivity: 'base'` (case-insensitive)
 - Works for all project types
-- Default: ascending (A-Z)
+- Projects without a name are placed at the end
+- Always sorts ascending (A-Z)
 
 ```tsx
-// Sort by name ascending
-const sorted = sortProjects(projects, 'name', 'asc')
+const sorted = sortProjects(projects, 'name')
 // ['Alpha Project', 'Beta App', 'Gamma Tool']
 ```
 
-### date
+### `date`
 
-- Uses `updatedAt` if available, otherwise `createdAt`
+- Uses `updatedAt` if available, falls back to `createdAt`
 - Works for all project types
-- Default: descending (newest first)
+- Projects without any date are placed at the end
+- Sorts descending (newest first)
 
 ```tsx
-// Sort by date descending
-const sorted = sortProjects(projects, 'date', 'desc')
+const sorted = sortProjects(projects, 'date')
 // [2024-01-15, 2024-01-10, 2024-01-05]
+```
+
+### `date-asc`
+
+- Same data source as `date` (`updatedAt` → `createdAt`)
+- Sorts ascending (oldest first)
+- Useful for timeline-style displays
+
+```tsx
+const sorted = sortProjects(projects, 'date-asc')
+// [2024-01-05, 2024-01-10, 2024-01-15]
 ```
 
 ## Integration with ProjectSort Component
 
-Use with `ProjectSort` component for user-selectable sorting:
+Use with the `ProjectSort` component for user-selectable sorting:
 
 ```tsx
 import { useState } from 'react'
@@ -78,18 +87,21 @@ import type { SortValue } from '@manningworks/projex'
 
 function ProjectsPage({ projects }) {
   const [sortBy, setSortBy] = useState<SortValue>('name')
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
-  const sortedProjects = sortProjects(projects, sortBy, order)
+  const sortedProjects = sortProjects(projects, sortBy)
 
   return (
     <div>
       <ProjectSort
-        options={['stars', 'name', 'date']}
+        options={['stars', 'name', 'date', 'date-asc']}
         value={sortBy}
         onChange={setSortBy}
       />
-      <ProjectGrid projects={sortedProjects} />
+      <ProjectGrid>
+        {sortedProjects.map(project => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </ProjectGrid>
     </div>
   )
 }
@@ -97,7 +109,8 @@ function ProjectsPage({ projects }) {
 
 ## Related
 
-- `sortProjects` - Unified sorting function
-- `sortByStars` - Star-specific sorting
-- `sortByName` - Name-specific sorting
-- `sortByDate` - Date-specific sorting
+- `sortProjects` — Unified sorting function
+- `sortByStars` — Star-specific sorting
+- `sortByName` — Name-specific sorting
+- `sortByDate` — Date-specific sorting (supports both `asc` and `desc`)
+- [ProjectSort](../components/project-sort) — Sort dropdown component

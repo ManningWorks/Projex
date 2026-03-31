@@ -11,11 +11,11 @@ Projex uses compound components for maximum flexibility. Compose your own layout
 Fetch data at build time using `normalise`:
 
 ```tsx
-import { normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
-import { projects as projectInputs } from '../projex.config'
 
 async function getProjects(): Promise<ProjexProject[]> {
+  const { projects: projectInputs } = await import('../projex.config')
+  const { normalise } = await import('@manningworks/projex')
   return Promise.all(projectInputs.map((input) => normalise(input)))
 }
 ```

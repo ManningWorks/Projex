@@ -12,6 +12,7 @@ Result object containing either repository data or an error.
 interface FetchReposResult {
   data: GitHubRepoData[] | null
   error: FetchReposError | null
+  rateLimitRemaining: number | null
 }
 ```
 
@@ -21,6 +22,7 @@ interface FetchReposResult {
 |-------|------|-------------|
 | data | `GitHubRepoData[] \| null` | Array of repository data, or `null` if error occurred |
 | error | `FetchReposError \| null` | Error type, or `null` if successful |
+| rateLimitRemaining | `number \| null` | GitHub API rate limit remaining, or `null` if unavailable |
 
 ## FetchReposError
 
@@ -29,7 +31,7 @@ Error type for repository fetch failures.
 ### Definition
 
 ```tsx
-type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
+type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'other'
 ```
 
 ### Values
@@ -39,7 +41,7 @@ type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
 | `rate_limit` | GitHub API rate limit exceeded |
 | `network` | Network error or request failed |
 | `not_found` | GitHub user not found (404) |
-| `unknown` | Unknown error occurred |
+| `other` | Unknown or unhandled error occurred |
 
 ## Usage
 
@@ -79,7 +81,7 @@ if (result.error) {
     case 'not_found':
       console.error('GitHub user not found')
       break
-    case 'unknown':
+    case 'other':
       console.error('Unknown error occurred')
       break
   }

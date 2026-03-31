@@ -173,7 +173,7 @@ Fetches store data from Lemon Squeezy API.
 
 **Auto-populated fields:** formatted MRR, order count, customer count
 
-**Environment variable:** `LEMONSQUEEZY_TOKEN` (required) - Get from [Lemon Squeezy Settings](https://app.lemonsqueezy.com/settings/api)
+**Environment variable:** `LS_TOKEN` (required) - Get from [Lemon Squeezy Settings](https://app.lemonsqueezy.com/settings/api)
 
 **Note:** Lemon Squeezy API does not provide timestamp fields. If you want to sort Lemon Squeezy projects by date, you must manually specify `createdAt` and `updatedAt`:
 

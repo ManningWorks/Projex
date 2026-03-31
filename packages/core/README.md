@@ -53,7 +53,7 @@ export function ProjectsGrid() {
 
 ## Documentation
 
-[Full Documentation →](https://projex-guide.vercel.app)
+[Full Documentation →](https://projex.manningworks.dev)
 
 ## CLI Reference
 
@@ -84,7 +84,7 @@ The CLI automatically installs the `@manningworks/projex` package as a dependenc
 - **Hybrid** — Mix GitHub + npm, or any combination
 
 **Additional types:** Lemon Squeezy (store data), Dev.to (articles)
-[View full documentation →](https://projex-guide.vercel.app/guides/project-types)
+[View full documentation →](https://projex.manningworks.dev/guides/project-types)
 
 ## Component API
 
@@ -101,7 +101,7 @@ Projex uses compound components for maximum flexibility. Each part is optional �
 </ProjectCard>
 ```
 
-[View all components →](https://projex-guide.vercel.app/api/components/)
+[View all components →](https://projex.manningworks.dev/api/components/)
 
 ## Styling
 
@@ -130,7 +130,7 @@ npx projex add theme-dark
 npx projex add theme-gradient
 ```
 
-[Styling guide →](https://projex-guide.vercel.app/guides/styling)
+[Styling guide →](https://projex.manningworks.dev/guides/styling)
 
 ## License
 

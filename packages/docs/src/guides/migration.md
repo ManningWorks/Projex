@@ -131,7 +131,7 @@ Update any documentation or repository URLs:
 | Old URL | New URL |
 |----------|----------|
 | `https://github.com/RealLukeManning/Folio` | `https://github.com/ManningWorks/Projex` |
-| `https://folio-guide.vercel.app` | `https://projex-guide.vercel.app` |
+| `https://folio-guide.vercel.app` | `https://projex.manningworks.dev` |
 | `https://www.npmjs.com/package/@reallukemanning/folio` | `https://www.npmjs.com/package/@manningworks/projex` |
 
 ---

@@ -29,6 +29,10 @@ interface ProjexProject {
   repo?: string
   package?: string
   slug?: string
+  channelId?: string
+  productId?: string
+  storeId?: string
+  username?: string
   commits?: ProjectCommit[]
   linkOrder?: string[]
 }
@@ -58,11 +62,15 @@ interface ProjexProject {
 | `languageColor` | `string \| null` | Language color hex (GitHub) |
 | `createdAt` | `string \| null` | Creation date |
 | `updatedAt` | `string \| null` | Last update date |
-| `repo` | `string` | Repository path (GitHub/hybrid) |
-| `package` | `string` | Package name (npm/hybrid) |
-| `slug` | `string` | Product Hunt slug |
-| `commits` | `ProjectCommit[]` | Recent commits (GitHub/hybrid) |
-| `linkOrder` | `string[]` | Link display order |
+| `repo` | `string \| undefined` | Repository path (GitHub/hybrid) |
+| `package` | `string \| undefined` | Package name (npm/hybrid) |
+| `slug` | `string \| undefined` | Product Hunt slug |
+| `channelId` | `string \| undefined` | YouTube channel ID |
+| `productId` | `string \| undefined` | Gumroad product ID |
+| `storeId` | `string \| undefined` | Lemon Squeezy store ID |
+| `username` | `string \| undefined` | Dev.to username |
+| `commits` | `ProjectCommit[] \| undefined` | Recent commits (GitHub/hybrid) |
+| `linkOrder` | `string[] \| undefined` | Link display order |
 
 ## Creation
 

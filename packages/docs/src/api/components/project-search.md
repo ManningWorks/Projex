@@ -41,7 +41,7 @@ import { ProjectSearch } from '@manningworks/projex'
 
 ```tsx
 import { useState } from 'react'
-import { ProjectSearch, useProjectSearch, ProjectGrid } from '@manningworks/projex'
+import { ProjectSearch, useProjectSearch, ProjectGrid, ProjectCard } from '@manningworks/projex'
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')
@@ -50,7 +50,9 @@ function ProjectShowcase({ projects }) {
   return (
     <div>
       <ProjectSearch onSearch={setQuery} placeholder="Search projects..." />
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(p => <ProjectCard key={p.id} project={p} />)}
+      </ProjectGrid>
     </div>
   )
 }

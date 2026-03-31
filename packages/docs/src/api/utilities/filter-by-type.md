@@ -51,5 +51,34 @@ type ProjectType =
   | 'manual'
   | 'npm'
   | 'product-hunt'
+  | 'youtube'
+  | 'gumroad'
+  | 'lemonsqueezy'
+  | 'devto'
   | 'hybrid'
+```
+
+### Common Filter Patterns
+
+```tsx
+// Show only code-related projects
+const codeProjects = filterByType(projects, 'github')
+
+// Show only content creator projects
+const contentProjects = projects.filter(p => 
+  ['youtube', 'devto'].includes(p.type)
+)
+
+// Show only commercial products
+const products = projects.filter(p => 
+  ['gumroad', 'lemonsqueezy'].includes(p.type)
+)
+
+// Show packages (npm only, not hybrid)
+const packagesOnly = filterByType(projects, 'npm')
+
+// Show packages including hybrid projects that include npm data
+const allPackages = projects.filter(p => 
+  p.type === 'npm' || p.type === 'hybrid'
+)
 ```

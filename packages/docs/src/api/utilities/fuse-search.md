@@ -16,7 +16,7 @@ function getFuseOptions(threshold?: number): FuseOptions
 
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
-| threshold | `number` | `0.2` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
+| threshold | `number` | `0.3` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
 
 ### Returns
 
@@ -44,7 +44,7 @@ interface FuseOptions {
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `threshold` | `number` | `0.2` | Match threshold (lower = stricter) |
+| `threshold` | `number` | `0.3` | Match threshold (lower = stricter) |
 | `ignoreLocation` | `boolean` | `true` | Find matches anywhere in field content (not just at start) |
 
 ### Example
@@ -52,9 +52,9 @@ interface FuseOptions {
 ```tsx
 import { getFuseOptions } from '@manningworks/projex'
 
-// Default threshold (0.2) with ignoreLocation enabled
+// Default threshold (0.3) with ignoreLocation enabled
 const options = getFuseOptions()
-// { threshold: 0.2, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
+// { threshold: 0.3, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
 
 // Custom threshold for stricter matching
 const strictOptions = getFuseOptions(0.1)
@@ -67,7 +67,7 @@ const strictOptions = getFuseOptions(0.1)
 |-------|----------|
 | `0.0` | Perfect match only (exact matches) |
 | `0.1` | Very strict (near-exact matches) |
-| `0.2` | Balanced (default, good balance) |
+| `0.3` | Balanced (default, good balance) |
 | `0.5` | Moderate (fuzzy matching) |
 | `1.0` | Very lenient (matches anything) |
 
@@ -86,7 +86,7 @@ function createFuseSearch(projects: ProjexProject[], threshold?: number): Fuse<P
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
 | projects | `ProjexProject[]` | - | Array of projects to search |
-| threshold | `number` | `0.2` | Match threshold (0.0 = perfect, 1.0 = match anything) |
+| threshold | `number` | `0.3` | Match threshold (0.0 = perfect, 1.0 = match anything) |
 
 ### Returns
 
@@ -113,7 +113,7 @@ results.forEach(({ item, refIndex }) => {
 These utilities are used internally by `useProjectSearch` hook:
 
 ```tsx
-import { useProjectSearch } from '@manningworks/projex'
+import { useProjectSearch, ProjectCard } from '@manningworks/projex'
 
 function ProjectSearch({ projects }) {
   const [query, setQuery] = useState('')
@@ -121,7 +121,9 @@ function ProjectSearch({ projects }) {
   // Internally uses createFuseSearch with getFuseOptions
   const filteredProjects = useProjectSearch(projects, query)
 
-  return <ProjectGrid projects={filteredProjects} />
+  return <ProjectGrid>
+    {filteredProjects.map(p => <ProjectCard key={p.id} project={p} />)}
+  </ProjectGrid>
 }
 ```
 

@@ -9,7 +9,7 @@ The threshold controls how "fuzzy" search matching is. Lower values are stricter
 ### Default Behavior
 
 Projex uses these defaults:
-- **Threshold:** `0.2` - Balanced between precision and recall
+- **Threshold:** `0.3` - Balanced between precision and recall
 - **ignoreLocation:** `true` - Matches found anywhere in field content
 - **Field weights:** `name` (2), `description` (1.5), `stack` (1)
 
@@ -19,7 +19,7 @@ Projex uses these defaults:
 |-----------|-------------|------------------|-----------|
 | `0.0` | Exact matches only | "react" → "React", "react-ui" ✅<br>"react" → "ReactNative" ❌ | Technical searches, package names |
 | `0.1` | Near-exact matches | "react" → "React", "react-ui", "re-act" ✅<br>"react" → "NativeScript" ❌ | Code search, technical terms |
-| `0.2` (default) | Balanced search | "react" → "React", "react-ui", "re-act", "ReactNative" ✅ | General project search |
+| `0.3` (default) | Balanced search | "react" → "React", "react-ui", "re-act", "ReactNative" ✅ | General project search |
 | `0.3` | More lenient | "react" → "React", "react-ui", "re-act", "NativeScript" ✅ | User-facing search with typos |
 | `0.5+` | Very fuzzy | "react" → "React", "react-ui", "re-act", "NativeScript", "reactor" ✅ | Broad discovery searches |
 
@@ -32,7 +32,7 @@ import { useState } from 'react'
 function SearchablePortfolio() {
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Default behavior (threshold: 0.2)
+  // Default behavior (threshold: 0.3)
   const results = useProjectSearch(projects, searchQuery)
 
   // Custom threshold for different use cases
@@ -172,7 +172,7 @@ Search performance varies based on configuration:
 | Configuration | Performance | Recommended For |
 |--------------|-------------|------------------|
 | Threshold 0.1 | Fastest | 1000+ projects, technical searches |
-| Threshold 0.2 (default) | Fast | 100-500 projects, balanced use |
+| Threshold 0.3 (default) | Fast | 100-500 projects, balanced use |
 | Threshold 0.4+ | Slower | <100 projects, user-facing search |
 | `ignoreLocation: true` | Slightly slower | Most use cases |
 | `ignoreLocation: false` | Fastest | Prefix-only searches |
@@ -220,7 +220,11 @@ function TechBlogSearch() {
     threshold: 0.1
   })
 
-  return <ProjectGrid projects={results} />
+  return (
+    <ProjectGrid>
+      {results.map(p => <ProjectCard key={p.id} project={p} />)}
+    </ProjectGrid>
+  )
 }
 ```
 
@@ -235,7 +239,11 @@ function PersonalPortfolioSearch() {
     threshold: 0.25  // Slightly more lenient than default
   })
 
-  return <ProjectGrid projects={results} />
+  return (
+    <ProjectGrid>
+      {results.map(p => <ProjectCard key={p.id} project={p} />)}
+    </ProjectGrid>
+  )
 }
 ```
 
@@ -250,7 +258,11 @@ function DiscoverySearch() {
     threshold: 0.4  // Very lenient
   })
 
-  return <ProjectGrid projects={results} />
+  return (
+    <ProjectGrid>
+      {results.map(p => <ProjectCard key={p.id} project={p} />)}
+    </ProjectGrid>
+  )
 }
 ```
 

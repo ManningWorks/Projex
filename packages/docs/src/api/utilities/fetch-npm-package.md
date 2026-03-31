@@ -25,6 +25,8 @@ interface NpmPackageData {
   name: string
   version: string
   downloads: number
+  createdAt?: string
+  modifiedAt?: string
 }
 ```
 
@@ -33,6 +35,8 @@ interface NpmPackageData {
 - Fetches from npm registry and downloads API in parallel
 - Uses `force-cache` for build-time caching
 - Returns `null` on any error
+- `createdAt` and `modifiedAt` are populated from npm registry `time` metadata
+- These timestamps require `fetchNpmTimestamps: true` in `defineProjects` options to be used for sorting
 
 ## Example
 

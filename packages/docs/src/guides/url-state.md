@@ -91,7 +91,11 @@ function Portfolio({ projects }) {
           />
         ))}
       </ProjectFilterBar>
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </ProjectGrid>
     </div>
   )
 }
@@ -395,7 +399,11 @@ function TagFilterPortfolio({ projects }) {
           />
         ))}
       </ProjectFilterBar>
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid>
+        {filteredProjects.map(project => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </ProjectGrid>
     </div>
   )
 }
@@ -423,9 +431,9 @@ export default async function PortfolioPage({
 }
 
 async function getProjects(): Promise<ProjexProject[]> {
-  const { projects: projectInputs } = await import('../../projex.config')
+  const { projects: projectInputs, options } = await import('../../projex.config')
   const { normalise } = await import('@manningworks/projex')
-  return Promise.all(projectInputs.map(normalise))
+  return Promise.all(projectInputs.map(p => normalise(p, options)))
 }
 
 // app/projex-client.tsx

@@ -16,6 +16,8 @@ interface GitHubRepoData {
   homepage: string | null
   created_at: string
   updated_at: string
+  fork?: boolean
+  archived?: boolean
 }
 ```
 
@@ -33,6 +35,8 @@ interface GitHubRepoData {
 | `homepage` | `string \| null` | Homepage URL |
 | `created_at` | `string` | Creation timestamp |
 | `updated_at` | `string` | Last update timestamp |
+| `fork` | `boolean \| undefined` | Whether the repository is a fork (only from `fetchGitHubRepos`) |
+| `archived` | `boolean \| undefined` | Whether the repository is archived (only from `fetchGitHubRepos`) |
 
 ## Usage
 

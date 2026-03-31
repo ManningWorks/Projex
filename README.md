@@ -8,7 +8,7 @@ A shadcn-style component library for building developer portfolio pages. Drop in
 
 **Open-source (MIT licensed) and free to use.**
 
-[Full Documentation →](https://projex-guide.vercel.app)
+[Full Documentation →](https://projex.manningworks.dev)
 
 ## Why Projex?
 
@@ -87,11 +87,11 @@ The CLI automatically installs the `@manningworks/projex` package as a dependenc
 
 ## Documentation
 
-- [Full Documentation](https://projex-guide.vercel.app)
-- [Getting Started Tutorial](https://projex-guide.vercel.app/guides/getting-started)
-- [Real World Examples](https://projex-guide.vercel.app/guides/real-world-examples)
-- [Component Reference](https://projex-guide.vercel.app/api/components/)
-- [CLI Reference](https://projex-guide.vercel.app/cli)
+- [Full Documentation](https://projex.manningworks.dev)
+- [Getting Started Tutorial](https://projex.manningworks.dev/guides/getting-started)
+- [Real World Examples](https://projex.manningworks.dev/guides/real-world-examples)
+- [Component Reference](https://projex.manningworks.dev/api/components/)
+- [CLI Reference](https://projex.manningworks.dev/cli)
 
 ## Project Types
 
@@ -106,7 +106,7 @@ Projex supports multiple project types out of the box:
 - **Hybrid** — Mix GitHub + npm, or any combination
 
 **Additional types:** Lemon Squeezy (store data), Dev.to (articles)
-[View full documentation →](https://projex-guide.vercel.app/guides/project-types)
+[View full documentation →](https://projex.manningworks.dev/guides/project-types)
 
 ## Styling
 

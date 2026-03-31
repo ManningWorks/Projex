@@ -33,8 +33,10 @@ Projex exports TypeScript types for all data structures. Import types from the m
 |------|-------------|
 | [ProjectLinks](./project-links) | Project link URLs |
 | [ProjectStruggle](./project-struggle) | Challenge or learning from the project |
-| ProjectTimelineEntry | Timeline entry object |
-| ProjectPost | Blog post reference |
+| [ProjectTimelineEntry](./project-timeline-entry) | Timeline milestone entry |
+| [ProjectPost](./project-post) | Blog post or article reference |
+| [ProjectCommit](./project-commit) | GitHub commit data |
+| [ProjectCommitAuthor](./project-commit) | Commit author information |
 
 ### Fetched Data Types
 
@@ -55,6 +57,7 @@ Projex exports TypeScript types for all data structures. Import types from the m
 
 | Type | Description |
 |------|-------------|
+| [ProjexProjectInputCompat](./projex-project-input-compat) | Compatibility type for flexible/partial project input |
 | SortValue | Allowed sort values for sortProjects |
 | ProjexProjectInputZod | Zod schema type for project validation |
 | FuseOptions | Fuse.js configuration options |

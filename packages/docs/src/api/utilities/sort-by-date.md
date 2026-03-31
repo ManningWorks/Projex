@@ -45,7 +45,7 @@ Different project types have different timestamp sources:
 | `npm` | Opt-in | npm `time.created`, `time.modified` (requires `fetchNpmTimestamps: true`) |
 | `product-hunt` | Yes | Product Hunt API `featured_at` |
 | `youtube` | Yes | YouTube API `latestVideoPublishedAt` |
-| `devto` | Yes | Latest article `published_at` |
+| `devto` | No | Manual `createdAt`/`updatedAt` only |
 | `manual` | No | Manual `createdAt`/`updatedAt` only |
 | `gumroad` | No | Manual `createdAt`/`updatedAt` only |
 | `lemonsqueezy` | No | Manual `createdAt`/`updatedAt` only |

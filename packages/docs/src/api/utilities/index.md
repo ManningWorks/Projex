@@ -122,12 +122,11 @@ const sorted = sortByDate(featuredActive, 'desc')
 ```tsx
 import { defineProjects, normalise, sortByStars } from '@manningworks/projex'
 
-export const projects = await Promise.all(
-  defineProjects([
-    { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
-    { id: 'proj-2', type: 'npm', package: 'my-package', status: 'shipped' },
-  ]).map(normalise)
-)
+const { projects, options } = defineProjects([
+  { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
+  { id: 'proj-2', type: 'npm', package: 'my-package', status: 'shipped' },
+])
+const normalised = await Promise.all(projects.map(p => normalise(p, options)))
 
-export const sortedProjects = sortByStars(projects, 'desc')
+export const sortedProjects = sortByStars(normalised, 'desc')
 ```

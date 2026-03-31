@@ -5,7 +5,10 @@ Transform a `ProjexProjectInput` into a normalized `ProjexProject` by fetching e
 ## Signature
 
 ```tsx
-function normalise(input: ProjexProjectInput): Promise<ProjexProject>
+function normalise(
+  input: ProjexProjectInput,
+  options?: DefineProjectsOptions,
+): Promise<ProjexProject>
 ```
 
 ## Parameters
@@ -13,6 +16,19 @@ function normalise(input: ProjexProjectInput): Promise<ProjexProject>
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | input | `ProjexProjectInput` | Project input configuration |
+| options | `DefineProjectsOptions` | Optional configuration controlling commits fetching and npm timestamp behavior |
+
+### DefineProjectsOptions
+
+```tsx
+interface DefineProjectsOptions {
+  commits?: number
+  fetchNpmTimestamps?: boolean
+}
+```
+
+- **`commits`**: Number of recent commits to fetch for `github` and `hybrid` projects. Defaults to `0` (no commits). Per-project `commits` values override this global default.
+- **`fetchNpmTimestamps`**: When `true`, extracts `createdAt` and `updatedAt` timestamps from the npm registry for `npm` and `hybrid` projects. Defaults to `false`.
 
 ## Returns
 
@@ -27,6 +43,10 @@ The function fetches external data based on the project type:
 | `github` | GitHub repository data |
 | `npm` | npm package data |
 | `product-hunt` | Product Hunt post data |
+| `youtube` | YouTube channel data |
+| `gumroad` | Gumroad product data |
+| `lemonsqueezy` | Lemon Squeezy store data |
+| `devto` | Dev.to user article data |
 | `hybrid` | GitHub + npm data |
 | `manual` | No external fetch |
 
@@ -59,13 +79,12 @@ const project = await normalise({
 })
 
 // Multiple projects
-const projects = await Promise.all(
-  defineProjects([
-    { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
-    { id: 'proj-2', type: 'npm', package: 'my-package', status: 'shipped' },
-    { id: 'proj-3', type: 'manual', status: 'coming-soon', name: 'Secret Project' },
-  ]).map(normalise)
-)
+const { projects, options } = defineProjects([
+  { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
+  { id: 'proj-2', type: 'npm', package: 'my-package', status: 'shipped' },
+  { id: 'proj-3', type: 'manual', status: 'coming-soon', name: 'Secret Project' },
+])
+const normalised = await Promise.all(projects.map(p => normalise(p, options)))
 ```
 
 ## Environment Variables
@@ -74,6 +93,11 @@ const projects = await Promise.all(
 |----------|----------|-------------|
 | `GITHUB_TOKEN` | Optional | GitHub API token (5000/hr vs 60/hr rate limit) |
 | `PRODUCT_HUNT_TOKEN` | Required for `product-hunt` | Product Hunt API token |
+| `YOUTUBE_TOKEN` | Required for `youtube` | YouTube Data API v3 key |
+| `GUMROAD_TOKEN` | Required for `gumroad` | Gumroad access token |
+| `LS_TOKEN` | Required for `lemonsqueezy` | Lemon Squeezy API key |
+
+> **Note:** Dev.to (`devto`) and `manual` types do not require any environment variables.
 
 ## Override Example
 

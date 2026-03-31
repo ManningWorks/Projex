@@ -35,6 +35,8 @@ interface GitHubRepoData {
 }
 ```
 
+> **Note:** When fetched via `fetchGitHubRepos`, the response also includes `fork?: boolean` and `archived?: boolean` fields for filtering purposes.
+
 ## Behavior
 
 - Uses `force-cache` for build-time caching
@@ -119,17 +121,16 @@ function fetchGitHubRepos(username: string): Promise<FetchReposResult>
 interface FetchReposResult {
   data: GitHubRepoData[] | null
   error: FetchReposError | null
+  rateLimitRemaining: number | null
 }
 
-type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'unknown'
+type FetchReposError = 'rate_limit' | 'network' | 'not_found' | 'other'
 ```
 
 ### Behavior
 
-- Fetches all public repositories for the user
-- Excludes archived repositories
-- Excludes repositories ending with `.template` or `.github.io`
-- Excludes repositories without descriptions
+- Fetches up to 100 public repositories for the user, sorted by last updated
+- Maps all returned repositories without filtering
 - Returns `null` data with error code on failure
 
 ### Environment Variables
@@ -169,7 +170,7 @@ if (result.data) {
 | `rate_limit` | GitHub API rate limit exceeded |
 | `network` | Network error or request failed |
 | `not_found` | GitHub user not found |
-| `unknown` | Unknown error occurred |
+| `other` | Unknown error occurred |
 
 ### Usage in CLI
 

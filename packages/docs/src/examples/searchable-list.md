@@ -19,7 +19,7 @@ function SearchableProjects() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredProjects = useProjectSearch(projects, searchQuery, {
-    threshold: 0.2
+    threshold: 0.3
   })
 
   return (
@@ -119,7 +119,7 @@ See the [Styling Guide](../guides/styling.md) for more CSS examples.
 
 ## Customizing Search Sensitivity
 
-The `useProjectSearch` hook uses Fuse.js fuzzy search with a default threshold of 0.2. You can adjust this for different behaviors:
+The `useProjectSearch` hook uses Fuse.js fuzzy search with a default threshold of 0.3. You can adjust this for different behaviors:
 
 ```tsx
 import { useProjectSearch } from '@manningworks/projex'
@@ -149,7 +149,7 @@ function CustomSearch() {
 | Threshold | Use Case | Example |
 |-----------|----------|---------|
 | `0.1` | Exact/near-exact matches | Search for specific package names or technical terms |
-| `0.2` (default) | Balanced search | General project showcase with good precision |
+| `0.3` (default) | Balanced search | General project showcase with good precision |
 | `0.3` | More lenient | User-facing search with typos allowed |
 | `0.4+` | Very fuzzy | Broad discovery searches |
 

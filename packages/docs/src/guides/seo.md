@@ -108,11 +108,12 @@ Combine with data fetching for dynamic metadata:
 // app/projects/[id]/page.tsx
 import { generateProjectMetadata, normalise } from '@manningworks/projex'
 import type { ProjexProject } from '@manningworks/projex'
+import { projects as projectInputs } from '../../../projex.config'
 
-async function getProject(id: string): Promise<ProjexProject> {
-  const response = await fetch(`${process.env.API_URL}/projects/${id}`)
-  const data = await response.json()
-  return normalise(data)
+async function getProject(id: string): Promise<ProjexProject | null> {
+  const input = projectInputs.find((p) => p.id === id)
+  if (!input) return null
+  return await normalise(input)
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -196,15 +197,25 @@ import Head from 'next/head'
 import type { ProjexProject, SoftwareApplicationSchema } from '@manningworks/projex'
 import { projects as projectInputs } from '../../projex.config'
 
-function getProject(id: string): ProjexProject {
+async function getProject(id: string): Promise<ProjexProject | null> {
   const input = projectInputs.find((p) => p.id === id)
-  return normalise(input!)
+  if (!input) return null
+  return await normalise(input)
 }
 
-export default function ProjectPage({ router }: { router: any }) {
-  const { id } = router.query
-  const project = getProject(id as string)
+export async function getStaticPaths() {
+  return {
+    paths: projectInputs.map((p) => ({ params: { id: p.id } })),
+    fallback: false,
+  }
+}
 
+export async function getStaticProps({ params }: { params: { id: string } }) {
+  const project = await getProject(params.id)
+  return { props: { project } }
+}
+
+export default function ProjectPage({ project }: { project: ProjexProject }) {
   const schema = generateProjectSchema(project)
 
   return (

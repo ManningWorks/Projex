@@ -96,7 +96,7 @@ export const projects = defineProjects([
 | `npm` | npm `time.created`, `time.modified` | Yes |
 | `product-hunt` | Product Hunt API `featured_at` | No |
 | `youtube` | YouTube API `latestVideoPublishedAt` | No |
-| `devto` | Latest article `published_at` | No |
+| `devto` | Manual `createdAt`/`updatedAt` only | N/A |
 | `manual` | Manual `createdAt`/`updatedAt` only | N/A |
 | `gumroad` | Manual `createdAt`/`updatedAt` only | N/A |
 | `lemonsqueezy` | Manual `createdAt`/`updatedAt` only | N/A |
@@ -180,16 +180,16 @@ export const projects = defineProjects([
 // projex.config.ts
 import { defineProjects } from '@manningworks/projex'
 
-export const projects = defineProjects([
+export const config = defineProjects([
   // ...projects
 ])
 
 // lib/projects.ts
-import { projects } from '@/projex.config'
+import { config } from '@/projex.config'
 import { normalise } from '@manningworks/projex'
 
 export async function getProjects() {
-  return Promise.all(projects.map(normalise))
+  return Promise.all(config.projects.map(p => normalise(p, config.options)))
 }
 ```
 
@@ -200,5 +200,9 @@ The function ensures all required fields are present based on the `type`:
 - `github`: requires `repo`
 - `npm`: requires `package`
 - `product-hunt`: requires `slug`
+- `youtube`: requires `channelId`
+- `gumroad`: requires `productId`
+- `lemonsqueezy`: requires `storeId`
+- `devto`: requires `username`
 - `hybrid`: requires `repo` and `package`
 - `manual`: no additional required fields

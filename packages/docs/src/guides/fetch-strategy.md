@@ -47,7 +47,7 @@ Projex fetches data at build time using environment variables:
 | `PRODUCT_HUNT_TOKEN` | Product Hunt API access | Optional (if using product-hunt type) |
 | `YOUTUBE_TOKEN` | YouTube Data API v3 access | Required (if using youtube type) |
 | `GUMROAD_TOKEN` | Gumroad access token | Required (if using gumroad type) |
-| `LEMONSQUEEZY_TOKEN` | Lemon Squeezy API key | Required (if using lemonsqueezy type) |
+| `LS_TOKEN` | Lemon Squeezy API key | Required (if using lemonsqueezy type) |
 
 ## Caching
 

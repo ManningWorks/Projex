@@ -56,6 +56,6 @@ export default function ProjectDetailPage({ project }) {
 
 The commits component displays:
 - Commit message
-- Author name and avatar
+- Author name
 - Commit date
 - Link to the commit on GitHub

@@ -16,13 +16,9 @@ permission:
     "**/package.json": ask
     "*": ask
   bash:
-    "pnpm --filter * build": allow
-    "pnpm --filter * lint": allow
-    "pnpm --filter * typecheck": allow
-    "pnpm --filter * test": allow
+    "pnpm --filter *": allow
     "head *": allow
     "ls *": allow
-    "ls -la *": allow
     "find *": allow
     "grep *": allow
     "rg *": allow

@@ -1,8 +1,8 @@
-# folioProjectInputSchema & ProjexProjectInputZod
+# projexProjectInputSchema & ProjexProjectInputZod
 
 Zod validation schema for `ProjexProjectInput` configuration. Provides runtime type checking for project configurations.
 
-## folioProjectInputSchema
+## projexProjectInputSchema
 
 Zod schema object for validating project configurations.
 
@@ -11,7 +11,7 @@ Zod schema object for validating project configurations.
 ```tsx
 import { z } from 'zod'
 
-export const folioProjectInputSchema: z.ZodDiscriminatedUnion<
+export const projexProjectInputSchema: z.ZodDiscriminatedUnion<
   'type',
   [
     z.ZodObject<GitHubProjectInput, ...>,
@@ -90,7 +90,7 @@ Inferred TypeScript type from the Zod schema.
 ### Definition
 
 ```tsx
-type ProjexProjectInputZod = z.infer<typeof folioProjectInputSchema>
+type ProjexProjectInputZod = z.infer<typeof projexProjectInputSchema>
 ```
 
 This type is identical to `ProjexProjectInput` but explicitly typed as the inferred schema type.
@@ -100,9 +100,9 @@ This type is identical to `ProjexProjectInput` but explicitly typed as the infer
 ### Validating Configuration
 
 ```tsx
-import { folioProjectInputSchema } from '@manningworks/projex'
+import { projexProjectInputSchema } from '@manningworks/projex'
 
-const result = folioProjectInputSchema.safeParse({
+const result = projexProjectInputSchema.safeParse({
   id: 'my-project',
   type: 'github',
   repo: 'user/repo',
@@ -119,9 +119,9 @@ if (!result.success) {
 Create custom validation with Zod:
 
 ```tsx
-import { folioProjectInputSchema } from '@manningworks/projex'
+import { projexProjectInputSchema } from '@manningworks/projex'
 
-const strictSchema = folioProjectInputSchema
+const strictSchema = projexProjectInputSchema
   .refine(
     (project) => project.type !== 'github' || !!project.repo,
     'GitHub projects must have a repo field'
@@ -140,7 +140,7 @@ Use `ProjexProjectInputZod` for type-safe config handling:
 import type { ProjexProjectInputZod } from '@manningworks/projex'
 
 function validateConfig(config: ProjexProjectInputZod): boolean {
-  return folioProjectInputSchema.safeParse(config).success
+  return projexProjectInputSchema.safeParse(config).success
 }
 ```
 
@@ -149,7 +149,7 @@ function validateConfig(config: ProjexProjectInputZod): boolean {
 The schema provides detailed error messages:
 
 ```tsx
-const result = folioProjectInputSchema.safeParse({
+const result = projexProjectInputSchema.safeParse({
   id: 'my-project',
   type: 'github',
   repo: 'user/repo',

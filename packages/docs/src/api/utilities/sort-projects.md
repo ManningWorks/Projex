@@ -41,7 +41,7 @@ type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
 ## Example
 
 ```tsx
-import { sortProjects, ProjectSort, ProjectGrid } from '@manningworks/projex'
+import { sortProjects, ProjectSort, ProjectGrid, ProjectCard } from '@manningworks/projex'
 
 const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']
 
@@ -56,7 +56,9 @@ function ProjectShowcase({ projects }) {
         value={sortValue}
         onChange={setSortValue}
       />
-      <ProjectGrid projects={sortedProjects} />
+      <ProjectGrid>
+        {sortedProjects.map(p => <ProjectCard key={p.id} project={p} />)}
+      </ProjectGrid>
     </div>
   )
 }
@@ -74,7 +76,8 @@ import {
   ProjectFilterBar,
   ProjectFilterTag,
   ProjectSort,
-  ProjectGrid
+  ProjectGrid,
+  ProjectCard
 } from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js']
@@ -117,7 +120,9 @@ function ProjectShowcase({ projects }) {
         onChange={setSortValue}
       />
 
-      <ProjectGrid projects={finalProjects} />
+      <ProjectGrid>
+        {finalProjects.map(p => <ProjectCard key={p.id} project={p} />)}
+      </ProjectGrid>
     </div>
   )
 }

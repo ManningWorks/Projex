@@ -30,10 +30,10 @@ function formatZodError(error: z.ZodError): string
 ## Example
 
 ```tsx
-import { folioProjectInputSchema, formatZodError } from '@manningworks/projex'
+import { projexProjectInputSchema, formatZodError } from '@manningworks/projex'
 import { z } from 'zod'
 
-const result = folioProjectInputSchema.safeParse({
+const result = projexProjectInputSchema.safeParse({
   id: 'my-project',
   type: 'github',
   status: 'invalid-status' // Wrong status
@@ -53,7 +53,7 @@ status: Invalid enum value. Expected one of: active, shipped, in-progress, comin
   Received: invalid-status
   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 
-Tip: Check your projex.config.ts for errors above.
+Tip: Check your projex.config.ts for the errors above.
 Refer to docs: https://folio.dev/docs/config
 ```
 
@@ -75,6 +75,7 @@ Refer to docs: https://folio.dev/docs/config
 |-------------|-------------------|
 | `email` | `Example: "user@example.com"` |
 | `url` | `Example: "https://example.com"` |
+| `uuid` | `valid UUID` |
 | `regex` | `string matching required pattern` |
 
 ## Usage in CLI
@@ -97,10 +98,10 @@ status: Invalid enum value. Expected one of: active, shipped, in-progress, comin
   Received: production
   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 
-Tip: Check your projex.config.ts for errors above.
+Tip: Check your projex.config.ts for the errors above.
 ```
 
 ## Related
 
-- `folioProjectInputSchema` - Zod schema for project configuration
+- `projexProjectInputSchema` - Zod schema for project configuration
 - `defineProjects` - Type-safe project configuration helper
