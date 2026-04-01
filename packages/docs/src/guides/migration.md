@@ -124,6 +124,62 @@ Get-ChildItem -Recurse -Include *.css,*.scss | ForEach-Object {
 | `data-folio-link` | `data-projex-link` |
 | `data-folio-stat` | `data-projex-stat` |
 
+### CSS Custom Properties
+
+All CSS custom properties (variables) have been renamed from `--folio-*` to `--projex-*`. Update your CSS:
+
+**Global CSS Replace:**
+
+**Find:** `--folio-`
+**Replace with:** `--projex-`
+
+Or use command-line tools:
+
+```bash
+# Using sed (Linux/Mac)
+find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/--folio-/--projex-/g'
+
+# Using PowerShell (Windows)
+Get-ChildItem -Recurse -Include *.css,*.scss | ForEach-Object {
+  (Get-Content $_) -replace '--folio-', '--projex-' | Set-Content $_
+}
+```
+
+**Common Variable Changes:**
+
+| Old Variable | New Variable |
+|-------------|-------------|
+| `--folio-card-bg` | `--projex-card-bg` |
+| `--folio-card-border` | `--projex-card-border` |
+| `--folio-card-radius` | `--projex-card-radius` |
+| `--folio-card-padding` | `--projex-card-padding` |
+| `--folio-card-text` | `--projex-card-text` |
+| `--folio-tag-bg` | `--projex-tag-bg` |
+| `--folio-tag-text` | `--projex-tag-text` |
+| `--folio-tag-radius` | `--projex-tag-radius` |
+| `--folio-stats-label` | `--projex-stats-label` |
+| `--folio-stats-value` | `--projex-stats-value` |
+| `--folio-link-text` | `--projex-link-text` |
+| `--folio-status-active-bg` | `--projex-status-active-bg` |
+| `--folio-status-active-text` | `--projex-status-active-text` |
+| `--folio-status-shipped-bg` | `--projex-status-shipped-bg` |
+| `--folio-status-shipped-text` | `--projex-status-shipped-text` |
+| `--folio-status-in-progress-bg` | `--projex-status-in-progress-bg` |
+| `--folio-status-in-progress-text` | `--projex-status-in-progress-text` |
+| `--folio-status-coming-soon-bg` | `--projex-status-coming-soon-bg` |
+| `--folio-status-coming-soon-text` | `--projex-status-coming-soon-text` |
+| `--folio-status-archived-bg` | `--projex-status-archived-bg` |
+| `--folio-status-archived-text` | `--projex-status-archived-text` |
+| `--folio-status-for-sale-bg` | `--projex-status-for-sale-bg` |
+| `--folio-status-for-sale-text` | `--projex-status-for-sale-text` |
+
+### CSS Class Names
+
+The `folio-link` CSS class has been renamed to `projex-link`. If you have any custom styles targeting this class, update them:
+
+**Find:** `.folio-link`
+**Replace with:** `.projex-link`
+
 ### URL Updates
 
 Update any documentation or repository URLs:
@@ -340,13 +396,15 @@ pnpm build
 
 **Problem:** Styles not applying after Folio → Projex migration
 
-**Cause:** CSS selectors still reference old data attributes.
+**Cause:** CSS selectors and/or custom properties still reference old Folio names.
 
-**Solution:** Run global find and replace in CSS files:
+**Solution:** Run global find and replace in CSS files for both data attributes and CSS custom properties:
 
 ```bash
 # Using sed (Linux/Mac)
 find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-projex-/g'
+find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/--folio-/--projex-/g'
+find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/.folio-link/.projex-link/g'
 ```
 
 ### TypeScript Errors After Upgrade

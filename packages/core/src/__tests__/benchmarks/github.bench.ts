@@ -1,14 +1,14 @@
 import { bench, describe, beforeAll, vi } from 'vitest'
 
 const mockGitHubResponse = {
-  name: 'folio',
+  name: 'projex',
   description: 'A component library for project showcases',
   stargazers_count: 1234,
   forks_count: 56,
   language: 'TypeScript',
   topics: ['react', 'typescript', 'portfolio', 'components'],
-  html_url: 'https://github.com/test/folio',
-  homepage: 'https://folio.dev',
+  html_url: 'https://github.com/test/projex',
+  homepage: 'https://projex.manningworks.dev',
   created_at: '2024-01-01T00:00:00Z',
   updated_at: '2024-06-01T00:00:00Z',
 }
@@ -22,14 +22,14 @@ describe('fetchGitHubRepo performance', () => {
   })
 
   bench('fetchGitHubRepo with cache (build strategy simulation)', async () => {
-    const response = await fetch('https://api.github.com/repos/test/folio', {
+    const response = await fetch('https://api.github.com/repos/test/projex', {
       cache: 'force-cache',
     })
     await response.json()
   })
 
   bench('fetchGitHubRepo without cache (runtime strategy simulation)', async () => {
-    const response = await fetch('https://api.github.com/repos/test/folio', {
+    const response = await fetch('https://api.github.com/repos/test/projex', {
       cache: 'no-store',
     })
     await response.json()

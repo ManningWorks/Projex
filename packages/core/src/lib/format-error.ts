@@ -147,7 +147,7 @@ export function formatZodError(error: z.ZodError): string {
   const hasTypeIssues = error.issues.some((i) => i.code === 'invalid_type')
   const hasEnumIssues = error.issues.some((i) => i.code === 'invalid_enum_value')
   if (hasTypeIssues || hasEnumIssues) {
-    lines.push(chalk.gray('Refer to the docs: https://folio.dev/docs/config'))
+    lines.push(chalk.gray('Refer to the docs: https://projex.manningworks.dev/docs/config'))
   }
 
   return lines.join('\n')

@@ -1,12 +1,12 @@
 import { bench, describe, beforeAll, vi } from 'vitest'
 
 const mockDownloadsResponse = {
-  package: 'folio-core',
+  package: 'projex',
   downloads: 123456,
 }
 
 const mockRegistryResponse = {
-  name: 'folio-core',
+  name: 'projex',
   'dist-tags': {
     latest: '1.2.3',
   },
@@ -35,10 +35,10 @@ describe('fetchNpmPackage performance', () => {
 
   bench('fetchNpmPackage (parallel fetch simulation)', async () => {
     const [downloadsResponse, registryResponse] = await Promise.all([
-      fetch('https://api.npmjs.org/downloads/point/last-month/folio-core', {
+      fetch('https://api.npmjs.org/downloads/point/last-month/projex', {
         cache: 'force-cache',
       }),
-      fetch('https://registry.npmjs.org/folio-core', {
+      fetch('https://registry.npmjs.org/projex', {
         cache: 'force-cache',
       }),
     ])

@@ -137,7 +137,7 @@ function ManualProjects({ projects }) {
 As a preset component, `ShowcaseCard` is copied to your project and can be freely modified:
 
 ```tsx
-// components/folio/ShowcaseCard/ShowcaseCard.tsx
+// components/projex/ShowcaseCard/ShowcaseCard.tsx
 function ShowcaseCard({ children }: { children?: ReactNode }) {
   // Your customizations here
 }

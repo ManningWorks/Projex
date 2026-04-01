@@ -461,7 +461,7 @@ describe('config-schema', () => {
       expect(result.success).toBe(false)
       if (!result.success) {
         const error = formatZodError(result.error)
-        expect(error).toContain('https://folio.dev/docs/config')
+        expect(error).toContain('https://projex.manningworks.dev/docs/config')
       }
     })
   })

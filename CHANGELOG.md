@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2026-04-02
+
+### Fixed
+
+- **Unscoped `npx projex` commands in docs and CLI** — All `npx projex` references replaced with `npx @manningworks/projex` across 19 files. Without this fix, users following the documentation would install an unrelated npm package.
+- **Stale "Folio" references in source and docs** — Replaced remaining `folio` paths, URLs, and error messages with correct `projex` equivalents across 8 files (component paths, `projex.manningworks.dev` URLs, CLI error messages, benchmark fixtures).
+- **CLI version mismatch** — `packages/core/src/cli.ts` hardcoded `.version('1.3.0')` instead of reading dynamically from `package.json`. Now reads version at runtime.
+- **`--folio-*` CSS custom properties** — Renamed all `--folio-*` CSS variables to `--projex-*` (~170+ replacements across `ProjectCard.tsx`, theme files, and docs stylesheets for brand consistency).
+- **`.folio-*` CSS class names** — Renamed `.folio-link` and related classes to `.projex-*` equivalents in `ProjectCard.tsx`.
+- **`data-folio-*` selectors in docs** — Renamed all `data-folio-*` attribute selectors to `data-projex-*` in VitePress theme styles.
+- **Inconsistent VitePress internal links** — Removed `.md` extensions from 7 internal links that caused navigation issues.
+- **Redundant note in docs index** — Removed duplicated note in `packages/docs/src/index.md`.
+
+### Changed
+
+- **Migration guide** — Added "CSS Custom Properties" section with full variable mapping table and `sed`/PowerShell migration commands. Added "CSS Class Names" section and updated "Styles Not Applying" troubleshooting with all three rename patterns.
+
+---
+
 ## [1.1.3] - 2026-03-11
 
 ### Fixed

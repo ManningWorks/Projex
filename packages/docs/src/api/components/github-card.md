@@ -151,7 +151,7 @@ function GitHubProjects({ projects }) {
 As a preset component, `GitHubCard` is copied to your project and can be freely modified:
 
 ```tsx
-// components/folio/GitHubCard/GitHubCard.tsx
+// components/projex/GitHubCard/GitHubCard.tsx
 function GitHubCard({ project, showForks = true, statsComponent, children }: GitHubCardProps) {
   // Your customizations here
 }

@@ -244,28 +244,28 @@ Each status has dedicated CSS custom properties for background and text color:
 ```css
 :root {
   /* Active - Green */
-  --folio-status-active-bg: #dcfce7;
-  --folio-status-active-text: #166534;
+  --projex-status-active-bg: #dcfce7;
+  --projex-status-active-text: #166534;
 
   /* Shipped - Blue */
-  --folio-status-shipped-bg: #dbeafe;
-  --folio-status-shipped-text: #1e40af;
+  --projex-status-shipped-bg: #dbeafe;
+  --projex-status-shipped-text: #1e40af;
 
   /* In Progress - Amber */
-  --folio-status-in-progress-bg: #fef3c7;
-  --folio-status-in-progress-text: #92400e;
+  --projex-status-in-progress-bg: #fef3c7;
+  --projex-status-in-progress-text: #92400e;
 
   /* Coming Soon - Purple */
-  --folio-status-coming-soon-bg: #f3e8ff;
-  --folio-status-coming-soon-text: #7c3aed;
+  --projex-status-coming-soon-bg: #f3e8ff;
+  --projex-status-coming-soon-text: #7c3aed;
 
   /* Archived - Gray */
-  --folio-status-archived-bg: #f1f5f9;
-  --folio-status-archived-text: #475569;
+  --projex-status-archived-bg: #f1f5f9;
+  --projex-status-archived-text: #475569;
 
   /* For Sale - Red */
-  --folio-status-for-sale-bg: #fee2e2;
-  --folio-status-for-sale-text: #991b1b;
+  --projex-status-for-sale-bg: #fee2e2;
+  --projex-status-for-sale-text: #991b1b;
 }
 ```
 
@@ -274,8 +274,8 @@ Override any status color by redefining the custom property:
 ```css
 /* Make "active" use your brand color */
 :root {
-  --folio-status-active-bg: #eef2ff;
-  --folio-status-active-text: #3730a3;
+  --projex-status-active-bg: #eef2ff;
+  --projex-status-active-text: #3730a3;
 }
 ```
 

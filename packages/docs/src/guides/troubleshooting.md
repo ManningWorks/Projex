@@ -159,7 +159,7 @@ For mission-critical data:
 **Symptom:** TypeScript error "Cannot find module" or "Cannot find name"
 
 **Solutions:**
-- Using CLI: Components are copied to `components/folio/<ComponentName>/` with types in `components/folio/types.ts`
+- Using CLI: Components are copied to `components/projex/<ComponentName>/` with types in `components/projex/types.ts`
 - Using npm package: Import from `@manningworks/projex` package
 - Check TypeScript config includes component directory
 
@@ -174,7 +174,7 @@ For mission-critical data:
 
 ### CLI Command Not Found
 
-**Symptom:** `folio: command not found`
+**Symptom:** `projex: command not found`
 
 **Solutions:**
 - Use `npx @manningworks/projex <command>` - no installation required

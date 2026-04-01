@@ -54,7 +54,7 @@ status: Invalid enum value. Expected one of: active, shipped, in-progress, comin
   Hint: Expected one of: active, shipped, in-progress, coming-soon, archived, for-sale
 
 Tip: Check your projex.config.ts for the errors above.
-Refer to docs: https://folio.dev/docs/config
+Refer to docs: https://projex.manningworks.dev/docs/config
 ```
 
 ## Supported Error Types

@@ -610,33 +610,33 @@ All components use CSS custom properties with fallback values. This allows fine-
 
 ```css
 :root {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-radius: 8px;
-  --folio-card-padding: 16px;
-  --folio-card-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-radius: 8px;
+  --projex-card-padding: 16px;
+  --projex-card-text: #374151;
 
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
-  --folio-tag-radius: 4px;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
+  --projex-tag-radius: 4px;
 
-  --folio-stats-label: #6b7280;
-  --folio-stats-value: #374151;
+  --projex-stats-label: #6b7280;
+  --projex-stats-value: #374151;
 
-  --folio-link-text: #374151;
+  --projex-link-text: #374151;
 
-  --folio-status-active-bg: #dcfce7;
-  --folio-status-active-text: #166534;
-  --folio-status-shipped-bg: #dbeafe;
-  --folio-status-shipped-text: #1e40af;
-  --folio-status-in-progress-bg: #fef3c7;
-  --folio-status-in-progress-text: #92400e;
-  --folio-status-coming-soon-bg: #f3e8ff;
-  --folio-status-coming-soon-text: #7c3aed;
-  --folio-status-archived-bg: #f1f5f9;
-  --folio-status-archived-text: #475569;
-  --folio-status-for-sale-bg: #fee2e2;
-  --folio-status-for-sale-text: #991b1b;
+  --projex-status-active-bg: #dcfce7;
+  --projex-status-active-text: #166534;
+  --projex-status-shipped-bg: #dbeafe;
+  --projex-status-shipped-text: #1e40af;
+  --projex-status-in-progress-bg: #fef3c7;
+  --projex-status-in-progress-text: #92400e;
+  --projex-status-coming-soon-bg: #f3e8ff;
+  --projex-status-coming-soon-text: #7c3aed;
+  --projex-status-archived-bg: #f1f5f9;
+  --projex-status-archived-text: #475569;
+  --projex-status-for-sale-bg: #fee2e2;
+  --projex-status-for-sale-text: #991b1b;
 }
 ```
 
@@ -645,12 +645,12 @@ All components use CSS custom properties with fallback values. This allows fine-
 ```css
 /* Override only GitHub-type cards */
 [data-projex-type-value="github"] {
-  --folio-card-bg: #f0fdf4;
+  --projex-card-bg: #f0fdf4;
 }
 
 /* Override specific project by ID */
 [data-projex-card="my-project"] {
-  --folio-card-border: #10b981;
+  --projex-card-border: #10b981;
 }
 ```
 

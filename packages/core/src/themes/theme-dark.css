@@ -1,92 +1,92 @@
 :root,
 [data-theme="light"] {
-  --folio-card-bg: #ffffff;
-  --folio-card-border: #e5e7eb;
-  --folio-card-radius: 8px;
-  --folio-card-padding: 16px;
-  --folio-card-text: #374151;
+  --projex-card-bg: #ffffff;
+  --projex-card-border: #e5e7eb;
+  --projex-card-radius: 8px;
+  --projex-card-padding: 16px;
+  --projex-card-text: #374151;
 
-  --folio-tag-bg: #f3f4f6;
-  --folio-tag-text: #374151;
-  --folio-tag-radius: 4px;
+  --projex-tag-bg: #f3f4f6;
+  --projex-tag-text: #374151;
+  --projex-tag-radius: 4px;
 
-  --folio-stats-label: #6b7280;
-  --folio-stats-value: #374151;
+  --projex-stats-label: #6b7280;
+  --projex-stats-value: #374151;
 
-  --folio-link-text: #374151;
+  --projex-link-text: #374151;
 
-  --folio-status-active-bg: #dcfce7;
-  --folio-status-active-text: #166534;
-  --folio-status-shipped-bg: #dbeafe;
-  --folio-status-shipped-text: #1e40af;
-  --folio-status-in-progress-bg: #fef3c7;
-  --folio-status-in-progress-text: #92400e;
-  --folio-status-coming-soon-bg: #f3e8ff;
-  --folio-status-coming-soon-text: #7c3aed;
-  --folio-status-archived-bg: #f1f5f9;
-  --folio-status-archived-text: #475569;
-  --folio-status-for-sale-bg: #fee2e2;
-  --folio-status-for-sale-text: #991b1b;
+  --projex-status-active-bg: #dcfce7;
+  --projex-status-active-text: #166534;
+  --projex-status-shipped-bg: #dbeafe;
+  --projex-status-shipped-text: #1e40af;
+  --projex-status-in-progress-bg: #fef3c7;
+  --projex-status-in-progress-text: #92400e;
+  --projex-status-coming-soon-bg: #f3e8ff;
+  --projex-status-coming-soon-text: #7c3aed;
+  --projex-status-archived-bg: #f1f5f9;
+  --projex-status-archived-text: #475569;
+  --projex-status-for-sale-bg: #fee2e2;
+  --projex-status-for-sale-text: #991b1b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --folio-card-bg: #1a1a1a;
-    --folio-card-border: #333333;
-    --folio-card-radius: 8px;
-    --folio-card-padding: 16px;
-    --folio-card-text: #e0e0e0;
+    --projex-card-bg: #1a1a1a;
+    --projex-card-border: #333333;
+    --projex-card-radius: 8px;
+    --projex-card-padding: 16px;
+    --projex-card-text: #e0e0e0;
 
-    --folio-tag-bg: #2d2d2d;
-    --folio-tag-text: #e0e0e0;
-    --folio-tag-radius: 4px;
+    --projex-tag-bg: #2d2d2d;
+    --projex-tag-text: #e0e0e0;
+    --projex-tag-radius: 4px;
 
-    --folio-stats-label: #9ca3af;
-    --folio-stats-value: #e0e0e0;
+    --projex-stats-label: #9ca3af;
+    --projex-stats-value: #e0e0e0;
 
-    --folio-link-text: #e0e0e0;
+    --projex-link-text: #e0e0e0;
 
-    --folio-status-active-bg: #14532d;
-    --folio-status-active-text: #86efac;
-    --folio-status-shipped-bg: #1e3a8a;
-    --folio-status-shipped-text: #93c5fd;
-    --folio-status-in-progress-bg: #78350f;
-    --folio-status-in-progress-text: #fde047;
-    --folio-status-coming-soon-bg: #581c87;
-    --folio-status-coming-soon-text: #d8b4fe;
-    --folio-status-archived-bg: #334155;
-    --folio-status-archived-text: #94a3b8;
-    --folio-status-for-sale-bg: #7f1d1d;
-    --folio-status-for-sale-text: #fca5a5;
+    --projex-status-active-bg: #14532d;
+    --projex-status-active-text: #86efac;
+    --projex-status-shipped-bg: #1e3a8a;
+    --projex-status-shipped-text: #93c5fd;
+    --projex-status-in-progress-bg: #78350f;
+    --projex-status-in-progress-text: #fde047;
+    --projex-status-coming-soon-bg: #581c87;
+    --projex-status-coming-soon-text: #d8b4fe;
+    --projex-status-archived-bg: #334155;
+    --projex-status-archived-text: #94a3b8;
+    --projex-status-for-sale-bg: #7f1d1d;
+    --projex-status-for-sale-text: #fca5a5;
   }
 }
 
 [data-theme="dark"] {
-  --folio-card-bg: #1a1a1a;
-  --folio-card-border: #333333;
-  --folio-card-radius: 8px;
-  --folio-card-padding: 16px;
-  --folio-card-text: #e0e0e0;
+  --projex-card-bg: #1a1a1a;
+  --projex-card-border: #333333;
+  --projex-card-radius: 8px;
+  --projex-card-padding: 16px;
+  --projex-card-text: #e0e0e0;
 
-  --folio-tag-bg: #2d2d2d;
-  --folio-tag-text: #e0e0e0;
-  --folio-tag-radius: 4px;
+  --projex-tag-bg: #2d2d2d;
+  --projex-tag-text: #e0e0e0;
+  --projex-tag-radius: 4px;
 
-  --folio-stats-label: #9ca3af;
-  --folio-stats-value: #e0e0e0;
+  --projex-stats-label: #9ca3af;
+  --projex-stats-value: #e0e0e0;
 
-  --folio-link-text: #e0e0e0;
+  --projex-link-text: #e0e0e0;
 
-  --folio-status-active-bg: #14532d;
-  --folio-status-active-text: #86efac;
-  --folio-status-shipped-bg: #1e3a8a;
-  --folio-status-shipped-text: #93c5fd;
-  --folio-status-in-progress-bg: #78350f;
-  --folio-status-in-progress-text: #fde047;
-  --folio-status-coming-soon-bg: #581c87;
-  --folio-status-coming-soon-text: #d8b4fe;
-  --folio-status-archived-bg: #334155;
-  --folio-status-archived-text: #94a3b8;
-  --folio-status-for-sale-bg: #7f1d1d;
-  --folio-status-for-sale-text: #fca5a5;
+  --projex-status-active-bg: #14532d;
+  --projex-status-active-text: #86efac;
+  --projex-status-shipped-bg: #1e3a8a;
+  --projex-status-shipped-text: #93c5fd;
+  --projex-status-in-progress-bg: #78350f;
+  --projex-status-in-progress-text: #fde047;
+  --projex-status-coming-soon-bg: #581c87;
+  --projex-status-coming-soon-text: #d8b4fe;
+  --projex-status-archived-bg: #334155;
+  --projex-status-archived-text: #94a3b8;
+  --projex-status-for-sale-bg: #7f1d1d;
+  --projex-status-for-sale-text: #fca5a5;
 }
