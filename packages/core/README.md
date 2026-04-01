@@ -8,7 +8,7 @@ A shadcn-style component library for building developer portfolio pages. Drop in
 
 ## Why use Projex?
 
-**Auto-discover your GitHub repos** — Run `npx projex init --github` to auto-detect all your public repos and generate a pre-populated config file.
+**Auto-discover your GitHub repos** — Run `npx @manningworks/projex init --github` to auto-detect all your public repos and generate a pre-populated config file.
 
 **Zero runtime API calls** — All data fetched at build time. No rate limits at runtime, fresh data on every rebuild.
 
@@ -22,13 +22,13 @@ A shadcn-style component library for building developer portfolio pages. Drop in
 
 ```bash
 # Auto-discover your GitHub repos
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Add components to your project
-npx projex add project-card
+npx @manningworks/projex add project-card
 
 # Add a pre-built theme
-npx projex add theme-minimal
+npx @manningworks/projex add theme-minimal
 ```
 
 ```tsx
@@ -59,16 +59,16 @@ export function ProjectsGrid() {
 
 ```bash
 # Initialize with auto GitHub discovery
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Copy components to your project
-npx projex add project-card
-npx projex add project-view
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-view
 
 # Add pre-built themes
-npx projex add theme-minimal
-npx projex add theme-dark
-npx projex add theme-gradient
+npx @manningworks/projex add theme-minimal
+npx @manningworks/projex add theme-dark
+npx @manningworks/projex add theme-gradient
 ```
 
 The CLI automatically installs the `@manningworks/projex` package as a dependency, and copied components import types directly from it.
@@ -125,9 +125,9 @@ Every rendered element has a `data-projex-*` attribute for styling:
 Or use pre-built themes:
 
 ```bash
-npx projex add theme-minimal
-npx projex add theme-dark
-npx projex add theme-gradient
+npx @manningworks/projex add theme-minimal
+npx @manningworks/projex add theme-dark
+npx @manningworks/projex add theme-gradient
 ```
 
 [Styling guide →](https://projex.manningworks.dev/guides/styling)

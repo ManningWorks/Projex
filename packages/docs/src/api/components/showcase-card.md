@@ -5,7 +5,7 @@ Pre-built card component for manual projects. Displays project name, description
 ## Installation
 
 ```bash
-npx projex add showcase-card
+npx @manningworks/projex add showcase-card
 ```
 
 ## Import

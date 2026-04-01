@@ -82,8 +82,8 @@ npx folio init
 npx folio add
 
 # New
-npx projex init
-npx projex add
+npx @manningworks/projex init
+npx @manningworks/projex add
 ```
 
 ### CSS Styling Updates
@@ -279,8 +279,8 @@ pnpm update @manningworks/projex
 If you copied components using the CLI, re-add them after updating to get the latest versions:
 
 ```bash
-npx projex add project-card --force
-npx projex add project-view --force
+npx @manningworks/projex add project-card --force
+npx @manningworks/projex add project-view --force
 ```
 
 The `--force` flag overwrites existing files with the latest versions.
@@ -364,7 +364,7 @@ find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-pro
 
 3. If using CLI-copied components, re-add them:
    ```bash
-   npx projex add project-card --force
+   npx @manningworks/projex add project-card --force
    ```
 
 ### Missing Features After Upgrade
@@ -385,7 +385,7 @@ find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-pro
 
 3. If using CLI-copied components, re-add them to get latest code:
    ```bash
-   npx projex add <component-name> --force
+   npx @manningworks/projex add <component-name> --force
    ```
 
 ### Build Fails After Upgrade
@@ -412,7 +412,7 @@ find . -name "*.css" -o -name "*.scss" | xargs sed -i '' 's/data-folio-/data-pro
 
 ### CLI Commands Not Working
 
-**Problem:** `npx projex` commands fail after upgrade.
+**Problem:** `npx @manningworks/projex` commands fail after upgrade.
 
 **Solution:**
 

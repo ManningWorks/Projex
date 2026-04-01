@@ -13,7 +13,7 @@ pnpm add @manningworks/projex
 Now you can use:
 
 ```bash
-npx projex <command>
+npx @manningworks/projex <command>
 ```
 
 Or install globally:
@@ -29,7 +29,7 @@ npm install -g @manningworks/projex
 Initialize a new Projex project with a `projex.config.ts` file.
 
 ```bash
-npx projex init
+npx @manningworks/projex init
 ```
 
 This creates a basic configuration template with a sample project.
@@ -71,7 +71,7 @@ export const projects = defineProjects([
 Auto-detect your GitHub repositories and create a pre-populated config.
 
 ```bash
-npx projex init --github
+npx @manningworks/projex init --github
 ```
 
 **What it does:**
@@ -92,7 +92,7 @@ npx projex init --github
 **Example with --yes:**
 
 ```bash
-npx projex init --github --yes
+npx @manningworks/projex init --github --yes
 ```
 
 This uses your git config username without prompting.
@@ -104,7 +104,7 @@ This uses your git config username without prompting.
 Create a config using git config without prompts.
 
 ```bash
-npx projex init --yes
+npx @manningworks/projex init --yes
 ```
 
 Uses your git `user.name` configuration for GitHub username when combined with `--github`.
@@ -116,7 +116,7 @@ Uses your git `user.name` configuration for GitHub username when combined with `
 Add a Projex component or theme to your project.
 
 ```bash
-npx projex add project-card
+npx @manningworks/projex add project-card
 ```
 
 **Available components:**
@@ -166,7 +166,7 @@ Import usage:
 Overwrite existing component files without prompting.
 
 ```bash
-npx projex add project-card --force
+npx @manningworks/projex add project-card --force
 ```
 
 Useful when updating to a new version or re-adding components.
@@ -178,9 +178,9 @@ Useful when updating to a new version or re-adding components.
 Add a pre-built theme to your project.
 
 ```bash
-npx projex add theme-minimal
-npx projex add theme-dark
-npx projex add theme-gradient
+npx @manningworks/projex add theme-minimal
+npx @manningworks/projex add theme-dark
+npx @manningworks/projex add theme-gradient
 ```
 
 **What it does:**
@@ -210,7 +210,7 @@ Import usage:
 Fine-grained personal access token for GitHub API.
 
 ```bash
-GITHUB_TOKEN=github_pat_xxx npx projex init --github
+GITHUB_TOKEN=github_pat_xxx npx @manningworks/projex init --github
 ```
 
 **Why use it:**
@@ -255,38 +255,38 @@ Only required if using `type: 'product-hunt'` in your config.
 
 ```bash
 # Initialize with your GitHub repos
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Add the ProjectCard component
-npx projex add project-card
+npx @manningworks/projex add project-card
 
 # Install dependencies
 pnpm install
 
 # Add styling
-npx projex add theme-minimal
+npx @manningworks/projex add theme-minimal
 ```
 
 ### Manual Project Setup
 
 ```bash
 # Initialize basic config
-npx projex init
+npx @manningworks/projex init
 
 # Add components you need
-npx projex add project-card
-npx projex add project-view
-npx projex add project-grid
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-view
+npx @manningworks/projex add project-grid
 
 # Add dark mode theme
-npx projex add theme-dark
+npx @manningworks/projex add theme-dark
 ```
 
 ### Update Components
 
 ```bash
 # Force overwrite to update
-npx projex add project-card --force
+npx @manningworks/projex add project-card --force
 ```
 
 ---
@@ -322,7 +322,7 @@ Ensure you have write permissions.
 Set a `GITHUB_TOKEN`:
 
 ```bash
-GITHUB_TOKEN=github_pat_xxx npx projex init --github
+GITHUB_TOKEN=github_pat_xxx npx @manningworks/projex init --github
 ```
 
 See [Fetch Strategy](./guides/fetch-strategy) for more details.
@@ -332,7 +332,7 @@ See [Fetch Strategy](./guides/fetch-strategy) for more details.
 Check available components:
 
 ```bash
-npx projex add
+npx @manningworks/projex add
 ```
 
 This lists all available components and themes.
@@ -345,7 +345,7 @@ You have two ways to use Projex:
 
 ### CLI (Copy-Paste)
 
-Use `npx projex add` to copy components:
+Use `npx @manningworks/projex add` to copy components:
 
 ```tsx
 // Import from copied files

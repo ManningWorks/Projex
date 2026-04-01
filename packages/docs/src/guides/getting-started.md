@@ -211,9 +211,9 @@ Add `featured: true` to your best project:
 Add the components you'll need:
 
 ```bash
-npx projex add project-card
-npx projex add project-grid
-npx projex add featured-project
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-grid
+npx @manningworks/projex add featured-project
 ```
 
 Install dependencies:
@@ -227,7 +227,7 @@ pnpm install
 Install a pre-built theme:
 
 ```bash
-npx projex add theme-minimal
+npx @manningworks/projex add theme-minimal
 ```
 
 Import the theme in your layout:

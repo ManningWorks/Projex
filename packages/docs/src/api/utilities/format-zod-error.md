@@ -84,7 +84,7 @@ This function is used internally by the CLI to display helpful validation errors
 
 ```bash
 # User provides invalid config
-npx projex init
+npx @manningworks/projex init
 
 # CLI outputs formatted error
 ✖ Validation failed

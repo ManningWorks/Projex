@@ -5,7 +5,7 @@ Pre-built card component for GitHub projects. Displays project name, description
 ## Installation
 
 ```bash
-npx projex add github-card
+npx @manningworks/projex add github-card
 ```
 
 ## Import

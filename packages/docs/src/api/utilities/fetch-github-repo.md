@@ -174,11 +174,11 @@ if (result.data) {
 
 ### Usage in CLI
 
-This function is used internally by `npx projex init --github`:
+This function is used internally by `npx @manningworks/projex init --github`:
 
 ```bash
 # Interactive CLI uses fetchGitHubRepos
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Prompts for username, fetches all repos, generates config
 ```

@@ -218,18 +218,18 @@ async function generateGitHubConfig(yes = false): Promise<string> {
         console.log(chalk.yellow('  Recommended: Set GITHUB_TOKEN for 5000 requests/hour'))
         console.log(chalk.yellow('  Create token: https://github.com/settings/personal-access-token/new'))
       }
-      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx @manningworks/projex init" for a basic scaffold instead.'))
     } else if (result.error === 'network') {
       console.log(chalk.red('✖ Failed to fetch repositories from GitHub'))
       console.log(chalk.gray('  Check your network connection and try again.'))
-      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx @manningworks/projex init" for a basic scaffold instead.'))
     } else if (result.error === 'not_found') {
       console.log(chalk.red(`✖ GitHub user "${username}" not found`))
       console.log(chalk.gray('  Check username and try again.'))
-      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx @manningworks/projex init" for a basic scaffold instead.'))
     } else {
       console.log(chalk.red('✖ Failed to fetch repositories from GitHub'))
-      console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
+      console.log(chalk.gray('  Run "npx @manningworks/projex init" for a basic scaffold instead.'))
     }
     process.exit(1)
   }
@@ -243,7 +243,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
     console.log()
     console.log(chalk.gray('Suggestions:'))
     console.log(chalk.gray('  1. Set GITHUB_TOKEN (fine-grained PAT with Contents read-only)'))
-    console.log(chalk.gray('  2. Run "npx projex init" for a basic scaffold instead'))
+    console.log(chalk.gray('  2. Run "npx @manningworks/projex init" for a basic scaffold instead'))
     console.log(chalk.gray('  3. Check your GitHub username and try again'))
     process.exit(1)
   }
@@ -276,7 +276,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
   if (finalRepos.length === 0) {
     console.log(chalk.yellow('✖ No repositories match your criteria'))
     console.log(chalk.gray('  Try including forks or check your repository descriptions.'))
-    console.log(chalk.gray('  Run "npx projex init" for a basic scaffold instead.'))
+    console.log(chalk.gray('  Run "npx @manningworks/projex init" for a basic scaffold instead.'))
     process.exit(1)
   }
 

@@ -93,7 +93,7 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
       console.log(chalk.gray(`  - ${name}`))
     })
     console.log()
-    console.log(chalk.gray('Usage: npx projex add <component-name>'))
+    console.log(chalk.gray('Usage: npx @manningworks/projex add <component-name>'))
     process.exit(1)
   }
 

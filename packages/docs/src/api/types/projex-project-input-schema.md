@@ -175,7 +175,7 @@ The schema is used internally by the CLI for `projex.config.ts` validation:
 
 ```bash
 # Invalid config
-npx projex init
+npx @manningworks/projex init
 
 # Output:
 # ✖ Validation failed

@@ -149,7 +149,7 @@ CSS for the filter bar and active states:
 }
 ```
 
-See the [Styling Guide](../guides/styling.md) for more CSS examples.
+See the [Styling Guide](../guides/styling) for more CSS examples.
 
 ## Tips
 

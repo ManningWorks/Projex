@@ -161,7 +161,7 @@ GUMROAD_TOKEN=your_gumroad_access_token
 }
 ```
 
-For more styling patterns, see the [Styling Guide](../guides/styling.md).
+For more styling patterns, see the [Styling Guide](../guides/styling).
 
 ## Tips
 

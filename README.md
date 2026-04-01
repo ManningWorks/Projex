@@ -16,7 +16,7 @@ Every developer eventually builds a projects page, and almost every developer bu
 
 **Projex solves this by:**
 
-- **Auto-discover GitHub repos** — Run `npx projex init --github` and get all your public repos pre-configured
+- **Auto-discover GitHub repos** — Run `npx @manningworks/projex init --github` and get all your public repos pre-configured
 - **Zero runtime API calls** — All data fetched at build time. No rate limits at runtime, fresh data on every rebuild
 - **Mix project types** — GitHub, npm, Product Hunt, YouTube, Gumroad, manual work — all in one place
 - **Copy-paste components** — You own the code. Customize, refactor, or extend anything
@@ -24,7 +24,7 @@ Every developer eventually builds a projects page, and almost every developer bu
 
 ## Who is Projex for?
 
-**OSS maintainers** — Auto-detect all your GitHub repositories with `npx projex init --github`. Stars, forks, and language data populate automatically.
+**OSS maintainers** — Auto-detect all your GitHub repositories with `npx @manningworks/projex init --github`. Stars, forks, and language data populate automatically.
 
 **Freelancers** — Showcase client work with manual projects. Full control over descriptions, tags, and links. Mix with GitHub repos for open source contributions.
 
@@ -38,13 +38,13 @@ Every developer eventually builds a projects page, and almost every developer bu
 
 ```bash
 # Auto-discover your GitHub repos
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Add components to your project
-npx projex add project-card
+npx @manningworks/projex add project-card
 
 # Add a pre-built theme
-npx projex add theme-minimal
+npx @manningworks/projex add theme-minimal
 ```
 
 ```tsx
@@ -71,16 +71,16 @@ export function ProjectsGrid() {
 
 ```bash
 # Initialize with auto GitHub discovery
-npx projex init --github
+npx @manningworks/projex init --github
 
 # Copy components to your project
-npx projex add project-card
-npx projex add project-view
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-view
 
 # Add pre-built themes
-npx projex add theme-minimal
-npx projex add theme-dark
-npx projex add theme-gradient
+npx @manningworks/projex add theme-minimal
+npx @manningworks/projex add theme-dark
+npx @manningworks/projex add theme-gradient
 ```
 
 The CLI automatically installs the `@manningworks/projex` package as a dependency, and copied components import types directly from it.

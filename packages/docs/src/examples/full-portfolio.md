@@ -142,7 +142,7 @@ CSS for the featured section and layouts:
 }
 ```
 
-See the [Styling Guide](../guides/styling.md) for comprehensive CSS examples.
+See the [Styling Guide](../guides/styling) for comprehensive CSS examples.
 
 ## Tips
 

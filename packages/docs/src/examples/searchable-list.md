@@ -108,7 +108,7 @@ CSS for the search input and list layout:
 }
 ```
 
-See the [Styling Guide](../guides/styling.md) for more CSS examples.
+See the [Styling Guide](../guides/styling) for more CSS examples.
 
 ## Tips
 

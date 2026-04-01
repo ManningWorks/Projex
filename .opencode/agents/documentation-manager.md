@@ -166,8 +166,8 @@ Verify READMEs match actual capabilities:
 Check by:
 ```bash
 # Test quick start commands
-npx projex init
-npx projex add project-card
+npx @manningworks/projex init
+npx @manningworks/projex add project-card
 
 # Verify imports work
 grep -r "import.*from '@manningworks/projex'" README.md packages/core/README.md
@@ -197,13 +197,13 @@ cat packages/docs/src/api/components/ProjectCard.md
 Verify CLI documentation matches actual commands:
 ```bash
 # List available commands
-npx projex --help
+npx @manningworks/projex --help
 
 # Check for init
-npx projex init --help
+npx @manningworks/projex init --help
 
 # Check for add
-npx projex add --help
+npx @manningworks/projex add --help
 ```
 
 ### Data Attributes

@@ -64,4 +64,4 @@ These examples demonstrate:
 
 ## Build Your Own
 
-Ready to create your own portfolio? Check out the [Styling Guide](./styling.md) and [Examples](../examples/) to get started.
+Ready to create your own portfolio? Check out the [Styling Guide](./styling) and [Examples](../examples/) to get started.

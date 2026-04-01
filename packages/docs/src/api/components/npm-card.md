@@ -5,7 +5,7 @@ Compound card component for npm packages. Use subcomponents to build custom npm 
 ## Installation
 
 ```bash
-npx projex add npm-card
+npx @manningworks/projex add npm-card
 ```
 
 ## Import

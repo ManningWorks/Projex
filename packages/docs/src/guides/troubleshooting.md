@@ -178,6 +178,6 @@ For mission-critical data:
 
 **Solutions:**
 - Use `npx @manningworks/projex <command>` - no installation required
-- Or install the package first: `pnpm add @manningworks/projex` then use `npx projex <command>`
+- Or install the package first: `pnpm add @manningworks/projex` then use `npx @manningworks/projex <command>`
 - Or install globally: `npm install -g @manningworks/projex`
 - Check Node.js version: `node --version` (requires 18+)

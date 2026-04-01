@@ -146,7 +146,7 @@ The components generate semantic HTML with `data-projex-*` attributes for stylin
 </div>
 ```
 
-See the [Styling Guide](../guides/styling.md) for comprehensive CSS examples.
+See the [Styling Guide](../guides/styling) for comprehensive CSS examples.
 
 ## Styling Example
 
@@ -230,7 +230,7 @@ Basic CSS to style the cards:
 }
 ```
 
-For more styling patterns, see the [Styling Guide](../guides/styling.md).
+For more styling patterns, see the [Styling Guide](../guides/styling).
 
 ## Tips
 

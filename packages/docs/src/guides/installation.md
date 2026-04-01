@@ -84,22 +84,22 @@ Use the CLI to add components (works with both methods):
 
 ```bash
 # Base components
-npx projex add project-card
-npx projex add project-view
-npx projex add project-grid
-npx projex add project-list
-npx projex add featured-project
+npx @manningworks/projex add project-card
+npx @manningworks/projex add project-view
+npx @manningworks/projex add project-grid
+npx @manningworks/projex add project-list
+npx @manningworks/projex add featured-project
 
 # Preset components (ready to use)
-npx projex add github-card
-npx projex add npm-card
-npx projex add showcase-card
+npx @manningworks/projex add github-card
+npx @manningworks/projex add npm-card
+npx @manningworks/projex add showcase-card
 
 # Interactive components
-npx projex add project-search
-npx projex add project-filter-bar
-npx projex add project-filter-tag
-npx projex add project-sort
+npx @manningworks/projex add project-search
+npx @manningworks/projex add project-filter-bar
+npx @manningworks/projex add project-filter-tag
+npx @manningworks/projex add project-sort
 ```
 
 ## Adding Themes
@@ -107,9 +107,9 @@ npx projex add project-sort
 Install pre-built themes for instant styling:
 
 ```bash
-npx projex add theme-minimal    # Clean light theme
-npx projex add theme-dark        # Dark mode with system preference
-npx projex add theme-gradient    # Purple gradient theme
+npx @manningworks/projex add theme-minimal    # Clean light theme
+npx @manningworks/projex add theme-dark        # Dark mode with system preference
+npx @manningworks/projex add theme-gradient    # Purple gradient theme
 ```
 
 Themes are copied to `styles/projex-<theme-name>.css`. Import in your app:
@@ -207,8 +207,8 @@ npm install -g @manningworks/projex
 If `@manningworks/projex` is already installed, use shorter commands:
 
 ```bash
-npx projex init
-npx projex add project-card
+npx @manningworks/projex init
+npx @manningworks/projex add project-card
 ```
 
 ### TypeScript Errors

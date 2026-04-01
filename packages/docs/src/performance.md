@@ -148,7 +148,7 @@ inquirer     - Interactive prompts (~30 KB)
 chalk        - Terminal colors (~10 KB)
 ```
 
-These CLI dependencies are only used when running `npx projex` commands - they don't impact your production bundle.
+These CLI dependencies are only used when running `npx @manningworks/projex` commands - they don't impact your production bundle.
 
 ## Optimization Tips
 

@@ -131,8 +131,8 @@ pnpm init
 pnpm add @manningworks/projex@latest
 
 # Test basic functionality
-npx projex init
-npx projex add project-card
+npx @manningworks/projex init
+npx @manningworks/projex add project-card
 
 # Verify component imports work
 # (Add to a test file and verify no type errors)
@@ -170,7 +170,7 @@ npx projex add project-card
 
 ### Added
 - New `ProjectTimeline` component for commit history
-- Auto GitHub discovery via `npx projex init --github`
+- Auto GitHub discovery via `npx @manningworks/projex init --github`
 
 ### Changed
 - Improved error handling in GitHub API fetcher

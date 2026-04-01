@@ -11,19 +11,17 @@ Projex is a shadcn-style component library for building developer portfolio page
 ## Quick Start
 
 ```bash
-npx projex init --github
+npx @manningworks/projex init --github
 ```
-
-> **Note:** You can also use the full package name: `npx @manningworks/projex init --github`
 
 Enter your GitHub username when prompted. Projex automatically fetches your public repositories and generates a `projex.config.ts` file pre-populated with all your projects.
 
 ### Quick Start Checklist
 
-- [ ] **Initialize project** — Run `npx projex init --github` to create your config
+- [ ] **Initialize project** — Run `npx @manningworks/projex init --github` to create your config
 - [ ] **Install dependencies** — Run `pnpm install` to install Projex package
-- [ ] **Add components** — Run `npx projex add project-card` to add components
-- [ ] **Add styling** — Run `npx projex add theme-minimal` for a theme, or add custom CSS
+- [ ] **Add components** — Run `npx @manningworks/projex add project-card` to add components
+- [ ] **Add styling** — Run `npx @manningworks/projex add theme-minimal` for a theme, or add custom CSS
 - [ ] **Update config** — Edit `projex.config.ts` with your projects
 - [ ] **Import components** — Import and use components in your Next.js pages
 - [ ] **Build and deploy** — Run `pnpm build` to generate your portfolio
@@ -32,7 +30,7 @@ Enter your GitHub username when prompted. Projex automatically fetches your publ
 
 ## How Projex works
 
-- **Copy-paste components** — Run `npx projex add project-card` to get the source code. You own it.
+- **Copy-paste components** — Run `npx @manningworks/projex add project-card` to get the source code. You own it.
 - **Style with data attributes** — Target elements like `[data-projex-card]` or use pre-built themes.
 - **Fetch data at build time** — GitHub, npm, Product Hunt data is fetched when your site builds. No runtime API calls, no rate limits at runtime, fresh data on every rebuild.
 
@@ -55,7 +53,7 @@ Each part is optional. Use only what you need, compose your own layout.
 
 ## Who is Projex for?
 
-**OSS maintainers** — Auto-detect all your GitHub repositories with `npx projex init --github`. Stars, forks, and language data populate automatically.
+**OSS maintainers** — Auto-detect all your GitHub repositories with `npx @manningworks/projex init --github`. Stars, forks, and language data populate automatically.
 
 **Freelancers** — Showcase client work with manual projects. Full control over descriptions, tags, and links. Mix with GitHub repos for open source contributions.
 
