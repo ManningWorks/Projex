@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2026-04-15
+
+### Fixed
+
+- **`npm` projects not auto-populating `name` from fetched package data** — The `normalise` function now falls back to the fetched npm registry package name when no `name` is provided in the project config, consistent with how GitHub projects already worked.
+- **`product-hunt` projects not auto-populating `name`, `tagline`, or `description` from fetched data** — These fields are now populated from the Product Hunt API when not provided in the project config.
+- **`override` object priority chain corrected for non-GitHub types** — The `override` object now correctly only applies to `github` and `hybrid` types. For other types, config values take precedence over fetched data, with no override layer.
+- Added comprehensive tests validating the name/tagline/description priority chain for all fetched project types.
+
+---
+
 ## [1.1.4] - 2026-04-02
 
 ### Fixed
