@@ -52,11 +52,26 @@ The function fetches external data based on the project type:
 
 ### Data Merging
 
-For GitHub and hybrid types, the function merges fetched data with input data:
+For fetched types, the function merges external API data with your input config using a consistent priority chain:
 
-1. Fetched data provides defaults for `name`, `description`, `links`, `stats`
-2. Input values override fetched data
-3. `override` object provides explicit overrides
+1. **`override` object** — highest priority (only available for `github` and `hybrid` types)
+2. **Input config values** — `name`, `tagline`, `description`, `stack` from your project config
+3. **Fetched API data** — auto-populated from external sources as fallbacks
+4. **Default** — empty string or empty array
+
+**Auto-populated fields by type:**
+
+| Type | `name` | `tagline` | `description` | `stats` | `links` |
+|------|:------:|:---------:|:-------------:|:-------:|:-------:|
+| `github` | ✅ | — | ✅ | ✅ | ✅ |
+| `hybrid` | ✅ | — | ✅ | ✅ | ✅ |
+| `npm` | ✅ | — | — | ✅ | — |
+| `product-hunt` | ✅ | ✅ | ✅ | ✅ | — |
+| `youtube` | — | — | — | ✅ | — |
+| `gumroad` | — | — | — | ✅ | — |
+| `lemonsqueezy` | — | — | — | ✅ | — |
+| `devto` | — | — | — | ✅ | — |
+| `manual` | — | — | — | — | — |
 
 ### Null Safety
 

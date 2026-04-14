@@ -155,6 +155,62 @@ describe('normalise', () => {
       expect(result.language).toBeNull()
     })
 
+    it('should prefer config name over fetched GitHub repo name', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'github-repo-name',
+        description: 'GitHub description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'config-name-priority',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        name: 'My Custom Name',
+        description: 'My Custom Description',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('My Custom Name')
+      expect(result.description).toBe('My Custom Description')
+    })
+
+    it('should fall back to fetched GitHub name when no config name', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({
+        name: 'github-repo-name',
+        description: 'GitHub description',
+        stargazers_count: 100,
+        forks_count: 20,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: null,
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-06-01T00:00:00Z',
+      })
+
+      const input: GitHubProjectInput = {
+        id: 'fallback-to-github-name',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('github-repo-name')
+      expect(result.description).toBe('GitHub description')
+    })
+
     it('should use override fields for GitHub project', async () => {
       mockedFetchGitHubRepo.mockResolvedValue({
         name: 'github-name',
@@ -174,6 +230,7 @@ describe('normalise', () => {
         type: 'github',
         repo: 'user/repo',
         status: 'active',
+        name: 'Config Name',
         override: {
           name: 'Custom Name',
           description: 'Custom Description',
@@ -662,6 +719,70 @@ describe('normalise', () => {
       expect(result.stats).toBeNull()
     })
 
+    it('should fall back to fetched npm package name when no config name', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'fetched-npm-name',
+        version: '1.0.0',
+        downloads: 500,
+      })
+
+      const input: NpmProjectInput = {
+        id: 'npm-name-fallback',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('fetched-npm-name')
+    })
+
+    it('should prefer config name over fetched npm package name', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'fetched-npm-name',
+        version: '1.0.0',
+        downloads: 500,
+      })
+
+      const input: NpmProjectInput = {
+        id: 'npm-name-priority',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+        name: 'My Custom Name',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('My Custom Name')
+    })
+
+    it('should ignore override fields for npm project', async () => {
+      mockedFetchNpmPackage.mockResolvedValue({
+        name: 'fetched-npm-name',
+        version: '1.0.0',
+        downloads: 500,
+      })
+
+      const input: NpmProjectInput = {
+        id: 'npm-override-ignored',
+        type: 'npm',
+        package: 'my-package',
+        status: 'active',
+        name: 'Config Name',
+        override: {
+          name: 'Override Name',
+          description: 'Override Description',
+        },
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('Config Name')
+      expect(result.description).toBe('')
+    })
+
     it('should not use npm timestamps by default', async () => {
       mockedFetchNpmPackage.mockResolvedValue({
         name: 'my-package',
@@ -785,6 +906,91 @@ describe('normalise', () => {
 
       expect(result.name).toBe('Fallback Name')
       expect(result.stats).toBeNull()
+    })
+
+    it('should fall back to fetched Product Hunt name/tagline/description when no config values', async () => {
+      mockedFetchProductHuntPost.mockResolvedValue({
+        name: 'Fetched PH Name',
+        tagline: 'Fetched PH Tagline',
+        description: 'Fetched PH Description',
+        votes_count: 100,
+        comments_count: 10,
+        featured_at: '2024-01-15T00:00:00Z',
+        website: 'https://example.com',
+        url: 'https://producthunt.com/posts/product',
+      })
+
+      const input: ProductHuntProjectInput = {
+        id: 'ph-fallback-test',
+        type: 'product-hunt',
+        slug: 'my-product',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('Fetched PH Name')
+      expect(result.tagline).toBe('Fetched PH Tagline')
+      expect(result.description).toBe('Fetched PH Description')
+    })
+
+    it('should prefer config values over fetched Product Hunt data', async () => {
+      mockedFetchProductHuntPost.mockResolvedValue({
+        name: 'Fetched PH Name',
+        tagline: 'Fetched PH Tagline',
+        description: 'Fetched PH Description',
+        votes_count: 100,
+        comments_count: 10,
+        featured_at: '2024-01-15T00:00:00Z',
+        website: 'https://example.com',
+        url: 'https://producthunt.com/posts/product',
+      })
+
+      const input: ProductHuntProjectInput = {
+        id: 'ph-priority-test',
+        type: 'product-hunt',
+        slug: 'my-product',
+        status: 'active',
+        name: 'My Custom Name',
+        tagline: 'My Custom Tagline',
+        description: 'My Custom Description',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('My Custom Name')
+      expect(result.tagline).toBe('My Custom Tagline')
+      expect(result.description).toBe('My Custom Description')
+    })
+
+    it('should ignore override fields for Product Hunt project', async () => {
+      mockedFetchProductHuntPost.mockResolvedValue({
+        name: 'Fetched PH Name',
+        tagline: 'Fetched PH Tagline',
+        description: 'Fetched PH Description',
+        votes_count: 100,
+        comments_count: 10,
+        featured_at: '2024-01-15T00:00:00Z',
+        website: 'https://example.com',
+        url: 'https://producthunt.com/posts/product',
+      })
+
+      const input: ProductHuntProjectInput = {
+        id: 'ph-override-ignored',
+        type: 'product-hunt',
+        slug: 'my-product',
+        status: 'active',
+        name: 'Config Name',
+        override: {
+          name: 'Override Name',
+          description: 'Override Description',
+        },
+      }
+
+      const result = await normalise(input)
+
+      expect(result.name).toBe('Config Name')
+      expect(result.description).toBe('Fetched PH Description')
     })
 
     it('should use featured_at as updatedAt for Product Hunt projects', async () => {

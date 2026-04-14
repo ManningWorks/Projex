@@ -152,22 +152,12 @@ export async function normalise(
   let finalDescription: string
   let finalStack: string[]
 
-  if (type === 'github') {
-    finalName = override?.name || githubData?.name || inputName || ''
-    finalTagline = override?.tagline || inputTagline || ''
-    finalDescription = override?.description || githubData?.description || inputDescription || ''
-    finalStack = override?.stack || inputStack || []
-  } else if (type === 'hybrid') {
-    finalName = override?.name || inputName || githubData?.name || ''
-    finalTagline = override?.tagline || inputTagline || ''
-    finalDescription = override?.description || inputDescription || githubData?.description || ''
-    finalStack = override?.stack || inputStack || []
-  } else {
-    finalName = inputName || ''
-    finalTagline = inputTagline || ''
-    finalDescription = inputDescription || ''
-    finalStack = inputStack || []
-  }
+  const usesOverrides = type === 'github' || type === 'hybrid'
+
+  finalName = (usesOverrides && override?.name) || inputName || githubData?.name || npmData?.name || productHuntData?.name || ''
+  finalTagline = (usesOverrides && override?.tagline) || inputTagline || productHuntData?.tagline || ''
+  finalDescription = (usesOverrides && override?.description) || inputDescription || githubData?.description || productHuntData?.description || ''
+  finalStack = (usesOverrides && override?.stack) || inputStack || []
 
   let finalLinks: ProjexProject['links'] = {}
   if (type === 'github') {

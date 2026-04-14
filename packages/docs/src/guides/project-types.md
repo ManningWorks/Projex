@@ -30,7 +30,7 @@ Fetches package data from npm registry.
 }
 ```
 
-**Auto-populated fields:** downloads, version, npm link
+**Auto-populated fields:** name, downloads, version, npm link
 
 **Note:** By default, npm projects do not have automatic timestamps for sorting. Enable them with `fetchNpmTimestamps: true` in `defineProjects`:
 
@@ -57,7 +57,7 @@ Fetches post data from Product Hunt.
 }
 ```
 
-**Auto-populated fields:** upvotes, comments, launch date
+**Auto-populated fields:** name, tagline, description, upvotes, comments, launch date
 
 ## Hybrid (`hybrid`)
 
