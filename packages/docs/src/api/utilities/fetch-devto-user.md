@@ -24,7 +24,7 @@ function fetchDevToUser(username: string): Promise<DevToUserData | null>
 interface DevToUserData {
   articleCount: number
   totalViews: number
-  averageReactions: number
+  totalReactions: number
 }
 ```
 
@@ -34,11 +34,13 @@ interface DevToUserData {
 - Returns `null` on any error (network, not found)
 - Fetches up to 1000 articles per user
 - Calculates aggregate statistics from all articles
-- Does not require authentication (public data only)
+- Supports optional authentication via `DEV_TO_API_KEY` env var (needed for page view counts)
 
 ## Environment Variables
 
-No environment variables required. Dev.to public API does not require authentication.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DEV_TO_API_KEY` | No | Dev.to API key. Without it, `page_views_count` is unavailable and `totalViews` will be `0`. Create one at https://dev.to/settings/extensions |
 
 ### Rate Limits
 
@@ -55,7 +57,7 @@ const data = await fetchDevToUser('ben')
 if (data) {
   console.log(data.articleCount)      // 150+
   console.log(data.totalViews)         // 500000+
-  console.log(data.averageReactions)   // 45
+  console.log(data.totalReactions)   // 675
 }
 ```
 
@@ -68,14 +70,14 @@ const data = await fetchDevToUser('nonexistentuser')
 // data is null (404)
 
 const data = await fetchDevToUser('user_without_articles')
-// data is { articleCount: 0, totalViews: 0, averageReactions: 0 }
+// data is { articleCount: 0, totalViews: 0, totalReactions: 0 }
 ```
 
 ## Calculation Details
 
 - `articleCount`: Number of articles returned by API
-- `totalViews`: Sum of `page_views_count` for all articles
-- `averageReactions`: Average of `positive_reactions_count` across all articles (rounded to nearest integer)
+- `totalViews`: Sum of `page_views_count` for all articles (falls back to `0` when unavailable for unauthenticated requests)
+- `totalReactions`: Sum of `public_reactions_count` across all articles (falls back to `positive_reactions_count`, then `0`)
 
 ## Usage in normalise
 

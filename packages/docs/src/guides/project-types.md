@@ -201,9 +201,9 @@ Fetches user data from Dev.to API.
 }
 ```
 
-**Auto-populated fields:** article count, total views, average reactions
+**Auto-populated fields:** article count, total views, total reactions
 
-**Environment variable:** Not required (Dev.to has generous public API limits)
+**Environment variable:** `DEV_TO_API_KEY` (optional) — Without it, `page_views_count` is unavailable and `totalViews` will be `0`. Create one at https://dev.to/settings/extensions
 
 ## Project Status
 

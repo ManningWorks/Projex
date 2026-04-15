@@ -93,7 +93,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: ProjexProj
       !project.stats.customerCount &&
       !project.stats.articleCount &&
       !project.stats.totalViews &&
-      !project.stats.averageReactions)
+      !project.stats.totalReactions)
   ) {
     return null
   }
@@ -243,12 +243,12 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: ProjexProj
           {project.stats.totalViews} views
         </span>
       )}
-      {project.stats.averageReactions && (
+      {project.stats.totalReactions && (
         <span
           data-projex-stat="reactions"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.averageReactions} reactions
+          {project.stats.totalReactions} reactions
         </span>
       )}
     </div>

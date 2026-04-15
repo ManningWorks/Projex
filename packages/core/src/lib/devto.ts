@@ -1,21 +1,34 @@
 export interface DevToArticleData {
   id: number
   title: string
-  page_views_count: number
-  positive_reactions_count: number
+  page_views_count?: number
+  positive_reactions_count?: number
+  public_reactions_count?: number
 }
 
 export interface DevToUserData {
   articleCount: number
   totalViews: number
-  averageReactions: number
+  totalReactions: number
 }
 
 export async function fetchDevToUser(username: string): Promise<DevToUserData | null> {
   try {
     const url = `https://dev.to/api/articles?username=${username}&per_page=1000`
 
+    const headers: HeadersInit = {}
+
+    const apiKey = process.env.DEV_TO_API_KEY
+    if (apiKey) {
+      headers['api-key'] = apiKey
+    } else {
+      console.warn(
+        'DEV_TO_API_KEY not set - page view counts will not be available. Create an API key at https://dev.to/settings/extensions',
+      )
+    }
+
     const response = await fetch(url, {
+      headers,
       cache: 'force-cache',
     })
 
@@ -42,14 +55,13 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
     }
 
     const articleCount = data.length
-    const totalViews = data.reduce((sum, article) => sum + article.page_views_count, 0)
-    const totalReactions = data.reduce((sum, article) => sum + article.positive_reactions_count, 0)
-    const averageReactions = articleCount > 0 ? Math.round(totalReactions / articleCount) : 0
+    const totalViews = data.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
+    const totalReactions = data.reduce((sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0), 0)
 
     return {
       articleCount,
       totalViews,
-      averageReactions,
+      totalReactions,
     }
   } catch {
     console.warn('Network error while fetching Dev.to user data.')

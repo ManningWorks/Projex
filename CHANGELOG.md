@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-15
+
+### Added
+
+- **`DEV_TO_API_KEY` env var support for Dev.to API** — Sends `api-key` header to Forem API for authenticated requests, enabling access to `page_views_count` and higher rate limits. Warns when not set that page view counts won't be available.
+
+### Changed
+
+- **Dev.to API now prefers `public_reactions_count`** — Uses the current Forem API field (`public_reactions_count`) with fallback to deprecated `positive_reactions_count`.
+- **`averageReactions` renamed to `totalReactions`** — Returns the raw sum of reactions instead of computing an average. Updated across types, source, components, tests, and docs. Not a breaking change since the Dev.to integration has not been previously published.
+- **`page_views_count` made optional** — Falls back to `0` with `?? 0` since the field is only available with authenticated API requests.
+
+### Fixed
+
+- **Dev.to integration used wrong API field names** — Fixed `page_views_count` availability and `public_reactions_count` vs `positive_reactions_count` handling. Fixes [#4](https://github.com/ManningWorks/Projex/issues/4)
+- **Return totalReactions instead of averageReactions** — Reactions stat now returns the total sum rather than a computed average. Fixes [#5](https://github.com/ManningWorks/Projex/issues/5)
+
+---
+
 ## [1.1.5] - 2026-04-15
 
 ### Fixed

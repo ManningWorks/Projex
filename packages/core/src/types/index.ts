@@ -81,7 +81,7 @@ export interface LemonSqueezyStats {
 export interface DevToStats {
   articleCount?: number
   totalViews?: number
-  averageReactions?: number
+  totalReactions?: number
 }
 
 export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & GumroadStats & LemonSqueezyStats & DevToStats

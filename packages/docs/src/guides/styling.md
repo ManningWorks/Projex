@@ -56,7 +56,7 @@ Available `data-projex-stat` values:
 - `customers` - Lemon Squeezy customers
 - `articles` - Dev.to articles
 - `total-views` - Dev.to total views
-- `reactions` - Dev.to average reactions
+- `reactions` - Dev.to total reactions
 
 ### Link Attributes
 

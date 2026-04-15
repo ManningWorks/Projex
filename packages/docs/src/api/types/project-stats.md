@@ -44,7 +44,7 @@ interface LemonSqueezyStats {
 interface DevToStats {
   articleCount?: number
   totalViews?: number
-  averageReactions?: number
+  totalReactions?: number
 }
 
 type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & GumroadStats & LemonSqueezyStats & DevToStats
@@ -121,10 +121,10 @@ type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & G
 |----------|------|--------|-------------|
 | `articleCount` | `number` | Dev.to API | Total number of articles published |
 | `totalViews` | `number` | Dev.to API | Sum of page views across all articles |
-| `averageReactions` | `number` | Dev.to API | Average positive reactions per article (rounded) |
+| `totalReactions` | `number` | Dev.to API | Total reactions across all articles |
 
 **Available for:** `devto`
-**Requires:** No authentication (public API)
+**Requires:** No authentication (public API). Optional: `DEV_TO_API_KEY` env var enables `page_views_count` for accurate `totalViews`.
 
 ## Stats by Project Type
 

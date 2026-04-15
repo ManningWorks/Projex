@@ -116,7 +116,7 @@ Dates are formatted as `Mon DD, YYYY` (e.g., `Jan 15, 2024`).
 |----------|-------|--------|----------------|
 | `articleCount` | Articles | Number (K/M suffix) | `{ label: 'Articles', value: '45' }` |
 | `totalViews` | Views | Number (K/M suffix) | `{ label: 'Views', value: '125.4K' }` |
-| `averageReactions` | Reactions | Number (K/M suffix) | `{ label: 'Reactions', value: '67' }` |
+| `totalReactions` | Reactions | Number (K/M suffix) | `{ label: 'Reactions', value: '67' }` |
 
 **Available for:** `devto`
 

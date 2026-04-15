@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { fetchDevToUser } from '../devto'
 
 const mockFetch = vi.fn()
@@ -7,6 +7,11 @@ vi.stubGlobal('fetch', mockFetch)
 describe('fetchDevToUser', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    delete process.env.DEV_TO_API_KEY
+  })
+
+  afterEach(() => {
+    delete process.env.DEV_TO_API_KEY
   })
 
   describe('valid user', () => {
@@ -42,7 +47,7 @@ describe('fetchDevToUser', () => {
       expect(result).toEqual({
         articleCount: 3,
         totalViews: 600,
-        averageReactions: 75,
+        totalReactions: 225,
       })
     })
 
@@ -57,7 +62,7 @@ describe('fetchDevToUser', () => {
       expect(result).toEqual({
         articleCount: 0,
         totalViews: 0,
-        averageReactions: 0,
+        totalReactions: 0,
       })
     })
 
@@ -81,11 +86,11 @@ describe('fetchDevToUser', () => {
       expect(result).toEqual({
         articleCount: 1,
         totalViews: 1000,
-        averageReactions: 200,
+        totalReactions: 200,
       })
     })
 
-    it('should correctly calculate average reactions', async () => {
+    it('should correctly sum reactions across articles', async () => {
       const mockArticles = [
         {
           id: 1,
@@ -114,10 +119,82 @@ describe('fetchDevToUser', () => {
 
       const result = await fetchDevToUser('testuser')
 
-      expect(result?.averageReactions).toBe(20)
+      expect(result?.totalReactions).toBe(60)
     })
 
-    it('should round average reactions to nearest integer', async () => {
+    it('should prefer public_reactions_count over positive_reactions_count', async () => {
+      const mockArticles = [
+        {
+          id: 1,
+          title: 'Article 1',
+          page_views_count: 100,
+          public_reactions_count: 40,
+          positive_reactions_count: 10,
+        },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.totalReactions).toBe(40)
+    })
+
+    it('should handle missing page_views_count (unauthenticated)', async () => {
+      const mockArticles = [
+        {
+          id: 1,
+          title: 'Article 1',
+          public_reactions_count: 50,
+        },
+        {
+          id: 2,
+          title: 'Article 2',
+          public_reactions_count: 30,
+        },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 2,
+        totalViews: 0,
+        totalReactions: 80,
+      })
+    })
+
+    it('should handle missing reaction counts gracefully', async () => {
+      const mockArticles = [
+        {
+          id: 1,
+          title: 'Article 1',
+          page_views_count: 100,
+        },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 1,
+        totalViews: 100,
+        totalReactions: 0,
+      })
+    })
+
+    it('should correctly sum reactions across articles', async () => {
       const mockArticles = [
         {
           id: 1,
@@ -140,7 +217,7 @@ describe('fetchDevToUser', () => {
 
       const result = await fetchDevToUser('testuser')
 
-      expect(result?.averageReactions).toBe(11)
+      expect(result?.totalReactions).toBe(21)
     })
   })
 
@@ -281,8 +358,64 @@ describe('fetchDevToUser', () => {
 
       expect(mockFetch).toHaveBeenCalledWith(
         'https://dev.to/api/articles?username=testuser&per_page=1000',
-        { cache: 'force-cache' },
+        { headers: {}, cache: 'force-cache' },
       )
+    })
+  })
+
+  describe('authentication', () => {
+    it('should include api-key header when DEV_TO_API_KEY is set', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key-123'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve([]),
+      })
+
+      await fetchDevToUser('testuser')
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://dev.to/api/articles?username=testuser&per_page=1000',
+        { headers: { 'api-key': 'test-api-key-123' }, cache: 'force-cache' },
+      )
+    })
+
+    it('should warn when DEV_TO_API_KEY is not set', async () => {
+      delete process.env.DEV_TO_API_KEY
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve([]),
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      await fetchDevToUser('testuser')
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'DEV_TO_API_KEY not set - page view counts will not be available. Create an API key at https://dev.to/settings/extensions',
+      )
+
+      warnSpy.mockRestore()
+    })
+
+    it('should not warn when DEV_TO_API_KEY is set', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve([]),
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      await fetchDevToUser('testuser')
+
+      expect(warnSpy).not.toHaveBeenCalledWith(
+        expect.stringContaining('DEV_TO_API_KEY not set'),
+      )
+
+      warnSpy.mockRestore()
     })
   })
 
@@ -297,7 +430,7 @@ describe('fetchDevToUser', () => {
 
       expect(mockFetch).toHaveBeenCalledWith(
         'https://dev.to/api/articles?username=testuser&per_page=1000',
-        { cache: 'force-cache' },
+        { headers: {}, cache: 'force-cache' },
       )
     })
 
@@ -311,7 +444,7 @@ describe('fetchDevToUser', () => {
 
       expect(mockFetch).toHaveBeenCalledWith(
         'https://dev.to/api/articles?username=test user&per_page=1000',
-        { cache: 'force-cache' },
+        { headers: {}, cache: 'force-cache' },
       )
     })
   })

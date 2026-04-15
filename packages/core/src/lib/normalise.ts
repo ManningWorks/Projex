@@ -242,7 +242,7 @@ export async function normalise(
         ...finalStats,
         articleCount: devtoData.articleCount,
         totalViews: devtoData.totalViews,
-        averageReactions: devtoData.averageReactions,
+        totalReactions: devtoData.totalReactions,
       }
     }
     if (inputStats) {
@@ -464,8 +464,8 @@ export function normalizeStats(stats: Record<string, unknown>, _type: ProjectTyp
     }
   }
 
-  if (stats.averageReactions !== undefined && stats.averageReactions !== null) {
-    const value = Number(stats.averageReactions)
+  if (stats.totalReactions !== undefined && stats.totalReactions !== null) {
+    const value = Number(stats.totalReactions)
     if (!isNaN(value)) {
       result.push({ label: 'Reactions', value: formatNumber(value) })
     }

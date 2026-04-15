@@ -111,8 +111,9 @@ const normalised = await Promise.all(projects.map(p => normalise(p, options)))
 | `YOUTUBE_TOKEN` | Required for `youtube` | YouTube Data API v3 key |
 | `GUMROAD_TOKEN` | Required for `gumroad` | Gumroad access token |
 | `LS_TOKEN` | Required for `lemonsqueezy` | Lemon Squeezy API key |
+| `DEV_TO_API_KEY` | Optional | Dev.to API key (enables `page_views_count` for `totalViews`) |
 
-> **Note:** Dev.to (`devto`) and `manual` types do not require any environment variables.
+> **Note:** Dev.to (`devto`) works without environment variables (public API), but `DEV_TO_API_KEY` is recommended to enable `page_views_count` for accurate `totalViews`. The `manual` type does not require any environment variables.
 
 ## Override Example
 

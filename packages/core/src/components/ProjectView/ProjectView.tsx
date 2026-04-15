@@ -176,7 +176,7 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
     project.stats.customerCount ||
     project.stats.articleCount ||
     project.stats.totalViews ||
-    project.stats.averageReactions
+    project.stats.totalReactions
 
   if (!hasStats) {
     return null
@@ -211,7 +211,7 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
       )}
       {project.stats.articleCount && <span data-projex-stat="articles">{project.stats.articleCount} articles</span>}
       {project.stats.totalViews && <span data-projex-stat="total-views">{project.stats.totalViews} views</span>}
-      {project.stats.averageReactions && <span data-projex-stat="reactions">{project.stats.averageReactions} reactions</span>}
+      {project.stats.totalReactions && <span data-projex-stat="reactions">{project.stats.totalReactions} reactions</span>}
     </div>
   )
 }
