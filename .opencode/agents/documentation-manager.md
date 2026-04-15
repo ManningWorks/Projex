@@ -2,20 +2,16 @@
 description: Ensure documentation completeness, accuracy, and consistency across READMEs, docs site, and examples
 mode: subagent
 temperature: 0.1
-tools:
-  read: true
-  write: true
-  edit: true
-  bash: true
 permission:
   edit:
+    "*": ask
     "**/*.md": allow
     "packages/docs/**/*": allow
     "**/*.tsx": ask
     "**/*.ts": ask
     "**/package.json": ask
-    "*": ask
   bash:
+    "*": ask
     "pnpm --filter *": allow
     "head *": allow
     "ls *": allow
@@ -28,10 +24,12 @@ permission:
     "wc -l *": allow
     "sort *": allow
     "uniq *": allow
-    "git log -- *": allow
-    "git diff -- *": allow
+    "git log *": allow
+    "git log": allow
+    "git diff *": allow
+    "git diff": allow
+    "git status *": allow
     "git status": allow
-    "*": ask
   webfetch: ask
 color: info
 ---

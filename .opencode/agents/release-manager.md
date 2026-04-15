@@ -2,20 +2,16 @@
 description: Create releases following Projex's version bump, changelog, and git tagging workflow
 mode: subagent
 temperature: 0.1
-tools:
-  read: true
-  write: true
-  edit: true
-  bash: true
 permission:
   edit:
+    "*": ask
     "packages/core/package.json": allow
     "CHANGELOG.md": allow
     "README.md": allow
     "packages/core/README.md": allow
     "packages/docs/**/*": allow
-    "*": ask
   bash:
+    "*": ask
     "pnpm --filter * build": allow
     "pnpm --filter * lint": allow
     "pnpm --filter * typecheck": allow
@@ -32,11 +28,13 @@ permission:
     "wc -l *": allow
     "sort *": allow
     "uniq *": allow
-    "git log -- *": allow
-    "git diff -- *": allow
+    "git log *": allow
+    "git log": allow
+    "git diff *": allow
+    "git diff": allow
+    "git status *": allow
     "git status": allow
     "git tag *": allow
-    "*": ask
   webfetch: deny
 color: success
 ---
