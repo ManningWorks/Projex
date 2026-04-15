@@ -13,8 +13,10 @@ permission:
   bash:
     "*": ask
     "pnpm --filter *": allow
+    "npx *": allow
     "head *": allow
     "ls *": allow
+    "ls -la *": allow
     "find *": allow
     "grep *": allow
     "rg *": allow

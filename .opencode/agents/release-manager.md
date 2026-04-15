@@ -12,10 +12,18 @@ permission:
     "packages/docs/**/*": allow
   bash:
     "*": ask
+    "pnpm install": allow
+    "pnpm install *": allow
+    "pnpm build": allow
+    "pnpm lint": allow
+    "pnpm typecheck": allow
+    "pnpm test": allow
     "pnpm --filter * build": allow
     "pnpm --filter * lint": allow
     "pnpm --filter * typecheck": allow
     "pnpm --filter * test": allow
+    "pnpm --filter * test:coverage": allow
+    "pnpm --filter * benchmark": allow
     "head *": allow
     "ls *": allow
     "ls -la *": allow
@@ -34,7 +42,12 @@ permission:
     "git diff": allow
     "git status *": allow
     "git status": allow
+    "git add *": allow
+    "git add .": allow
+    "git commit *": allow
+    "git commit": allow
     "git tag *": allow
+    "git tag": allow
   webfetch: deny
 color: success
 ---
