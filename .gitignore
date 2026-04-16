@@ -62,4 +62,5 @@ packages/docs/.vitepress/cache/
 .turbo
 .yarn/install-state.gz
 
-
+#opencode
+.opencode/plans

@@ -16,6 +16,8 @@ See the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.m
 
 ## Table of Contents
 
+- [Strict Type-Specific Field Validation (1.2.1)](#strict-type-specific-field-validation-121)
+- [ProjectStruggle Type Changes](#projectstruggle-type-changes)
 - [Project Rename (Folio → Projex)](#project-rename-folio--projex)
 - [Upgrading Projex](#upgrading-projex)
 - [Common Upgrade Issues](#common-upgrade-issues)
@@ -189,6 +191,42 @@ Update any documentation or repository URLs:
 | `https://github.com/RealLukeManning/Folio` | `https://github.com/ManningWorks/Projex` |
 | `https://folio-guide.vercel.app` | `https://projex.manningworks.dev` |
 | `https://www.npmjs.com/package/@reallukemanning/folio` | `https://www.npmjs.com/package/@manningworks/projex` |
+
+---
+
+## Strict Type-Specific Field Validation (1.2.1)
+
+> **Version:** 1.2.1+
+> **Impact:** Scripts using `edit project` with type-incompatible fields will now error instead of warning
+
+### What Changed
+
+The `edit project` command previously allowed setting any type-specific field on any project type with a warning. For example, `--channel-id` on a `hybrid` project would warn but proceed. Now the command errors and exits:
+
+```
+✖ 'channelId' is not a valid field for type 'hybrid'. Valid type-specific fields: repo, package
+```
+
+### Migration Steps
+
+If you have scripts that set type-specific fields regardless of project type:
+
+1. Check which project type you're editing before setting type-specific fields
+2. Only set fields valid for that project type (e.g., `repo`/`package` for `hybrid`, `channelId` for `youtube`)
+
+### Valid Type-Specific Fields
+
+| Project Type | Valid Fields |
+|-------------|-------------|
+| `github` | `repo` |
+| `npm` | `package` |
+| `hybrid` | `repo`, `package` |
+| `product-hunt` | `slug` |
+| `youtube` | `channelId` |
+| `gumroad` | `productId` |
+| `lemonsqueezy` | `storeId` |
+| `devto` | `username` |
+| `manual` | *(none)* |
 
 ---
 

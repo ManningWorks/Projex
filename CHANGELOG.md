@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-04-16
+
+### Added
+
+- **CLI for managing projects** — Full command-line interface for managing `projex.config.ts` without editing the file directly. All commands support interactive prompts when flags are omitted and non-interactive mode for scripting.
+  - `projex init` — Initialize a new config file
+  - `projex list` — List all projects
+  - `projex add project` — Add a project (supports `github`, `npm`, `hybrid`, `product-hunt`, `youtube`, `gumroad`, `lemonsqueezy`, `devto`, `manual` types)
+  - `projex add learning|timeline|post` — Add learning entries, timeline milestones, and blog posts to projects
+  - `projex edit project` — Edit project fields with type-specific field validation
+  - `projex edit project --unset <field>` — Remove a field from a project config (protected fields: `id`, `type`, `struggles`, `timeline`, `posts`)
+  - `projex remove project|learning|timeline|post` — Remove projects or entries with descriptive interactive labels
+  - `projex add <component>` — Copy UI components into your project
+- **`config-editor.ts` library** — Programmatic AST-based config file manipulation using ts-morph. Provides `addProject`, `removeProject`, `setProjectField`, `removeProjectField`, `getProjectIds`, `getProjectSummaries`, `getLearningEntries`, `getTimelineEntries`, `getPostEntries`, and more.
+- **881 tests** — Comprehensive test coverage across 55 test files including integration tests that exercise real config file parsing.
+
+---
+
 ## [1.2.0] - 2026-04-15
 
 ### Added

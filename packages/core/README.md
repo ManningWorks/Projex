@@ -69,6 +69,17 @@ npx @manningworks/projex add project-view
 npx @manningworks/projex add theme-minimal
 npx @manningworks/projex add theme-dark
 npx @manningworks/projex add theme-gradient
+
+# List all projects
+npx @manningworks/projex list
+
+# Edit a project
+npx @manningworks/projex edit project my-project --status shipped --featured
+
+# Remove a project or content
+npx @manningworks/projex remove project old-project --force
+npx @manningworks/projex remove learning my-project --index 0
+npx @manningworks/projex remove timeline my-project --index 1
 ```
 
 The CLI automatically installs the `@manningworks/projex` package as a dependency, and copied components import types directly from it.

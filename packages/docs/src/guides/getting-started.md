@@ -206,6 +206,18 @@ Add `featured: true` to your best project:
 }
 ```
 
+Or use the CLI to mark a project as featured:
+
+```bash
+npx @manningworks/projex edit project my-awesome-lib --featured
+```
+
+You can also update other fields like status:
+
+```bash
+npx @manningworks/projex edit project my-awesome-lib --status shipped
+```
+
 ## Step 6: Install Components
 
 Add the components you'll need:

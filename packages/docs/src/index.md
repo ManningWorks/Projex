@@ -22,7 +22,7 @@ Enter your GitHub username when prompted. Projex automatically fetches your publ
 - [ ] **Install dependencies** — Run `pnpm install` to install Projex package
 - [ ] **Add components** — Run `npx @manningworks/projex add project-card` to add components
 - [ ] **Add styling** — Run `npx @manningworks/projex add theme-minimal` for a theme, or add custom CSS
-- [ ] **Update config** — Edit `projex.config.ts` with your projects
+- [ ] **Update config** — Edit `projex.config.ts` directly, or use `projex edit project <id>` to update projects
 - [ ] **Import components** — Import and use components in your Next.js pages
 - [ ] **Build and deploy** — Run `pnpm build` to generate your portfolio
 
