@@ -38,7 +38,7 @@ program
 program
   .command('add')
   .description('Add a Projex component or content to your project')
-  .argument('<type>', 'Content type (project, learning, timeline, post) or component name')
+  .argument('<type>', 'Content type (project, learning, challenge, timeline, post) or component name')
   .argument('[id]', 'Project ID (required for learning, timeline, post)')
   .option('-f, --force', 'Overwrite existing files without prompting')
   .option('--type <type>', 'Project type (for add project)')
@@ -85,7 +85,7 @@ program
 program
   .command('remove')
   .description('Remove a project or content entry')
-  .argument('<type>', 'Content type (project, learning, timeline, post)')
+  .argument('<type>', 'Content type (project, learning, challenge, timeline, post)')
   .argument('[id]', 'Project ID')
   .option('-f, --force', 'Skip confirmation prompt')
   .option('--index <index>', 'Index of entry to remove (for learning, timeline, post)', (value: string) => parseInt(value, 10))

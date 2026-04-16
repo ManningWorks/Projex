@@ -31,6 +31,8 @@ permission:
     "grep *": allow
     "rg *": allow
     "cat *": allow
+    "echo *": allow
+    "echo": allow
     "tail *": allow
     "wc *": allow
     "wc -l *": allow

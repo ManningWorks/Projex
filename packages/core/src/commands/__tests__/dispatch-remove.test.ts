@@ -39,6 +39,14 @@ describe('dispatchRemove', () => {
       expect(removeLearningCommand).toHaveBeenCalledWith('my-project', { index: 0 })
     })
 
+    it('should route "challenge" to removeLearningCommand', async () => {
+      const { removeLearningCommand } = await import('../remove-learning.js')
+
+      await dispatchRemove('challenge', 'my-project', { index: 0 })
+
+      expect(removeLearningCommand).toHaveBeenCalledWith('my-project', { index: 0 })
+    })
+
     it('should route "timeline" to removeTimelineCommand', async () => {
       const { removeTimelineCommand } = await import('../remove-timeline.js')
 

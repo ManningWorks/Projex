@@ -35,12 +35,28 @@ describe('dispatchAdd', () => {
       expect(addProjectCommand).toHaveBeenCalled()
     })
 
-    it('should route "learning" to addLearningCommand with project ID', async () => {
+    it('should route "learning" to addLearningCommand with default type "learning"', async () => {
+      const { addLearningCommand } = await import('../add-learning.js')
+
+      await dispatchAdd('learning', 'my-project', { text: 'test' })
+
+      expect(addLearningCommand).toHaveBeenCalledWith('my-project', { text: 'test', type: 'learning' })
+    })
+
+    it('should route "learning" to addLearningCommand with overridden type', async () => {
       const { addLearningCommand } = await import('../add-learning.js')
 
       await dispatchAdd('learning', 'my-project', { type: 'challenge', text: 'test' })
 
       expect(addLearningCommand).toHaveBeenCalledWith('my-project', { type: 'challenge', text: 'test' })
+    })
+
+    it('should route "challenge" to addLearningCommand with type "challenge"', async () => {
+      const { addLearningCommand } = await import('../add-learning.js')
+
+      await dispatchAdd('challenge', 'my-project', { text: 'test' })
+
+      expect(addLearningCommand).toHaveBeenCalledWith('my-project', { text: 'test', type: 'challenge' })
     })
 
     it('should route "timeline" to addTimelineCommand with project ID', async () => {
@@ -84,6 +100,21 @@ describe('dispatchAdd', () => {
       const exitSpy = vi.spyOn(process, 'exit').mockImplementation((() => {}) as () => never)
 
       await dispatchAdd('learning', undefined, {})
+
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Project ID is required'),
+      )
+      expect(exitSpy).toHaveBeenCalledWith(1)
+
+      errorSpy.mockRestore()
+      exitSpy.mockRestore()
+    })
+
+    it('should exit when challenge is called without project ID', async () => {
+      const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation((() => {}) as () => never)
+
+      await dispatchAdd('challenge', undefined, {})
 
       expect(errorSpy).toHaveBeenCalledWith(
         expect.stringContaining('Project ID is required'),

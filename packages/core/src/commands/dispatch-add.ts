@@ -5,7 +5,7 @@ import { addLearningCommand } from './add-learning.js'
 import { addTimelineCommand } from './add-timeline.js'
 import { addPostCommand } from './add-post.js'
 
-const CONTENT_TYPES = new Set(['project', 'learning', 'timeline', 'post'])
+const CONTENT_TYPES = new Set(['project', 'learning', 'challenge', 'timeline', 'post'])
 
 interface DispatchAddOptions {
   force?: boolean
@@ -46,7 +46,16 @@ export async function dispatchAdd(
           )
           process.exit(1)
         }
-        await addLearningCommand(projectId, options)
+        await addLearningCommand(projectId, { ...options, type: options.type ?? 'learning' })
+        break
+      case 'challenge':
+        if (!projectId) {
+          console.error(
+            chalk.red('✖ Project ID is required: projex add challenge <project-id>'),
+          )
+          process.exit(1)
+        }
+        await addLearningCommand(projectId, { ...options, type: 'challenge' })
         break
       case 'timeline':
         if (!projectId) {

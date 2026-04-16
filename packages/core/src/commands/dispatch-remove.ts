@@ -4,7 +4,7 @@ import { removeLearningCommand } from './remove-learning.js'
 import { removeTimelineCommand } from './remove-timeline.js'
 import { removePostCommand } from './remove-post.js'
 
-const VALID_REMOVE_TYPES = new Set(['project', 'learning', 'timeline', 'post'])
+const VALID_REMOVE_TYPES = new Set(['project', 'learning', 'challenge', 'timeline', 'post'])
 
 interface DispatchRemoveOptions {
   force?: boolean
@@ -37,6 +37,7 @@ export async function dispatchRemove(
       await removeProjectCommand(id, { force: options.force })
       break
     case 'learning':
+    case 'challenge':
       await removeLearningCommand(id, { index: options.index })
       break
     case 'timeline':
