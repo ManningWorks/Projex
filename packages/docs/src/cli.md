@@ -253,7 +253,7 @@ The project ID is auto-generated from the name by lowercasing and replacing spac
 
 ### `add learning <project-id>`
 
-Add a learning or challenge entry to a project's struggles array.
+Add a learning entry to a project's struggles array.
 
 ```bash
 npx @manningworks/projex add learning my-project --text "Learned about SSR patterns"
@@ -263,18 +263,46 @@ npx @manningworks/projex add learning my-project --text "Learned about SSR patte
 
 | Option | Description |
 |--------|-------------|
-| `--text <text>` | The learning or challenge text |
+| `--text <text>` | The learning text |
 
-**Interactive mode:** When `--text` is not provided, you'll be prompted to select an entry type (`challenge` or `learning`) and enter text.
+**Behavior:** When `--text` is provided, the entry type is set to `"learning"` automatically (no prompt). When `--text` is not provided, you'll be prompted to enter text.
 
 **Examples:**
 
 ```bash
-# Add a learning entry
+# Add a learning entry (type is automatically "learning")
 npx @manningworks/projex add learning my-project --text "Discovered efficient caching strategies"
 
-# Interactive — choose type and enter text
+# Interactive — prompted for text
 npx @manningworks/projex add learning my-project
+```
+
+---
+
+### `add challenge <project-id>`
+
+Add a challenge entry to a project's struggles array.
+
+```bash
+npx @manningworks/projex add challenge my-project --text "Struggled with state management"
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--text <text>` | The challenge text |
+
+**Behavior:** When `--text` is provided, the entry type is set to `"challenge"` automatically (no prompt). When `--text` is not provided, you'll be prompted to enter text.
+
+**Examples:**
+
+```bash
+# Add a challenge entry (type is automatically "challenge")
+npx @manningworks/projex add challenge my-project --text "API rate limits required creative caching"
+
+# Interactive — prompted for text
+npx @manningworks/projex add challenge my-project
 ```
 
 ---
@@ -470,12 +498,13 @@ npx @manningworks/projex remove project old-project --force
 
 ---
 
-### `remove learning|timeline|post <project-id>`
+### `remove challenge|learning|timeline|post <project-id>`
 
-Remove a learning entry, timeline entry, or post from a project.
+Remove a challenge entry, learning entry, timeline entry, or post from a project. Both `challenge` and `learning` operate on the same struggles array — `challenge` and `learning` are interchangeable aliases.
 
 ```bash
 npx @manningworks/projex remove learning my-project --index 0
+npx @manningworks/projex remove challenge my-project --index 0
 npx @manningworks/projex remove timeline my-project --index 1
 npx @manningworks/projex remove post my-project --index 0
 ```
@@ -503,6 +532,9 @@ No learning entries to remove.
 ```bash
 # Remove first learning entry from a project
 npx @manningworks/projex remove learning my-project --index 0
+
+# Remove a challenge entry (alias for learning)
+npx @manningworks/projex remove challenge my-project --index 0
 
 # Remove a timeline entry interactively
 npx @manningworks/projex remove timeline my-project
@@ -616,11 +648,13 @@ npx @manningworks/projex edit project my-side-project --unset description
 
 # Add content to a project
 npx @manningworks/projex add learning my-side-project --text "Learned about SSR patterns"
+npx @manningworks/projex add challenge my-side-project --text "API rate limits required creative caching"
 npx @manningworks/projex add timeline my-side-project --date 2026-04-15 --note "v1.0 released"
 
 # Remove content from a project
 npx @manningworks/projex remove learning my-side-project --index 0
-npx @manningworks/projex remove timeline my-side-project --index 1
+npx @manningworks/projex remove challenge my-side-project --index 1
+npx @manningworks/projex remove timeline my-side-project --index 2
 
 # Remove a project
 npx @manningworks/projex remove project old-project --force

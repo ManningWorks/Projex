@@ -20,10 +20,12 @@ permission:
     "pnpm test": allow
     "pnpm --filter * build": allow
     "pnpm --filter * lint": allow
-    "pnpm --filter * typecheck": allow
-    "pnpm --filter * test": allow
-    "pnpm --filter * test:coverage": allow
-    "pnpm --filter * benchmark": allow
+    "pnpm --filter * typecheck *": allow
+    "pnpm --filter * test *": allow
+    "pnpm --filter * test:coverage *": allow
+    "pnpm --filter * benchmark *": allow
+    "pnpm --filter @manningworks/projex typecheck *": allow
+    "pnpm --filter @manningworks/projex test:coverage *": allow
     "head *": allow
     "ls *": allow
     "ls -la *": allow

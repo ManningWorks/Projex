@@ -79,7 +79,8 @@ npx @manningworks/projex edit project my-project --status shipped --featured
 # Remove a project or content
 npx @manningworks/projex remove project old-project --force
 npx @manningworks/projex remove learning my-project --index 0
-npx @manningworks/projex remove timeline my-project --index 1
+npx @manningworks/projex remove challenge my-project --index 1
+npx @manningworks/projex remove timeline my-project --index 2
 ```
 
 The CLI automatically installs the `@manningworks/projex` package as a dependency, and copied components import types directly from it.
