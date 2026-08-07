@@ -1,5 +1,6 @@
 import type { ProjexProject } from '../../types'
 import type { ProjectStatus } from '../../types'
+import { useProjectContext } from '../ProjectGrid/ProjectGridContext'
 
 const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
   active: { bg: 'var(--projex-status-active-bg, #dcfce7)', text: 'var(--projex-status-active-text, #166534)' },
@@ -8,6 +9,11 @@ const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
   'coming-soon': { bg: 'var(--projex-status-coming-soon-bg, #f3e8ff)', text: 'var(--projex-status-coming-soon-text, #7c3aed)' },
   archived: { bg: 'var(--projex-status-archived-bg, #f1f5f9)', text: 'var(--projex-status-archived-text, #475569)' },
   'for-sale': { bg: 'var(--projex-status-for-sale-bg, #fee2e2)', text: 'var(--projex-status-for-sale-text, #991b1b)' },
+}
+
+function useResolvedProject(project?: ProjexProject): ProjexProject | null {
+  const context = useProjectContext()
+  return project ?? context
 }
 
 interface ProjectCardProps {
@@ -36,27 +42,31 @@ function ProjectCard({ children, project }: ProjectCardProps) {
   )
 }
 
-ProjectCard.Header = function ProjectCardHeader({ project }: { project: ProjexProject }) {
+ProjectCard.Header = function ProjectCardHeader({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved) return null
   return (
     <div data-projex-card-header>
-      <h3>{project.name}</h3>
-      <div data-projex-type data-projex-type-value={project.type}>
-        {project.type}
+      <h3>{resolved.name}</h3>
+      <div data-projex-type data-projex-type-value={resolved.type}>
+        {resolved.type}
       </div>
     </div>
   )
 }
 
-ProjectCard.Description = function ProjectCardDescription({ project }: { project: ProjexProject }) {
-  if (!project.description) return null
-  return <div data-projex-card-description>{project.description}</div>
+ProjectCard.Description = function ProjectCardDescription({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved?.description) return null
+  return <div data-projex-card-description>{resolved.description}</div>
 }
 
-ProjectCard.Tags = function ProjectCardTags({ project }: { project: ProjexProject }) {
-  if (!project.stack || project.stack.length === 0) return null
+ProjectCard.Tags = function ProjectCardTags({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved?.stack || resolved.stack.length === 0) return null
   return (
     <div data-projex-card-tags>
-      {project.stack.map((tag) => (
+      {resolved.stack.map((tag) => (
         <span
           key={tag}
           data-projex-tag
@@ -73,27 +83,30 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project: ProjexProjec
   )
 }
 
-ProjectCard.Stats = function ProjectCardStats({ project }: { project: ProjexProject }) {
+ProjectCard.Stats = function ProjectCardStats({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved) return null
+  const stats = resolved.stats as Record<string, any> | null
   if (
-    !project.stats ||
-    (!project.stats.stars &&
-      !project.stats.forks &&
-      !project.stats.downloads &&
-      !project.stats.version &&
-      !project.stats.upvotes &&
-      !project.stats.comments &&
-      !project.stats.subscribers &&
-      !project.stats.views &&
-      !project.stats.latestVideoTitle &&
-      !project.stats.formattedRevenue &&
-      !project.stats.salesCount &&
-      !project.stats.subscriberCount &&
-      !project.stats.formattedMRR &&
-      !project.stats.orderCount &&
-      !project.stats.customerCount &&
-      !project.stats.articleCount &&
-      !project.stats.totalViews &&
-      !project.stats.totalReactions)
+    !stats ||
+    (!stats.stars &&
+      !stats.forks &&
+      !stats.downloads &&
+      !stats.version &&
+      !stats.upvotes &&
+      !stats.comments &&
+      !stats.subscribers &&
+      !stats.views &&
+      !stats.latestVideoTitle &&
+      !stats.formattedRevenue &&
+      !stats.salesCount &&
+      !stats.subscriberCount &&
+      !stats.formattedMRR &&
+      !stats.orderCount &&
+      !stats.customerCount &&
+      !stats.articleCount &&
+      !stats.totalViews &&
+      !stats.totalReactions)
   ) {
     return null
   }
@@ -104,174 +117,179 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project: ProjexProj
         color: 'var(--projex-stats-label, #6b7280)',
       }}
     >
-      {project.stats.stars && (
+      {stats.stars && (
         <span
           data-projex-stat="stars"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.stars} stars
+          {stats.stars} stars
         </span>
       )}
-      {project.stats.forks && (
+      {stats.forks && (
         <span
           data-projex-stat="forks"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.forks} forks
+          {stats.forks} forks
         </span>
       )}
-      {project.stats.downloads && (
+      {stats.downloads && (
         <span
           data-projex-stat="downloads"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.downloads} downloads
+          {stats.downloads} downloads
         </span>
       )}
-      {project.stats.version && (
+      {stats.version && (
         <span
           data-projex-stat="version"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.version}
+          {stats.version}
         </span>
       )}
-      {project.stats.upvotes && (
+      {stats.upvotes && (
         <span
           data-projex-stat="upvotes"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.upvotes} upvotes
+          {stats.upvotes} upvotes
         </span>
       )}
-      {project.stats.comments && (
+      {stats.comments && (
         <span
           data-projex-stat="comments"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.comments} comments
+          {stats.comments} comments
         </span>
       )}
-      {project.stats.subscribers && (
+      {stats.subscribers && (
         <span
           data-projex-stat="subscribers"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.subscribers} subscribers
+          {stats.subscribers} subscribers
         </span>
       )}
-      {project.stats.views && (
+      {stats.views && (
         <span
           data-projex-stat="views"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.views} views
+          {stats.views} views
         </span>
       )}
-      {project.stats.latestVideoTitle && project.stats.latestVideoUrl && (
+      {stats.latestVideoTitle && stats.latestVideoUrl && (
         <a
-          href={project.stats.latestVideoUrl}
+          href={stats.latestVideoUrl}
           data-projex-link
           data-projex-link-type="youtube"
           style={{ color: 'var(--projex-link-text, #374151)' }}
           className="projex-link"
         >
-          {project.stats.latestVideoTitle}
+          {stats.latestVideoTitle}
         </a>
       )}
-      {project.stats.formattedRevenue && (
+      {stats.formattedRevenue && (
         <span
           data-projex-stat="revenue"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.formattedRevenue}
+          {stats.formattedRevenue}
         </span>
       )}
-      {project.stats.salesCount && (
+      {stats.salesCount && (
         <span
           data-projex-stat="sales"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.salesCount} sales
+          {stats.salesCount} sales
         </span>
       )}
-      {project.stats.subscriberCount && (
+      {stats.subscriberCount && (
         <span
           data-projex-stat="subscribers"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.subscriberCount} subscribers
+          {stats.subscriberCount} subscribers
         </span>
       )}
-      {project.stats.formattedMRR && (
+      {stats.formattedMRR && (
         <span
           data-projex-stat="mrr"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.formattedMRR} MRR
+          {stats.formattedMRR} MRR
         </span>
       )}
-      {project.stats.orderCount && (
+      {stats.orderCount && (
         <span
           data-projex-stat="orders"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.orderCount} orders
+          {stats.orderCount} orders
         </span>
       )}
-      {project.stats.customerCount && (
+      {stats.customerCount && (
         <span
           data-projex-stat="customers"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.customerCount} customers
+          {stats.customerCount} customers
         </span>
       )}
-      {project.stats.articleCount && (
+      {stats.articleCount && (
         <span
           data-projex-stat="articles"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.articleCount} articles
+          {stats.articleCount} articles
         </span>
       )}
-      {project.stats.totalViews && (
+      {stats.totalViews && (
         <span
           data-projex-stat="total-views"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.totalViews} views
+          {stats.totalViews} views
         </span>
       )}
-      {project.stats.totalReactions && (
+      {stats.totalReactions && (
         <span
           data-projex-stat="reactions"
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {project.stats.totalReactions} reactions
+          {stats.totalReactions} reactions
         </span>
       )}
     </div>
   )
 }
 
-ProjectCard.Status = function ProjectCardStatus({ project }: { project: ProjexProject }) {
-  const colors = statusColors[project.status]
+ProjectCard.Status = function ProjectCardStatus({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved) return null
+  const colors = statusColors[resolved.status]
   return (
     <div
       data-projex-status
-      data-projex-status-value={project.status}
+      data-projex-status-value={resolved.status}
       style={{
         backgroundColor: colors.bg,
         color: colors.text,
       }}
     >
-      {project.status}
+      {resolved.status}
     </div>
   )
 }
 
-ProjectCard.Links = function ProjectCardLinks({ project }: { project: ProjexProject }) {
+ProjectCard.Links = function ProjectCardLinks({ project }: { project?: ProjexProject }) {
+  const resolved = useResolvedProject(project)
+  if (!resolved) return null
+
   const standardLinks = ['github', 'live', 'docs', 'demo', 'npm', 'productHunt', 'youtube', 'custom'] as const
 
   const linkLabels: Record<string, string> = {
@@ -294,11 +312,11 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: ProjexProj
     youtube: 'youtube',
   }
 
-  const order = project.linkOrder || standardLinks
+  const order = resolved.linkOrder || standardLinks
 
   const hasLinks = order.some(linkType => {
-    if (linkType === 'custom') return project.links.custom && project.links.custom.length > 0
-    return project.links[linkType as keyof typeof project.links] !== undefined
+    if (linkType === 'custom') return resolved.links.custom && resolved.links.custom.length > 0
+    return resolved.links[linkType as keyof typeof resolved.links] !== undefined
   })
 
   if (!hasLinks) return null
@@ -312,7 +330,7 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: ProjexProj
     >
       {order.map(linkType => {
         if (linkType === 'custom') {
-          return project.links.custom?.map((link) => (
+          return resolved.links.custom?.map((link) => (
             <a
               key={link.label}
               href={link.url}
@@ -329,7 +347,7 @@ ProjectCard.Links = function ProjectCardLinks({ project }: { project: ProjexProj
           ))
         }
 
-        const url = project.links[linkType as keyof typeof project.links] as string | undefined
+        const url = resolved.links[linkType as keyof typeof resolved.links] as string | undefined
         if (!url) return null
 
         return (

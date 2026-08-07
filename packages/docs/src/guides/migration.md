@@ -16,6 +16,14 @@ See the [CHANGELOG](https://github.com/ManningWorks/Projex/blob/main/CHANGELOG.m
 
 ## Table of Contents
 
+- [fetchGitHubRepo / fetchNpmPackage Return Type Change](#fetchgithubrepo--fetchnpmpackage-return-type-change)
+- [normalizeStats Renamed to normaliseStats](#normalizestats-renamed-to-normalisestats)
+- [ProjectStats Changed to Tagged Union](#projectstats-changed-to-tagged-union)
+- [DefineProjectsOptions onError Option](#defineprojectsoptions-onerror-option)
+- [New SmartProjectGrid Component](#new-smartprojectgrid-component)
+- [CLI Export Entry Point](#cli-export-entry-point)
+- [escapeString Utility](#escapestring-utility)
+- [fetchProjectData Utility](#fetchprojectdata-utility)
 - [Strict Type-Specific Field Validation (1.2.1)](#strict-type-specific-field-validation-121)
 - [ProjectStruggle Type Changes](#projectstruggle-type-changes)
 - [Project Rename (Folio → Projex)](#project-rename-folio--projex)
@@ -191,6 +199,277 @@ Update any documentation or repository URLs:
 | `https://github.com/RealLukeManning/Folio` | `https://github.com/ManningWorks/Projex` |
 | `https://folio-guide.vercel.app` | `https://projex.manningworks.dev` |
 | `https://www.npmjs.com/package/@reallukemanning/folio` | `https://www.npmjs.com/package/@manningworks/projex` |
+
+---
+
+## fetchGitHubRepo / fetchNpmPackage Return Type Change
+
+> **Impact:** Breaking change for code that calls `fetchGitHubRepo()` or `fetchNpmPackage()` directly
+
+### What Changed
+
+Both functions now return a structured result object instead of raw data or `null`.
+
+**Before:**
+```tsx
+const data = await fetchGitHubRepo('user/repo')
+if (data) {
+  console.log(data.stargazers_count)
+}
+```
+
+**After:**
+```tsx
+const { data, error } = await fetchGitHubRepo('user/repo')
+if (data) {
+  console.log(data.stargazers_count)
+} else if (error) {
+  console.error(error.message)
+}
+```
+
+### New Return Types
+
+```tsx
+// fetchGitHubRepo returns FetchRepoResult
+interface FetchRepoResult {
+  data: GitHubRepoData | null
+  error: FetchRepoError | null
+}
+
+interface FetchRepoError {
+  type: FetchRepoErrorType
+  message: string
+}
+
+type FetchRepoErrorType = 'not_found' | 'rate_limited' | 'network' | 'auth' | 'other'
+
+// fetchNpmPackage returns FetchNpmResult
+interface FetchNpmResult {
+  data: NpmPackageData | null
+  error: FetchNpmError | null
+}
+
+interface FetchNpmError {
+  type: FetchNpmErrorType
+  message: string
+}
+
+type FetchNpmErrorType = 'not_found' | 'network' | 'other'
+```
+
+### Migration Steps
+
+1. Search for direct calls to `fetchGitHubRepo` and `fetchNpmPackage`
+2. Destructure the return value as `{ data, error }`
+3. Update null checks from `if (data)` to `if (data)` (unchanged) and add error handling for `error`
+4. If you were relying on `normalise()` internally, no changes are needed — `normalise` handles the new return type automatically
+
+### Not Affected
+
+- Code using `normalise()` or `defineProjects()` is not affected
+- Code using `fetchGitHubRepos()` (plural) is not affected — it already used the `{ data, error }` pattern
+
+---
+
+## normalizeStats Renamed to normaliseStats
+
+> **Impact:** Non-breaking — `normalizeStats` is still available as a deprecated alias
+
+### What Changed
+
+`normalizeStats` has been renamed to `normaliseStats` for naming consistency with the `normalise` function. The old name is still exported as a deprecated alias.
+
+### Migration Steps
+
+Update imports in new code:
+
+```tsx
+// Old (still works, deprecated)
+import { normalizeStats } from '@manningworks/projex'
+
+// New (preferred)
+import { normaliseStats } from '@manningworks/projex'
+```
+
+No immediate action required — the deprecated alias will continue to work.
+
+---
+
+## ProjectStats Changed to Tagged Union
+
+> **Impact:** Breaking change for code that accesses `project.stats` properties without checking the type
+
+### What Changed
+
+`ProjectStats` changed from an intersection type to a tagged union with a `type` discriminator field.
+
+**Before:**
+```tsx
+type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & ...
+```
+
+**After:**
+```tsx
+type ProjectStats =
+  | ({ type: 'github' } & GitHubStats)
+  | ({ type: 'manual' } & Record<string, never>)
+  | ({ type: 'npm' } & NpmStats)
+  | ({ type: 'product-hunt' } & ProductHuntStats)
+  | ({ type: 'youtube' } & YouTubeStats)
+  | ({ type: 'gumroad' } & GumroadStats)
+  | ({ type: 'lemonsqueezy' } & LemonSqueezyStats)
+  | ({ type: 'devto' } & DevToStats)
+  | ({ type: 'hybrid' } & GitHubStats & NpmStats)
+```
+
+### Migration Steps
+
+1. **If you access stats without type guards**, add a `type` check:
+
+   **Before:**
+   ```tsx
+   if (project.stats?.stars) { ... }
+   ```
+
+   **After (still works for most cases, but TypeScript is stricter):**
+   ```tsx
+   if (project.stats && project.stats.type === 'github') {
+     console.log(project.stats.stars)
+   }
+   ```
+
+2. **If you use `normaliseStats`**, no changes needed — it accepts `Record<string, unknown>` and ignores the type tag.
+
+3. **If you manually construct stats objects**, add the `type` field:
+
+   **Before:**
+   ```tsx
+   stats: { stars: 100, forks: 10 }
+   ```
+
+   **After:**
+   ```tsx
+   stats: { type: 'github', stars: 100, forks: 10 }
+   ```
+
+---
+
+## DefineProjectsOptions onError Option
+
+> **Impact:** Non-breaking — new optional option with a default value
+
+### What Changed
+
+A new `onError` option has been added to `DefineProjectsOptions` to control how fetch errors are handled during `normalise()`.
+
+```tsx
+interface DefineProjectsOptions {
+  commits?: number
+  fetchNpmTimestamps?: boolean
+  onError?: 'throw' | 'warn' | 'silent'
+}
+```
+
+| Value | Behavior |
+|-------|----------|
+| `'warn'` (default) | Logs fetch error messages to console |
+| `'throw'` | Throws an error with all fetch error messages |
+| `'silent'` | Suppresses all fetch error output |
+
+No migration needed — existing behavior is preserved by default.
+
+---
+
+## New SmartProjectGrid Component
+
+> **Impact:** Non-breaking — new component, no existing code affected
+
+### What's New
+
+A new `SmartProjectGrid` client component provides search, filters, and sort out of the box:
+
+```tsx
+import { SmartProjectGrid, ProjectCard } from '@manningworks/projex'
+
+<SmartProjectGrid projects={projects} showSearch showFilters>
+  {(project) => (
+    <ProjectCard>
+      <ProjectCard.Header />
+      <ProjectCard.Description />
+      <ProjectCard.Stats />
+    </ProjectCard>
+  )}
+</SmartProjectGrid>
+```
+
+### Context Provider
+
+`ProjectCard` sub-components (`.Header`, `.Description`, `.Tags`, `.Stats`, `.Status`, `.Links`) now accept an optional `project` prop. When used inside a `SmartProjectGrid`, they can read the project from context instead:
+
+```tsx
+import { ProjectGridProvider, useProjectContext } from '@manningworks/projex'
+```
+
+---
+
+## CLI Export Entry Point
+
+> **Impact:** Non-breaking — new export map entry
+
+### What Changed
+
+The `package.json` exports map now includes a `./cli` entry point:
+
+```json
+{
+  "exports": {
+    ".": { ... },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    }
+  }
+}
+```
+
+No migration needed — existing imports from `@manningworks/projex` are unaffected.
+
+---
+
+## escapeString Utility
+
+> **Impact:** Non-breaking — new utility export
+
+### What's New
+
+A new `escapeString` utility is exported for escaping strings in generated code:
+
+```tsx
+import { escapeString } from '@manningworks/projex'
+
+escapeString("It's a test\n")
+// "It\\'s a test\\n"
+```
+
+---
+
+## fetchProjectData Utility
+
+> **Impact:** Non-breaking — new utility export
+
+### What's New
+
+A new `fetchProjectData` function fetches all external API data for a project in parallel via `Promise.all`:
+
+```tsx
+import { fetchProjectData } from '@manningworks/projex'
+
+const result = await fetchProjectData(input, options)
+// result.githubData, result.npmData, result.githubError, result.npmError, ...
+```
+
+See the [normalise API reference](../api/utilities/normalise) for full details.
 
 ---
 

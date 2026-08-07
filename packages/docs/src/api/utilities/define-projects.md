@@ -128,6 +128,40 @@ You can always manually specify timestamps regardless of the `fetchNpmTimestamps
 
 The npm registry data is already being fetched to get version and download counts. Enabling `fetchNpmTimestamps` extracts additional metadata from the existing response with **zero extra API calls**.
 
+## Error Handling Configuration
+
+Control how fetch errors are surfaced during `normalise()` using the `onError` option.
+
+### onError
+
+```tsx
+interface DefineProjectsOptions {
+  commits?: number
+  fetchNpmTimestamps?: boolean
+  onError?: 'throw' | 'warn' | 'silent'
+}
+```
+
+| Value | Behavior |
+|-------|----------|
+| `'warn'` (default) | Logs fetch error messages to console via `console.warn` |
+| `'throw'` | Throws an error with all fetch error messages joined |
+| `'silent'` | Suppresses all fetch error output |
+
+### Example
+
+```tsx
+import { defineProjects, normalise } from '@manningworks/projex'
+
+// Throw on fetch errors instead of silently continuing
+const { projects, options } = defineProjects([
+  { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
+], { onError: 'throw' })
+
+// If GitHub fetch fails, this will throw
+const normalised = await Promise.all(projects.map(p => normalise(p, options)))
+```
+
 ## Purpose
 
 This is an identity function that provides TypeScript type inference and autocomplete for project configurations. It does not modify the input.

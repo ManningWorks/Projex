@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import { z } from 'zod'
 
 function formatPath(path: (string | number)[]): string {
@@ -63,7 +62,7 @@ function getExpectedValues(issue: z.ZodIssue): string | undefined {
 
 function getSuggestion(issue: z.ZodIssue): string | undefined {
   if (issue.code === 'invalid_enum_value') {
-    return `Expected one of: ${chalk.gray(issue.options?.join(', ') || 'unknown')}`
+    return `Expected one of: ${issue.options?.join(', ') || 'unknown'}`
   }
   if (issue.code === 'invalid_type') {
     const ctx = issue as z.ZodInvalidTypeIssue
@@ -81,10 +80,10 @@ function getSuggestion(issue: z.ZodIssue): string | undefined {
   if (issue.code === 'invalid_string') {
     const ctx = issue as z.ZodInvalidStringIssue
     if (ctx.validation === 'email') {
-      return `Example: ${chalk.gray('"user@example.com"')}`
+      return `Example: "user@example.com"`
     }
     if (ctx.validation === 'url') {
-      return `Example: ${chalk.gray('"https://example.com"')}`
+      return `Example: "https://example.com"`
     }
   }
   if (issue.code === 'custom') {
@@ -97,22 +96,22 @@ function formatIssue(issue: z.ZodIssue): string[] {
   const lines: string[] = []
   const path = formatPath(issue.path)
 
-  const pathStr = path ? `${chalk.cyan(path)}: ` : ''
-  lines.push(`${pathStr}${chalk.red(issue.message)}`)
+  const pathStr = path ? `${path}: ` : ''
+  lines.push(`${pathStr}${issue.message}`)
 
   const expected = getExpectedValues(issue)
   if (expected) {
-    lines.push(`  ${chalk.gray('Expected:')} ${chalk.yellow(expected)}`)
+    lines.push(`  Expected: ${expected}`)
   }
 
   if (issue.code === 'invalid_type') {
     const ctx = issue as z.ZodInvalidTypeIssue
-    lines.push(`  ${chalk.gray('Received:')} ${chalk.yellow(ctx.received)}`)
+    lines.push(`  Received: ${ctx.received}`)
   }
 
   const suggestion = getSuggestion(issue)
   if (suggestion) {
-    lines.push(`  ${chalk.green('Hint:')} ${suggestion}`)
+    lines.push(`  Hint: ${suggestion}`)
   }
 
   return lines
@@ -121,11 +120,11 @@ function formatIssue(issue: z.ZodIssue): string[] {
 export function formatZodError(error: z.ZodError): string {
   const lines: string[] = []
 
-  lines.push(chalk.bold.red('✖ Validation failed'))
+  lines.push('Validation failed')
 
   const issueCount = error.issues.length
   const issueWord = issueCount === 1 ? 'issue' : 'issues'
-  lines.push(`${chalk.gray(`${issueCount} ${issueWord} found:`)}\n`)
+  lines.push(`${issueCount} ${issueWord} found:\n`)
 
   const issuesByPath = new Map<string, z.ZodIssue[]>()
   for (const issue of error.issues) {
@@ -142,12 +141,12 @@ export function formatZodError(error: z.ZodError): string {
   }
 
   lines.push('')
-  lines.push(chalk.gray('Tip: Check your projex.config.ts for the errors above.'))
+  lines.push('Tip: Check your projex.config.ts for the errors above.')
 
   const hasTypeIssues = error.issues.some((i) => i.code === 'invalid_type')
   const hasEnumIssues = error.issues.some((i) => i.code === 'invalid_enum_value')
   if (hasTypeIssues || hasEnumIssues) {
-    lines.push(chalk.gray('Refer to the docs: https://projex.manningworks.dev/docs/config'))
+    lines.push('Refer to the docs: https://projex.manningworks.dev/docs/config')
   }
 
   return lines.join('\n')

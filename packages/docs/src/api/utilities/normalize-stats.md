@@ -1,11 +1,13 @@
-# normalizeStats
+# normaliseStats
 
 Format project stats into a normalized array for display. Converts raw numeric stats into human-readable format with proper labels.
+
+> **Note:** `normalizeStats` is available as a deprecated alias for `normaliseStats`. Prefer `normaliseStats` in new code.
 
 ## Signature
 
 ```tsx
-function normalizeStats(
+function normaliseStats(
   stats: Record<string, unknown>,
   type: ProjectType
 ): NormalizedStat[]
@@ -123,10 +125,10 @@ Dates are formatted as `Mon DD, YYYY` (e.g., `Jan 15, 2024`).
 ## Example
 
 ```tsx
-import { normalizeStats } from '@manningworks/projex'
+import { normaliseStats } from '@manningworks/projex'
 
 // GitHub project
-const githubStats = normalizeStats(
+const githubStats = normaliseStats(
   { stars: 1234, forks: 56 },
   'github'
 )
@@ -136,7 +138,7 @@ const githubStats = normalizeStats(
 // ]
 
 // YouTube channel
-const youtubeStats = normalizeStats(
+const youtubeStats = normaliseStats(
   { subscribers: 125400, views: 2500000 },
   'youtube'
 )
@@ -146,7 +148,7 @@ const youtubeStats = normalizeStats(
 // ]
 
 // Gumroad product
-const gumroadStats = normalizeStats(
+const gumroadStats = normaliseStats(
   { formattedRevenue: '$5,678.90', salesCount: 234, subscriberCount: 89 },
   'gumroad'
 )
@@ -160,10 +162,10 @@ const gumroadStats = normalizeStats(
 ## Usage with Components
 
 ```tsx
-import { normalizeStats } from '@manningworks/projex'
+import { normaliseStats } from '@manningworks/projex'
 
 function StatList({ project }) {
-  const stats = normalizeStats(project.stats || {}, project.type)
+  const stats = normaliseStats(project.stats || {}, project.type)
   
   return (
     <ul>

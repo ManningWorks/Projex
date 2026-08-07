@@ -33,7 +33,8 @@ Projex provides utility functions for filtering, sorting, and normalizing projec
 | Function | Description |
 |----------|-------------|
 | [normalise](./normalise) | Transform project input to normalized project |
-| [normalizeStats](./normalize-stats) | Format stats for display |
+| [normaliseStats](./normalize-stats) | Format stats for display |
+| [fetchProjectData](./normalise) | Fetch all external API data in parallel for a project |
 
 ### Data Fetching
 
@@ -85,7 +86,9 @@ import {
   useProjectSearch,
   useProjectFilters,
   normalise,
+  normaliseStats,
   normalizeStats,
+  fetchProjectData,
   defineProjects,
   fetchGitHubRepo,
   fetchGitHubRepos,
@@ -101,7 +104,8 @@ import {
   generateProjectSchema,
   generatePortfolioMetadata,
   generateProjectMetadata,
-  formatZodError
+  formatZodError,
+  escapeString
 } from '@manningworks/projex'
 ```
 

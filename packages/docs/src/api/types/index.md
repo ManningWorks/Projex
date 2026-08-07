@@ -17,7 +17,7 @@ Projex exports TypeScript types for all data structures. Import types from the m
 
 | Type | Description |
 |------|-------------|
-| [ProjectStats](./project-stats) | Combined stats interface |
+| [ProjectStats](./project-stats) | Tagged union of platform-specific stats |
 | GitHubStats | GitHub-specific stats |
 | NpmStats | npm-specific stats |
 | ProductHuntStats | Product Hunt-specific stats |
@@ -43,9 +43,16 @@ Projex exports TypeScript types for all data structures. Import types from the m
 | Type | Description |
 |------|-------------|
 | [GitHubRepoData](./github-repo-data) | GitHub API response |
+| FetchRepoResult | Result object for fetchGitHubRepo (`{ data, error }`) |
+| FetchRepoError | Error object for fetchGitHubRepo |
+| FetchRepoErrorType | Error type union for fetchGitHubRepo |
 | FetchReposResult | Result object for fetchGitHubRepos |
 | FetchReposError | Error type for fetchGitHubRepos |
 | [NpmPackageData](./npm-package-data) | npm API response |
+| FetchNpmResult | Result object for fetchNpmPackage (`{ data, error }`) |
+| FetchNpmError | Error object for fetchNpmPackage |
+| FetchNpmErrorType | Error type union for fetchNpmPackage |
+| FetchProjectDataResult | Combined result from fetchProjectData |
 | [ProductHuntPostData](./product-hunt-post-data) | Product Hunt API response |
 | YouTubeChannelData | YouTube API response |
 | GumroadProductData | Gumroad API response |

@@ -39,7 +39,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/test-repo')
 
-      expect(result).toEqual(mockData)
+      expect(result.data).toEqual(mockData)
+      expect(result.error).toBeNull()
       expect(mockFetch).toHaveBeenCalledWith(
         'https://api.github.com/repos/user/test-repo',
         expect.objectContaining({
@@ -72,8 +73,9 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/no-desc-repo')
 
-      expect(result).not.toBeNull()
-      expect(result?.description).toBeNull()
+      expect(result.data).not.toBeNull()
+      expect(result.error).toBeNull()
+      expect(result.data?.description).toBeNull()
     })
 
     it('should handle repo with missing topics', async () => {
@@ -97,8 +99,9 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/no-topics-repo')
 
-      expect(result).not.toBeNull()
-      expect(result?.topics).toEqual([])
+      expect(result.data).not.toBeNull()
+      expect(result.error).toBeNull()
+      expect(result.data?.topics).toEqual([])
     })
   })
 
@@ -111,7 +114,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/nonexistent-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('not_found')
     })
 
     it('should return null for 403 forbidden', async () => {
@@ -122,7 +126,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/forbidden-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('rate_limited')
     })
 
     it('should return null for 500 server error', async () => {
@@ -133,7 +138,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/server-error-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('other')
     })
 
     it('should return null for 401 unauthorized', async () => {
@@ -144,7 +150,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/unauthorized-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('auth')
     })
   })
 
@@ -154,7 +161,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/network-error-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
 
     it('should return null for timeout error', async () => {
@@ -162,7 +170,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/timeout-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
 
     it('should return null for DNS resolution failure', async () => {
@@ -170,7 +179,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/dns-error-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
 
     it('should return null for connection refused', async () => {
@@ -178,7 +188,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/conn-refused-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
   })
 
@@ -347,7 +358,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/rate-limited-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('rate_limited')
     })
 
     it('should handle secondary rate limit (403 with retry-after)', async () => {
@@ -359,7 +371,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/secondary-rate-limit')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('rate_limited')
     })
   })
 
@@ -441,7 +454,7 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/parse-test-repo')
 
-      expect(result).toEqual({
+      expect(result.data).toEqual({
         name: 'parse-test-repo',
         description: 'A repo with unicode: 🎉',
         stargazers_count: 12345,
@@ -453,6 +466,7 @@ describe('fetchGitHubRepo', () => {
         created_at: '2024-01-15T10:30:00Z',
         updated_at: '2024-06-20T15:45:00Z',
       })
+      expect(result.error).toBeNull()
     })
 
     it('should handle invalid JSON response', async () => {
@@ -463,7 +477,8 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/invalid-json-repo')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error).not.toBeNull()
     })
   })
 
@@ -549,7 +564,7 @@ describe('fetchGitHubRepo', () => {
 
       const result = await fetchGitHubRepo('user/full-api-repo')
 
-      expect(result).toEqual({
+      expect(result.data).toEqual({
         name: 'full-api-repo',
         description: 'Full API description',
         stargazers_count: 5000,
@@ -561,6 +576,7 @@ describe('fetchGitHubRepo', () => {
         created_at: '2023-01-01T00:00:00Z',
         updated_at: '2024-12-31T23:59:59Z',
       })
+      expect(result.error).toBeNull()
     })
   })
 })

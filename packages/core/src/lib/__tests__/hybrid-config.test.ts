@@ -16,6 +16,9 @@ describe('hybrid config recognition', () => {
   })
 
   it('should recognize a hybrid project when type is "hybrid"', async () => {
+    mockedFetchGitHubRepo.mockResolvedValue({ data: null, error: null })
+    mockedFetchNpmPackage.mockResolvedValue({ data: null, error: null })
+
     const input: HybridProjectInput = {
       id: 'test-hybrid',
       type: 'hybrid',
@@ -33,7 +36,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should fetch from both GitHub and npm APIs for hybrid projects', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -44,13 +47,13 @@ describe('hybrid config recognition', () => {
       homepage: 'https://example.com',
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -67,7 +70,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should merge stats from both GitHub and npm', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -78,13 +81,13 @@ describe('hybrid config recognition', () => {
       homepage: 'https://example.com',
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -97,6 +100,7 @@ describe('hybrid config recognition', () => {
     const result = await normalise(input)
 
     expect(result.stats).toEqual({
+      type: 'hybrid',
       stars: 100,
       forks: 20,
       downloads: '5000',
@@ -105,7 +109,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should merge successful source stats when one API fails', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -116,9 +120,9 @@ describe('hybrid config recognition', () => {
       homepage: 'https://example.com',
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue(null)
+    mockedFetchNpmPackage.mockResolvedValue({ data: null, error: { type: 'not_found', message: 'Not found' } })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -131,19 +135,20 @@ describe('hybrid config recognition', () => {
     const result = await normalise(input)
 
     expect(result.stats).toEqual({
+      type: 'hybrid',
       stars: 100,
       forks: 20,
     })
   })
 
   it('should merge successful source stats when npm API succeeds but GitHub fails', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue(null)
+    mockedFetchGitHubRepo.mockResolvedValue({ data: null, error: { type: 'not_found', message: 'Not found' } })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -156,13 +161,14 @@ describe('hybrid config recognition', () => {
     const result = await normalise(input)
 
     expect(result.stats).toEqual({
+      type: 'hybrid',
       downloads: '5000',
       version: '1.0.0',
     })
   })
 
   it('should auto-generate npm link from package name', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -173,13 +179,13 @@ describe('hybrid config recognition', () => {
       homepage: null,
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -196,7 +202,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should allow manual override of auto-generated links', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -207,13 +213,13 @@ describe('hybrid config recognition', () => {
       homepage: null,
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -234,7 +240,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should use GitHub data for name, description, and language when available', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'github-name',
       description: 'GitHub description',
       stargazers_count: 100,
@@ -245,13 +251,13 @@ describe('hybrid config recognition', () => {
       homepage: null,
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'npm-name',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -269,7 +275,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should allow override fields to take precedence over fetched data', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'github-name',
       description: 'GitHub description',
       stargazers_count: 100,
@@ -280,13 +286,13 @@ describe('hybrid config recognition', () => {
       homepage: null,
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'npm-name',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -311,7 +317,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should handle hybrid project with all optional fields', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'GitHub description',
       stargazers_count: 100,
@@ -322,13 +328,13 @@ describe('hybrid config recognition', () => {
       homepage: 'https://example.com',
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'full-hybrid',
@@ -369,6 +375,7 @@ describe('hybrid config recognition', () => {
     expect(result.links.live).toBe('https://custom-live.com')
     expect(result.links.npm).toBe('https://npmjs.com/package/test-package')
     expect(result.stats).toEqual({
+      type: 'hybrid',
       stars: 100,
       forks: 20,
       downloads: '5000',
@@ -377,7 +384,7 @@ describe('hybrid config recognition', () => {
   })
 
   it('should allow manual stats to override fetched stats', async () => {
-    mockedFetchGitHubRepo.mockResolvedValue({
+    mockedFetchGitHubRepo.mockResolvedValue({ data: {
       name: 'test-package',
       description: 'A test package',
       stargazers_count: 100,
@@ -388,13 +395,13 @@ describe('hybrid config recognition', () => {
       homepage: null,
       created_at: '2024-01-01T00:00:00Z',
       updated_at: '2024-06-01T00:00:00Z',
-    })
+    }, error: null })
 
-    mockedFetchNpmPackage.mockResolvedValue({
+    mockedFetchNpmPackage.mockResolvedValue({ data: {
       name: 'test-package',
       version: '1.0.0',
       downloads: 5000,
-    })
+    }, error: null })
 
     const input: HybridProjectInput = {
       id: 'test-hybrid',
@@ -403,6 +410,7 @@ describe('hybrid config recognition', () => {
       package: 'test-package',
       status: 'active',
       stats: {
+        type: 'hybrid',
         stars: 999,
         downloads: '9999',
       },
@@ -411,6 +419,7 @@ describe('hybrid config recognition', () => {
     const result = await normalise(input)
 
     expect(result.stats).toEqual({
+      type: 'hybrid',
       stars: 999,
       forks: 20,
       downloads: '9999',

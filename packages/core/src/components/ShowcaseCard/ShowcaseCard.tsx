@@ -38,28 +38,29 @@ ShowcaseCard.Tags = function ShowcaseCardTags({ project }: { project: ProjexProj
 }
 
 ShowcaseCard.Stats = function ShowcaseCardStats({ project }: { project: ProjexProject }) {
+  const stats = project.stats as Record<string, any> | null
   if (
-    !project.stats ||
-    (!project.stats.stars &&
-      !project.stats.forks &&
-      !project.stats.downloads &&
-      !project.stats.version &&
-      !project.stats.upvotes &&
-      !project.stats.comments)
+    !stats ||
+    (!stats.stars &&
+      !stats.forks &&
+      !stats.downloads &&
+      !stats.version &&
+      !stats.upvotes &&
+      !stats.comments)
   ) {
     return null
   }
   return (
     <div data-projex-card-stats>
-      {project.stats.stars && <span data-projex-stat="stars">{project.stats.stars} stars</span>}
-      {project.stats.forks && <span data-projex-stat="forks">{project.stats.forks} forks</span>}
-      {project.stats.downloads && (
-        <span data-projex-stat="downloads">{project.stats.downloads} downloads</span>
+      {stats.stars && <span data-projex-stat="stars">{stats.stars} stars</span>}
+      {stats.forks && <span data-projex-stat="forks">{stats.forks} forks</span>}
+      {stats.downloads && (
+        <span data-projex-stat="downloads">{stats.downloads} downloads</span>
       )}
-      {project.stats.version && <span data-projex-stat="version">{project.stats.version}</span>}
-      {project.stats.upvotes && <span data-projex-stat="upvotes">{project.stats.upvotes} upvotes</span>}
-      {project.stats.comments && (
-        <span data-projex-stat="comments">{project.stats.comments} comments</span>
+      {stats.version && <span data-projex-stat="version">{stats.version}</span>}
+      {stats.upvotes && <span data-projex-stat="upvotes">{stats.upvotes} upvotes</span>}
+      {stats.comments && (
+        <span data-projex-stat="comments">{stats.comments} comments</span>
       )}
     </div>
   )

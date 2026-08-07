@@ -1,14 +1,128 @@
-import { fetchGitHubCommits, fetchGitHubRepo, LANGUAGE_COLORS } from './github'
-import { fetchNpmPackage, type NpmPackageData } from './npm'
-import { fetchProductHuntPost } from './product-hunt'
-import { fetchYouTubeChannel } from './youtube'
-import { fetchGumroadProduct } from './gumroad'
-import { fetchLemonSqueezyStore } from './lemonsqueezy'
-import { fetchDevToUser } from './devto'
+import { fetchGitHubCommits, fetchGitHubRepo, LANGUAGE_COLORS, type GitHubRepoData, type FetchRepoError } from './github'
+import { fetchNpmPackage, type NpmPackageData, type FetchNpmError } from './npm'
+import { fetchProductHuntPost, type ProductHuntPostData } from './product-hunt'
+import { fetchYouTubeChannel, type YouTubeChannelData } from './youtube'
+import { fetchGumroadProduct, type GumroadProductData } from './gumroad'
+import { fetchLemonSqueezyStore, type LemonSqueezyStoreData } from './lemonsqueezy'
+import { fetchDevToUser, type DevToUserData } from './devto'
 import { projexProjectInputSchema } from './config-schema'
 import { formatZodError } from './format-error'
 import type { DefineProjectsOptions } from './defineProjects'
 import type { ProjexProject, ProjexProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
+
+export interface FetchProjectDataResult {
+  githubData: GitHubRepoData | null
+  npmData: NpmPackageData | null
+  productHuntData: ProductHuntPostData | null
+  youtubeData: YouTubeChannelData | null
+  gumroadData: GumroadProductData | null
+  lemonsqueezyData: LemonSqueezyStoreData | null
+  devtoData: DevToUserData | null
+  commits: ProjectCommit[] | undefined
+  githubError: FetchRepoError | null
+  npmError: FetchNpmError | null
+}
+
+export async function fetchProjectData(
+  input: ProjexProjectInput,
+  options?: DefineProjectsOptions,
+): Promise<FetchProjectDataResult> {
+  const { type } = input
+  const repo = 'repo' in input ? input.repo : undefined
+  const npmPackage = 'package' in input ? input.package : undefined
+  const slug = 'slug' in input ? input.slug : undefined
+  const channelId = 'channelId' in input ? input.channelId : undefined
+  const productId = 'productId' in input ? input.productId : undefined
+  const storeId = 'storeId' in input ? input.storeId : undefined
+  const username = 'username' in input ? input.username : undefined
+
+  const githubPromise = (type === 'github' || type === 'hybrid') && repo
+    ? fetchGitHubRepo(repo)
+    : Promise.resolve({ data: null as GitHubRepoData | null, error: null as FetchRepoError | null })
+
+  const npmPromise = (type === 'npm' || type === 'hybrid') && npmPackage
+    ? fetchNpmPackage(npmPackage)
+    : Promise.resolve({ data: null as NpmPackageData | null, error: null as FetchNpmError | null })
+
+  const phPromise = type === 'product-hunt' && slug
+    ? fetchProductHuntPost(slug)
+    : Promise.resolve(null)
+
+  const ytPromise = type === 'youtube' && channelId
+    ? fetchYouTubeChannel(channelId)
+    : Promise.resolve(null)
+
+  const gumroadPromise = type === 'gumroad' && productId
+    ? fetchGumroadProduct(productId)
+    : Promise.resolve(null)
+
+  const lsPromise = type === 'lemonsqueezy' && storeId
+    ? fetchLemonSqueezyStore(storeId)
+    : Promise.resolve(null)
+
+  const devtoPromise = type === 'devto' && username
+    ? fetchDevToUser(username)
+    : Promise.resolve(null)
+
+  let commitsPromise: Promise<ProjectCommit[] | undefined> = Promise.resolve(undefined)
+  if ((type === 'github' || type === 'hybrid') && repo) {
+    const commitsConfig = 'commits' in input ? input.commits : undefined
+    const globalCommits = options?.commits ?? 0
+    let commitsLimit: number | undefined = commitsConfig ?? globalCommits
+
+    if (commitsLimit !== undefined) {
+      if (commitsLimit < 0 || commitsLimit > 100) {
+        console.warn(
+          `Invalid commits value: ${commitsLimit}. Clamping to valid range (0-100).`,
+        )
+        commitsLimit = Math.max(0, Math.min(100, commitsLimit))
+      }
+
+      if (commitsLimit > 0) {
+        commitsPromise = fetchGitHubCommits(repo, commitsLimit).then(
+          (data) => {
+            if (data === null) {
+              console.warn(`Failed to fetch commits for ${repo}. Setting commits to empty array.`)
+              return []
+            }
+            return data.map((commit) => ({
+              message: commit.message,
+              date: commit.date,
+              url: commit.htmlUrl,
+              author: commit.author
+                ? { name: commit.author }
+                : undefined,
+            }))
+          },
+        )
+      }
+    }
+  }
+
+  const [githubResult, npmResult, productHuntData, youtubeData, gumroadData, lemonsqueezyData, devtoData, commits] = await Promise.all([
+    githubPromise,
+    npmPromise,
+    phPromise,
+    ytPromise,
+    gumroadPromise,
+    lsPromise,
+    devtoPromise,
+    commitsPromise,
+  ])
+
+  return {
+    githubData: githubResult.data,
+    npmData: npmResult.data,
+    productHuntData,
+    youtubeData,
+    gumroadData,
+    lemonsqueezyData,
+    devtoData,
+    commits,
+    githubError: githubResult.error,
+    npmError: npmResult.error,
+  }
+}
 
 export async function normalise(
   input: ProjexProjectInput,
@@ -18,6 +132,27 @@ export async function normalise(
 
   if (!validationResult.success) {
     throw new Error(formatZodError(validationResult.error))
+  }
+
+  const fetched = await fetchProjectData(input, options)
+  const { githubData, npmData, productHuntData, youtubeData, gumroadData, lemonsqueezyData, devtoData } = fetched
+  const finalCommits = fetched.commits
+
+  const onError = options?.onError ?? 'warn'
+
+  const fetchErrors: string[] = []
+  if (fetched.githubError) fetchErrors.push(fetched.githubError.message)
+  if (fetched.npmError) fetchErrors.push(fetched.npmError.message)
+
+  if (fetchErrors.length > 0) {
+    if (onError === 'throw') {
+      throw new Error(fetchErrors.join('; '))
+    }
+    if (onError === 'warn') {
+      for (const msg of fetchErrors) {
+        console.warn(msg)
+      }
+    }
   }
 
   const {
@@ -43,109 +178,7 @@ export async function normalise(
   } = input
 
   const repo = 'repo' in input ? input.repo : undefined
-
-  let githubData = null
-
-  if (type === 'github' || type === 'hybrid') {
-    if (repo) {
-      githubData = await fetchGitHubRepo(repo)
-    }
-  }
-
   const npmPackage = 'package' in input ? input.package : undefined
-
-  let npmData: NpmPackageData | null = null
-
-  if (type === 'npm' || type === 'hybrid') {
-    if (npmPackage) {
-      npmData = await fetchNpmPackage(npmPackage)
-    }
-  }
-
-  const slug = 'slug' in input ? input.slug : undefined
-
-  let productHuntData = null
-
-  if (type === 'product-hunt') {
-    if (slug) {
-      productHuntData = await fetchProductHuntPost(slug)
-    }
-  }
-
-  const channelId = 'channelId' in input ? input.channelId : undefined
-
-  let youtubeData = null
-
-  if (type === 'youtube') {
-    if (channelId) {
-      youtubeData = await fetchYouTubeChannel(channelId)
-    }
-  }
-
-  const productId = 'productId' in input ? input.productId : undefined
-
-  let gumroadData = null
-
-  if (type === 'gumroad') {
-    if (productId) {
-      gumroadData = await fetchGumroadProduct(productId)
-    }
-  }
-
-  const storeId = 'storeId' in input ? input.storeId : undefined
-
-  let lemonsqueezyData = null
-
-  if (type === 'lemonsqueezy') {
-    if (storeId) {
-      lemonsqueezyData = await fetchLemonSqueezyStore(storeId)
-    }
-  }
-
-  const username = 'username' in input ? input.username : undefined
-
-  let devtoData = null
-
-  if (type === 'devto') {
-    if (username) {
-      devtoData = await fetchDevToUser(username)
-    }
-  }
-
-  let finalCommits: ProjectCommit[] | undefined = undefined
-
-  if (type === 'github' || type === 'hybrid') {
-    const commitsConfig = 'commits' in input ? input.commits : undefined
-    const globalCommits = options?.commits ?? 0
-    let commitsLimit: number | undefined = commitsConfig ?? globalCommits
-
-    if (commitsLimit !== undefined) {
-      if (commitsLimit < 0 || commitsLimit > 100) {
-        console.warn(
-          `Invalid commits value: ${commitsLimit}. Clamping to valid range (0-100).`,
-        )
-        commitsLimit = Math.max(0, Math.min(100, commitsLimit))
-      }
-
-      if (commitsLimit > 0 && repo) {
-        const commitsData = await fetchGitHubCommits(repo, commitsLimit)
-
-        if (commitsData === null) {
-          finalCommits = []
-          console.warn(`Failed to fetch commits for ${repo}. Setting commits to empty array.`)
-        } else {
-          finalCommits = commitsData.map((commit) => ({
-            message: commit.message,
-            date: commit.date,
-            url: commit.htmlUrl,
-            author: commit.author
-              ? { name: commit.author }
-              : undefined,
-          }))
-        }
-      }
-    }
-  }
 
   let finalName: string
   let finalTagline: string
@@ -192,6 +225,7 @@ export async function normalise(
   if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt' || type === 'youtube' || type === 'gumroad' || type === 'lemonsqueezy' || type === 'devto') {
     if (githubData) {
       finalStats = {
+        type: type as 'github' | 'hybrid',
         stars: githubData.stargazers_count,
         forks: githubData.forks_count,
       }
@@ -199,6 +233,7 @@ export async function normalise(
     if (npmData) {
       finalStats = {
         ...finalStats,
+        type: type as 'npm' | 'hybrid',
         downloads: String(npmData.downloads),
         version: npmData.version,
       }
@@ -206,6 +241,7 @@ export async function normalise(
     if (productHuntData) {
       finalStats = {
         ...finalStats,
+        type: 'product-hunt' as const,
         upvotes: productHuntData.votes_count,
         comments: productHuntData.comments_count,
         launchDate: productHuntData.featured_at || undefined,
@@ -214,6 +250,7 @@ export async function normalise(
     if (youtubeData) {
       finalStats = {
         ...finalStats,
+        type: 'youtube' as const,
         subscribers: youtubeData.subscriberCount,
         views: youtubeData.viewCount,
         latestVideoTitle: youtubeData.latestVideoTitle,
@@ -224,6 +261,7 @@ export async function normalise(
     if (gumroadData) {
       finalStats = {
         ...finalStats,
+        type: 'gumroad' as const,
         formattedRevenue: gumroadData.formattedRevenue,
         salesCount: gumroadData.salesCount,
         subscriberCount: gumroadData.subscriberCount,
@@ -232,6 +270,7 @@ export async function normalise(
     if (lemonsqueezyData) {
       finalStats = {
         ...finalStats,
+        type: 'lemonsqueezy' as const,
         formattedMRR: lemonsqueezyData.formattedMRR,
         orderCount: lemonsqueezyData.orderCount,
         customerCount: lemonsqueezyData.customerCount,
@@ -240,16 +279,17 @@ export async function normalise(
     if (devtoData) {
       finalStats = {
         ...finalStats,
+        type: 'devto' as const,
         articleCount: devtoData.articleCount,
         totalViews: devtoData.totalViews,
         totalReactions: devtoData.totalReactions,
       }
     }
     if (inputStats) {
-      finalStats = { ...finalStats, ...inputStats }
+      finalStats = { ...finalStats, ...inputStats, type: (finalStats as Record<string, unknown>)?.type ?? type } as ProjexProject['stats']
     }
   } else {
-    finalStats = inputStats || null
+    finalStats = inputStats ? { ...inputStats, type: 'manual' as const } as ProjexProject['stats'] : null
   }
 
   let finalLanguage: ProjexProject['language'] = null
@@ -357,7 +397,7 @@ function formatDate(value: string | number): string {
   }
 }
 
-export function normalizeStats(stats: Record<string, unknown>, _type: ProjectType): NormalizedStat[] {
+export function normaliseStats(stats: Record<string, unknown>, _type: ProjectType): NormalizedStat[] {
   const result: NormalizedStat[] = []
 
   if (stats.stars !== undefined && stats.stars !== null) {
@@ -473,3 +513,5 @@ export function normalizeStats(stats: Record<string, unknown>, _type: ProjectTyp
 
   return result
 }
+
+export const normalizeStats = normaliseStats

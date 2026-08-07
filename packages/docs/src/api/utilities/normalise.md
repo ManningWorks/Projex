@@ -24,11 +24,13 @@ function normalise(
 interface DefineProjectsOptions {
   commits?: number
   fetchNpmTimestamps?: boolean
+  onError?: 'throw' | 'warn' | 'silent'
 }
 ```
 
 - **`commits`**: Number of recent commits to fetch for `github` and `hybrid` projects. Defaults to `0` (no commits). Per-project `commits` values override this global default.
 - **`fetchNpmTimestamps`**: When `true`, extracts `createdAt` and `updatedAt` timestamps from the npm registry for `npm` and `hybrid` projects. Defaults to `false`.
+- **`onError`**: Controls how fetch errors (GitHub, npm) are handled. Defaults to `'warn'`.
 
 ## Returns
 
@@ -79,6 +81,93 @@ The function handles fetch failures gracefully:
 
 - If GitHub/npm/Product Hunt fetch fails, uses input data only
 - Returns `null` for missing optional fields
+
+### Error Handling (onError)
+
+The `onError` option in `DefineProjectsOptions` controls how fetch errors from GitHub and npm are surfaced:
+
+| Value | Behavior |
+|-------|----------|
+| `'warn'` (default) | Logs fetch error messages to console via `console.warn` |
+| `'throw'` | Throws an error with all fetch error messages joined |
+| `'silent'` | Suppresses all fetch error output |
+
+```tsx
+const { projects, options } = defineProjects([
+  { id: 'proj-1', type: 'github', repo: 'user/repo', status: 'active' },
+], { onError: 'throw' })
+
+// If the GitHub fetch fails, normalise will throw instead of silently continuing
+const normalised = await Promise.all(projects.map(p => normalise(p, options)))
+```
+
+## fetchProjectData
+
+Fetch all external API data for a project input in parallel. This is a lower-level function used internally by `normalise`, exposed for advanced use cases where you need raw fetch results.
+
+### Signature
+
+```tsx
+function fetchProjectData(
+  input: ProjexProjectInput,
+  options?: DefineProjectsOptions,
+): Promise<FetchProjectDataResult>
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| input | `ProjexProjectInput` | Project input configuration |
+| options | `DefineProjectsOptions` | Optional configuration controlling commits fetching |
+
+### Returns
+
+`Promise<FetchProjectDataResult>` - Object containing all fetched data and errors:
+
+```tsx
+interface FetchProjectDataResult {
+  githubData: GitHubRepoData | null
+  npmData: NpmPackageData | null
+  productHuntData: ProductHuntPostData | null
+  youtubeData: YouTubeChannelData | null
+  gumroadData: GumroadProductData | null
+  lemonsqueezyData: LemonSqueezyStoreData | null
+  devtoData: DevToUserData | null
+  commits: ProjectCommit[] | undefined
+  githubError: FetchRepoError | null
+  npmError: FetchNpmError | null
+}
+```
+
+### Behavior
+
+- Calls all relevant APIs in parallel via `Promise.all`
+- Only fetches APIs relevant to the project type (e.g., `github` type only fetches GitHub data)
+- Returns `null` for data fields that were not fetched
+- Includes typed error objects for GitHub and npm fetches (`githubError`, `npmError`)
+
+### Example
+
+```tsx
+import { fetchProjectData, defineProjects } from '@manningworks/projex'
+
+const { projects, options } = defineProjects([
+  { id: 'my-project', type: 'hybrid', repo: 'user/repo', package: 'my-pkg', status: 'active' },
+])
+
+const result = await fetchProjectData(projects[0], options)
+
+if (result.githubError) {
+  console.error('GitHub fetch failed:', result.githubError.message)
+}
+if (result.npmError) {
+  console.error('npm fetch failed:', result.npmError.message)
+}
+
+console.log('Stars:', result.githubData?.stargazers_count)
+console.log('Downloads:', result.npmData?.downloads)
+```
 
 ## Example
 

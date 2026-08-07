@@ -1,6 +1,6 @@
 # formatZodError
 
-Format Zod validation errors with colored terminal output and helpful suggestions. Used internally by CLI for configuration validation.
+Format Zod validation errors with plain text output and helpful suggestions. Used internally by CLI for configuration validation.
 
 ## Signature
 
@@ -16,7 +16,7 @@ function formatZodError(error: z.ZodError): string
 
 ## Returns
 
-`string` - Formatted error message with colors, expected values, and hints
+`string` - Formatted error message with expected values, hints, and suggestions
 
 ## Behavior
 
@@ -24,7 +24,7 @@ function formatZodError(error: z.ZodError): string
 - Provides expected values for enum/type errors
 - Shows received values for type mismatches
 - Includes helpful hints and suggestions
-- Uses chalk for colored terminal output
+- Outputs plain text (no terminal color codes)
 - Never throws - always returns a formatted string
 
 ## Example

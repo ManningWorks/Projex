@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { normalise, normalizeStats } from '../normalise'
+import { normalise, normaliseStats } from '../normalise'
 import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput, YouTubeProjectInput } from '../../types'
 import { fetchGitHubRepo, fetchGitHubCommits } from '../github'
 import { fetchNpmPackage } from '../npm'
@@ -58,7 +58,7 @@ describe('normalise', () => {
         posts: [{ title: 'Post', date: '2024-01-01', url: 'https://example.com' }],
         stack: ['React', 'TypeScript'],
         links: { live: 'https://example.com' },
-        stats: { stars: 100, downloads: '1000' },
+        stats: { stars: 100, downloads: '1000' } as unknown as NonNullable<ManualProjectInput['stats']>,
         createdAt: '2024-01-01',
         updatedAt: '2024-06-01',
       }
@@ -76,7 +76,7 @@ describe('normalise', () => {
       expect(result.posts).toEqual([{ title: 'Post', date: '2024-01-01', url: 'https://example.com' }])
       expect(result.stack).toEqual(['React', 'TypeScript'])
       expect(result.links).toEqual({ live: 'https://example.com' })
-      expect(result.stats).toEqual({ stars: 100, downloads: '1000' })
+      expect(result.stats).toEqual({ type: 'manual', stars: 100, downloads: '1000' })
       expect(result.featured).toBe(true)
       expect(result.createdAt).toBe('2024-01-01')
       expect(result.updatedAt).toBe('2024-06-01')
@@ -104,7 +104,7 @@ describe('normalise', () => {
 
   describe('GitHub project normalization', () => {
     it('should normalize a GitHub project with fetched data', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'github-repo',
         description: 'GitHub description',
         stargazers_count: 100,
@@ -115,7 +115,7 @@ describe('normalise', () => {
         homepage: 'https://example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'test-github',
@@ -128,7 +128,7 @@ describe('normalise', () => {
 
       expect(result.name).toBe('github-repo')
       expect(result.description).toBe('GitHub description')
-      expect(result.stats).toEqual({ stars: 100, forks: 20 })
+      expect(result.stats).toEqual({ type: 'github', stars: 100, forks: 20 })
       expect(result.language).toBe('TypeScript')
       expect(result.links.github).toBe('https://github.com/user/repo')
       expect(result.links.live).toBe('https://example.com')
@@ -136,7 +136,7 @@ describe('normalise', () => {
     })
 
     it('should handle GitHub fetch failure gracefully', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue(null)
+      mockedFetchGitHubRepo.mockResolvedValue({ data: null, error: { type: 'not_found', message: 'Not found' } })
 
       const input: GitHubProjectInput = {
         id: 'failed-github',
@@ -156,7 +156,7 @@ describe('normalise', () => {
     })
 
     it('should prefer config name over fetched GitHub repo name', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'github-repo-name',
         description: 'GitHub description',
         stargazers_count: 100,
@@ -167,7 +167,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'config-name-priority',
@@ -185,7 +185,7 @@ describe('normalise', () => {
     })
 
     it('should fall back to fetched GitHub name when no config name', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'github-repo-name',
         description: 'GitHub description',
         stargazers_count: 100,
@@ -196,7 +196,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'fallback-to-github-name',
@@ -212,7 +212,7 @@ describe('normalise', () => {
     })
 
     it('should use override fields for GitHub project', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'github-name',
         description: 'GitHub description',
         stargazers_count: 100,
@@ -223,7 +223,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'override-github',
@@ -244,7 +244,7 @@ describe('normalise', () => {
     })
 
     it('should include repo in the output', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue(null)
+      mockedFetchGitHubRepo.mockResolvedValue({ data: null, error: { type: 'not_found', message: 'Not found' } })
 
       const input: GitHubProjectInput = {
         id: 'repo-test',
@@ -259,7 +259,7 @@ describe('normalise', () => {
     })
 
     it('should merge input links with GitHub links', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -270,7 +270,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'links-test',
@@ -289,7 +289,7 @@ describe('normalise', () => {
     })
 
     it('should suppress auto-populated live link when linkOrder does not include live', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -300,7 +300,7 @@ describe('normalise', () => {
         homepage: 'https://example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'linkorder-suppress-live',
@@ -325,7 +325,7 @@ describe('normalise', () => {
     })
 
     it('should preserve auto-populated live link when linkOrder includes live', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -336,7 +336,7 @@ describe('normalise', () => {
         homepage: 'https://example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'linkorder-include-live',
@@ -357,7 +357,7 @@ describe('normalise', () => {
     })
 
     it('should preserve auto-populated live link when no linkOrder is specified', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -368,7 +368,7 @@ describe('normalise', () => {
         homepage: 'https://example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'no-linkorder',
@@ -388,7 +388,7 @@ describe('normalise', () => {
     })
 
     it('should preserve explicitly set live link even when linkOrder does not include live', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -399,7 +399,7 @@ describe('normalise', () => {
         homepage: 'https://github-homepage.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'explicit-live-no-linkorder',
@@ -421,7 +421,7 @@ describe('normalise', () => {
     })
 
     it('should use global commits default when no per-project commits config', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -432,7 +432,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue([
         {
@@ -460,7 +460,7 @@ describe('normalise', () => {
     })
 
     it('should use per-project commits config over global default', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -471,7 +471,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue([
         {
@@ -499,7 +499,7 @@ describe('normalise', () => {
     })
 
     it('should not fetch commits when global commits is 0', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -510,7 +510,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'no-commits-test',
@@ -526,7 +526,7 @@ describe('normalise', () => {
     })
 
     it('should clamp invalid commits config and log warning', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -537,7 +537,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue([])
 
@@ -563,7 +563,7 @@ describe('normalise', () => {
     })
 
     it('should clamp negative commits config and log warning', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -574,7 +574,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue([])
 
@@ -600,7 +600,7 @@ describe('normalise', () => {
     })
 
     it('should handle commits fetch failure gracefully', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'test-repo',
         description: 'Test description',
         stargazers_count: 100,
@@ -611,7 +611,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue(null)
 
@@ -634,7 +634,7 @@ describe('normalise', () => {
     })
 
     it('should handle hybrid project commits', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'hybrid-repo',
         description: 'Hybrid description',
         stargazers_count: 50,
@@ -645,7 +645,7 @@ describe('normalise', () => {
         homepage: 'https://hybrid.example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       mockedFetchGitHubCommits.mockResolvedValue([
         {
@@ -675,11 +675,11 @@ describe('normalise', () => {
 
   describe('npm project normalization', () => {
     it('should normalize an npm project with fetched data', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'my-package',
         version: '2.0.0',
         downloads: 10000,
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'test-npm',
@@ -695,6 +695,7 @@ describe('normalise', () => {
       expect(result.name).toBe('My Package')
       expect(result.description).toBe('Package description')
       expect(result.stats).toEqual({
+        type: 'npm',
         downloads: '10000',
         version: '2.0.0',
       })
@@ -703,7 +704,7 @@ describe('normalise', () => {
     })
 
     it('should handle npm fetch failure gracefully', async () => {
-      mockedFetchNpmPackage.mockResolvedValue(null)
+      mockedFetchNpmPackage.mockResolvedValue({ data: null, error: { type: 'not_found', message: 'Not found' } })
 
       const input: NpmProjectInput = {
         id: 'failed-npm',
@@ -720,11 +721,11 @@ describe('normalise', () => {
     })
 
     it('should fall back to fetched npm package name when no config name', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'fetched-npm-name',
         version: '1.0.0',
         downloads: 500,
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'npm-name-fallback',
@@ -739,11 +740,11 @@ describe('normalise', () => {
     })
 
     it('should prefer config name over fetched npm package name', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'fetched-npm-name',
         version: '1.0.0',
         downloads: 500,
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'npm-name-priority',
@@ -759,11 +760,11 @@ describe('normalise', () => {
     })
 
     it('should ignore override fields for npm project', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'fetched-npm-name',
         version: '1.0.0',
         downloads: 500,
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'npm-override-ignored',
@@ -784,13 +785,13 @@ describe('normalise', () => {
     })
 
     it('should not use npm timestamps by default', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'my-package',
         version: '2.0.0',
         downloads: 10000,
         createdAt: '2024-01-01T00:00:00Z',
         modifiedAt: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'test-npm-timestamps',
@@ -808,13 +809,13 @@ describe('normalise', () => {
     })
 
     it('should use npm timestamps when fetchNpmTimestamps is true', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'my-package',
         version: '2.0.0',
         downloads: 10000,
         createdAt: '2024-01-01T00:00:00Z',
         modifiedAt: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'test-npm-timestamps-opt-in',
@@ -832,11 +833,11 @@ describe('normalise', () => {
     })
 
     it('should fallback to input timestamps when npm timestamps are missing', async () => {
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'my-package',
         version: '2.0.0',
         downloads: 10000,
-      })
+      }, error: null })
 
       const input: NpmProjectInput = {
         id: 'test-npm-fallback',
@@ -883,6 +884,7 @@ describe('normalise', () => {
       expect(result.tagline).toBe('Input Tagline')
       expect(result.description).toBe('Input Description')
       expect(result.stats).toEqual({
+        type: 'product-hunt',
         upvotes: 500,
         comments: 50,
         launchDate: '2024-01-15T00:00:00Z',
@@ -1105,7 +1107,7 @@ describe('normalise', () => {
 
   describe('hybrid project normalization', () => {
     it('should use npm modified timestamp when more recent than github', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'hybrid-repo',
         description: 'Hybrid description',
         stargazers_count: 50,
@@ -1116,15 +1118,15 @@ describe('normalise', () => {
         homepage: 'https://hybrid.example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-05-01T00:00:00Z',
-      })
+      }, error: null })
 
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'hybrid-package',
         version: '2.0.0',
         downloads: 1000,
         createdAt: '2024-01-01T00:00:00Z',
         modifiedAt: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input = {
         id: 'test-hybrid',
@@ -1141,7 +1143,7 @@ describe('normalise', () => {
     })
 
     it('should use github updated timestamp when more recent than npm', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'hybrid-repo',
         description: 'Hybrid description',
         stargazers_count: 50,
@@ -1152,15 +1154,15 @@ describe('normalise', () => {
         homepage: 'https://hybrid.example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-07-01T00:00:00Z',
-      })
+      }, error: null })
 
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'hybrid-package',
         version: '2.0.0',
         downloads: 1000,
         createdAt: '2024-01-01T00:00:00Z',
         modifiedAt: '2024-05-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input = {
         id: 'test-hybrid',
@@ -1177,7 +1179,7 @@ describe('normalise', () => {
     })
 
     it('should not use npm timestamps when fetchNpmTimestamps is false', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'hybrid-repo',
         description: 'Hybrid description',
         stargazers_count: 50,
@@ -1188,15 +1190,15 @@ describe('normalise', () => {
         homepage: 'https://hybrid.example.com',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-05-01T00:00:00Z',
-      })
+      }, error: null })
 
-      mockedFetchNpmPackage.mockResolvedValue({
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
         name: 'hybrid-package',
         version: '2.0.0',
         downloads: 1000,
         createdAt: '2024-01-01T00:00:00Z',
         modifiedAt: '2024-06-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input = {
         id: 'test-hybrid',
@@ -1242,7 +1244,7 @@ describe('normalise', () => {
 
   describe('language color handling', () => {
     it('should set language color for known languages', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -1253,7 +1255,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'lang-color',
@@ -1269,7 +1271,7 @@ describe('normalise', () => {
     })
 
     it('should handle unknown languages', async () => {
-      mockedFetchGitHubRepo.mockResolvedValue({
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
         stargazers_count: 0,
@@ -1280,7 +1282,7 @@ describe('normalise', () => {
         homepage: null,
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z',
-      })
+      }, error: null })
 
       const input: GitHubProjectInput = {
         id: 'unknown-lang',
@@ -1410,81 +1412,81 @@ describe('normalise', () => {
   })
 })
 
-describe('normalizeStats', () => {
+describe('normaliseStats', () => {
   it('should normalize stars', () => {
-    const result = normalizeStats({ stars: 1500 }, 'github')
+    const result = normaliseStats({ stars: 1500 }, 'github')
 
     expect(result).toContainEqual({ label: 'Stars', value: '1.5K' })
   })
 
   it('should normalize forks', () => {
-    const result = normalizeStats({ forks: 250 }, 'github')
+    const result = normaliseStats({ forks: 250 }, 'github')
 
     expect(result).toContainEqual({ label: 'Forks', value: '250' })
   })
 
   it('should normalize downloads with unit', () => {
-    const result = normalizeStats({ downloads: 10000 }, 'npm')
+    const result = normaliseStats({ downloads: 10000 }, 'npm')
 
     expect(result).toContainEqual({ label: 'Downloads', value: '10.0K', unit: 'month' })
   })
 
   it('should normalize version with v prefix', () => {
-    const result = normalizeStats({ version: '1.2.3' }, 'npm')
+    const result = normaliseStats({ version: '1.2.3' }, 'npm')
 
     expect(result).toContainEqual({ label: 'Version', value: 'v1.2.3' })
   })
 
   it('should not duplicate v prefix', () => {
-    const result = normalizeStats({ version: 'v2.0.0' }, 'npm')
+    const result = normaliseStats({ version: 'v2.0.0' }, 'npm')
 
     expect(result).toContainEqual({ label: 'Version', value: 'v2.0.0' })
   })
 
   it('should normalize upvotes', () => {
-    const result = normalizeStats({ upvotes: 500 }, 'product-hunt')
+    const result = normaliseStats({ upvotes: 500 }, 'product-hunt')
 
     expect(result).toContainEqual({ label: 'Upvotes', value: '500' })
   })
 
   it('should normalize comments', () => {
-    const result = normalizeStats({ comments: 75 }, 'product-hunt')
+    const result = normaliseStats({ comments: 75 }, 'product-hunt')
 
     expect(result).toContainEqual({ label: 'Comments', value: '75' })
   })
 
   it('should normalize launchDate', () => {
-    const result = normalizeStats({ launchDate: '2024-01-15' }, 'product-hunt')
+    const result = normaliseStats({ launchDate: '2024-01-15' }, 'product-hunt')
 
     expect(result).toContainEqual({ label: 'Launched', value: expect.any(String) })
   })
 
   it('should format large numbers with M suffix', () => {
-    const result = normalizeStats({ stars: 2500000 }, 'github')
+    const result = normaliseStats({ stars: 2500000 }, 'github')
 
     expect(result).toContainEqual({ label: 'Stars', value: '2.5M' })
   })
 
   it('should handle empty stats', () => {
-    const result = normalizeStats({}, 'github')
+    const result = normaliseStats({}, 'github')
 
     expect(result).toEqual([])
   })
 
   it('should handle null/undefined values', () => {
-    const result = normalizeStats({ stars: null, forks: undefined }, 'github')
+    const result = normaliseStats({ stars: null, forks: undefined }, 'github')
 
     expect(result).toEqual([])
   })
 
   it('should handle invalid numbers', () => {
-    const result = normalizeStats({ stars: 'not-a-number' }, 'github')
+    const result = normaliseStats({ stars: 'not-a-number' }, 'github')
 
     expect(result).toEqual([])
   })
 
   it('should combine multiple stats', () => {
-    const result = normalizeStats({
+    const result = normaliseStats({
       stars: 100,
       forks: 50,
       downloads: 1000,

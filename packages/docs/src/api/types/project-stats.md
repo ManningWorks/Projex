@@ -1,6 +1,6 @@
 # ProjectStats
 
-Combined statistics interface for project metrics. This is an intersection type that merges stats from all supported platforms.
+Tagged union of platform-specific stats. Each variant includes a `type` discriminator field that identifies the source platform.
 
 ## Definition
 
@@ -47,8 +47,19 @@ interface DevToStats {
   totalReactions?: number
 }
 
-type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & GumroadStats & LemonSqueezyStats & DevToStats
+type ProjectStats =
+  | ({ type: 'github' } & GitHubStats)
+  | ({ type: 'manual' } & Record<string, never>)
+  | ({ type: 'npm' } & NpmStats)
+  | ({ type: 'product-hunt' } & ProductHuntStats)
+  | ({ type: 'youtube' } & YouTubeStats)
+  | ({ type: 'gumroad' } & GumroadStats)
+  | ({ type: 'lemonsqueezy' } & LemonSqueezyStats)
+  | ({ type: 'devto' } & DevToStats)
+  | ({ type: 'hybrid' } & GitHubStats & NpmStats)
 ```
+
+The `type` field acts as a discriminator, enabling TypeScript to narrow the available properties via control flow analysis.
 
 ## All Properties
 
@@ -148,20 +159,27 @@ import type { ProjexProject } from '@manningworks/projex'
 function formatStats(project: ProjexProject): string[] {
   const stats: string[] = []
   
-  if (project.stats?.stars) {
-    stats.push(`${project.stats.stars} stars`)
+  if (!project.stats) return stats
+
+  if (project.stats.type === 'github' || project.stats.type === 'hybrid') {
+    if (project.stats.stars) stats.push(`${project.stats.stars} stars`)
+    if (project.stats.forks) stats.push(`${project.stats.forks} forks`)
   }
-  if (project.stats?.downloads) {
-    stats.push(`${project.stats.downloads} downloads`)
+  
+  if (project.stats.type === 'npm' || project.stats.type === 'hybrid') {
+    if (project.stats.downloads) stats.push(`${project.stats.downloads} downloads`)
   }
-  if (project.stats?.subscribers) {
-    stats.push(`${project.stats.subscribers} subscribers`)
+
+  if (project.stats.type === 'youtube') {
+    if (project.stats.subscribers) stats.push(`${project.stats.subscribers} subscribers`)
   }
-  if (project.stats?.formattedRevenue) {
-    stats.push(`${project.stats.formattedRevenue} revenue`)
+
+  if (project.stats.type === 'gumroad') {
+    if (project.stats.formattedRevenue) stats.push(`${project.stats.formattedRevenue} revenue`)
   }
-  if (project.stats?.articleCount) {
-    stats.push(`${project.stats.articleCount} articles`)
+
+  if (project.stats.type === 'devto') {
+    if (project.stats.articleCount) stats.push(`${project.stats.articleCount} articles`)
   }
   
   return stats
@@ -183,20 +201,20 @@ Manual projects that don't provide explicit stats will have `stats: null`.
 
 ## Normalization
 
-Use `normalizeStats` to format all stats for display:
+Use `normaliseStats` to format all stats for display:
 
 ```tsx
-import { normalizeStats } from '@manningworks/projex'
+import { normaliseStats } from '@manningworks/projex'
 
-const formattedStats = normalizeStats(project.stats || {}, project.type)
+const formattedStats = normaliseStats(project.stats || {}, project.type)
 // [{ label: 'Stars', value: '1.2K' }, { label: 'Revenue', value: '$1,234.56' }, ...]
 ```
 
-See [normalizeStats](../utilities/normalize-stats) for all output labels.
+See [normaliseStats](../utilities/normalize-stats) for all output labels.
 
 ## Manual Stats Override
 
-For `manual` project types, you can provide any stats values directly:
+For `manual` project types, you can provide any stats values directly. The `type` field is set automatically during normalisation:
 
 ```tsx
 {
@@ -205,18 +223,18 @@ For `manual` project types, you can provide any stats values directly:
   status: 'shipped',
   name: 'Client Website',
   stats: {
-    // You can use any stat field as a manual override
+    type: 'manual',
     downloads: '5000',
     version: '2.1.0',
   }
 }
 ```
 
-For fetched types, input `stats` override values are merged with fetched data (input values take precedence).
+For fetched types, input `stats` override values are merged with fetched data (input values take precedence). The `type` field is set automatically by `normalise` based on the project type.
 
 ## Related
 
-- [normalizeStats](../utilities/normalize-stats) — Format stats for display
+- [normaliseStats](../utilities/normalize-stats) — Format stats for display
 - [ProjexProject](./projex-project) — Full project type with stats field
 - [GitHubRepoData](./github-repo-data) — Raw GitHub data source
 - [NpmPackageData](./npm-package-data) — Raw npm data source

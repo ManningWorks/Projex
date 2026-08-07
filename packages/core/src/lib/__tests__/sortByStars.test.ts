@@ -42,9 +42,9 @@ describe('sortByStars', () => {
   describe('sorting GitHub projects by stars', () => {
     it('should sort GitHub projects by stars descending by default', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
-        createProject({ id: '3', type: 'github', stats: { stars: 250 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 100 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
+        createProject({ id: '3', type: 'github', stats: { type: 'github', stars: 250 } }),
       ]
 
       const result = sortByStars(projects)
@@ -54,9 +54,9 @@ describe('sortByStars', () => {
 
     it('should sort GitHub projects by stars ascending when order is asc', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
-        createProject({ id: '3', type: 'github', stats: { stars: 250 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 100 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
+        createProject({ id: '3', type: 'github', stats: { type: 'github', stars: 250 } }),
       ]
 
       const result = sortByStars(projects, 'asc')
@@ -68,8 +68,8 @@ describe('sortByStars', () => {
   describe('handling non-GitHub projects', () => {
     it('should treat non-GitHub projects as having 0 stars', () => {
       const projects = [
-        createProject({ id: '1', type: 'npm', stats: { downloads: '1000' } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '1', type: 'npm', stats: { type: 'npm', downloads: '1000' } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
         createProject({ id: '3', type: 'manual' }),
       ]
 
@@ -81,9 +81,9 @@ describe('sortByStars', () => {
 
     it('should place non-GitHub projects at the end in desc order', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 100 } }),
         createProject({ id: '2', type: 'npm' }),
-        createProject({ id: '3', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '3', type: 'github', stats: { type: 'github', stars: 500 } }),
       ]
 
       const result = sortByStars(projects, 'desc')
@@ -96,7 +96,7 @@ describe('sortByStars', () => {
     it('should handle GitHub projects without stats', () => {
       const projects = [
         createProject({ id: '1', type: 'github', stats: null }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
       ]
 
       const result = sortByStars(projects, 'desc')
@@ -107,8 +107,8 @@ describe('sortByStars', () => {
 
     it('should handle GitHub projects with stats but missing stars', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { forks: 10 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', forks: 10 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
       ]
 
       const result = sortByStars(projects, 'desc')
@@ -118,7 +118,7 @@ describe('sortByStars', () => {
 
     it('should handle all projects with 0 stars', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 0 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 0 } }),
         createProject({ id: '2', type: 'npm' }),
         createProject({ id: '3', type: 'github', stats: null }),
       ]
@@ -143,26 +143,28 @@ describe('sortByStars', () => {
   describe('mixed project types', () => {
     it('should correctly sort mixed project types (only github counts stars)', () => {
       const projects = [
-        createProject({ id: '1', type: 'npm', stats: { downloads: '1000' } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 100 } }),
-        createProject({ id: '3', type: 'product-hunt', stats: { upvotes: 50 } }),
-        createProject({ id: '4', type: 'github', stats: { stars: 500 } }),
-        createProject({ id: '5', type: 'hybrid', stats: { stars: 250 } }),
+        createProject({ id: '1', type: 'npm', stats: { type: 'npm', downloads: '1000' } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 100 } }),
+        createProject({ id: '3', type: 'product-hunt', stats: { type: 'product-hunt', upvotes: 50 } }),
+        createProject({ id: '4', type: 'github', stats: { type: 'github', stars: 500 } }),
+        createProject({ id: '5', type: 'hybrid', stats: { type: 'hybrid', stars: 250 } }),
       ]
 
       const result = sortByStars(projects, 'desc')
 
       expect(result[0].id).toBe('4')
-      expect(result[1].id).toBe('2')
-      expect(result.filter(p => p.type !== 'github').every(p => result.indexOf(p) > 1)).toBe(true)
+      expect(result[1].id).toBe('5')
+      expect(result[2].id).toBe('2')
+      expect(result.filter(p => p.stats && 'stars' in p.stats).map(p => p.id)).toEqual(['4', '5', '2'])
+      expect(result.filter(p => !p.stats || !('stars' in p.stats)).map(p => p.id)).toEqual(['1', '3'])
     })
   })
 
   describe('immutability', () => {
     it('should not mutate the original array', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 100 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
       ]
 
       const originalOrder = projects.map(p => p.id)
@@ -172,7 +174,7 @@ describe('sortByStars', () => {
     })
 
     it('should return a new array instance', () => {
-      const projects = [createProject({ type: 'github', stats: { stars: 100 } })]
+      const projects = [createProject({ type: 'github', stats: { type: 'github', stars: 100 } })]
 
       const result = sortByStars(projects)
 
@@ -183,8 +185,8 @@ describe('sortByStars', () => {
   describe('edge cases', () => {
     it('should handle very large star counts', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 1000000 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 1000000 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 500 } }),
       ]
 
       const result = sortByStars(projects, 'desc')
@@ -194,8 +196,8 @@ describe('sortByStars', () => {
 
     it('should handle projects with same star count', () => {
       const projects = [
-        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
-        createProject({ id: '2', type: 'github', stats: { stars: 100 } }),
+        createProject({ id: '1', type: 'github', stats: { type: 'github', stars: 100 } }),
+        createProject({ id: '2', type: 'github', stats: { type: 'github', stars: 100 } }),
       ]
 
       const result = sortByStars(projects, 'desc')

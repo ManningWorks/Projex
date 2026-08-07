@@ -79,21 +79,22 @@ GitHubCard.Tags = function GitHubCardTags({ project }: { project: ProjexProject 
 }
 
 GitHubCard.Stats = function GitHubCardStats({ project, showForks = true }: { project: ProjexProject; showForks?: boolean }) {
-  const hasStats = project.stats?.stars || (showForks && project.stats?.forks) || project.commits?.length
+  const stats = project.stats as Record<string, any> | null
+  const hasStats = stats?.stars || (showForks && stats?.forks) || project.commits?.length
   if (!hasStats) return null
 
   return (
     <div data-projex-card-stats>
-      {project.stats?.stars && (
+      {stats?.stars && (
         <span data-projex-stat="stars">
           <span data-projex-stat-icon="stars" />
-          {project.stats.stars} stars
+          {stats.stars} stars
         </span>
       )}
-      {showForks && project.stats?.forks && (
+      {showForks && stats?.forks && (
         <span data-projex-stat="forks">
           <span data-projex-stat-icon="forks" />
-          {project.stats.forks} forks
+          {stats.forks} forks
         </span>
       )}
       {project.commits && project.commits.length > 0 && (

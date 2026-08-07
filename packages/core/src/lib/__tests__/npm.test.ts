@@ -38,11 +38,12 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('react')
 
-      expect(result).toEqual({
+      expect(result.data).toEqual({
         name: 'react',
         version: '18.2.0',
         downloads: 10000000,
       })
+      expect(result.error).toBeNull()
       expect(mockFetch).toHaveBeenCalledTimes(2)
     })
 
@@ -76,7 +77,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('nonexistent-package-xyz')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('not_found')
     })
 
     it('should return null for 404 not found on registry endpoint', async () => {
@@ -86,18 +88,25 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('nonexistent-registry-package')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('not_found')
     })
 
     it('should return null for 500 server error', async () => {
-      mockFetch.mockResolvedValueOnce({
-        ok: false,
-        status: 500,
-      })
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 500,
+        })
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 500,
+        })
 
       const result = await fetchNpmPackage('server-error-package')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('other')
     })
   })
 
@@ -107,7 +116,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('network-error-package')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
 
     it('should return null for timeout error', async () => {
@@ -115,7 +125,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('timeout-package')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
 
     it('should return null for DNS resolution failure', async () => {
@@ -123,7 +134,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('dns-error-package')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('network')
     })
   })
 
@@ -174,7 +186,7 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('exact-package-name')
 
-      expect(result?.name).toBe('exact-package-name')
+      expect(result.data?.name).toBe('exact-package-name')
     })
 
     it('should use package name from parameter when not in downloads response', async () => {
@@ -187,7 +199,7 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('param-package-name')
 
-      expect(result?.name).toBe('param-package-name')
+      expect(result.data?.name).toBe('param-package-name')
     })
 
     it('should handle zero downloads', async () => {
@@ -200,7 +212,7 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('zero-downloads')
 
-      expect(result?.downloads).toBe(0)
+      expect(result.data?.downloads).toBe(0)
     })
 
     it('should handle missing downloads field gracefully', async () => {
@@ -213,7 +225,7 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('no-downloads-field')
 
-      expect(result?.downloads).toBe(0)
+      expect(result.data?.downloads).toBe(0)
     })
   })
 
@@ -228,7 +240,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('no-version')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('other')
     })
 
     it('should return null when dist-tags is undefined', async () => {
@@ -241,7 +254,8 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('no-dist-tags')
 
-      expect(result).toBeNull()
+      expect(result.data).toBeNull()
+      expect(result.error?.type).toBe('other')
     })
 
     it('should extract latest version from dist-tags', async () => {
@@ -260,7 +274,7 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('versioned-pkg')
 
-      expect(result?.version).toBe('5.0.0')
+      expect(result.data?.version).toBe('5.0.0')
     })
   })
 
@@ -304,11 +318,12 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('full-api-pkg')
 
-      expect(result).toEqual<NpmPackageData>({
+      expect(result.data).toEqual<NpmPackageData>({
         name: 'full-api-pkg',
         version: '10.20.30',
         downloads: 12345678,
       })
+      expect(result.error).toBeNull()
     })
 
     it('should handle scoped packages', async () => {
@@ -321,11 +336,12 @@ describe('fetchNpmPackage', () => {
 
       const result = await fetchNpmPackage('@types/node')
 
-      expect(result).toEqual({
+      expect(result.data).toEqual({
         name: '@types/node',
         version: '20.10.0',
         downloads: 5000000,
       })
+      expect(result.error).toBeNull()
       expect(mockFetch).toHaveBeenCalledWith(
         'https://api.npmjs.org/downloads/point/last-month/@types/node',
         { cache: 'force-cache' }

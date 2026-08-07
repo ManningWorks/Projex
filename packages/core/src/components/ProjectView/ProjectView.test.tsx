@@ -36,6 +36,7 @@ const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject =>
     live: 'https://test-project.com',
   },
   stats: {
+    type: 'github',
     stars: 100,
     forks: 20,
   },
@@ -270,7 +271,7 @@ describe('ProjectView Stats', () => {
   })
 
   it('does not render when stats object has no values', () => {
-    const project = createProject({ stats: {} })
+    const project = createProject({ stats: { type: 'github' } })
 
     const { container } = render(<ProjectView.Stats project={project} />)
 
@@ -279,7 +280,7 @@ describe('ProjectView Stats', () => {
 
   it('renders npm stats', () => {
     const project = createProject({
-      stats: { downloads: '5000', version: '3.0.0' }
+      stats: { type: 'npm', downloads: '5000', version: '3.0.0' }
     })
 
     render(<ProjectView.Stats project={project} />)
@@ -290,7 +291,7 @@ describe('ProjectView Stats', () => {
 
   it('renders product hunt stats', () => {
     const project = createProject({
-      stats: { upvotes: 300, comments: 45 }
+      stats: { type: 'product-hunt', upvotes: 300, comments: 45 }
     })
 
     render(<ProjectView.Stats project={project} />)

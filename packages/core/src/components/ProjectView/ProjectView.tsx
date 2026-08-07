@@ -158,25 +158,27 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
     return null
   }
 
+  const stats = project.stats as Record<string, any>
+
   const hasStats =
-    project.stats.stars ||
-    project.stats.forks ||
-    project.stats.downloads ||
-    project.stats.version ||
-    project.stats.upvotes ||
-    project.stats.comments ||
-    project.stats.subscribers ||
-    project.stats.views ||
-    project.stats.latestVideoTitle ||
-    project.stats.formattedRevenue ||
-    project.stats.salesCount ||
-    project.stats.subscriberCount ||
-    project.stats.formattedMRR ||
-    project.stats.orderCount ||
-    project.stats.customerCount ||
-    project.stats.articleCount ||
-    project.stats.totalViews ||
-    project.stats.totalReactions
+    stats.stars ||
+    stats.forks ||
+    stats.downloads ||
+    stats.version ||
+    stats.upvotes ||
+    stats.comments ||
+    stats.subscribers ||
+    stats.views ||
+    stats.latestVideoTitle ||
+    stats.formattedRevenue ||
+    stats.salesCount ||
+    stats.subscriberCount ||
+    stats.formattedMRR ||
+    stats.orderCount ||
+    stats.customerCount ||
+    stats.articleCount ||
+    stats.totalViews ||
+    stats.totalReactions
 
   if (!hasStats) {
     return null
@@ -184,34 +186,34 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
 
   return (
     <div data-projex-view-stats>
-      {project.stats.stars && <span data-projex-stat="stars">{project.stats.stars} stars</span>}
-      {project.stats.forks && <span data-projex-stat="forks">{project.stats.forks} forks</span>}
-      {project.stats.downloads && (
-        <span data-projex-stat="downloads">{project.stats.downloads} downloads</span>
+      {stats.stars && <span data-projex-stat="stars">{stats.stars} stars</span>}
+      {stats.forks && <span data-projex-stat="forks">{stats.forks} forks</span>}
+      {stats.downloads && (
+        <span data-projex-stat="downloads">{stats.downloads} downloads</span>
       )}
-      {project.stats.version && <span data-projex-stat="version">{project.stats.version}</span>}
-      {project.stats.upvotes && <span data-projex-stat="upvotes">{project.stats.upvotes} upvotes</span>}
-      {project.stats.comments && <span data-projex-stat="comments">{project.stats.comments} comments</span>}
-      {project.stats.subscribers && <span data-projex-stat="subscribers">{project.stats.subscribers} subscribers</span>}
-      {project.stats.views && <span data-projex-stat="views">{project.stats.views} views</span>}
-      {project.stats.latestVideoTitle && project.stats.latestVideoUrl && (
-        <a href={project.stats.latestVideoUrl} data-projex-link data-projex-link-type="youtube">
-          {project.stats.latestVideoTitle}
+      {stats.version && <span data-projex-stat="version">{stats.version}</span>}
+      {stats.upvotes && <span data-projex-stat="upvotes">{stats.upvotes} upvotes</span>}
+      {stats.comments && <span data-projex-stat="comments">{stats.comments} comments</span>}
+      {stats.subscribers && <span data-projex-stat="subscribers">{stats.subscribers} subscribers</span>}
+      {stats.views && <span data-projex-stat="views">{stats.views} views</span>}
+      {stats.latestVideoTitle && stats.latestVideoUrl && (
+        <a href={stats.latestVideoUrl} data-projex-link data-projex-link-type="youtube">
+          {stats.latestVideoTitle}
         </a>
       )}
-      {project.stats.formattedRevenue && <span data-projex-stat="revenue">{project.stats.formattedRevenue}</span>}
-      {project.stats.salesCount && <span data-projex-stat="sales">{project.stats.salesCount} sales</span>}
-      {project.stats.subscriberCount && (
-        <span data-projex-stat="subscribers">{project.stats.subscriberCount} subscribers</span>
+      {stats.formattedRevenue && <span data-projex-stat="revenue">{stats.formattedRevenue}</span>}
+      {stats.salesCount && <span data-projex-stat="sales">{stats.salesCount} sales</span>}
+      {stats.subscriberCount && (
+        <span data-projex-stat="subscribers">{stats.subscriberCount} subscribers</span>
       )}
-      {project.stats.formattedMRR && <span data-projex-stat="mrr">{project.stats.formattedMRR} MRR</span>}
-      {project.stats.orderCount && <span data-projex-stat="orders">{project.stats.orderCount} orders</span>}
-      {project.stats.customerCount && (
-        <span data-projex-stat="customers">{project.stats.customerCount} customers</span>
+      {stats.formattedMRR && <span data-projex-stat="mrr">{stats.formattedMRR} MRR</span>}
+      {stats.orderCount && <span data-projex-stat="orders">{stats.orderCount} orders</span>}
+      {stats.customerCount && (
+        <span data-projex-stat="customers">{stats.customerCount} customers</span>
       )}
-      {project.stats.articleCount && <span data-projex-stat="articles">{project.stats.articleCount} articles</span>}
-      {project.stats.totalViews && <span data-projex-stat="total-views">{project.stats.totalViews} views</span>}
-      {project.stats.totalReactions && <span data-projex-stat="reactions">{project.stats.totalReactions} reactions</span>}
+      {stats.articleCount && <span data-projex-stat="articles">{stats.articleCount} articles</span>}
+      {stats.totalViews && <span data-projex-stat="total-views">{stats.totalViews} views</span>}
+      {stats.totalReactions && <span data-projex-stat="reactions">{stats.totalReactions} reactions</span>}
     </div>
   )
 }

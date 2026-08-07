@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-04-18
+
+### Breaking Changes
+
+- **`fetchGitHubRepo()` returns `{ data, error }` instead of `GitHubRepoData | null`** — Consumers must now destructure the result. The `data` field contains `GitHubRepoData` on success or `null` on failure. The `error` field provides structured error details (`type: 'not_found' | 'rate_limited' | 'network' | 'auth' | 'other'`).
+- **`fetchNpmPackage()` returns `{ data, error }` instead of `NpmPackageData | null`** — Same structured error pattern as `fetchGitHubRepo`. Consumers must destructure the result.
+- **`ProjectStats` is now a tagged union requiring a `type` discriminator** — Accessing stats fields requires narrowing by `type` (e.g., `if (stats.type === 'github')` yields `GitHubStats`). TypeScript catches this at compile time. The main API surface (`defineProjects`, `normalise`, components) handles this internally.
+
+### Added
+
+- **`fetchProjectData()`** — New function that calls all required APIs in parallel via `Promise.all`. Returns raw fetch results for a given project input. Extracted from `normalise` for direct use by power consumers.
+- **Structured error returns on `fetchGitHubRepo` and `fetchNpmPackage`** — Both fetchers return `{ data, error }` with typed error objects. Error types include `not_found`, `rate_limited`, `network`, `auth`, and `other`.
+- **`onError` option** — Configurable error handling on `normalise` via `DefineProjectsOptions`. Supports `'throw'` (throw on any fetch failure), `'warn'` (current default behavior), and `'silent'` (continue with no warnings).
+- **Smart `<ProjectGrid>` component** — Turnkey client component composing search, filters, and project cards. Accepts `ProjexProject[]` with optional `showSearch`, `showFilters`, and `showSort` props. Includes `'use client'` directive for Next.js App Router.
+- **`ProjectGridProvider`** — React context provider that supplies `project` to all `ProjectCard` sub-components. Sub-components read from context when no explicit `project` prop is given.
+- **`useProjectContext`** — Hook to access the current project from `ProjectGridProvider` context.
+
+### Fixed
+
+- **Missing `'use client'` on React hooks** — Added `'use client'` directive to `useProjectFilters` and `useProjectSearch`.
+- **Incomplete `escapeString` in CLI commands** — The inline `escapeString` helpers in `init` and `init-interactive` did not escape backslashes, so a `\` immediately before a `'` could defeat the quote escaping. The logic is now a single shared, exported utility that escapes backslashes first, then single quotes and newlines. Used by `init`, `init-interactive`, and `config-editor`.
+
+### Changed
+
+- **Parallel fetches in `normalise`** — All API calls within a single project now run concurrently via `Promise.all` instead of sequentially.
+- **`ProjectStats` changed from intersection type to tagged union** — Matches runtime behavior where `normalise` only produces a stats subset per project type.
+- **CLI dependencies separated into `@manningworks/projex/cli` entry point** — `ts-morph`, `chalk`, `@inquirer/prompts`, and `commander` moved out of the main bundle. Consumers importing only components no longer pull in CLI dependencies.
+- **`normalizeStats` renamed to `normaliseStats`** — Follows project British English naming convention. `normalizeStats` available as deprecated alias for one version.
+
+---
+
 ## [1.3.1] - 2026-04-17
 
 ### Fixed

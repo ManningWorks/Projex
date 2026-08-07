@@ -12,6 +12,7 @@ import type {
 } from 'ts-morph'
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { escapeString } from './escape-string.js'
 
 const CONFIG_FILE = 'projex.config.ts'
 
@@ -115,13 +116,6 @@ function getOrCreateArrayProperty(
     throw new ConfigEditorError(`Failed to create ${propertyName} array.`)
   }
   return init.asKindOrThrow(SyntaxKind.ArrayLiteralExpression)
-}
-
-function escapeString(str: string): string {
-  return str
-    .replace(/\\/g, '\\\\')
-    .replace(/'/g, "\\'")
-    .replace(/\n/g, '\\n')
 }
 
 function buildProjectObjectText(input: AddProjectInput): string {

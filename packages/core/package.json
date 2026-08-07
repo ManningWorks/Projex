@@ -1,6 +1,6 @@
 {
   "name": "@manningworks/projex",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Show Everything You Ship",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,6 +12,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
     },
     "./themes/theme-minimal.css": "./dist/themes/theme-minimal.css",
     "./themes/theme-dark.css": "./dist/themes/theme-dark.css",

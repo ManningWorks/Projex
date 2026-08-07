@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
+import { escapeString } from '../lib/escape-string.js'
 
 const CONFIG_FILE = 'projex.config.ts'
 
@@ -239,10 +240,6 @@ export const projects = defineProjects([
 ${projects.join(',\n')}
 ])
 `
-}
-
-function escapeString(str: string): string {
-  return str.replace(/'/g, "\\'").replace(/\n/g, ' ')
 }
 
 async function ensureProjexInstalled(): Promise<void> {

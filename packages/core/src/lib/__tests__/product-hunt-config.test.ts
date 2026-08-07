@@ -57,6 +57,7 @@ describe('product-hunt config recognition', () => {
         live: 'https://full-product.com',
       },
       stats: {
+        type: 'product-hunt',
         upvotes: 100,
         comments: 25,
         launchDate: '2024-01-15',
@@ -79,6 +80,7 @@ describe('product-hunt config recognition', () => {
       live: 'https://full-product.com',
     })
     expect(result.stats).toEqual({
+      type: 'product-hunt',
       upvotes: 100,
       comments: 25,
       launchDate: '2024-01-15',

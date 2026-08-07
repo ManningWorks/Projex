@@ -5,6 +5,7 @@ import { confirm, input } from '@inquirer/prompts'
 import chalk from 'chalk'
 import { execSync } from 'node:child_process'
 import { fetchGitHubRepos } from '../lib/github.js'
+import { escapeString } from '../lib/escape-string.js'
 
 const CONFIG_FILE = 'projex.config.ts'
 const PACKAGE_JSON = 'package.json'
@@ -288,7 +289,7 @@ async function generateGitHubConfig(yes = false): Promise<string> {
     repo: '${username}/${repo.name}',
     status: 'active',
     featured: false,
-    description: '${(repo.description || '').replace(/'/g, "\\'").replace(/\n/g, ' ')}',
+    description: '${escapeString(repo.description || '')}',
     background: null,
     why: null,
     stack: ${repo.language ? `['${repo.language}']` : '[]'},

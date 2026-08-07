@@ -5,7 +5,7 @@ Fetch repository data from the GitHub API.
 ## Signature
 
 ```tsx
-function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | null>
+function fetchGitHubRepo(repo: string): Promise<FetchRepoResult>
 ```
 
 ## Parameters
@@ -16,11 +16,23 @@ function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | null>
 
 ## Returns
 
-`Promise<GitHubRepoData | null>` - Repository data or `null` on error
+`Promise<FetchRepoResult>` - Result object with data or error
 
 ## Types
 
 ```tsx
+interface FetchRepoResult {
+  data: GitHubRepoData | null
+  error: FetchRepoError | null
+}
+
+interface FetchRepoError {
+  type: FetchRepoErrorType
+  message: string
+}
+
+type FetchRepoErrorType = 'not_found' | 'rate_limited' | 'network' | 'auth' | 'other'
+
 interface GitHubRepoData {
   name: string
   description: string | null
@@ -40,7 +52,7 @@ interface GitHubRepoData {
 ## Behavior
 
 - Uses `force-cache` for build-time caching
-- Returns `null` on any error (network, auth, not found)
+- Returns `{ data: null, error: ... }` on any error (network, auth, not found)
 - Logs warning if `GITHUB_TOKEN` is not set
 
 ## Environment Variables
@@ -61,29 +73,41 @@ interface GitHubRepoData {
 ```tsx
 import { fetchGitHubRepo } from '@manningworks/projex'
 
-const data = await fetchGitHubRepo('facebook/react')
+const { data, error } = await fetchGitHubRepo('facebook/react')
 
 if (data) {
   console.log(data.stargazers_count) // 220000+
   console.log(data.language)         // 'JavaScript'
+} else if (error) {
+  console.error(error.message)
 }
 ```
 
 ## Error Handling
 
-The function never throws - it returns `null` for any failure:
+The function never throws - it returns `{ data: null, error }` for any failure:
 
 ```tsx
-const data = await fetchGitHubRepo('invalid/repo')
-// data is null
+const { data, error } = await fetchGitHubRepo('invalid/repo')
+// data is null, error.type is 'not_found'
 
-const data = await fetchGitHubRepo('nonexistent/repository')
-// data is null (404)
+const { data, error } = await fetchGitHubRepo('nonexistent/repository')
+// data is null, error.type is 'not_found'
 ```
+
+### Error Codes
+
+| Error Type | Description |
+|-----------|-------------|
+| `not_found` | Repository not found (404) |
+| `rate_limited` | GitHub API rate limit exceeded (403) |
+| `auth` | Authentication failed (401) |
+| `network` | Network error or request failed |
+| `other` | Unknown error occurred |
 
 ## Usage in normalise
 
-This function is called internally by `normalise` for `github` and `hybrid` project types:
+This function is called internally by `normalise` and `fetchProjectData` for `github` and `hybrid` project types:
 
 ```tsx
 // normalise calls fetchGitHubRepo internally

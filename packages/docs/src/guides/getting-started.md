@@ -274,6 +274,8 @@ export default function RootLayout({
 
 Create the main portfolio page with data fetching:
 
+> **Build-Time Data Fetching:** Projex fetches external API data (GitHub stars, npm downloads, etc.) at build time, not at runtime. This means your portfolio is fully static and fast — no API calls when users visit your site. The `normalise` function performs all fetches during the Next.js build step. Make sure environment variables like `GITHUB_TOKEN` are available in your build environment (not just locally).
+
 ```tsx
 // app/page.tsx
 import { ProjectCard, ProjectGrid, FeaturedProject } from '@manningworks/projex'
@@ -471,7 +473,34 @@ export default async function ProjectPage({ params }: { params: { id: string } }
 
 ### Add Search and Filter
 
-Add interactive filtering to your portfolio:
+Add interactive filtering to your portfolio using `SmartProjectGrid`:
+
+```tsx
+import { SmartProjectGrid, ProjectCard } from '@manningworks/projex'
+
+function InteractivePortfolio({ projects }) {
+  return (
+    <SmartProjectGrid
+      projects={projects}
+      showSearch
+      showFilters
+      placeholder="Search projects..."
+    >
+      {(project) => (
+        <ProjectCard>
+          <ProjectCard.Header />
+          <ProjectCard.Description />
+          <ProjectCard.Tags />
+          <ProjectCard.Stats />
+          <ProjectCard.Links />
+        </ProjectCard>
+      )}
+    </SmartProjectGrid>
+  )
+}
+```
+
+Or compose search and filter manually with hooks:
 
 ```tsx
 'use client'

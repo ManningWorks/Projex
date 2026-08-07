@@ -27,6 +27,7 @@ const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject =>
     live: 'https://test-project.com',
   },
   stats: {
+    type: 'github',
     stars: 100,
     forks: 20,
   },
@@ -61,7 +62,7 @@ describe('ProjectCard', () => {
   it('displays GitHub-specific stats', () => {
     const project = createProject({
       type: 'github',
-      stats: { stars: 500, forks: 50 },
+      stats: { type: 'github', stars: 500, forks: 50 },
     })
 
     const { container } = render(<ProjectCard.Stats project={project} />)
@@ -75,7 +76,7 @@ describe('ProjectCard', () => {
   it('displays npm-specific stats', () => {
     const project = createProject({
       type: 'npm',
-      stats: { downloads: '10000', version: '2.0.0' },
+      stats: { type: 'npm', downloads: '10000', version: '2.0.0' },
     })
 
     const { container } = render(<ProjectCard.Stats project={project} />)
@@ -88,7 +89,7 @@ describe('ProjectCard', () => {
   it('displays product-hunt-specific stats', () => {
     const project = createProject({
       type: 'product-hunt',
-      stats: { upvotes: 250, comments: 30 },
+      stats: { type: 'product-hunt', upvotes: 250, comments: 30 },
     })
 
     const { container } = render(<ProjectCard.Stats project={project} />)

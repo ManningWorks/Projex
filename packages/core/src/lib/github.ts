@@ -101,7 +101,19 @@ export async function fetchGitHubCommits(
   }
 }
 
-export async function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | null> {
+export type FetchRepoErrorType = 'not_found' | 'rate_limited' | 'network' | 'auth' | 'other'
+
+export interface FetchRepoError {
+  type: FetchRepoErrorType
+  message: string
+}
+
+export interface FetchRepoResult {
+  data: GitHubRepoData | null
+  error: FetchRepoError | null
+}
+
+export async function fetchGitHubRepo(repo: string): Promise<FetchRepoResult> {
   try {
     const url = `https://api.github.com/repos/${repo}`
 
@@ -121,26 +133,41 @@ export async function fetchGitHubRepo(repo: string): Promise<GitHubRepoData | nu
       cache: 'force-cache',
     })
 
+    if (response.status === 404) {
+      return { data: null, error: { type: 'not_found', message: `Repository '${repo}' not found` } }
+    }
+
+    if (response.status === 403) {
+      return { data: null, error: { type: 'rate_limited', message: 'GitHub API rate limit exceeded' } }
+    }
+
+    if (response.status === 401) {
+      return { data: null, error: { type: 'auth', message: 'GitHub API authentication failed' } }
+    }
+
     if (!response.ok) {
-      return null
+      return { data: null, error: { type: 'other', message: `GitHub API error: ${response.status}` } }
     }
 
     const data = await response.json()
 
     return {
-      name: data.name,
-      description: data.description,
-      stargazers_count: data.stargazers_count,
-      forks_count: data.forks_count,
-      language: data.language,
-      topics: data.topics || [],
-      html_url: data.html_url,
-      homepage: data.homepage,
-      created_at: data.created_at,
-      updated_at: data.updated_at,
+      data: {
+        name: data.name,
+        description: data.description,
+        stargazers_count: data.stargazers_count,
+        forks_count: data.forks_count,
+        language: data.language,
+        topics: data.topics || [],
+        html_url: data.html_url,
+        homepage: data.homepage,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+      },
+      error: null,
     }
   } catch {
-    return null
+    return { data: null, error: { type: 'network', message: `Network error fetching repository '${repo}'` } }
   }
 }
 

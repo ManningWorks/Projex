@@ -84,7 +84,16 @@ export interface DevToStats {
   totalReactions?: number
 }
 
-export type ProjectStats = GitHubStats & NpmStats & ProductHuntStats & YouTubeStats & GumroadStats & LemonSqueezyStats & DevToStats
+export type ProjectStats =
+  | ({ type: 'github' } & GitHubStats)
+  | ({ type: 'manual' } & Record<string, never>)
+  | ({ type: 'npm' } & NpmStats)
+  | ({ type: 'product-hunt' } & ProductHuntStats)
+  | ({ type: 'youtube' } & YouTubeStats)
+  | ({ type: 'gumroad' } & GumroadStats)
+  | ({ type: 'lemonsqueezy' } & LemonSqueezyStats)
+  | ({ type: 'devto' } & DevToStats)
+  | ({ type: 'hybrid' } & GitHubStats & NpmStats)
 
 export interface NormalizedStat {
   label: string

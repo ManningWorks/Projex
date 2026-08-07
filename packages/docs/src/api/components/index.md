@@ -19,6 +19,7 @@ Projex provides compound components for building project showcase pages. All com
 | [ProjectCard](./project-card) | Card component for displaying individual project summaries |
 | [ProjectView](./project-view) | Full page view for detailed project information |
 | [ProjectGrid](./project-grid) | Container for grid layout of projects |
+| [SmartProjectGrid](./smart-project-grid) | Turnkey client component with built-in search, filters, and sort |
 | [ProjectList](./project-list) | Container for list layout of projects |
 | [FeaturedProject](./featured-project) | Featured project hero section |
 
@@ -36,6 +37,22 @@ Components use the compound pattern for maximum flexibility. Consumers compose t
   <ProjectCard.Stats project={project} />
   <ProjectCard.Links project={project} />
 </ProjectCard>
+```
+
+Sub-components accept an optional `project` prop. When used inside a `SmartProjectGrid`, the `project` prop can be omitted and the component will read the project from context via `ProjectGridProvider`.
+
+```tsx
+<SmartProjectGrid projects={projects} showSearch showFilters>
+  {(project) => (
+    <ProjectCard>
+      <ProjectCard.Header />
+      <ProjectCard.Description />
+      <ProjectCard.Tags />
+      <ProjectCard.Stats />
+      <ProjectCard.Links />
+    </ProjectCard>
+  )}
+</SmartProjectGrid>
 ```
 
 ### Data Attributes

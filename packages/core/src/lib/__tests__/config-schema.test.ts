@@ -429,7 +429,7 @@ describe('config-schema', () => {
       expect(result.success).toBe(false)
       if (!result.success) {
         const error = formatZodError(result.error)
-        expect(error).toContain('✖ Validation failed')
+        expect(error).toContain('Validation failed')
         expect(error).toContain('repo')
         expect(error).toContain('Required')
         expect(error).toContain('Tip:')

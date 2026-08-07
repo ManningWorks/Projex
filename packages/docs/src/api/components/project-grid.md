@@ -8,6 +8,16 @@ Container component for displaying projects in a grid layout.
 import { ProjectGrid } from '@manningworks/projex'
 ```
 
+Related exports from the same module:
+
+```tsx
+import { SmartProjectGrid, ProjectGridProvider, useProjectContext } from '@manningworks/projex'
+```
+
+- **`SmartProjectGrid`** — Turnkey client component with built-in search, filters, and sort. See [SmartProjectGrid](./smart-project-grid).
+- **`ProjectGridProvider`** — React context provider that supplies a `ProjexProject` to the tree.
+- **`useProjectContext`** — Hook to access the current project from context.
+
 ## Usage
 
 ```tsx

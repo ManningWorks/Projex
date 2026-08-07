@@ -71,6 +71,7 @@ describe('npm config recognition', () => {
         github: 'https://github.com/user/full-package',
       },
       stats: {
+        type: 'npm',
         downloads: '10000',
         version: '1.0.0',
       },
@@ -91,6 +92,7 @@ describe('npm config recognition', () => {
       github: 'https://github.com/user/full-package',
     })
     expect(result.stats).toEqual({
+      type: 'npm',
       downloads: '10000',
       version: '1.0.0',
     })

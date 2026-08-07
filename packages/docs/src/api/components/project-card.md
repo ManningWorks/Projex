@@ -10,6 +10,8 @@ import { ProjectCard } from '@manningworks/projex'
 
 ## Usage
 
+### Explicit project prop
+
 ```tsx
 <ProjectCard>
   <ProjectCard.Header project={project} />
@@ -21,6 +23,25 @@ import { ProjectCard } from '@manningworks/projex'
 </ProjectCard>
 ```
 
+### With context (inside SmartProjectGrid or ProjectGridProvider)
+
+When used inside a `SmartProjectGrid` or `ProjectGridProvider`, the `project` prop can be omitted — sub-components will read the project from context:
+
+```tsx
+<SmartProjectGrid projects={projects} showSearch>
+  {(project) => (
+    <ProjectCard>
+      <ProjectCard.Header />
+      <ProjectCard.Description />
+      <ProjectCard.Tags />
+      <ProjectCard.Stats />
+      <ProjectCard.Status />
+      <ProjectCard.Links />
+    </ProjectCard>
+  )}
+</SmartProjectGrid>
+```
+
 ## Props
 
 ### ProjectCard (Root)
@@ -28,18 +49,19 @@ import { ProjectCard } from '@manningworks/projex'
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | children | `React.ReactNode` | Yes | Child components to render inside the card |
+| project | `ProjexProject` | No | Optional project data (used for data attributes on the root element) |
 
 ### ProjectCard.Header
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 ### ProjectCard.Description
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 Returns `null` if `project.description` is empty.
 
@@ -47,7 +69,7 @@ Returns `null` if `project.description` is empty.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 Returns `null` if `project.stack` is empty.
 
@@ -55,7 +77,7 @@ Returns `null` if `project.stack` is empty.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 Returns `null` if `project.stats` is empty or contains no values.
 
@@ -63,13 +85,13 @@ Returns `null` if `project.stats` is empty or contains no values.
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 ### ProjectCard.Links
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| project | `ProjexProject` | Yes | Project data to display |
+| project | `ProjexProject` | No | Project data to display. Falls back to context if omitted. |
 
 Returns `null` if no links are available.
 
