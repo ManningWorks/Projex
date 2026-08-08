@@ -8,7 +8,7 @@ import { fetchDevToUser, type DevToUserData } from './devto'
 import { projexProjectInputSchema } from './config-schema'
 import { formatZodError } from './format-error'
 import type { DefineProjectsOptions } from './defineProjects'
-import type { ProjexProject, ProjexProjectInput, NormalizedStat, ProjectCommit, ProjectType } from '../types'
+import type { ProjexProject, ProjexProjectInput, NormalizedStat, ProjectCommit, ProjectStats, ProjectType } from '../types'
 
 export interface FetchProjectDataResult {
   githubData: GitHubRepoData | null
@@ -36,33 +36,35 @@ export async function fetchProjectData(
   const storeId = 'storeId' in input ? input.storeId : undefined
   const username = 'username' in input ? input.username : undefined
 
-  const githubPromise = (type === 'github' || type === 'hybrid') && repo
-    ? fetchGitHubRepo(repo)
-    : Promise.resolve({ data: null as GitHubRepoData | null, error: null as FetchRepoError | null })
+  const fetchers: Record<string, () => Promise<unknown>> = {
+    github: () => repo ? fetchGitHubRepo(repo) : Promise.resolve({ data: null as GitHubRepoData | null, error: null as FetchRepoError | null }),
+    npm: () => npmPackage ? fetchNpmPackage(npmPackage) : Promise.resolve({ data: null as NpmPackageData | null, error: null as FetchNpmError | null }),
+    'product-hunt': () => slug ? fetchProductHuntPost(slug) : Promise.resolve(null),
+    youtube: () => channelId ? fetchYouTubeChannel(channelId) : Promise.resolve(null),
+    gumroad: () => productId ? fetchGumroadProduct(productId) : Promise.resolve(null),
+    lemonsqueezy: () => storeId ? fetchLemonSqueezyStore(storeId) : Promise.resolve(null),
+    devto: () => username ? fetchDevToUser(username) : Promise.resolve(null),
+  }
 
-  const npmPromise = (type === 'npm' || type === 'hybrid') && npmPackage
-    ? fetchNpmPackage(npmPackage)
-    : Promise.resolve({ data: null as NpmPackageData | null, error: null as FetchNpmError | null })
+  const [githubResult, npmResult, phResult, ytResult, gumroadResult, lsResult, devtoResult] = await Promise.all([
+    (type === 'github' || type === 'hybrid') ? fetchers.github() : Promise.resolve({ data: null as GitHubRepoData | null, error: null as FetchRepoError | null }),
+    (type === 'npm' || type === 'hybrid') ? fetchers.npm() : Promise.resolve({ data: null as NpmPackageData | null, error: null as FetchNpmError | null }),
+    fetchers['product-hunt'](),
+    fetchers['youtube'](),
+    fetchers['gumroad'](),
+    fetchers['lemonsqueezy'](),
+    fetchers['devto'](),
+  ])
 
-  const phPromise = type === 'product-hunt' && slug
-    ? fetchProductHuntPost(slug)
-    : Promise.resolve(null)
-
-  const ytPromise = type === 'youtube' && channelId
-    ? fetchYouTubeChannel(channelId)
-    : Promise.resolve(null)
-
-  const gumroadPromise = type === 'gumroad' && productId
-    ? fetchGumroadProduct(productId)
-    : Promise.resolve(null)
-
-  const lsPromise = type === 'lemonsqueezy' && storeId
-    ? fetchLemonSqueezyStore(storeId)
-    : Promise.resolve(null)
-
-  const devtoPromise = type === 'devto' && username
-    ? fetchDevToUser(username)
-    : Promise.resolve(null)
+  const githubData = (githubResult as { data: GitHubRepoData | null }).data
+  const githubError = (githubResult as { error: FetchRepoError | null }).error
+  const npmData = (npmResult as { data: NpmPackageData | null }).data
+  const npmError = (npmResult as { error: FetchNpmError | null }).error
+  const productHuntData = phResult as ProductHuntPostData | null
+  const youtubeData = ytResult as YouTubeChannelData | null
+  const gumroadData = gumroadResult as GumroadProductData | null
+  const lemonsqueezyData = lsResult as LemonSqueezyStoreData | null
+  const devtoData = devtoResult as DevToUserData | null
 
   let commitsPromise: Promise<ProjectCommit[] | null> = Promise.resolve(null)
   if ((type === 'github' || type === 'hybrid') && repo) {
@@ -99,28 +101,19 @@ export async function fetchProjectData(
     }
   }
 
-  const [githubResult, npmResult, productHuntData, youtubeData, gumroadData, lemonsqueezyData, devtoData, commits] = await Promise.all([
-    githubPromise,
-    npmPromise,
-    phPromise,
-    ytPromise,
-    gumroadPromise,
-    lsPromise,
-    devtoPromise,
-    commitsPromise,
-  ])
+  const [commits] = await Promise.all([commitsPromise])
 
   return {
-    githubData: githubResult.data,
-    npmData: npmResult.data,
+    githubData,
+    npmData,
     productHuntData,
     youtubeData,
     gumroadData,
     lemonsqueezyData,
     devtoData,
     commits,
-    githubError: githubResult.error,
-    npmError: npmResult.error,
+    githubError,
+    npmError,
   }
 }
 
@@ -223,24 +216,26 @@ export async function normalise(
 
   let finalStats: ProjexProject['stats'] | null = null
   if (type === 'github' || type === 'hybrid' || type === 'npm' || type === 'product-hunt' || type === 'youtube' || type === 'gumroad' || type === 'lemonsqueezy' || type === 'devto') {
+    const baseStats = inputStats ?? {}
     if (githubData) {
       finalStats = {
-        type: type as 'github' | 'hybrid',
+        ...baseStats,
+        type: 'github' as const,
         stars: githubData.stargazers_count,
         forks: githubData.forks_count,
       }
     }
     if (npmData) {
       finalStats = {
-        ...finalStats,
-        type: type as 'npm' | 'hybrid',
+        ...baseStats,
+        type: 'npm' as const,
         downloads: String(npmData.downloads),
         version: npmData.version,
       }
     }
     if (productHuntData) {
       finalStats = {
-        ...finalStats,
+        ...baseStats,
         type: 'product-hunt' as const,
         upvotes: productHuntData.votes_count,
         comments: productHuntData.comments_count,
@@ -249,7 +244,7 @@ export async function normalise(
     }
     if (youtubeData) {
       finalStats = {
-        ...finalStats,
+        ...baseStats,
         type: 'youtube' as const,
         subscribers: youtubeData.subscriberCount,
         views: youtubeData.viewCount,
@@ -260,7 +255,7 @@ export async function normalise(
     }
     if (gumroadData) {
       finalStats = {
-        ...finalStats,
+        ...baseStats,
         type: 'gumroad' as const,
         formattedRevenue: gumroadData.formattedRevenue,
         salesCount: gumroadData.salesCount,
@@ -269,7 +264,7 @@ export async function normalise(
     }
     if (lemonsqueezyData) {
       finalStats = {
-        ...finalStats,
+        ...baseStats,
         type: 'lemonsqueezy' as const,
         formattedMRR: lemonsqueezyData.formattedMRR,
         orderCount: lemonsqueezyData.orderCount,
@@ -278,18 +273,36 @@ export async function normalise(
     }
     if (devtoData) {
       finalStats = {
-        ...finalStats,
+        ...baseStats,
         type: 'devto' as const,
         articleCount: devtoData.articleCount,
         totalViews: devtoData.totalViews,
         totalReactions: devtoData.totalReactions,
       }
     }
-    if (inputStats) {
-      finalStats = { ...finalStats, ...inputStats, type: finalStats?.type ?? type } as ProjexProject['stats']
+    if (type === 'hybrid' && (githubData || npmData)) {
+      const hybridStats: { stars?: number; forks?: number; downloads?: string; version?: string } = {}
+      if (githubData) {
+        hybridStats.stars = githubData.stargazers_count
+        hybridStats.forks = githubData.forks_count
+      }
+      if (npmData) {
+        hybridStats.downloads = String(npmData.downloads)
+        hybridStats.version = npmData.version
+      }
+      finalStats = {
+        ...hybridStats,
+        ...baseStats,
+        type: 'hybrid' as const,
+      }
+    }
+    if (!finalStats) {
+      finalStats = inputStats
+        ? ({ ...inputStats, type: type as 'github' | 'npm' | 'product-hunt' | 'youtube' | 'gumroad' | 'lemonsqueezy' | 'devto' | 'hybrid' } as ProjectStats)
+        : null
     }
   } else {
-    finalStats = inputStats ? { ...inputStats, type: 'manual' as const } as ProjexProject['stats'] : null
+    finalStats = inputStats ? ({ ...inputStats, type: 'manual' as const } as ProjectStats) : null
   }
 
   let finalLanguage: ProjexProject['language'] = null

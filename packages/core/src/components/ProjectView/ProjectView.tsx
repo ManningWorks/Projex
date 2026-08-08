@@ -159,7 +159,7 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
     return null
   }
 
-  const stats = project.stats as Record<string, any>
+  const stats = project.stats as any
 
   if (!hasStatValues(stats)) {
     return null

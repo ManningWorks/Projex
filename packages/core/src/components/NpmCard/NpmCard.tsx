@@ -38,19 +38,18 @@ NpmCard.Tags = function NpmCardTags({ project }: { project: ProjexProject }) {
 }
 
 NpmCard.Stats = function NpmCardStats({ project, showVersion = true }: NpmCardProps) {
-  const stats = project.stats as Record<string, any> | null
-  if (!stats || (!stats.downloads && (!showVersion || !stats.version))) {
-    return null
-  }
+  const stats = project.stats
+  const hasStats = stats && (stats.type === 'npm' ? (stats.downloads || (showVersion && stats.version)) : false)
+  if (!hasStats) return null
   return (
     <div data-projex-card-stats>
-      {stats.downloads && (
+      {stats && stats.type === 'npm' && stats.downloads && (
         <span data-projex-stat="downloads">
           <span data-projex-stat-icon="downloads" />
           {stats.downloads} downloads
         </span>
       )}
-      {showVersion && stats.version && (
+      {showVersion && stats && stats.type === 'npm' && stats.version && (
         <span data-projex-stat="version">v{stats.version}</span>
       )}
     </div>

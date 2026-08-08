@@ -87,7 +87,7 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project?: ProjexProje
 ProjectCard.Stats = function ProjectCardStats({ project }: { project?: ProjexProject }) {
   const resolved = useResolvedProject(project)
   if (!resolved) return null
-  const stats = resolved.stats as Record<string, any> | null
+  const stats = resolved.stats as any
   if (!stats || !hasStatValues(stats)) {
     return null
   }
