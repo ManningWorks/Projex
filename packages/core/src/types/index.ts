@@ -222,6 +222,6 @@ export interface ProjexProject {
   productId?: string
   storeId?: string
   username?: string
-  commits?: ProjectCommit[]
+  commits: ProjectCommit[] | null
   linkOrder?: string[]
 }

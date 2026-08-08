@@ -521,7 +521,7 @@ describe('normalise', () => {
 
       const result = await normalise(input)
 
-      expect(result.commits).toBeUndefined()
+      expect(result.commits).toBeNull()
       expect(mockedFetchGitHubCommits).not.toHaveBeenCalled()
     })
 
@@ -594,7 +594,7 @@ describe('normalise', () => {
         'Invalid commits value: -5. Clamping to valid range (0-100).',
       )
       expect(mockedFetchGitHubCommits).not.toHaveBeenCalled()
-      expect(result.commits).toBeUndefined()
+      expect(result.commits).toBeNull()
 
       warnSpy.mockRestore()
     })
