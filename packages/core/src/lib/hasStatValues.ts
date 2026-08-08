@@ -1,26 +1,12 @@
+import type { ProjectStats } from '../types'
+import { getStatEntries } from './statEntries'
+
 /**
- * Returns true if the stats object has at least one non-null/undefined value.
+ * Returns true if the stats object has at least one renderable stat value.
+ *
+ * Backed by the typed {@link getStatEntries} accessor, which narrows the
+ * `ProjectStats` tagged union — so this never requires callers to cast.
  */
-export function hasStatValues(stats: Record<string, unknown> | null | undefined): boolean {
-  if (!stats) return false
-  return !!(
-    stats.stars ||
-    stats.forks ||
-    stats.downloads ||
-    stats.version ||
-    stats.upvotes ||
-    stats.comments ||
-    stats.subscribers ||
-    stats.views ||
-    stats.latestVideoTitle ||
-    stats.formattedRevenue ||
-    stats.salesCount ||
-    stats.subscriberCount ||
-    stats.formattedMRR ||
-    stats.orderCount ||
-    stats.customerCount ||
-    stats.articleCount ||
-    stats.totalViews ||
-    stats.totalReactions
-  )
+export function hasStatValues(stats: ProjectStats | null | undefined): boolean {
+  return getStatEntries(stats ?? null).length > 0
 }

@@ -27,6 +27,7 @@ const createProject = (overrides: Partial<ProjexProject> = {}): ProjexProject =>
     live: 'https://test-project.com',
   },
   stats: {
+    type: 'github',
     stars: 1000,
     forks: 200,
   },

@@ -1,5 +1,15 @@
 import type { ReactNode } from 'react'
 import type { ProjexProject } from '../../types'
+import { getStatEntries, type StatId } from '../../lib/statEntries'
+
+const SHOWCASE_STAT_IDS: ReadonlySet<StatId> = new Set([
+  'stars',
+  'forks',
+  'downloads',
+  'version',
+  'upvotes',
+  'comments',
+])
 
 export interface ShowcaseCardProps {
   project: ProjexProject
@@ -38,30 +48,19 @@ ShowcaseCard.Tags = function ShowcaseCardTags({ project }: { project: ProjexProj
 }
 
 ShowcaseCard.Stats = function ShowcaseCardStats({ project }: { project: ProjexProject }) {
-  const stats = project.stats as Record<string, any> | null
-  if (
-    !stats ||
-    (!stats.stars &&
-      !stats.forks &&
-      !stats.downloads &&
-      !stats.version &&
-      !stats.upvotes &&
-      !stats.comments)
-  ) {
+  const entries = getStatEntries(project.stats).filter(
+    entry => entry.id !== 'latest-video' && SHOWCASE_STAT_IDS.has(entry.id),
+  )
+  if (entries.length === 0) {
     return null
   }
   return (
     <div data-projex-card-stats>
-      {stats.stars && <span data-projex-stat="stars">{stats.stars} stars</span>}
-      {stats.forks && <span data-projex-stat="forks">{stats.forks} forks</span>}
-      {stats.downloads && (
-        <span data-projex-stat="downloads">{stats.downloads} downloads</span>
-      )}
-      {stats.version && <span data-projex-stat="version">{stats.version}</span>}
-      {stats.upvotes && <span data-projex-stat="upvotes">{stats.upvotes} upvotes</span>}
-      {stats.comments && (
-        <span data-projex-stat="comments">{stats.comments} comments</span>
-      )}
+      {entries.map(entry => (
+        <span key={entry.id} data-projex-stat={entry.id}>
+          {entry.value}{entry.suffix ? ` ${entry.suffix}` : ''}
+        </span>
+      ))}
     </div>
   )
 }

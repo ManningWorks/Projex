@@ -85,7 +85,9 @@ export async function fetchGitHubCommits(
 
     const data = await response.json()
 
-    const commits = data.map((commit: any) => ({
+    const commits = data.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- untyped GitHub API JSON, parsed at the boundary
+      (commit: any) => ({
       sha: commit.sha,
       message: commit.commit.message,
       author: commit.author?.login ?? commit.commit.author?.name ?? null,
@@ -214,7 +216,9 @@ export async function fetchGitHubRepos(username: string): Promise<FetchReposResu
 
     const data = await response.json()
 
-    const repos = data.map((repo: any) => ({
+    const repos = data.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- untyped GitHub API JSON, parsed at the boundary
+      (repo: any) => ({
       name: repo.name,
       description: repo.description,
       stargazers_count: repo.stargazers_count,

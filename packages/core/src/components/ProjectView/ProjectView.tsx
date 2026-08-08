@@ -1,6 +1,6 @@
 import type { ProjexProject } from '../../types'
 import { CommitList } from '../CommitList'
-import { hasStatValues } from '../../lib/hasStatValues'
+import { getStatEntries } from '../../lib/statEntries'
 
 type SectionName = keyof Pick<ProjexProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts' | 'commits'>
 
@@ -155,46 +155,27 @@ ProjectView.Links = function ProjectViewLinks({ project }: { project: ProjexProj
 }
 
 ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProject }) {
-  if (!project.stats) {
-    return null
-  }
-
-  const stats = project.stats as any
-
-  if (!hasStatValues(stats)) {
+  const entries = getStatEntries(project.stats)
+  if (entries.length === 0) {
     return null
   }
 
   return (
     <div data-projex-view-stats>
-      {stats.stars && <span data-projex-stat="stars">{stats.stars} stars</span>}
-      {stats.forks && <span data-projex-stat="forks">{stats.forks} forks</span>}
-      {stats.downloads && (
-        <span data-projex-stat="downloads">{stats.downloads} downloads</span>
-      )}
-      {stats.version && <span data-projex-stat="version">{stats.version}</span>}
-      {stats.upvotes && <span data-projex-stat="upvotes">{stats.upvotes} upvotes</span>}
-      {stats.comments && <span data-projex-stat="comments">{stats.comments} comments</span>}
-      {stats.subscribers && <span data-projex-stat="subscribers">{stats.subscribers} subscribers</span>}
-      {stats.views && <span data-projex-stat="views">{stats.views} views</span>}
-      {stats.latestVideoTitle && stats.latestVideoUrl && (
-        <a href={stats.latestVideoUrl} data-projex-link data-projex-link-type="youtube">
-          {stats.latestVideoTitle}
+      {entries.map(entry => entry.href ? (
+        <a
+          key={entry.id}
+          href={entry.href}
+          data-projex-link
+          data-projex-link-type={entry.linkType}
+        >
+          {entry.value}
         </a>
-      )}
-      {stats.formattedRevenue && <span data-projex-stat="revenue">{stats.formattedRevenue}</span>}
-      {stats.salesCount && <span data-projex-stat="sales">{stats.salesCount} sales</span>}
-      {stats.subscriberCount && (
-        <span data-projex-stat="subscribers">{stats.subscriberCount} subscribers</span>
-      )}
-      {stats.formattedMRR && <span data-projex-stat="mrr">{stats.formattedMRR} MRR</span>}
-      {stats.orderCount && <span data-projex-stat="orders">{stats.orderCount} orders</span>}
-      {stats.customerCount && (
-        <span data-projex-stat="customers">{stats.customerCount} customers</span>
-      )}
-      {stats.articleCount && <span data-projex-stat="articles">{stats.articleCount} articles</span>}
-      {stats.totalViews && <span data-projex-stat="total-views">{stats.totalViews} views</span>}
-      {stats.totalReactions && <span data-projex-stat="reactions">{stats.totalReactions} reactions</span>}
+      ) : (
+        <span key={entry.id} data-projex-stat={entry.id}>
+          {entry.value}{entry.suffix ? ` ${entry.suffix}` : ''}
+        </span>
+      ))}
     </div>
   )
 }

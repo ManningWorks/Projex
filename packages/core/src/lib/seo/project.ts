@@ -58,27 +58,31 @@ export function generateProjectSchema(
     schema.applicationCategory = 'DeveloperApplication'
   }
 
-  const stats = project.stats as Record<string, unknown> | null
+  const stats = project.stats
 
-  const stars = stats?.stars
-  if (stars && typeof stars === 'number' && stars > 0) {
-    schema.aggregateRating = {
-      '@type': 'AggregateRating',
-      ratingValue: 5,
-      ratingCount: stars,
+  if (stats && (stats.type === 'github' || stats.type === 'hybrid')) {
+    const stars = stats.stars
+    if (stars && stars > 0) {
+      schema.aggregateRating = {
+        '@type': 'AggregateRating',
+        ratingValue: 5,
+        ratingCount: stars,
+      }
     }
   }
 
-  const downloads = stats?.downloads
-  if (downloads && typeof downloads === 'string' && downloads.trim() !== '') {
-    const downloadsNumber = parseInt(downloads, 10)
-    if (!isNaN(downloadsNumber) && downloadsNumber > 0) {
-      schema.interactionStatistic = {
-        '@type': 'InteractionCounter',
-        interactionType: {
-          '@type': 'DownloadAction',
-        },
-        userInteractionCount: downloadsNumber,
+  if (stats && (stats.type === 'npm' || stats.type === 'hybrid')) {
+    const downloads = stats.downloads
+    if (downloads && downloads.trim() !== '') {
+      const downloadsNumber = parseInt(downloads, 10)
+      if (!isNaN(downloadsNumber) && downloadsNumber > 0) {
+        schema.interactionStatistic = {
+          '@type': 'InteractionCounter',
+          interactionType: {
+            '@type': 'DownloadAction',
+          },
+          userInteractionCount: downloadsNumber,
+        }
       }
     }
   }

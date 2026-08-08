@@ -1,7 +1,7 @@
 import type { ProjexProject } from '../../types'
 import type { ProjectStatus } from '../../types'
 import { useProjectContext } from '../ProjectGrid/ProjectGridContext'
-import { hasStatValues } from '../../lib/hasStatValues'
+import { getStatEntries } from '../../lib/statEntries'
 
 const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
   active: { bg: 'var(--projex-status-active-bg, #dcfce7)', text: 'var(--projex-status-active-text, #166534)' },
@@ -87,8 +87,8 @@ ProjectCard.Tags = function ProjectCardTags({ project }: { project?: ProjexProje
 ProjectCard.Stats = function ProjectCardStats({ project }: { project?: ProjexProject }) {
   const resolved = useResolvedProject(project)
   if (!resolved) return null
-  const stats = resolved.stats as any
-  if (!stats || !hasStatValues(stats)) {
+  const entries = getStatEntries(resolved.stats)
+  if (entries.length === 0) {
     return null
   }
   return (
@@ -98,153 +98,26 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project?: ProjexPro
         color: 'var(--projex-stats-label, #6b7280)',
       }}
     >
-      {stats.stars && (
-        <span
-          data-projex-stat="stars"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.stars} stars
-        </span>
-      )}
-      {stats.forks && (
-        <span
-          data-projex-stat="forks"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.forks} forks
-        </span>
-      )}
-      {stats.downloads && (
-        <span
-          data-projex-stat="downloads"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.downloads} downloads
-        </span>
-      )}
-      {stats.version && (
-        <span
-          data-projex-stat="version"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.version}
-        </span>
-      )}
-      {stats.upvotes && (
-        <span
-          data-projex-stat="upvotes"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.upvotes} upvotes
-        </span>
-      )}
-      {stats.comments && (
-        <span
-          data-projex-stat="comments"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.comments} comments
-        </span>
-      )}
-      {stats.subscribers && (
-        <span
-          data-projex-stat="subscribers"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.subscribers} subscribers
-        </span>
-      )}
-      {stats.views && (
-        <span
-          data-projex-stat="views"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.views} views
-        </span>
-      )}
-      {stats.latestVideoTitle && stats.latestVideoUrl && (
+      {entries.map(entry => entry.href ? (
         <a
-          href={stats.latestVideoUrl}
+          key={entry.id}
+          href={entry.href}
           data-projex-link
-          data-projex-link-type="youtube"
+          data-projex-link-type={entry.linkType}
           style={{ color: 'var(--projex-link-text, #374151)' }}
           className="projex-link"
         >
-          {stats.latestVideoTitle}
+          {entry.value}
         </a>
-      )}
-      {stats.formattedRevenue && (
+      ) : (
         <span
-          data-projex-stat="revenue"
+          key={entry.id}
+          data-projex-stat={entry.id}
           style={{ color: 'var(--projex-stats-value, #374151)' }}
         >
-          {stats.formattedRevenue}
+          {entry.value}{entry.suffix ? ` ${entry.suffix}` : ''}
         </span>
-      )}
-      {stats.salesCount && (
-        <span
-          data-projex-stat="sales"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.salesCount} sales
-        </span>
-      )}
-      {stats.subscriberCount && (
-        <span
-          data-projex-stat="subscribers"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.subscriberCount} subscribers
-        </span>
-      )}
-      {stats.formattedMRR && (
-        <span
-          data-projex-stat="mrr"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.formattedMRR} MRR
-        </span>
-      )}
-      {stats.orderCount && (
-        <span
-          data-projex-stat="orders"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.orderCount} orders
-        </span>
-      )}
-      {stats.customerCount && (
-        <span
-          data-projex-stat="customers"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.customerCount} customers
-        </span>
-      )}
-      {stats.articleCount && (
-        <span
-          data-projex-stat="articles"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.articleCount} articles
-        </span>
-      )}
-      {stats.totalViews && (
-        <span
-          data-projex-stat="total-views"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.totalViews} views
-        </span>
-      )}
-      {stats.totalReactions && (
-        <span
-          data-projex-stat="reactions"
-          style={{ color: 'var(--projex-stats-value, #374151)' }}
-        >
-          {stats.totalReactions} reactions
-        </span>
-      )}
+      ))}
     </div>
   )
 }

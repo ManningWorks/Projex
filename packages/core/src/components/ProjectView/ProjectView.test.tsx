@@ -399,3 +399,101 @@ describe('ProjectView data attributes', () => {
     expect(container.querySelector('[data-projex-view-stats]')).toBeInTheDocument()
   })
 })
+
+describe('ProjectView.Stats per-type coverage', () => {
+  it('renders youtube stats including the latest-video link', () => {
+    const project = createProject({
+      type: 'youtube',
+      stats: {
+        type: 'youtube',
+        subscribers: 10000,
+        views: 500000,
+        latestVideoTitle: 'My Latest Video',
+        latestVideoUrl: 'https://youtube.com/watch?v=abc',
+      },
+    })
+
+    const { container } = render(<ProjectView.Stats project={project} />)
+
+    expect(screen.getByText('10000 subscribers')).toBeInTheDocument()
+    expect(screen.getByText('500000 views')).toBeInTheDocument()
+    const link = container.querySelector('[data-projex-link-type="youtube"]')
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveAttribute('href', 'https://youtube.com/watch?v=abc')
+    expect(link).toHaveTextContent('My Latest Video')
+  })
+
+  it('renders gumroad stats', () => {
+    const project = createProject({
+      type: 'gumroad',
+      stats: {
+        type: 'gumroad',
+        formattedRevenue: '$1,234',
+        salesCount: 42,
+        subscriberCount: 300,
+      },
+    })
+
+    render(<ProjectView.Stats project={project} />)
+
+    expect(screen.getByText('$1,234')).toBeInTheDocument()
+    expect(screen.getByText('42 sales')).toBeInTheDocument()
+    expect(screen.getByText('300 subscribers')).toBeInTheDocument()
+  })
+
+  it('renders lemonsqueezy stats', () => {
+    const project = createProject({
+      type: 'lemonsqueezy',
+      stats: {
+        type: 'lemonsqueezy',
+        formattedMRR: '$500',
+        orderCount: 7,
+        customerCount: 9,
+      },
+    })
+
+    render(<ProjectView.Stats project={project} />)
+
+    expect(screen.getByText('$500 MRR')).toBeInTheDocument()
+    expect(screen.getByText('7 orders')).toBeInTheDocument()
+    expect(screen.getByText('9 customers')).toBeInTheDocument()
+  })
+
+  it('renders devto stats', () => {
+    const project = createProject({
+      type: 'devto',
+      stats: {
+        type: 'devto',
+        articleCount: 12,
+        totalViews: 9999,
+        totalReactions: 88,
+      },
+    })
+
+    render(<ProjectView.Stats project={project} />)
+
+    expect(screen.getByText('12 articles')).toBeInTheDocument()
+    expect(screen.getByText('9999 views')).toBeInTheDocument()
+    expect(screen.getByText('88 reactions')).toBeInTheDocument()
+  })
+
+  it('renders hybrid stats (github + npm fields together)', () => {
+    const project = createProject({
+      type: 'hybrid',
+      stats: {
+        type: 'hybrid',
+        stars: 50,
+        forks: 5,
+        downloads: '500',
+        version: '1.0.0',
+      },
+    })
+
+    render(<ProjectView.Stats project={project} />)
+
+    expect(screen.getByText('50 stars')).toBeInTheDocument()
+    expect(screen.getByText('5 forks')).toBeInTheDocument()
+    expect(screen.getByText('500 downloads')).toBeInTheDocument()
+    expect(screen.getByText('1.0.0')).toBeInTheDocument()
+  })
+})

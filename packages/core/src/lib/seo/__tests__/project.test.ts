@@ -126,6 +126,7 @@ describe('generateProjectSchema', () => {
     it('should include aggregateRating when stars are available', () => {
       const project = createProject({
         stats: {
+          type: 'github',
           stars: 1234,
         },
       })
@@ -143,6 +144,7 @@ describe('generateProjectSchema', () => {
     it('should include interactionStatistic when downloads are available', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           downloads: '5678',
         },
       })
@@ -162,6 +164,7 @@ describe('generateProjectSchema', () => {
     it('should include both aggregateRating and interactionStatistic when both stats are available', () => {
       const project = createProject({
         stats: {
+          type: 'hybrid',
           stars: 100,
           downloads: '500',
         },
@@ -429,6 +432,7 @@ describe('generateProjectSchema', () => {
     it('should not include aggregateRating when stars are 0', () => {
       const project = createProject({
         stats: {
+          type: 'github',
           stars: 0,
         },
       })
@@ -442,6 +446,7 @@ describe('generateProjectSchema', () => {
     it('should not include aggregateRating when stars are negative', () => {
       const project = createProject({
         stats: {
+          type: 'github',
           stars: -10,
         },
       })
@@ -455,6 +460,7 @@ describe('generateProjectSchema', () => {
     it('should not include aggregateRating when stars are undefined', () => {
       const project = createProject({
         stats: {
+          type: 'github',
           forks: 5,
         },
       })
@@ -468,6 +474,7 @@ describe('generateProjectSchema', () => {
     it('should not include interactionStatistic when downloads are 0', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           downloads: '0',
         },
       })
@@ -481,6 +488,7 @@ describe('generateProjectSchema', () => {
     it('should not include interactionStatistic when downloads are not a number', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           downloads: 'not-a-number',
         },
       })
@@ -494,6 +502,7 @@ describe('generateProjectSchema', () => {
     it('should not include interactionStatistic when downloads are empty string', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           downloads: '',
         },
       })
@@ -507,6 +516,7 @@ describe('generateProjectSchema', () => {
     it('should not include interactionStatistic when downloads are undefined', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           version: '1.0.0',
         },
       })
@@ -593,6 +603,7 @@ describe('generateProjectSchema', () => {
     it('should include aggregateRating in JSON output', () => {
       const project = createProject({
         stats: {
+          type: 'github',
           stars: 100,
         },
       })
@@ -610,6 +621,7 @@ describe('generateProjectSchema', () => {
     it('should include interactionStatistic in JSON output', () => {
       const project = createProject({
         stats: {
+          type: 'npm',
           downloads: '500',
         },
       })
