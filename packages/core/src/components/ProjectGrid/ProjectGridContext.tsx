@@ -5,7 +5,7 @@ import type { ProjexProject } from '../../types'
 
 const ProjectContext = createContext<ProjexProject | null>(null)
 
-export function ProjectGridProvider({ project, children }: { project: ProjexProject; children: React.ReactNode }) {
+export function ProjectGridProvider({ project, children }: { project: ProjexProject; children: React.ReactNode }): React.ReactNode {
   return (
     <ProjectContext.Provider value={project}>
       {children}

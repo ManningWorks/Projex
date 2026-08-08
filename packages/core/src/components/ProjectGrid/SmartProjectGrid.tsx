@@ -26,7 +26,7 @@ function SmartProjectGrid({
   showSort = false,
   placeholder,
   children,
-}: SmartProjectGridProps) {
+}: SmartProjectGridProps): React.ReactNode {
   const [query, setQuery] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [sortValue, setSortValue] = useState<SortValue>('stars')
