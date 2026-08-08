@@ -40,18 +40,8 @@ permission:
     "wc -l *": allow
     "sort *": allow
     "uniq *": allow
-    "git log *": allow
-    "git log": allow
-    "git diff *": allow
-    "git diff": allow
-    "git status *": allow
-    "git status": allow
-    "git add *": allow
-    "git add .": allow
-    "git commit *": allow
-    "git commit": allow
-    "git tag *": allow
-    "git tag": allow
+    "git *": allow
+    "git": allow
   webfetch: deny
 color: success
 ---
