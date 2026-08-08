@@ -18,7 +18,7 @@ export interface FetchProjectDataResult {
   gumroadData: GumroadProductData | null
   lemonsqueezyData: LemonSqueezyStoreData | null
   devtoData: DevToUserData | null
-  commits: ProjectCommit[] | undefined
+  commits: ProjectCommit[] | null
   githubError: FetchRepoError | null
   npmError: FetchNpmError | null
 }
@@ -64,7 +64,7 @@ export async function fetchProjectData(
     ? fetchDevToUser(username)
     : Promise.resolve(null)
 
-  let commitsPromise: Promise<ProjectCommit[] | undefined> = Promise.resolve(undefined)
+  let commitsPromise: Promise<ProjectCommit[] | null> = Promise.resolve(null)
   if ((type === 'github' || type === 'hybrid') && repo) {
     const commitsConfig = 'commits' in input ? input.commits : undefined
     const globalCommits = options?.commits ?? 0
@@ -286,7 +286,7 @@ export async function normalise(
       }
     }
     if (inputStats) {
-      finalStats = { ...finalStats, ...inputStats, type: (finalStats as Record<string, unknown>)?.type ?? type } as ProjexProject['stats']
+      finalStats = { ...finalStats, ...inputStats, type: finalStats?.type ?? type } as ProjexProject['stats']
     }
   } else {
     finalStats = inputStats ? { ...inputStats, type: 'manual' as const } as ProjexProject['stats'] : null
@@ -514,4 +514,7 @@ export function normaliseStats(stats: Record<string, unknown>, _type: ProjectTyp
   return result
 }
 
+/**
+ * @deprecated Use `normaliseStats` instead.
+ */
 export const normalizeStats = normaliseStats
