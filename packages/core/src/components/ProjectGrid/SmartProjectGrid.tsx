@@ -4,6 +4,8 @@ import { useState, useCallback, useMemo } from 'react'
 import type { ProjexProject } from '../../types'
 import { useProjectSearch } from '../../lib/useProjectSearch'
 import { useProjectFilters } from '../../lib/useProjectFilters'
+import { sortProjects, type SortValue } from '../../lib/sortProjects'
+import { ProjectSort } from '../ProjectSort'
 import { ProjectGridProvider } from './ProjectGridContext'
 
 interface SmartProjectGridProps {
@@ -15,6 +17,8 @@ interface SmartProjectGridProps {
   children?: (project: ProjexProject) => React.ReactNode
 }
 
+const SORT_OPTIONS: SortValue[] = ['stars', 'name', 'date', 'date-asc']
+
 function SmartProjectGrid({
   projects,
   showSearch = true,
@@ -25,9 +29,11 @@ function SmartProjectGrid({
 }: SmartProjectGridProps) {
   const [query, setQuery] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [sortValue, setSortValue] = useState<SortValue>('stars')
 
   const searched = useProjectSearch(projects, query)
   const filtered = useProjectFilters(searched, selectedTags)
+  const sorted = useMemo(() => sortProjects(filtered, sortValue), [filtered, sortValue])
 
   const allTags = useMemo(() => {
     const tagSet = new Set<string>()
@@ -49,6 +55,10 @@ function SmartProjectGrid({
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     )
+  }, [])
+
+  const handleSort = useCallback((value: string) => {
+    setSortValue(value as SortValue)
   }, [])
 
   return (
@@ -79,16 +89,23 @@ function SmartProjectGrid({
               ))}
             </div>
           )}
+          {showSort && (
+            <ProjectSort
+              options={SORT_OPTIONS}
+              value={sortValue}
+              onChange={handleSort}
+            />
+          )}
         </div>
       )}
       <div data-projex-grid>
         {children
-          ? filtered.map(project => (
+          ? sorted.map(project => (
               <ProjectGridProvider key={project.id} project={project}>
                 {children(project)}
               </ProjectGridProvider>
             ))
-          : filtered.map(project => (
+          : sorted.map(project => (
               <ProjectGridProvider key={project.id} project={project}>
                 <div data-projex-card={project.id}>
                   <h3>{project.name}</h3>
