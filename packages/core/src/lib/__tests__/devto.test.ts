@@ -357,7 +357,7 @@ describe('fetchDevToUser', () => {
       await fetchDevToUser('testuser')
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://dev.to/api/articles?username=testuser&per_page=1000',
+        'https://dev.to/api/articles?username=testuser&per_page=1000&state=published',
         { headers: {}, cache: 'force-cache' },
       )
     })
@@ -375,7 +375,7 @@ describe('fetchDevToUser', () => {
       await fetchDevToUser('testuser')
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://dev.to/api/articles?username=testuser&per_page=1000',
+        'https://dev.to/api/articles?username=testuser&per_page=1000&state=published',
         { headers: { 'api-key': 'test-api-key-123' }, cache: 'force-cache' },
       )
     })
@@ -429,7 +429,7 @@ describe('fetchDevToUser', () => {
       await fetchDevToUser('testuser')
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://dev.to/api/articles?username=testuser&per_page=1000',
+        'https://dev.to/api/articles?username=testuser&per_page=1000&state=published',
         { headers: {}, cache: 'force-cache' },
       )
     })
@@ -443,7 +443,7 @@ describe('fetchDevToUser', () => {
       await fetchDevToUser('test user')
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://dev.to/api/articles?username=test user&per_page=1000',
+        'https://dev.to/api/articles?username=test user&per_page=1000&state=published',
         { headers: {}, cache: 'force-cache' },
       )
     })

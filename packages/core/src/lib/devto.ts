@@ -14,7 +14,7 @@ export interface DevToUserData {
 
 export async function fetchDevToUser(username: string): Promise<DevToUserData | null> {
   try {
-    const url = `https://dev.to/api/articles?username=${username}&per_page=1000`
+    const url = `https://dev.to/api/articles?username=${username}&per_page=1000&state=published`
 
     const headers: HeadersInit = {}
 
@@ -60,7 +60,7 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
 
     return {
       articleCount,
-      totalViews,
+      totalViews: totalViews > 0 ? totalViews : 0,
       totalReactions,
     }
   } catch {
