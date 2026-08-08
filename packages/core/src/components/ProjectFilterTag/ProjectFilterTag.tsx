@@ -16,6 +16,7 @@ function ProjectFilterTag({ label, isActive = false, onClick }: ProjectFilterTag
       type="button"
       data-projex-filter-tag
       data-projex-filter-tag-active={isActive ? 'true' : undefined}
+      aria-pressed={isActive}
       onClick={handleClick}
     >
       {label}

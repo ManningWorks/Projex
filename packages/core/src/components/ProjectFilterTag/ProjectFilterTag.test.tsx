@@ -42,6 +42,20 @@ describe('ProjectFilterTag', () => {
     expect(tag).toHaveAttribute('data-projex-filter-tag-active', 'true')
   })
 
+  it('does not set aria-pressed when inactive', () => {
+    const { container } = render(<ProjectFilterTag label="React" isActive={false} />)
+
+    const tag = container.querySelector('[data-projex-filter-tag]')
+    expect(tag).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('sets aria-pressed to "true" when active', () => {
+    const { container } = render(<ProjectFilterTag label="React" isActive={true} />)
+
+    const tag = container.querySelector('[data-projex-filter-tag]')
+    expect(tag).toHaveAttribute('aria-pressed', 'true')
+  })
+
   it('renders as a button element', () => {
     render(<ProjectFilterTag label="TypeScript" />)
 

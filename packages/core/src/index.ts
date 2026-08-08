@@ -7,4 +7,6 @@ export {
   ProjectFilterBar,
   ProjectFilterTag,
   ProjectSort,
+  ProjectStatusFilterBar,
+  ProjectTypeFilterBar,
 } from './components'
