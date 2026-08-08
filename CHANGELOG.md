@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-08-08
+
+### Changed
+
+- **CLI dependencies moved to optional `peerDependencies`** — `ts-morph`, `chalk`, `@inquirer/prompts`, and `commander` relocated from `dependencies` to `peerDependencies` (marked optional via `peerDependenciesMeta`). Completes the CLI/component split documented in 1.4.0: consumers importing only components no longer install CLI dependencies transitively; CLI consumers install the peers explicitly. Fixes [#11].
+- **`ProjexProject.commits` type tightened** from `commits?: ProjectCommit[]` (optional, `undefined`) to `commits: ProjectCommit[] | null` (required, `null`) for consistency with the null-sentinel model used elsewhere. Truthiness checks (`if (project.commits)`) are unaffected; `=== undefined` checks should become `=== null` or truthiness. This is the resolved output type, so objects produced by `normalise`/`defineProjects` are unaffected.
+- Added explicit return types to `SmartProjectGrid` and `ProjectGridProvider`.
+- Marked `normalizeStats` with `@deprecated` JSDoc (the alias remains exported per 1.4.0).
+
+### Fixed
+
+- **`showSort` on `SmartProjectGrid` now applies sorting** — delivers the 1.4.0-documented behavior; sorting is applied only when `showSort` is enabled. Fixes [#10].
+- **dev.to API**: added `state=published` to the request URL, and `totalViews` is now included only when non-zero. Fixes [#6].
+- **Removed unsafe `as any` / `as Record<string, any>` casts** that bypassed the `ProjectStats` tagged union in `ProjectCard`, `ProjectView`, `ShowcaseCard`, and `seo/project`. Rendered output is byte-for-byte unchanged. Fixes [#8].
+
+### Internal
+
+- New internal `getStatEntries` typed accessor powers all stats rendering and `hasStatValues`. It is intentionally **not** part of the public export surface.
+- `hasStatValues` parameter scoped to `ProjectStats` (the function is new this release; the looser signature never shipped).
+- Enabled `@typescript-eslint/no-explicit-any` on non-test source as a regression guard.
+
+---
+
 ## [1.4.0] - 2026-04-18
 
 ### Breaking Changes
@@ -406,3 +429,11 @@ The following are considered implementation details and may change in any versio
 - Internal helper functions not exported from `index.ts`
 - Test utilities and fixtures
 - Build configuration
+
+<!-- Reference-style link definitions -->
+
+[#6]: https://github.com/ManningWorks/Projex/issues/6
+[#8]: https://github.com/ManningWorks/Projex/issues/8
+[#10]: https://github.com/ManningWorks/Projex/issues/10
+[#11]: https://github.com/ManningWorks/Projex/issues/11
+[1.5.0]: https://github.com/ManningWorks/Projex/compare/v1.4.0...v1.5.0
