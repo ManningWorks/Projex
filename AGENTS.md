@@ -23,3 +23,17 @@ When you call a subagent with the `Task` tool, it returns a `task_id` in the res
 You can reuse this `task_id` in subsequent calls to resume the same subagent session, maintaining conversation context across multiple interactions.
 **Use when:** reviewing changes or iterating with the same subagent. 
 **Why:** Maintains context across calls, enabling refinement and preserving the agent's memory of previous work.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as GitHub issues (via the `gh` CLI). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Five canonical triage labels, label string equal to role name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.

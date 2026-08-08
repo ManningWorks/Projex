@@ -33,7 +33,10 @@ function SmartProjectGrid({
 
   const searched = useProjectSearch(projects, query)
   const filtered = useProjectFilters(searched, selectedTags)
-  const sorted = useMemo(() => sortProjects(filtered, sortValue), [filtered, sortValue])
+  const sorted = useMemo(
+    () => showSort ? sortProjects(filtered, sortValue) : filtered,
+    [showSort, filtered, sortValue]
+  )
 
   const allTags = useMemo(() => {
     const tagSet = new Set<string>()
