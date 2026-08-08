@@ -1,6 +1,7 @@
 import type { ProjexProject } from '../../types'
 import type { ProjectStatus } from '../../types'
 import { useProjectContext } from '../ProjectGrid/ProjectGridContext'
+import { hasStatValues } from '../../lib/hasStatValues'
 
 const statusColors: Record<ProjectStatus, { bg: string; text: string }> = {
   active: { bg: 'var(--projex-status-active-bg, #dcfce7)', text: 'var(--projex-status-active-text, #166534)' },
@@ -87,27 +88,7 @@ ProjectCard.Stats = function ProjectCardStats({ project }: { project?: ProjexPro
   const resolved = useResolvedProject(project)
   if (!resolved) return null
   const stats = resolved.stats as Record<string, any> | null
-  if (
-    !stats ||
-    (!stats.stars &&
-      !stats.forks &&
-      !stats.downloads &&
-      !stats.version &&
-      !stats.upvotes &&
-      !stats.comments &&
-      !stats.subscribers &&
-      !stats.views &&
-      !stats.latestVideoTitle &&
-      !stats.formattedRevenue &&
-      !stats.salesCount &&
-      !stats.subscriberCount &&
-      !stats.formattedMRR &&
-      !stats.orderCount &&
-      !stats.customerCount &&
-      !stats.articleCount &&
-      !stats.totalViews &&
-      !stats.totalReactions)
-  ) {
+  if (!stats || !hasStatValues(stats)) {
     return null
   }
   return (

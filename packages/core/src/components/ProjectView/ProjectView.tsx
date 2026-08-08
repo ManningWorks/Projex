@@ -1,5 +1,6 @@
 import type { ProjexProject } from '../../types'
 import { CommitList } from '../CommitList'
+import { hasStatValues } from '../../lib/hasStatValues'
 
 type SectionName = keyof Pick<ProjexProject, 'description' | 'background' | 'why' | 'stack' | 'struggles' | 'timeline' | 'posts' | 'commits'>
 
@@ -160,27 +161,7 @@ ProjectView.Stats = function ProjectViewStats({ project }: { project: ProjexProj
 
   const stats = project.stats as Record<string, any>
 
-  const hasStats =
-    stats.stars ||
-    stats.forks ||
-    stats.downloads ||
-    stats.version ||
-    stats.upvotes ||
-    stats.comments ||
-    stats.subscribers ||
-    stats.views ||
-    stats.latestVideoTitle ||
-    stats.formattedRevenue ||
-    stats.salesCount ||
-    stats.subscriberCount ||
-    stats.formattedMRR ||
-    stats.orderCount ||
-    stats.customerCount ||
-    stats.articleCount ||
-    stats.totalViews ||
-    stats.totalReactions
-
-  if (!hasStats) {
+  if (!hasStatValues(stats)) {
     return null
   }
 
