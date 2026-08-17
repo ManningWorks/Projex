@@ -6,11 +6,8 @@ export interface DevToArticleData {
   public_reactions_count?: number
 }
 
-/** Shape of GET /api/analytics/totals — only the fields we read. */
-interface DevToAnalyticsData {
-  page_views?: {
-    total?: number
-  }
+export interface DevToArticleWithViews extends DevToArticleData {
+  page_views_count: number
 }
 
 export interface DevToUserData {
@@ -19,16 +16,6 @@ export interface DevToUserData {
   totalReactions: number
 }
 
-/**
- * Fetch aggregate stats for a dev.to user via a two-call strategy:
- *
- * 1. GET /api/articles?username=... — source of truth for article count and
- *    reactions. Note: article listings never include `page_views_count`
- *    (regardless of api-key auth), so views cannot come from here.
- * 2. GET /api/analytics/totals (api-key required) — lifetime page-view total
- *    across all articles. Falls back to the (always-0) article-list sum when
- *    the key is missing or the analytics call fails.
- */
 export async function fetchDevToUser(username: string): Promise<DevToUserData | null> {
   try {
     const url = `https://dev.to/api/articles?username=${username}&per_page=1000&state=published`
@@ -71,52 +58,38 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
       return null
     }
 
-    const articleCount = data.length
-    // Fallback only: listings omit page_views_count, so this sums to 0 in practice.
-    const articleListViews = data.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
-    const totalReactions = data.reduce((sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0), 0)
+    let totalViews = 0
+    if (apiKey) {
+      try {
+        const meUrl = 'https://dev.to/api/articles/me/published?per_page=1000'
+        const meResponse = await fetch(meUrl, {
+          headers: { 'api-key': apiKey },
+          cache: 'force-cache',
+        })
 
-    // Real view totals come from the analytics endpoint when authenticated;
-    // article-list sum is the unauthenticated fallback (always 0 in practice
-    // because listings omit page_views_count).
-    const analyticsViews = apiKey ? await fetchDevToAnalyticsTotalViews(apiKey) : null
-    const totalViews = analyticsViews ?? articleListViews
+        if (meResponse.ok) {
+          const meArticles: DevToArticleWithViews[] = await meResponse.json()
+          if (Array.isArray(meArticles)) {
+            totalViews = meArticles.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
+          }
+        } else {
+          console.warn(`Dev.to /me endpoint returned error status: ${meResponse.status}`)
+        }
+      } catch {
+        console.warn('Network error while fetching Dev.to user view counts.')
+      }
+    }
 
     return {
-      articleCount,
+      articleCount: data.length,
       totalViews,
-      totalReactions,
+      totalReactions: data.reduce(
+        (sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0),
+        0,
+      ),
     }
   } catch {
     console.warn('Network error while fetching Dev.to user data.')
-    return null
-  }
-}
-
-/**
- * Fetch the lifetime page-view total from /api/analytics/totals.
- * Returns null on any failure (401, network error, unexpected shape) so the
- * caller can fall back to the article-list summation without failing the build.
- */
-async function fetchDevToAnalyticsTotalViews(apiKey: string): Promise<number | null> {
-  try {
-    const response = await fetch('https://dev.to/api/analytics/totals', {
-      headers: { 'api-key': apiKey },
-      // Analytics totals should stay fresh, unlike the build-pinned article list.
-      cache: 'no-store',
-    })
-
-    if (!response.ok) {
-      console.warn(`Dev.to analytics API returned error status: ${response.status}`)
-      return null
-    }
-
-    const data: DevToAnalyticsData = await response.json()
-    const total = data.page_views?.total
-
-    return typeof total === 'number' ? total : null
-  } catch {
-    console.warn('Network error while fetching Dev.to analytics data.')
     return null
   }
 }

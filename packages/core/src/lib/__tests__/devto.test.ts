@@ -20,19 +20,16 @@ describe('fetchDevToUser', () => {
         {
           id: 1,
           title: 'First Article',
-          page_views_count: 100,
           positive_reactions_count: 50,
         },
         {
           id: 2,
           title: 'Second Article',
-          page_views_count: 200,
           positive_reactions_count: 75,
         },
         {
           id: 3,
           title: 'Third Article',
-          page_views_count: 300,
           positive_reactions_count: 100,
         },
       ]
@@ -46,7 +43,7 @@ describe('fetchDevToUser', () => {
 
       expect(result).toEqual({
         articleCount: 3,
-        totalViews: 600,
+        totalViews: 0,
         totalReactions: 225,
       })
     })
@@ -71,7 +68,6 @@ describe('fetchDevToUser', () => {
         {
           id: 1,
           title: 'First Article',
-          page_views_count: 1000,
           positive_reactions_count: 200,
         },
       ]
@@ -85,7 +81,7 @@ describe('fetchDevToUser', () => {
 
       expect(result).toEqual({
         articleCount: 1,
-        totalViews: 1000,
+        totalViews: 0,
         totalReactions: 200,
       })
     })
@@ -95,19 +91,16 @@ describe('fetchDevToUser', () => {
         {
           id: 1,
           title: 'Article 1',
-          page_views_count: 100,
           positive_reactions_count: 10,
         },
         {
           id: 2,
           title: 'Article 2',
-          page_views_count: 100,
           positive_reactions_count: 20,
         },
         {
           id: 3,
           title: 'Article 3',
-          page_views_count: 100,
           positive_reactions_count: 30,
         },
       ]
@@ -127,7 +120,6 @@ describe('fetchDevToUser', () => {
         {
           id: 1,
           title: 'Article 1',
-          page_views_count: 100,
           public_reactions_count: 40,
           positive_reactions_count: 10,
         },
@@ -143,16 +135,18 @@ describe('fetchDevToUser', () => {
       expect(result?.totalReactions).toBe(40)
     })
 
-    it('should handle missing page_views_count (unauthenticated)', async () => {
+    it('should return zero views without an api key even if listings include page_views_count', async () => {
       const mockArticles = [
         {
           id: 1,
           title: 'Article 1',
+          page_views_count: 100,
           public_reactions_count: 50,
         },
         {
           id: 2,
           title: 'Article 2',
+          page_views_count: 200,
           public_reactions_count: 30,
         },
       ]
@@ -176,7 +170,6 @@ describe('fetchDevToUser', () => {
         {
           id: 1,
           title: 'Article 1',
-          page_views_count: 100,
         },
       ]
 
@@ -189,23 +182,21 @@ describe('fetchDevToUser', () => {
 
       expect(result).toEqual({
         articleCount: 1,
-        totalViews: 100,
+        totalViews: 0,
         totalReactions: 0,
       })
     })
 
-    it('should correctly sum reactions across articles', async () => {
+    it('should sum reactions from both count fields across articles', async () => {
       const mockArticles = [
         {
           id: 1,
           title: 'Article 1',
-          page_views_count: 100,
           positive_reactions_count: 10,
         },
         {
           id: 2,
           title: 'Article 2',
-          page_views_count: 100,
           positive_reactions_count: 11,
         },
       ]
@@ -374,7 +365,7 @@ describe('fetchDevToUser', () => {
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ page_views: { total: 0 } }),
+        json: () => Promise.resolve([]),
       })
 
       await fetchDevToUser('testuser')
@@ -414,7 +405,7 @@ describe('fetchDevToUser', () => {
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ page_views: { total: 0 } }),
+        json: () => Promise.resolve([]),
       })
 
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
@@ -429,25 +420,27 @@ describe('fetchDevToUser', () => {
     })
   })
 
-  describe('analytics totals', () => {
-    // Realistic listing shape: no page_views_count, reactions present.
+  describe('view counts', () => {
     const listingArticles = [
       { id: 1, title: 'Article 1', public_reactions_count: 2 },
       { id: 2, title: 'Article 2', public_reactions_count: 3 },
     ]
 
-    it('should call /api/analytics/totals and use page_views.total when api-key is set', async () => {
-      process.env.DEV_TO_API_KEY = 'test-api-key'
-
+    function mockMePublishedSuccess(views: number[]) {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: () => Promise.resolve(listingArticles),
       })
-
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ page_views: { total: 85 } }),
+        json: () => Promise.resolve(views.map((page_views_count, id) => ({ id: id + 1, page_views_count }))),
       })
+    }
+
+    it('should sum page_views_count from /api/articles/me/published when api-key is set', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      mockMePublishedSuccess([28, 57])
 
       const result = await fetchDevToUser('testuser')
 
@@ -458,23 +451,15 @@ describe('fetchDevToUser', () => {
       })
       expect(mockFetch).toHaveBeenNthCalledWith(
         2,
-        'https://dev.to/api/analytics/totals',
-        { headers: { 'api-key': 'test-api-key' }, cache: 'no-store' },
+        'https://dev.to/api/articles/me/published?per_page=1000',
+        { headers: { 'api-key': 'test-api-key' }, cache: 'force-cache' },
       )
     })
 
-    it('should keep force-cache on the article list while using no-store for analytics', async () => {
+    it('should use force-cache for both the article list and /me/published calls', async () => {
       process.env.DEV_TO_API_KEY = 'test-api-key'
 
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: () => Promise.resolve(listingArticles),
-      })
-
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: () => Promise.resolve({ page_views: { total: 85 } }),
-      })
+      mockMePublishedSuccess([28, 57])
 
       await fetchDevToUser('testuser')
 
@@ -485,12 +470,12 @@ describe('fetchDevToUser', () => {
       )
       expect(mockFetch).toHaveBeenNthCalledWith(
         2,
-        'https://dev.to/api/analytics/totals',
-        { headers: { 'api-key': 'test-api-key' }, cache: 'no-store' },
+        'https://dev.to/api/articles/me/published?per_page=1000',
+        { headers: { 'api-key': 'test-api-key' }, cache: 'force-cache' },
       )
     })
 
-    it('should skip the analytics call when no api-key is set', async () => {
+    it('should skip the /me/published call when no api-key is set', async () => {
       delete process.env.DEV_TO_API_KEY
 
       mockFetch.mockResolvedValueOnce({
@@ -500,10 +485,9 @@ describe('fetchDevToUser', () => {
 
       const result = await fetchDevToUser('testuser')
 
-      // No key → single-call path; 0 views is expected and documented.
       expect(mockFetch).toHaveBeenCalledTimes(1)
       expect(mockFetch).not.toHaveBeenCalledWith(
-        'https://dev.to/api/analytics/totals',
+        'https://dev.to/api/articles/me/published?per_page=1000',
         expect.anything(),
       )
       expect(result).toEqual({
@@ -513,17 +497,12 @@ describe('fetchDevToUser', () => {
       })
     })
 
-    it('should fall back to article-list summation when analytics returns 401', async () => {
+    it('should return zero views when /me/published returns 401', async () => {
       process.env.DEV_TO_API_KEY = 'revoked-key'
-
-      const legacyArticles = [
-        { id: 1, title: 'Article 1', page_views_count: 40, public_reactions_count: 2 },
-        { id: 2, title: 'Article 2', page_views_count: 60, public_reactions_count: 3 },
-      ]
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve(legacyArticles),
+        json: () => Promise.resolve(listingArticles),
       })
 
       mockFetch.mockResolvedValueOnce({
@@ -537,15 +516,15 @@ describe('fetchDevToUser', () => {
 
       expect(result).toEqual({
         articleCount: 2,
-        totalViews: 100,
+        totalViews: 0,
         totalReactions: 5,
       })
-      expect(warnSpy).toHaveBeenCalledWith('Dev.to analytics API returned error status: 401')
+      expect(warnSpy).toHaveBeenCalledWith('Dev.to /me endpoint returned error status: 401')
 
       warnSpy.mockRestore()
     })
 
-    it('should fall back when analytics response has no page_views', async () => {
+    it('should return zero views when /me/published articles omit page_views_count', async () => {
       process.env.DEV_TO_API_KEY = 'test-api-key'
 
       mockFetch.mockResolvedValueOnce({
@@ -555,7 +534,7 @@ describe('fetchDevToUser', () => {
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ reactions: { total: 1 } }),
+        json: () => Promise.resolve([{ id: 1 }, { id: 2 }]),
       })
 
       const result = await fetchDevToUser('testuser')
@@ -567,16 +546,12 @@ describe('fetchDevToUser', () => {
       })
     })
 
-    it('should fall back when the analytics call rejects (network error)', async () => {
+    it('should return zero views when the /me/published call rejects (network error)', async () => {
       process.env.DEV_TO_API_KEY = 'test-api-key'
-
-      const legacyArticles = [
-        { id: 1, title: 'Article 1', page_views_count: 25, public_reactions_count: 2 },
-      ]
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve(legacyArticles),
+        json: () => Promise.resolve(listingArticles),
       })
 
       mockFetch.mockRejectedValueOnce(new Error('Network error'))
@@ -586,11 +561,11 @@ describe('fetchDevToUser', () => {
       const result = await fetchDevToUser('testuser')
 
       expect(result).toEqual({
-        articleCount: 1,
-        totalViews: 25,
-        totalReactions: 2,
+        articleCount: 2,
+        totalViews: 0,
+        totalReactions: 5,
       })
-      expect(warnSpy).toHaveBeenCalledWith('Network error while fetching Dev.to analytics data.')
+      expect(warnSpy).toHaveBeenCalledWith('Network error while fetching Dev.to user view counts.')
 
       warnSpy.mockRestore()
     })
