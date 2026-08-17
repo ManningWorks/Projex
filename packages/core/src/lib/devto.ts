@@ -6,10 +6,6 @@ export interface DevToArticleData {
   public_reactions_count?: number
 }
 
-export interface DevToArticleWithViews extends DevToArticleData {
-  page_views_count: number
-}
-
 export interface DevToUserData {
   articleCount: number
   totalViews: number
@@ -68,7 +64,7 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
         })
 
         if (meResponse.ok) {
-          const meArticles: DevToArticleWithViews[] = await meResponse.json()
+          const meArticles: DevToArticleData[] = await meResponse.json()
           if (Array.isArray(meArticles)) {
             totalViews = meArticles.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
           }
