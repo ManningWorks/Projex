@@ -372,6 +372,11 @@ describe('fetchDevToUser', () => {
         json: () => Promise.resolve([]),
       })
 
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ page_views: { total: 0 } }),
+      })
+
       await fetchDevToUser('testuser')
 
       expect(mockFetch).toHaveBeenCalledWith(
@@ -407,6 +412,11 @@ describe('fetchDevToUser', () => {
         json: () => Promise.resolve([]),
       })
 
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ page_views: { total: 0 } }),
+      })
+
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
       await fetchDevToUser('testuser')
@@ -414,6 +424,173 @@ describe('fetchDevToUser', () => {
       expect(warnSpy).not.toHaveBeenCalledWith(
         expect.stringContaining('DEV_TO_API_KEY not set'),
       )
+
+      warnSpy.mockRestore()
+    })
+  })
+
+  describe('analytics totals', () => {
+    // Realistic listing shape: no page_views_count, reactions present.
+    const listingArticles = [
+      { id: 1, title: 'Article 1', public_reactions_count: 2 },
+      { id: 2, title: 'Article 2', public_reactions_count: 3 },
+    ]
+
+    it('should call /api/analytics/totals and use page_views.total when api-key is set', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(listingArticles),
+      })
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ page_views: { total: 85 } }),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 2,
+        totalViews: 85,
+        totalReactions: 5,
+      })
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        'https://dev.to/api/analytics/totals',
+        { headers: { 'api-key': 'test-api-key' }, cache: 'no-store' },
+      )
+    })
+
+    it('should keep force-cache on the article list while using no-store for analytics', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(listingArticles),
+      })
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ page_views: { total: 85 } }),
+      })
+
+      await fetchDevToUser('testuser')
+
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        'https://dev.to/api/articles?username=testuser&per_page=1000&state=published',
+        { headers: { 'api-key': 'test-api-key' }, cache: 'force-cache' },
+      )
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
+        'https://dev.to/api/analytics/totals',
+        { headers: { 'api-key': 'test-api-key' }, cache: 'no-store' },
+      )
+    })
+
+    it('should skip the analytics call when no api-key is set', async () => {
+      delete process.env.DEV_TO_API_KEY
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(listingArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      // No key → single-call path; 0 views is expected and documented.
+      expect(mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockFetch).not.toHaveBeenCalledWith(
+        'https://dev.to/api/analytics/totals',
+        expect.anything(),
+      )
+      expect(result).toEqual({
+        articleCount: 2,
+        totalViews: 0,
+        totalReactions: 5,
+      })
+    })
+
+    it('should fall back to article-list summation when analytics returns 401', async () => {
+      process.env.DEV_TO_API_KEY = 'revoked-key'
+
+      const legacyArticles = [
+        { id: 1, title: 'Article 1', page_views_count: 40, public_reactions_count: 2 },
+        { id: 2, title: 'Article 2', page_views_count: 60, public_reactions_count: 3 },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(legacyArticles),
+      })
+
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 401,
+      })
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 2,
+        totalViews: 100,
+        totalReactions: 5,
+      })
+      expect(warnSpy).toHaveBeenCalledWith('Dev.to analytics API returned error status: 401')
+
+      warnSpy.mockRestore()
+    })
+
+    it('should fall back when analytics response has no page_views', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(listingArticles),
+      })
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ reactions: { total: 1 } }),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 2,
+        totalViews: 0,
+        totalReactions: 5,
+      })
+    })
+
+    it('should fall back when the analytics call rejects (network error)', async () => {
+      process.env.DEV_TO_API_KEY = 'test-api-key'
+
+      const legacyArticles = [
+        { id: 1, title: 'Article 1', page_views_count: 25, public_reactions_count: 2 },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(legacyArticles),
+      })
+
+      mockFetch.mockRejectedValueOnce(new Error('Network error'))
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result).toEqual({
+        articleCount: 1,
+        totalViews: 25,
+        totalReactions: 2,
+      })
+      expect(warnSpy).toHaveBeenCalledWith('Network error while fetching Dev.to analytics data.')
 
       warnSpy.mockRestore()
     })
