@@ -54,14 +54,35 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
       return null
     }
 
-    const articleCount = data.length
-    const totalViews = data.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
-    const totalReactions = data.reduce((sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0), 0)
+    let totalViews = 0
+    if (apiKey) {
+      try {
+        const meUrl = 'https://dev.to/api/articles/me/published?per_page=1000'
+        const meResponse = await fetch(meUrl, {
+          headers: { 'api-key': apiKey },
+          cache: 'force-cache',
+        })
+
+        if (meResponse.ok) {
+          const meArticles: DevToArticleData[] = await meResponse.json()
+          if (Array.isArray(meArticles)) {
+            totalViews = meArticles.reduce((sum, article) => sum + (article.page_views_count ?? 0), 0)
+          }
+        } else {
+          console.warn(`Dev.to /me endpoint returned error status: ${meResponse.status}`)
+        }
+      } catch {
+        console.warn('Network error while fetching Dev.to user view counts.')
+      }
+    }
 
     return {
-      articleCount,
-      totalViews: totalViews > 0 ? totalViews : 0,
-      totalReactions,
+      articleCount: data.length,
+      totalViews,
+      totalReactions: data.reduce(
+        (sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0),
+        0,
+      ),
     }
   } catch {
     console.warn('Network error while fetching Dev.to user data.')
