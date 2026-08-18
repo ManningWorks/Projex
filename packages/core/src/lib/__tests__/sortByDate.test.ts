@@ -159,6 +159,39 @@ describe('sortByDate', () => {
     })
   })
 
+  describe('handling unparseable dates', () => {
+    // getTime() returns NaN for unparseable strings, which must not leak into
+    // the comparator (NaN result = unspecified order per the sort contract).
+    // NaN coerces to epoch 0, so unparseable dates sit between dateless and
+    // real post-1970 dates (issue #29).
+    it.each<{ order: SortOrder; expected: string[] }>([
+      { order: 'desc', expected: ['2', '1', '3'] },
+      { order: 'asc', expected: ['3', '1', '2'] },
+    ])('should treat unparseable date strings as epoch instead of poisoning the sort in $order order', ({ order, expected }) => {
+      const projects = [
+        createProject({ id: '1', updatedAt: 'not-a-date' }),
+        createProject({ id: '2', updatedAt: '2024-06-01' }),
+        createProject({ id: '3', updatedAt: null, createdAt: null }),
+      ]
+
+      const result = sortByDate(projects, order)
+
+      expect(result.map(p => p.id)).toEqual(expected)
+    })
+
+    it('should keep a deterministic order when every date is unparseable', () => {
+      const projects = [
+        createProject({ id: '1', updatedAt: 'not-a-date' }),
+        createProject({ id: '2', updatedAt: 'also-not-a-date' }),
+      ]
+
+      const result = sortByDate(projects)
+
+      // Equal (epoch) comparisons keep input order via stable sort
+      expect(result.map(p => p.id)).toEqual(['1', '2'])
+    })
+  })
+
   describe('date parsing', () => {
     it('should correctly parse ISO date strings', () => {
       const projects = [
