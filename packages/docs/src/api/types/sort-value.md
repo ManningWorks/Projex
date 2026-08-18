@@ -5,7 +5,7 @@ Allowed sort values for the `sortProjects` function. Defines how projects can be
 ## Definition
 
 ```tsx
-type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
+type SortValue = 'stars' | 'stars-asc' | 'name' | 'name-desc' | 'date' | 'date-asc'
 ```
 
 ## Values
@@ -13,7 +13,9 @@ type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
 | Value | Description | Direction | Usage |
 |-------|-------------|-----------|--------|
 | `stars` | Sort by GitHub stars | Descending (highest first) | GitHub and hybrid projects |
+| `stars-asc` | Sort by GitHub stars | Ascending (lowest first) | GitHub and hybrid projects |
 | `name` | Sort alphabetically by project name | Ascending (A-Z) | All project types |
+| `name-desc` | Sort alphabetically by project name | Descending (Z-A) | All project types |
 | `date` | Sort by `updatedAt` or `createdAt` | Descending (newest first) | All project types |
 | `date-asc` | Sort by `updatedAt` or `createdAt` | Ascending (oldest first) | All project types |
 
@@ -41,6 +43,17 @@ const sorted = sortProjects(projects, 'stars')
 // [1000 stars, 500 stars, 200 stars, 0 stars, manual project, npm project]
 ```
 
+### `stars-asc`
+
+- Same data source as `stars`
+- Sorts ascending (lowest stars first)
+- Projects without stars are still placed at the end
+
+```tsx
+const sorted = sortProjects(projects, 'stars-asc')
+// [200 stars, 500 stars, 1000 stars, 0 stars, manual project, npm project]
+```
+
 ### `name`
 
 - Alphabetical sort using `localeCompare` with `sensitivity: 'base'` (case-insensitive)
@@ -51,6 +64,17 @@ const sorted = sortProjects(projects, 'stars')
 ```tsx
 const sorted = sortProjects(projects, 'name')
 // ['Alpha Project', 'Beta App', 'Gamma Tool']
+```
+
+### `name-desc`
+
+- Same data source as `name`
+- Sorts descending (Z-A)
+- Projects without a name are still placed at the end
+
+```tsx
+const sorted = sortProjects(projects, 'name-desc')
+// ['Gamma Tool', 'Beta App', 'Alpha Project']
 ```
 
 ### `date`
@@ -93,7 +117,7 @@ function ProjectsPage({ projects }) {
   return (
     <div>
       <ProjectSort
-        options={['stars', 'name', 'date', 'date-asc']}
+        options={['stars', 'stars-asc', 'name', 'name-desc', 'date', 'date-asc']}
         value={sortBy}
         onChange={setSortBy}
       />

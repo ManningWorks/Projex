@@ -44,6 +44,20 @@ describe('sortProjects', () => {
     })
   })
 
+  describe('sort by stars-asc', () => {
+    it('should call sortByStars with asc order (lowest first)', () => {
+      const projects = [
+        createProject({ id: '1', type: 'github', stats: { stars: 100 } }),
+        createProject({ id: '2', type: 'github', stats: { stars: 500 } }),
+        createProject({ id: '3', type: 'github', stats: { stars: 250 } }),
+      ]
+
+      const result = sortProjects(projects, 'stars-asc')
+
+      expect(result.map(p => p.id)).toEqual(['1', '3', '2'])
+    })
+  })
+
   describe('sort by name', () => {
     it('should call sortByName with asc order and return result', () => {
       const projects = [
@@ -55,6 +69,20 @@ describe('sortProjects', () => {
       const result = sortProjects(projects, 'name')
 
       expect(result.map(p => p.id)).toEqual(['2', '3', '1'])
+    })
+  })
+
+  describe('sort by name-desc', () => {
+    it('should call sortByName with desc order (Z-A) and return result', () => {
+      const projects = [
+        createProject({ id: '1', name: 'Zebra' }),
+        createProject({ id: '2', name: 'Alpha' }),
+        createProject({ id: '3', name: 'Beta' }),
+      ]
+
+      const result = sortProjects(projects, 'name-desc')
+
+      expect(result.map(p => p.id)).toEqual(['1', '3', '2'])
     })
   })
 
