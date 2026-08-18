@@ -9,14 +9,17 @@ Get Fuse.js search configuration options with default weights for project fields
 ### Signature
 
 ```tsx
-function getFuseOptions(threshold?: number): FuseOptions
+function getFuseOptions(options?: FuseSearchOptions | number): FuseOptions
 ```
+
+Accepts an options object, or a bare threshold number for backwards compatibility with v1.3.
 
 ### Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
-| threshold | `number` | `0.3` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
+| options.threshold | `number` | `0.3` | Match threshold (0.0 = perfect match, 1.0 = match anything) |
+| options.keys | `Array<{ name: string; weight: number }>` | weighted defaults below | Weighted fields to search (replaces the defaults entirely) |
 
 ### Returns
 
@@ -25,6 +28,11 @@ function getFuseOptions(threshold?: number): FuseOptions
 ### Types
 
 ```tsx
+interface FuseSearchOptions {
+  threshold?: number
+  keys?: Array<{ name: string; weight: number }>
+}
+
 interface FuseOptions {
   threshold: number
   ignoreLocation: boolean
@@ -37,7 +45,8 @@ interface FuseOptions {
 | Key | Weight | Description |
 |-----|--------|-------------|
 | `name` | 2 | Project name (highest priority) |
-| `description` | 1.5 | Project description (medium priority) |
+| `tagline` | 1.5 | Short, high-signal summary line |
+| `description` | 1.5 | Project description |
 | `stack` | 1 | Technology stack (lowest priority) |
 
 ### Default Options
@@ -46,6 +55,8 @@ interface FuseOptions {
 |--------|------|---------|-------------|
 | `threshold` | `number` | `0.3` | Match threshold (lower = stricter) |
 | `ignoreLocation` | `boolean` | `true` | Find matches anywhere in field content (not just at start) |
+
+The `0.3` default is shared by every search entry point (`getFuseOptions`, `createFuseSearch`, `searchProjects`, and `useProjectSearch`).
 
 ### Example
 
@@ -57,8 +68,10 @@ const options = getFuseOptions()
 // { threshold: 0.3, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
 
 // Custom threshold for stricter matching
-const strictOptions = getFuseOptions(0.1)
-// { threshold: 0.1, ignoreLocation: true, keys: [{ name: 'name', weight: 2 }, ...] }
+const strictOptions = getFuseOptions({ threshold: 0.1 })
+
+// Bare number still works (v1.3 back-compat)
+const legacyOptions = getFuseOptions(0.1)
 ```
 
 ### Threshold Values
@@ -78,15 +91,21 @@ Create a configured Fuse search instance for fuzzy searching projects.
 ### Signature
 
 ```tsx
-function createFuseSearch(projects: ProjexProject[], threshold?: number): Fuse<ProjexProject>
+function createFuseSearch(
+  projects: ProjexProject[],
+  options?: FuseSearchOptions | number
+): Fuse<ProjexProject>
 ```
+
+Accepts an options object, or a bare threshold number for backwards compatibility with v1.3.
 
 ### Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|----------|-------------|
 | projects | `ProjexProject[]` | - | Array of projects to search |
-| threshold | `number` | `0.3` | Match threshold (0.0 = perfect, 1.0 = match anything) |
+| options.threshold | `number` | `0.3` | Match threshold (0.0 = perfect, 1.0 = match anything) |
+| options.keys | `Array<{ name: string; weight: number }>` | weighted defaults | Weighted fields to search |
 
 ### Returns
 
@@ -108,9 +127,31 @@ results.forEach(({ item, refIndex }) => {
 })
 ```
 
+### Custom Keys
+
+Override the searchable fields without dropping down to `new Fuse(...)` yourself:
+
+```tsx
+import { createFuseSearch } from '@manningworks/projex'
+
+// Only search names and taglines
+const fuse = createFuseSearch(projects, {
+  keys: [
+    { name: 'name', weight: 2 },
+    { name: 'tagline', weight: 1 },
+  ],
+})
+
+// Custom keys and threshold together
+const strictFuse = createFuseSearch(projects, {
+  threshold: 0.1,
+  keys: [{ name: 'stack', weight: 1 }],
+})
+```
+
 ## Usage in useProjectSearch
 
-These utilities are used internally by `useProjectSearch` hook:
+These utilities are used internally by `useProjectSearch` and `searchProjects`:
 
 ```tsx
 import { useProjectSearch, ProjectCard } from '@manningworks/projex'
@@ -127,27 +168,7 @@ function ProjectSearch({ projects }) {
 }
 ```
 
-## Advanced Usage
-
-### Custom Weights
-
-For custom search behavior, create your own options:
-
-```tsx
-import Fuse from 'fuse.js'
-import type { ProjexProject } from '@manningworks/projex'
-
-const fuse = new Fuse(projects, {
-  threshold: 0.2,
-  keys: [
-    { name: 'name', weight: 3 },
-    { name: 'description', weight: 1 },
-    { name: 'stack', weight: 0.5 }
-  ]
-})
-```
-
-### Multi-term Search
+## Multi-term Search
 
 Fuse supports searching multiple terms:
 
@@ -160,5 +181,6 @@ const results = fuse.search('react next')
 
 ## Related
 
+- `searchProjects` - Pure helper returning matching projects directly
 - `useProjectSearch` - React hook for fuzzy search with Fuse.js
 - Fuse.js documentation: https://fusejs.io/

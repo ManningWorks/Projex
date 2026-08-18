@@ -137,4 +137,26 @@ describe('useProjectSearch', () => {
 
     expect(result.current.length).toBeGreaterThan(0)
   })
+
+  it('should find projects by tagline by default', () => {
+    const projectsWithTaglines = [
+      createProject({ id: '1', name: 'Project One', tagline: 'Show everything you ship' }),
+      createProject({ id: '2', name: 'Project Two', tagline: 'A calm todo list' }),
+    ]
+
+    const { result } = renderHook(() => useProjectSearch(projectsWithTaglines, 'everything'))
+
+    expect(result.current).toHaveLength(1)
+    expect(result.current[0].id).toBe('1')
+  })
+
+  it('should restrict search to custom keys option', () => {
+    const { result } = renderHook(() =>
+      useProjectSearch(projects, 'authentication', {
+        keys: [{ name: 'name', weight: 1 }],
+      })
+    )
+
+    expect(result.current).toHaveLength(0)
+  })
 })
