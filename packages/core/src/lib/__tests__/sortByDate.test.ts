@@ -91,28 +91,59 @@ describe('sortByDate', () => {
   })
 
   describe('handling missing dates', () => {
-    it('should place projects without dates at the beginning in desc order', () => {
+    it.each<{ order: SortOrder; position: string; expected: string[] }>([
+      { order: 'desc', position: 'end', expected: ['3', '1', '2'] },
+      { order: 'asc', position: 'beginning', expected: ['2', '1', '3'] },
+    ])('should place projects without dates at the $position in $order order', ({ order, expected }) => {
       const projects = [
         createProject({ id: '1', updatedAt: '2024-01-01' }),
         createProject({ id: '2', updatedAt: null, createdAt: null }),
         createProject({ id: '3', updatedAt: '2024-06-01' }),
       ]
 
-      const result = sortByDate(projects, 'desc')
+      const result = sortByDate(projects, order)
 
-      expect(result.map(p => p.id)).toEqual(['2', '3', '1'])
+      expect(result.map(p => p.id)).toEqual(expected)
     })
 
-    it('should place projects without dates at the end in asc order', () => {
+    it('should place projects without dates at the end when order is omitted (default desc)', () => {
       const projects = [
-        createProject({ id: '1', updatedAt: '2024-01-01' }),
-        createProject({ id: '2', updatedAt: null, createdAt: null }),
+        createProject({ id: '1', updatedAt: null, createdAt: null }),
+        createProject({ id: '2', updatedAt: '2024-06-01' }),
+      ]
+
+      const result = sortByDate(projects)
+
+      expect(result.map(p => p.id)).toEqual(['2', '1'])
+    })
+
+    it.each<{ order: SortOrder; position: string; expected: string[] }>([
+      { order: 'desc', position: 'after', expected: ['3', '2', '1'] },
+      { order: 'asc', position: 'before', expected: ['1', '2', '3'] },
+    ])('should sort dateless projects $position createdAt-only projects in $order order', ({ order, expected }) => {
+      const projects = [
+        createProject({ id: '1', updatedAt: null, createdAt: null }),
+        createProject({ id: '2', updatedAt: null, createdAt: '2024-01-01' }),
         createProject({ id: '3', updatedAt: '2024-06-01' }),
       ]
 
-      const result = sortByDate(projects, 'asc')
+      const result = sortByDate(projects, order)
 
-      expect(result.map(p => p.id)).toEqual(['1', '3', '2'])
+      expect(result.map(p => p.id)).toEqual(expected)
+    })
+
+    it.each<{ order: SortOrder; position: string; expected: string[] }>([
+      { order: 'desc', position: 'end', expected: ['2', '1'] },
+      { order: 'asc', position: 'beginning', expected: ['1', '2'] },
+    ])('should place projects without dates at the $position even against pre-1970 dates in $order order', ({ order, expected }) => {
+      const projects = [
+        createProject({ id: '1', updatedAt: null, createdAt: null }),
+        createProject({ id: '2', updatedAt: '1950-06-01' }),
+      ]
+
+      const result = sortByDate(projects, order)
+
+      expect(result.map(p => p.id)).toEqual(expected)
     })
 
     it('should handle all projects without dates', () => {
@@ -123,18 +154,8 @@ describe('sortByDate', () => {
 
       const result = sortByDate(projects)
 
-      expect(result).toHaveLength(2)
-    })
-
-    it('should return 0 for comparison when both dates are missing', () => {
-      const projects = [
-        createProject({ id: '1', updatedAt: null, createdAt: null }),
-        createProject({ id: '2', updatedAt: null, createdAt: null }),
-      ]
-
-      const result = sortByDate(projects, 'desc')
-
-      expect(result).toHaveLength(2)
+      // Equal (zero) comparisons keep input order via stable sort
+      expect(result.map(p => p.id)).toEqual(['1', '2'])
     })
   })
 
