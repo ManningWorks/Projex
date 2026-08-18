@@ -1135,6 +1135,30 @@ describe('normalise', () => {
       expect(result.updatedAt).toBe('2024-07-10T09:00:00Z')
     })
 
+    it('should prefer fetched article dates over input config dates', async () => {
+      mockedFetchDevToUser.mockResolvedValue({
+        articleCount: 42,
+        totalViews: 1000,
+        totalReactions: 300,
+        latestArticleUpdatedAt: '2024-07-10T09:00:00Z',
+        earliestArticlePublishedAt: '2021-03-04T08:00:00Z',
+      })
+
+      const input: DevToProjectInput = {
+        id: 'test-devto-precedence',
+        type: 'devto',
+        username: 'lukemanning',
+        status: 'active',
+        createdAt: '2020-01-01',
+        updatedAt: '2023-01-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2021-03-04T08:00:00Z')
+      expect(result.updatedAt).toBe('2024-07-10T09:00:00Z')
+    })
+
     it('should fall back to input dates when articles carry no timestamps', async () => {
       mockedFetchDevToUser.mockResolvedValue({
         articleCount: 3,
