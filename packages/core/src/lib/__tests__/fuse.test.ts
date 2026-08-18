@@ -29,24 +29,31 @@ function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
 }
 
 describe('getFuseOptions', () => {
-  it('should return default threshold of 0.2', () => {
+  it('should return default threshold of 0.3', () => {
     const options = getFuseOptions()
 
-    expect(options.threshold).toBe(0.2)
+    expect(options.threshold).toBe(0.3)
   })
 
-  it('should accept custom threshold', () => {
+  it('should accept custom threshold via options object', () => {
+    const options = getFuseOptions({ threshold: 0.5 })
+
+    expect(options.threshold).toBe(0.5)
+  })
+
+  it('should accept a bare threshold number (v1.3 back-compat)', () => {
     const options = getFuseOptions(0.5)
 
     expect(options.threshold).toBe(0.5)
   })
 
-  it('should include name, description, and stack keys', () => {
+  it('should include name, tagline, description, and stack keys by default', () => {
     const options = getFuseOptions()
 
     const keyNames = options.keys.map(k => k.name)
 
     expect(keyNames).toContain('name')
+    expect(keyNames).toContain('tagline')
     expect(keyNames).toContain('description')
     expect(keyNames).toContain('stack')
   })
@@ -59,14 +66,24 @@ describe('getFuseOptions', () => {
     expect(nameKey?.weight).toBe(2)
   })
 
-  it('should assign higher weight to description than stack', () => {
+  it('should weight tagline and description equally, above stack', () => {
     const options = getFuseOptions()
 
+    const taglineKey = options.keys.find(k => k.name === 'tagline')
     const descKey = options.keys.find(k => k.name === 'description')
     const stackKey = options.keys.find(k => k.name === 'stack')
 
+    expect(taglineKey?.weight).toBe(1.5)
     expect(descKey?.weight).toBe(1.5)
     expect(stackKey?.weight).toBe(1)
+  })
+
+  it('should use custom keys when provided via options object', () => {
+    const customKeys = [{ name: 'name', weight: 1 }]
+
+    const options = getFuseOptions({ keys: customKeys })
+
+    expect(options.keys).toEqual(customKeys)
   })
 })
 
@@ -121,6 +138,19 @@ describe('createFuseSearch', () => {
     expect(results[0].item.id).toBe('1')
   })
 
+  it('should find projects by tagline', () => {
+    const projects = [
+      createProject({ id: '1', name: 'Project One', tagline: 'Ship your portfolio fast' }),
+      createProject({ id: '2', name: 'Project Two', tagline: 'A todo app for everyone' }),
+    ]
+
+    const fuse = createFuseSearch(projects)
+    const results = fuse.search('portfolio')
+
+    expect(results).toHaveLength(1)
+    expect(results[0].item.id).toBe('1')
+  })
+
   it('should find projects by stack tag', () => {
     const projects = [
       createProject({ id: '1', name: 'Project One', stack: ['react', 'typescript'] }),
@@ -150,15 +180,56 @@ describe('createFuseSearch', () => {
   it('should respect custom threshold', () => {
     const projects = [
       createProject({ id: '1', name: 'React Dashboard' }),
+      createProject({ id: '2', name: 'Vue Todo' }),
     ]
 
+    // 'Ract' (one deletion from 'React') is within fuzzy tolerance at 0.5
+    // but not at 0.1, so the two thresholds must produce different sets.
     const fuseStrict = createFuseSearch(projects, 0.1)
     const fuseLoose = createFuseSearch(projects, 0.5)
 
     const strictResults = fuseStrict.search('Ract')
     const looseResults = fuseLoose.search('Ract')
 
-    expect(looseResults.length).toBeGreaterThanOrEqual(strictResults.length)
+    expect(strictResults).toHaveLength(0)
+    expect(looseResults).toHaveLength(1)
+    expect(looseResults[0].item.id).toBe('1')
+    expect(looseResults.length).toBeGreaterThan(strictResults.length)
+  })
+
+  it('should accept custom threshold via options object', () => {
+    const projects = [
+      createProject({ id: '1', name: 'React Dashboard' }),
+    ]
+
+    const fuse = createFuseSearch(projects, { threshold: 0.4 })
+    const results = fuse.search('Ract')
+
+    expect(results.length).toBeGreaterThan(0)
+  })
+
+  it('should restrict search to custom keys via options object', () => {
+    const projects = [
+      createProject({ id: '1', name: 'Alpha', description: 'A modern dashboard' }),
+      createProject({ id: '2', name: 'Dashboard Tool', description: 'A simple tool' }),
+    ]
+
+    const nameOnly = createFuseSearch(projects, { keys: [{ name: 'name', weight: 1 }] })
+
+    const results = nameOnly.search('dashboard')
+
+    expect(results).toHaveLength(1)
+    expect(results[0].item.id).toBe('2')
+  })
+
+  it('should accept a bare threshold number (v1.3 back-compat)', () => {
+    const projects = [
+      createProject({ id: '1', name: 'React Dashboard' }),
+    ]
+
+    const fuse = createFuseSearch(projects, 0.4)
+
+    expect(fuse).toBeDefined()
   })
 
   it('should return empty array for no matches', () => {

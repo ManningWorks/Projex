@@ -25,7 +25,7 @@ Projex provides utility functions for filtering, sorting, and normalizing projec
 
 | Function | Description |
 |----------|-------------|
-| [useProjectSearch](./use-project-search) | Fuzzy search projects by name, description, stack |
+| [useProjectSearch](./use-project-search) | Fuzzy search projects by name, tagline, description, stack |
 | [useProjectFilters](./use-project-filters) | Filter projects by tags |
 
 ### Data Normalization
@@ -49,10 +49,11 @@ Projex provides utility functions for filtering, sorting, and normalizing projec
 | [fetchLemonSqueezyStore](./fetch-lemon-squeezy-store) | Fetch Lemon Squeezy store data |
 | [fetchDevToUser](./fetch-devto-user) | Fetch Dev.to user data |
 
-### Search Configuration
+### Search
 
 | Function | Description |
 |----------|-------------|
+| [searchProjects](./search-projects) | Pure fuzzy search over projects |
 | [getFuseOptions](./fuse-search) | Get Fuse.js search configuration |
 | [createFuseSearch](./fuse-search) | Create Fuse.js search instance |
 
@@ -100,6 +101,7 @@ import {
   fetchDevToUser,
   getFuseOptions,
   createFuseSearch,
+  searchProjects,
   generatePersonSchema,
   generateProjectSchema,
   generatePortfolioMetadata,

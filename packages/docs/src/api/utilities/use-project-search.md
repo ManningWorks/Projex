@@ -1,6 +1,6 @@
 # useProjectSearch
 
-React hook for fuzzy searching projects by name, description, and stack using Fuse.js.
+React hook for fuzzy searching projects by name, tagline, description, and stack using Fuse.js.
 
 ## Signature
 
@@ -29,13 +29,15 @@ function useProjectSearch(
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | threshold | `number` | `0.3` | Fuse.js fuzzy match threshold (lower = stricter) |
+| keys | `Array<{ name: string; weight: number }>` | `name` (2), `tagline` (1.5), `description` (1.5), `stack` (1) | Weighted fields to search |
 
 ## Behavior
 
 - Returns all projects if query is empty, null, or undefined
-- Searches across name, description, and stack fields
-- Name field has highest weight, then description, then stack
+- Searches across name, tagline, description, and stack fields
+- Name field has highest weight; tagline and description sit equally below it, then stack
 - Threshold of 0.3 allows typos while remaining accurate
+- Custom `keys` are compared by content, so passing an inline array is safe — the search index is only rebuilt when the entries actually change
 - Uses `ignoreLocation: true` for better substring matching
 - Results maintain original project order (sorted by relevance)
 

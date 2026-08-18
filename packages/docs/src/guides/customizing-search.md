@@ -11,7 +11,9 @@ The threshold controls how "fuzzy" search matching is. Lower values are stricter
 Projex uses these defaults:
 - **Threshold:** `0.3` - Balanced between precision and recall
 - **ignoreLocation:** `true` - Matches found anywhere in field content
-- **Field weights:** `name` (2), `description` (1.5), `stack` (1)
+- **Field weights:** `name` (2), `tagline` (1.5), `description` (1.5), `stack` (1)
+
+The `0.3` threshold default is shared by every search entry point: `useProjectSearch`, `searchProjects`, `createFuseSearch`, and `getFuseOptions`.
 
 ### Threshold Values Reference
 
@@ -50,9 +52,9 @@ function SearchablePortfolio() {
 }
 ```
 
-## Using Fuse.js Directly
+## Customizing Searchable Fields and Threshold
 
-For maximum control over search behavior, use Fuse.js utilities directly:
+Both `createFuseSearch` and the `searchProjects` helper (and `useProjectSearch`) accept a `{ threshold, keys }` options object, so customising the searchable fields no longer requires constructing `new Fuse(...)` yourself:
 
 ```tsx
 import { createFuseSearch } from '@manningworks/projex'
@@ -61,8 +63,14 @@ import { useState, useMemo } from 'react'
 function AdvancedSearch() {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const fuse = useMemo(() => 
-    createFuseSearch(projects, 0.3), // Custom threshold
+  const fuse = useMemo(() =>
+    createFuseSearch(projects, {
+      threshold: 0.1,             // stricter matching
+      keys: [                     // search only these fields, weighted
+        { name: 'name', weight: 2 },
+        { name: 'tagline', weight: 1 },
+      ],
+    }),
     []
   )
 
@@ -77,9 +85,13 @@ function AdvancedSearch() {
 }
 ```
 
-### Customizing Fuse.js Options
+::: tip Backwards compatibility
+`createFuseSearch(projects, 0.3)` and `getFuseOptions(0.3)` still accept a bare threshold number, so v1.3-style calls keep working.
+:::
 
-When using `createFuseSearch`, you get full access to Fuse.js options:
+### Truly Custom Fuse Options
+
+For options projex does not expose (such as `ignoreLocation: false` or `minMatchCharLength`), drop down to Fuse.js directly:
 
 ```tsx
 import Fuse from 'fuse.js'
@@ -87,15 +99,16 @@ import Fuse from 'fuse.js'
 const fuse = new Fuse(projects, {
   keys: [
     { name: 'name', weight: 2 },
+    { name: 'tagline', weight: 1.5 },
     { name: 'description', weight: 1.5 },
     { name: 'stack', weight: 1 },
   ],
-  threshold: 0.2,        // Match strictness
-  ignoreLocation: true,    // Match anywhere in field
-  ignoreFieldNorm: false,  // Consider field length in scoring
-  includeScore: false,     // Don't include score in results
-  includeMatches: false,   // Don't include match details
-  minMatchCharLength: 1, // Minimum characters to match
+  threshold: 0.3,         // Match strictness
+  ignoreLocation: true,   // Match anywhere in field
+  ignoreFieldNorm: false, // Consider field length in scoring
+  includeScore: false,    // Don't include score in results
+  includeMatches: false,  // Don't include match details
+  minMatchCharLength: 1,  // Minimum characters to match
 })
 ```
 
@@ -144,20 +157,22 @@ Use this when:
 Search relevance is influenced by field weights. Higher weight = higher relevance score:
 
 ```tsx
-const fuse = new Fuse(projects, {
+import { createFuseSearch } from '@manningworks/projex'
+
+const fuse = createFuseSearch(projects, {
   keys: [
     { name: 'name', weight: 2 },           // Highest priority
+    { name: 'tagline', weight: 1.5 },      // Medium priority
     { name: 'description', weight: 1.5 },  // Medium priority
     { name: 'stack', weight: 1 },          // Lower priority
   ],
-  threshold: 0.2,
-  ignoreLocation: true,
+  threshold: 0.3,
 })
 ```
 
 **Effect of weights:**
 - Matching in `name` is 2x more relevant than matching in `stack`
-- Matching in `description` is 1.5x more relevant than matching in `stack`
+- Matching in `tagline` or `description` is 1.5x more relevant than matching in `stack`
 - Results are sorted by combined relevance score
 
 **When to adjust weights:**
