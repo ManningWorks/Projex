@@ -2,6 +2,8 @@
 
 ![Banner](./assets/projex_banner.svg)
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/ManningWorks/Projex?utm_source=oss&utm_medium=github&utm_campaign=ManningWorks%2FProjex&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
 Show Everything You Ship
 
 A shadcn-style component library for building developer portfolio pages. Drop in pre-built project cards that auto-fetch data from GitHub, npm, and Product Hunt — no API glue required. Built for Next.js. Zero CSS shipped by default.
