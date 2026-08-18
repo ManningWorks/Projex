@@ -172,6 +172,9 @@ export async function normalise(
 
   const repo = 'repo' in input ? input.repo : undefined
   const npmPackage = 'package' in input ? input.package : undefined
+  // Opt-out flags for GitHub-derived links; default true for backward compatibility
+  const useGithubLinkFromRepo = 'useGithubLinkFromRepo' in input ? input.useGithubLinkFromRepo ?? true : true
+  const useLiveLinkFromGithub = 'useLiveLinkFromGithub' in input ? input.useLiveLinkFromGithub ?? true : true
 
   let finalName: string
   let finalTagline: string
@@ -189,8 +192,8 @@ export async function normalise(
   if (type === 'github') {
     if (githubData) {
       finalLinks = {
-        github: githubData.html_url,
-        live: githubData.homepage || undefined,
+        github: useGithubLinkFromRepo ? githubData.html_url : undefined,
+        live: useLiveLinkFromGithub ? (githubData.homepage || undefined) : undefined,
       }
     }
     if (inputLinks) {
@@ -199,8 +202,12 @@ export async function normalise(
   } else if (type === 'hybrid') {
     finalLinks = inputLinks || {}
     if (githubData) {
-      finalLinks.github = finalLinks.github || githubData.html_url
-      finalLinks.live = finalLinks.live || githubData.homepage || undefined
+      if (useGithubLinkFromRepo) {
+        finalLinks.github = finalLinks.github || githubData.html_url
+      }
+      if (useLiveLinkFromGithub) {
+        finalLinks.live = finalLinks.live || githubData.homepage || undefined
+      }
     }
     if (npmData && npmPackage) {
       finalLinks.npm = finalLinks.npm || `https://npmjs.com/package/${npmPackage}`

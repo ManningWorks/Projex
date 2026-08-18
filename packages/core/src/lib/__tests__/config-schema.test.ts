@@ -552,4 +552,53 @@ describe('config-schema', () => {
       }
     })
   })
+
+  describe('link auto-generation opt-out flags', () => {
+    it('should accept boolean flags on github projects', () => {
+      const result = schema.safeParse({
+        id: 'test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useGithubLinkFromRepo: false,
+        useLiveLinkFromGithub: false,
+      })
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.useGithubLinkFromRepo).toBe(false)
+        expect(result.data.useLiveLinkFromGithub).toBe(false)
+      }
+    })
+
+    it('should accept boolean flags on hybrid projects', () => {
+      const result = schema.safeParse({
+        id: 'test',
+        type: 'hybrid',
+        repo: 'user/repo',
+        package: 'my-package',
+        status: 'active',
+        useGithubLinkFromRepo: false,
+        useLiveLinkFromGithub: false,
+      })
+
+      expect(result.success).toBe(true)
+    })
+
+    it('should reject non-boolean flag values', () => {
+      const result = schema.safeParse({
+        id: 'test',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useLiveLinkFromGithub: 'no',
+      })
+
+      expect(result.success).toBe(false)
+      if (!result.success) {
+        const error = formatZodError(result.error)
+        expect(error).toContain('useLiveLinkFromGithub')
+      }
+    })
+  })
 })

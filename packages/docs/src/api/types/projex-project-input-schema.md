@@ -67,6 +67,13 @@ export const projexProjectInputSchema: z.ZodDiscriminatedUnion<
 | `devto` | `username: string` |
 | `hybrid` | `repo: string`, `package: string` |
 
+Optional boolean fields on `github` and `hybrid` types:
+
+| Field | Type | Effect |
+|-------|------|--------|
+| `useGithubLinkFromRepo` | `boolean` | Include the repo's GitHub URL as the `github` link. Default `true` |
+| `useLiveLinkFromGithub` | `boolean` | Include the repo's homepage as the `live` link. Default `true` |
+
 #### Link Validation
 
 All link URLs are validated as proper URL strings:

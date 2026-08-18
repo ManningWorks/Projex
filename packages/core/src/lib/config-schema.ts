@@ -89,6 +89,8 @@ const gitHubProjectInputSchema = baseProjectInputSchema.extend({
   type: z.literal('github'),
   repo: z.string(),
   commits: z.number().optional(),
+  useGithubLinkFromRepo: z.boolean().optional(),
+  useLiveLinkFromGithub: z.boolean().optional(),
 })
 
 const manualProjectInputSchema = baseProjectInputSchema.extend({
@@ -110,6 +112,8 @@ const hybridProjectInputSchema = baseProjectInputSchema.extend({
   repo: z.string(),
   package: z.string(),
   commits: z.number().optional(),
+  useGithubLinkFromRepo: z.boolean().optional(),
+  useLiveLinkFromGithub: z.boolean().optional(),
 })
 
 const youtubeProjectInputSchema = baseProjectInputSchema.extend({

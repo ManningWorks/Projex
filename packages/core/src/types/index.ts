@@ -132,6 +132,10 @@ export interface GitHubProjectInput extends BaseProjectInput {
   type: 'github'
   repo: string
   commits?: number
+  /** Include the repo's GitHub URL as the `github` link. Default true. */
+  useGithubLinkFromRepo?: boolean
+  /** Include the repo's homepage as the `live` link. Default true. */
+  useLiveLinkFromGithub?: boolean
 }
 
 export interface ManualProjectInput extends BaseProjectInput {
@@ -173,6 +177,10 @@ export interface HybridProjectInput extends BaseProjectInput {
   repo: string
   package: string
   commits?: number
+  /** Include the repo's GitHub URL as the `github` link. Default true. */
+  useGithubLinkFromRepo?: boolean
+  /** Include the repo's homepage as the `live` link. Default true. */
+  useLiveLinkFromGithub?: boolean
 }
 
 export type ProjexProjectInput =
