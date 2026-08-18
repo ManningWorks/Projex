@@ -28,7 +28,7 @@ Projex follows strict code style conventions to maintain consistency and quality
 ### TypeScript
 
 - **Strict mode** - always enabled
-- **No comments** - code should be self-documenting
+- **Comments** - concise comments that clarify functionality are welcome (e.g. a brief description above a function); don't comment every line
 - **Explicit return types** on exported functions
 - **Prefer interfaces over types** for object shapes
 - **Use discriminated unions** for variants
