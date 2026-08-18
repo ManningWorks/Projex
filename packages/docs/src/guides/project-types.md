@@ -17,6 +17,25 @@ Fetches repo data from the GitHub API automatically.
 
 **Auto-populated fields:** name, description, stars, forks, language, links
 
+### Suppressing auto-generated links
+
+By default, the repo's GitHub URL becomes the `github` link and the repo's homepage becomes the `live` link. For a personal site that already IS the live URL, these auto-generated links are noise. Opt out per project:
+
+```ts
+{
+  id: 'my-site',
+  type: 'github',
+  repo: 'ManningWorks/my-site',
+  status: 'active',
+  useGithubLinkFromRepo: false,  // no auto-generated github link
+  useLiveLinkFromRepo: false,    // no auto-generated live link
+}
+```
+
+Both flags default to `true` for backward compatibility. They only suppress auto-generated links — explicit `links` in your config always win. The same flags work for `hybrid` projects.
+
+This is generation-time suppression: the link is never created. To suppress the `live` link at display-filtering time instead (removing even explicitly set links), omit `live` from [`linkOrder`](/api/types/project-links#link-suppression) — see [Link Suppression](/api/types/project-links#link-suppression) for how the two mechanisms interact.
+
 ## NPM (`npm`)
 
 Fetches package data from npm registry.

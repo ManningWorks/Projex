@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Opt-out flags for auto-generated GitHub links** — `github` and `hybrid` projects accept `useGithubLinkFromRepo` and `useLiveLinkFromRepo` (both default `true`) to suppress the repo-URL `github` link and the repo-homepage `live` link. Explicit `links` in config still win. For the pre-existing `linkOrder`-based `live` suppression, the docs now explain how the two mechanisms interact. Fixes [#24].
+
 ### Fixed
 
 - **`sortByDate` null-date handling** — Projects with no date (`updatedAt` and `createdAt` both null) previously sorted to the top in `desc` order, and flipped position with sort direction. Null dates are now treated as epoch-equivalent (oldest), so dateless projects sort last in newest-first and first in oldest-first, consistently in both directions. Matches the already-documented behavior. Fixes [#23].
+
+---
 
 ## [1.5.0] - 2026-08-08
 
@@ -443,5 +449,6 @@ The following are considered implementation details and may change in any versio
 [#10]: https://github.com/ManningWorks/Projex/issues/10
 [#11]: https://github.com/ManningWorks/Projex/issues/11
 [#23]: https://github.com/ManningWorks/Projex/issues/23
+[#24]: https://github.com/ManningWorks/Projex/issues/24
 [Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.5.0...HEAD
 [1.5.0]: https://github.com/ManningWorks/Projex/compare/v1.4.0...v1.5.0

@@ -390,7 +390,7 @@ describe('normalise', () => {
       expect(result.links.live).toBe('https://example.com')
     })
 
-    it('should preserve explicitly set live link even when linkOrder does not include live', async () => {
+    it('should remove explicitly set live link when linkOrder does not include live', async () => {
       mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
@@ -421,6 +421,180 @@ describe('normalise', () => {
       expect(result.links.github).toBe('https://github.com/user/repo')
       expect(result.links.demo).toBe('https://demo.example.com')
       expect(result.links.live).toBeUndefined()
+    })
+
+    it('should suppress auto-generated live link when useLiveLinkFromRepo is false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'suppress-live',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useLiveLinkFromRepo: false,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.live).toBeUndefined()
+    })
+
+    it('should suppress auto-generated github link when useGithubLinkFromRepo is false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'suppress-github',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useGithubLinkFromRepo: false,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBeUndefined()
+      expect(result.links.live).toBe('https://example.com')
+    })
+
+    it('should suppress both auto-generated links when both flags are false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'suppress-both',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useGithubLinkFromRepo: false,
+        useLiveLinkFromRepo: false,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBeUndefined()
+      expect(result.links.live).toBeUndefined()
+    })
+
+    it('should not resurrect a flag-suppressed live link when linkOrder includes live', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'flag-suppress-beats-linkorder',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useLiveLinkFromRepo: false,
+        linkOrder: ['github', 'live'],
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.live).toBeUndefined()
+    })
+
+    it('should keep explicit config links even when auto-generation flags are false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://github-homepage.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'explicit-links-win',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useGithubLinkFromRepo: false,
+        useLiveLinkFromRepo: false,
+        links: {
+          github: 'https://github.com/user/mirror',
+          live: 'https://my-live-site.com',
+        },
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/mirror')
+      expect(result.links.live).toBe('https://my-live-site.com')
+    })
+
+    it('should keep auto-generated links by default (backward compat)', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'default-flags',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
+      expect(result.links.live).toBe('https://example.com')
     })
 
     it('should use global commits default when no per-project commits config', async () => {
@@ -1307,6 +1481,45 @@ describe('normalise', () => {
 
       expect(result.createdAt).toBe('2024-01-01T00:00:00Z')
       expect(result.updatedAt).toBe('2024-05-01T00:00:00Z')
+    })
+
+    it('should suppress auto-generated github/live links when flags are false', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'hybrid-repo',
+        description: 'Hybrid description',
+        stargazers_count: 50,
+        forks_count: 10,
+        language: 'TypeScript',
+        topics: [],
+        html_url: 'https://github.com/user/hybrid-repo',
+        homepage: 'https://hybrid.example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-05-01T00:00:00Z',
+      }, error: null })
+
+      mockedFetchNpmPackage.mockResolvedValue({ data: {
+        name: 'hybrid-package',
+        version: '2.0.0',
+        downloads: 1000,
+        createdAt: '2024-01-01T00:00:00Z',
+        modifiedAt: '2024-06-01T00:00:00Z',
+      }, error: null })
+
+      const input = {
+        id: 'test-hybrid',
+        type: 'hybrid' as const,
+        repo: 'user/hybrid-repo',
+        package: 'hybrid-package',
+        status: 'active' as const,
+        useGithubLinkFromRepo: false,
+        useLiveLinkFromRepo: false,
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBeUndefined()
+      expect(result.links.live).toBeUndefined()
+      expect(result.links.npm).toBe('https://npmjs.com/package/hybrid-package')
     })
   })
 
