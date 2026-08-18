@@ -132,6 +132,20 @@ describe('sortByDate', () => {
       expect(result.map(p => p.id)).toEqual(expected)
     })
 
+    it.each<{ order: SortOrder; position: string; expected: string[] }>([
+      { order: 'desc', position: 'end', expected: ['2', '1'] },
+      { order: 'asc', position: 'beginning', expected: ['1', '2'] },
+    ])('should place projects without dates at the $position even against pre-1970 dates in $order order', ({ order, expected }) => {
+      const projects = [
+        createProject({ id: '1', updatedAt: null, createdAt: null }),
+        createProject({ id: '2', updatedAt: '1950-06-01' }),
+      ]
+
+      const result = sortByDate(projects, order)
+
+      expect(result.map(p => p.id)).toEqual(expected)
+    })
+
     it('should handle all projects without dates', () => {
       const projects = [
         createProject({ id: '1', updatedAt: null, createdAt: null }),
