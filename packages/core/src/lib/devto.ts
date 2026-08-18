@@ -17,9 +17,9 @@ export interface DevToUserData {
 }
 
 /**
- * Reduces a list of ISO date strings to the latest (or earliest) one.
- * Returns null for an empty list. Comparisons are timestamp-based so
- * non-ISO strings are ignored rather than winning by accident.
+ * Reduces a list of date strings to the latest (or earliest) one.
+ * Returns null for an empty list. Comparisons are timestamp-based, so
+ * unparseable strings are ignored rather than winning by accident.
  */
 function pickDate(dates: string[], mode: 'latest' | 'earliest'): string | null {
   return dates.reduce<string | null>((best, current) => {
