@@ -24,12 +24,14 @@ function sortProjects(projects: ProjexProject[], sortValue: SortValue): ProjexPr
 | Value | Description |
 |-------|-------------|
 | `'stars'` | Sort by GitHub stars (descending) |
-| `'name'` | Sort alphabetically by name (ascending) |
+| `'stars-asc'` | Sort by GitHub stars (ascending) |
+| `'name'` | Sort alphabetically by name (ascending, A-Z) |
+| `'name-desc'` | Sort alphabetically by name (descending, Z-A) |
 | `'date'` | Sort by date (newest first, descending) |
 | `'date-asc'` | Sort by date (oldest first, ascending) |
 
 ```tsx
-type SortValue = 'stars' | 'name' | 'date' | 'date-asc'
+type SortValue = 'stars' | 'stars-asc' | 'name' | 'name-desc' | 'date' | 'date-asc'
 ```
 
 ## Behavior
