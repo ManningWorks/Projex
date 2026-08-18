@@ -85,12 +85,17 @@ const baseProjectInputSchema = z.object({
     .optional(),
 })
 
-const gitHubProjectInputSchema = baseProjectInputSchema.extend({
-  type: z.literal('github'),
+// Fields shared by every project type backed by a GitHub repo.
+const gitHubSourceFields = {
   repo: z.string(),
   commits: z.number().optional(),
   useGithubLinkFromRepo: z.boolean().optional(),
-  useLiveLinkFromGithub: z.boolean().optional(),
+  useLiveLinkFromRepo: z.boolean().optional(),
+}
+
+const gitHubProjectInputSchema = baseProjectInputSchema.extend({
+  type: z.literal('github'),
+  ...gitHubSourceFields,
 })
 
 const manualProjectInputSchema = baseProjectInputSchema.extend({
@@ -109,11 +114,8 @@ const productHuntProjectInputSchema = baseProjectInputSchema.extend({
 
 const hybridProjectInputSchema = baseProjectInputSchema.extend({
   type: z.literal('hybrid'),
-  repo: z.string(),
+  ...gitHubSourceFields,
   package: z.string(),
-  commits: z.number().optional(),
-  useGithubLinkFromRepo: z.boolean().optional(),
-  useLiveLinkFromGithub: z.boolean().optional(),
 })
 
 const youtubeProjectInputSchema = baseProjectInputSchema.extend({

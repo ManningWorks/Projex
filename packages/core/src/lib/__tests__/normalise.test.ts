@@ -390,7 +390,7 @@ describe('normalise', () => {
       expect(result.links.live).toBe('https://example.com')
     })
 
-    it('should preserve explicitly set live link even when linkOrder does not include live', async () => {
+    it('should remove explicitly set live link when linkOrder does not include live', async () => {
       mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
@@ -423,7 +423,7 @@ describe('normalise', () => {
       expect(result.links.live).toBeUndefined()
     })
 
-    it('should suppress auto-generated live link when useLiveLinkFromGithub is false', async () => {
+    it('should suppress auto-generated live link when useLiveLinkFromRepo is false', async () => {
       mockedFetchGitHubRepo.mockResolvedValue({ data: {
         name: 'repo',
         description: 'desc',
@@ -442,7 +442,7 @@ describe('normalise', () => {
         type: 'github',
         repo: 'user/repo',
         status: 'active',
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
       }
 
       const result = await normalise(input)
@@ -499,12 +499,41 @@ describe('normalise', () => {
         repo: 'user/repo',
         status: 'active',
         useGithubLinkFromRepo: false,
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
       }
 
       const result = await normalise(input)
 
       expect(result.links.github).toBeUndefined()
+      expect(result.links.live).toBeUndefined()
+    })
+
+    it('should not resurrect a flag-suppressed live link when linkOrder includes live', async () => {
+      mockedFetchGitHubRepo.mockResolvedValue({ data: {
+        name: 'repo',
+        description: 'desc',
+        stargazers_count: 0,
+        forks_count: 0,
+        language: null,
+        topics: [],
+        html_url: 'https://github.com/user/repo',
+        homepage: 'https://example.com',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: '2024-01-01T00:00:00Z',
+      }, error: null })
+
+      const input: GitHubProjectInput = {
+        id: 'flag-suppress-beats-linkorder',
+        type: 'github',
+        repo: 'user/repo',
+        status: 'active',
+        useLiveLinkFromRepo: false,
+        linkOrder: ['github', 'live'],
+      }
+
+      const result = await normalise(input)
+
+      expect(result.links.github).toBe('https://github.com/user/repo')
       expect(result.links.live).toBeUndefined()
     })
 
@@ -528,7 +557,7 @@ describe('normalise', () => {
         repo: 'user/repo',
         status: 'active',
         useGithubLinkFromRepo: false,
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
         links: {
           github: 'https://github.com/user/mirror',
           live: 'https://my-live-site.com',
@@ -1483,7 +1512,7 @@ describe('normalise', () => {
         package: 'hybrid-package',
         status: 'active' as const,
         useGithubLinkFromRepo: false,
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
       }
 
       const result = await normalise(input)

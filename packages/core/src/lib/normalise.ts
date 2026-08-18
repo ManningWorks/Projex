@@ -172,9 +172,6 @@ export async function normalise(
 
   const repo = 'repo' in input ? input.repo : undefined
   const npmPackage = 'package' in input ? input.package : undefined
-  // Opt-out flags for GitHub-derived links; default true for backward compatibility
-  const useGithubLinkFromRepo = 'useGithubLinkFromRepo' in input ? input.useGithubLinkFromRepo ?? true : true
-  const useLiveLinkFromGithub = 'useLiveLinkFromGithub' in input ? input.useLiveLinkFromGithub ?? true : true
 
   let finalName: string
   let finalTagline: string
@@ -188,32 +185,22 @@ export async function normalise(
   finalDescription = (usesOverrides && override?.description) || inputDescription || githubData?.description || productHuntData?.description || ''
   finalStack = (usesOverrides && override?.stack) || inputStack || []
 
-  let finalLinks: ProjexProject['links'] = {}
-  if (type === 'github') {
-    if (githubData) {
-      finalLinks = {
-        github: useGithubLinkFromRepo ? githubData.html_url : undefined,
-        live: useLiveLinkFromGithub ? (githubData.homepage || undefined) : undefined,
-      }
+  // Config links seed the map; auto-generated links only fill the gaps,
+  // so explicit `links` in config always win over GitHub/npm-derived values.
+  let finalLinks: ProjexProject['links'] = { ...inputLinks }
+  if ((type === 'github' || type === 'hybrid') && githubData) {
+    // Opt-out flags for GitHub-derived links; default true for backward compatibility.
+    const useGithubLinkFromRepo = input.useGithubLinkFromRepo ?? true
+    const useLiveLinkFromRepo = input.useLiveLinkFromRepo ?? true
+    if (useGithubLinkFromRepo) {
+      finalLinks.github = finalLinks.github || githubData.html_url
     }
-    if (inputLinks) {
-      finalLinks = { ...finalLinks, ...inputLinks }
+    if (useLiveLinkFromRepo) {
+      finalLinks.live = finalLinks.live || githubData.homepage || undefined
     }
-  } else if (type === 'hybrid') {
-    finalLinks = inputLinks || {}
-    if (githubData) {
-      if (useGithubLinkFromRepo) {
-        finalLinks.github = finalLinks.github || githubData.html_url
-      }
-      if (useLiveLinkFromGithub) {
-        finalLinks.live = finalLinks.live || githubData.homepage || undefined
-      }
-    }
-    if (npmData && npmPackage) {
-      finalLinks.npm = finalLinks.npm || `https://npmjs.com/package/${npmPackage}`
-    }
-  } else {
-    finalLinks = inputLinks || {}
+  }
+  if (type === 'hybrid' && npmData && npmPackage) {
+    finalLinks.npm = finalLinks.npm || `https://npmjs.com/package/${npmPackage}`
   }
 
   const { linkOrder } = input

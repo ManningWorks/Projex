@@ -134,6 +134,17 @@ Auto-generated `live` links can be suppressed by omitting `live` from `linkOrder
 
 This allows customizing which links appear without requiring manual filtering in consuming applications.
 
+### Flags vs. `linkOrder`
+
+`github` and `hybrid` projects also support the `useGithubLinkFromRepo` / `useLiveLinkFromRepo` flags (default `true`), which suppress the auto-generated `github` / `live` links at **generation time** — see [Suppressing auto-generated links](/guides/project-types#suppressing-auto-generated-links). The two mechanisms differ:
+
+| | `linkOrder` omission | Opt-out flags |
+|---|---|---|
+| Phase | Filtering after links are resolved | Generation (link never created) |
+| Scope | `live` only | `github` and `live` |
+| Explicit config `links` | Also removed | Always win — flags only affect auto-generated links |
+| Interaction | `linkOrder: ['live']` cannot resurrect a flag-suppressed link | A flag-suppressed link means `linkOrder` has nothing to keep |
+
 ## Data Attributes
 
 Each link element receives `data-projex-link` and `data-projex-link-type` attributes:

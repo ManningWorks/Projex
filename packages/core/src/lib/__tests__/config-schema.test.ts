@@ -561,13 +561,13 @@ describe('config-schema', () => {
         repo: 'user/repo',
         status: 'active',
         useGithubLinkFromRepo: false,
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
       })
 
       expect(result.success).toBe(true)
       if (result.success) {
         expect(result.data.useGithubLinkFromRepo).toBe(false)
-        expect(result.data.useLiveLinkFromGithub).toBe(false)
+        expect(result.data.useLiveLinkFromRepo).toBe(false)
       }
     })
 
@@ -579,7 +579,7 @@ describe('config-schema', () => {
         package: 'my-package',
         status: 'active',
         useGithubLinkFromRepo: false,
-        useLiveLinkFromGithub: false,
+        useLiveLinkFromRepo: false,
       })
 
       expect(result.success).toBe(true)
@@ -591,13 +591,13 @@ describe('config-schema', () => {
         type: 'github',
         repo: 'user/repo',
         status: 'active',
-        useLiveLinkFromGithub: 'no',
+        useLiveLinkFromRepo: 'no',
       })
 
       expect(result.success).toBe(false)
       if (!result.success) {
         const error = formatZodError(result.error)
-        expect(error).toContain('useLiveLinkFromGithub')
+        expect(error).toContain('useLiveLinkFromRepo')
       }
     })
   })

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Opt-out flags for auto-generated GitHub links** — `github` and `hybrid` projects accept `useGithubLinkFromRepo` and `useLiveLinkFromRepo` (both default `true`) to suppress the repo-URL `github` link and the repo-homepage `live` link. Explicit `links` in config still win. For the pre-existing `linkOrder`-based `live` suppression, the docs now explain how the two mechanisms interact. Fixes [#24].
+
+---
+
 ## [1.5.0] - 2026-08-08
 
 ### Changed

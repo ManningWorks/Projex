@@ -128,14 +128,18 @@ export interface BaseProjectInput {
   }
 }
 
-export interface GitHubProjectInput extends BaseProjectInput {
-  type: 'github'
+/** Fields shared by project types backed by a GitHub repo. */
+interface GitHubSourceFields {
   repo: string
   commits?: number
   /** Include the repo's GitHub URL as the `github` link. Default true. */
   useGithubLinkFromRepo?: boolean
   /** Include the repo's homepage as the `live` link. Default true. */
-  useLiveLinkFromGithub?: boolean
+  useLiveLinkFromRepo?: boolean
+}
+
+export interface GitHubProjectInput extends BaseProjectInput, GitHubSourceFields {
+  type: 'github'
 }
 
 export interface ManualProjectInput extends BaseProjectInput {
@@ -172,15 +176,9 @@ export interface DevToProjectInput extends BaseProjectInput {
   username: string
 }
 
-export interface HybridProjectInput extends BaseProjectInput {
+export interface HybridProjectInput extends BaseProjectInput, GitHubSourceFields {
   type: 'hybrid'
-  repo: string
   package: string
-  commits?: number
-  /** Include the repo's GitHub URL as the `github` link. Default true. */
-  useGithubLinkFromRepo?: boolean
-  /** Include the repo's homepage as the `live` link. Default true. */
-  useLiveLinkFromGithub?: boolean
 }
 
 export type ProjexProjectInput =

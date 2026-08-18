@@ -28,11 +28,13 @@ By default, the repo's GitHub URL becomes the `github` link and the repo's homep
   repo: 'ManningWorks/my-site',
   status: 'active',
   useGithubLinkFromRepo: false,  // no auto-generated github link
-  useLiveLinkFromGithub: false,  // no auto-generated live link
+  useLiveLinkFromRepo: false,    // no auto-generated live link
 }
 ```
 
 Both flags default to `true` for backward compatibility. They only suppress auto-generated links — explicit `links` in your config always win. The same flags work for `hybrid` projects.
+
+This is generation-time suppression: the link is never created. To suppress the `live` link at display-filtering time instead (removing even explicitly set links), omit `live` from [`linkOrder`](/api/types/project-links#link-suppression) — see [Link Suppression](/api/types/project-links#link-suppression) for how the two mechanisms interact.
 
 ## NPM (`npm`)
 

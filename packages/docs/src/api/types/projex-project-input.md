@@ -58,7 +58,7 @@ interface GitHubProjectInput extends BaseProjectInput {
   type: 'github'
   repo: string  // Required: 'owner/repo'
   useGithubLinkFromRepo?: boolean  // Include repo URL as `github` link. Default true
-  useLiveLinkFromGithub?: boolean  // Include repo homepage as `live` link. Default true
+  useLiveLinkFromRepo?: boolean  // Include repo homepage as `live` link. Default true
 }
 ```
 
@@ -88,7 +88,7 @@ interface HybridProjectInput extends BaseProjectInput {
   repo: string     // Required
   package: string  // Required
   useGithubLinkFromRepo?: boolean  // Include repo URL as `github` link. Default true
-  useLiveLinkFromGithub?: boolean  // Include repo homepage as `live` link. Default true
+  useLiveLinkFromRepo?: boolean  // Include repo homepage as `live` link. Default true
 }
 ```
 
