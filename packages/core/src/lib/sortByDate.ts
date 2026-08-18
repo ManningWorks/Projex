@@ -13,18 +13,12 @@ export function sortByDate(projects: ProjexProject[], order: SortOrder = 'desc')
     const dateA = a.updatedAt || a.createdAt || null
     const dateB = b.updatedAt || b.createdAt || null
 
-    if (!dateA && !dateB) {
-      return 0
-    }
+    // Treat missing dates as epoch (oldest possible) so dateless projects sort
+    // last in newest-first order and first in oldest-first order, consistently
+    // in both directions (issue #23).
+    const timeA = dateA ? new Date(dateA).getTime() : 0
+    const timeB = dateB ? new Date(dateB).getTime() : 0
 
-    if (!dateA) {
-      return 1 * multiplier
-    }
-
-    if (!dateB) {
-      return -1 * multiplier
-    }
-
-    return (new Date(dateA).getTime() - new Date(dateB).getTime()) * multiplier
+    return (timeA - timeB) * multiplier
   })
 }
