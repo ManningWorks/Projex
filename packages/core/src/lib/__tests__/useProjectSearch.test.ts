@@ -1,7 +1,15 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { useProjectSearch } from '../useProjectSearch'
+import { createFuseSearch } from '../fuse'
 import type { ProjexProject } from '../../types'
+
+// Wrap createFuseSearch in a spy (delegating to the real implementation) so
+// index rebuilds can be counted in the memoisation tests below.
+vi.mock('../fuse', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../fuse')>()
+  return { ...actual, createFuseSearch: vi.fn(actual.createFuseSearch) }
+})
 
 function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
   return {
@@ -158,5 +166,47 @@ describe('useProjectSearch', () => {
     )
 
     expect(result.current).toHaveLength(0)
+  })
+
+  it('should not rebuild the search index when inline keys have stable content', () => {
+    const spy = vi.mocked(createFuseSearch)
+    spy.mockClear()
+
+    const { rerender, result } = renderHook(
+      ({ query }) =>
+        useProjectSearch(projects, query, {
+          keys: [{ name: 'name', weight: 2 }],
+        }),
+      { initialProps: { query: '' } }
+    )
+
+    spy.mockClear()
+
+    // Each rerender passes a fresh inline keys array with identical content
+    rerender({ query: 'dash' })
+    rerender({ query: 'dashb' })
+    rerender({ query: 'dashboard' })
+
+    expect(spy).not.toHaveBeenCalled()
+    expect(result.current).toHaveLength(1)
+    expect(result.current[0].id).toBe('1')
+  })
+
+  it('should rebuild the search index when key content changes', () => {
+    const spy = vi.mocked(createFuseSearch)
+    spy.mockClear()
+
+    const { rerender } = renderHook(
+      ({ keys }) => useProjectSearch(projects, 'authentication', { keys }),
+      { initialProps: { keys: [{ name: 'name', weight: 1 }] } }
+    )
+
+    spy.mockClear()
+
+    rerender({ keys: [{ name: 'name', weight: 1 }] })
+    expect(spy).not.toHaveBeenCalled()
+
+    rerender({ keys: [{ name: 'description', weight: 1 }] })
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 })
