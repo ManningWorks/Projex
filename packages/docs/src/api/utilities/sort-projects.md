@@ -45,7 +45,7 @@ type SortValue = 'stars' | 'stars-asc' | 'name' | 'name-desc' | 'date' | 'date-a
 ```tsx
 import { sortProjects, ProjectSort, ProjectGrid, ProjectCard } from '@manningworks/projex'
 
-const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']
+const SORT_OPTIONS = ['stars', 'stars-asc', 'name', 'name-desc', 'date', 'date-asc']
 
 function ProjectShowcase({ projects }) {
   const [sortValue, setSortValue] = useState('stars')
@@ -83,7 +83,7 @@ import {
 } from '@manningworks/projex'
 
 const AVAILABLE_TAGS = ['React', 'TypeScript', 'Node.js']
-const SORT_OPTIONS = ['stars', 'name', 'date', 'date-asc']
+const SORT_OPTIONS = ['stars', 'stars-asc', 'name', 'name-desc', 'date', 'date-asc']
 
 function ProjectShowcase({ projects }) {
   const [query, setQuery] = useState('')

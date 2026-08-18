@@ -117,7 +117,7 @@ function ProjectsPage({ projects }) {
   return (
     <div>
       <ProjectSort
-        options={['stars', 'name', 'date', 'date-asc']}
+        options={['stars', 'stars-asc', 'name', 'name-desc', 'date', 'date-asc']}
         value={sortBy}
         onChange={setSortBy}
       />

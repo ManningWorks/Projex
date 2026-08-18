@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`name-desc` and `stars-asc` sort values** — `SortValue` now covers both directions for every field: `'name-desc'` sorts Z-A via `sortByName(projects, 'desc')`, and `'stars-asc'` sorts lowest-stars-first via `sortByStars(projects, 'asc')`. Every existing value keeps its meaning; `'stars'` remains descending, mirroring `'date'`. Fixes [#20].
 - **Opt-out flags for auto-generated GitHub links** — `github` and `hybrid` projects accept `useGithubLinkFromRepo` and `useLiveLinkFromRepo` (both default `true`) to suppress the repo-URL `github` link and the repo-homepage `live` link. Explicit `links` in config still win. For the pre-existing `linkOrder`-based `live` suppression, the docs now explain how the two mechanisms interact. Fixes [#24].
 
 ### Fixed
