@@ -25,6 +25,8 @@ interface DevToUserData {
   articleCount: number
   totalViews: number
   totalReactions: number
+  latestArticleUpdatedAt: string | null
+  earliestArticlePublishedAt: string | null
 }
 ```
 
@@ -78,6 +80,8 @@ const data = await fetchDevToUser('user_without_articles')
 - `articleCount`: Number of articles returned by API
 - `totalViews`: Sum of `page_views_count` for all articles (falls back to `0` when unavailable for unauthenticated requests)
 - `totalReactions`: Sum of `public_reactions_count` across all articles (falls back to `positive_reactions_count`, then `0`)
+- `latestArticleUpdatedAt`: Latest `edited_at` across all articles, falling back to `published_at` for unedited articles (`null` when no articles carry timestamps)
+- `earliestArticlePublishedAt`: Earliest `published_at` across all articles (`null` when no articles carry timestamps)
 
 ## Usage in normalise
 

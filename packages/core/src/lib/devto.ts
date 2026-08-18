@@ -4,12 +4,32 @@ export interface DevToArticleData {
   page_views_count?: number
   positive_reactions_count?: number
   public_reactions_count?: number
+  published_at?: string | null
+  edited_at?: string | null
 }
 
 export interface DevToUserData {
   articleCount: number
   totalViews: number
   totalReactions: number
+  latestArticleUpdatedAt: string | null
+  earliestArticlePublishedAt: string | null
+}
+
+/**
+ * Reduces a list of ISO date strings to the latest (or earliest) one.
+ * Returns null for an empty list. Comparisons are timestamp-based so
+ * non-ISO strings are ignored rather than winning by accident.
+ */
+function pickDate(dates: string[], mode: 'latest' | 'earliest'): string | null {
+  return dates.reduce<string | null>((best, current) => {
+    const currentTime = Date.parse(current)
+    if (Number.isNaN(currentTime)) return best
+    if (best === null) return current
+    const bestTime = Date.parse(best)
+    const isBetter = mode === 'latest' ? currentTime > bestTime : currentTime < bestTime
+    return isBetter ? current : best
+  }, null)
 }
 
 export async function fetchDevToUser(username: string): Promise<DevToUserData | null> {
@@ -76,6 +96,15 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
       }
     }
 
+    // last activity = latest edit, falling back to publish date for unedited articles
+    const updatedAtCandidates = data
+      .map((article) => article.edited_at || article.published_at)
+      .filter((date): date is string => typeof date === 'string')
+    // first post = earliest publish date
+    const publishedAtCandidates = data
+      .map((article) => article.published_at)
+      .filter((date): date is string => typeof date === 'string')
+
     return {
       articleCount: data.length,
       totalViews,
@@ -83,6 +112,8 @@ export async function fetchDevToUser(username: string): Promise<DevToUserData | 
         (sum, article) => sum + (article.public_reactions_count ?? article.positive_reactions_count ?? 0),
         0,
       ),
+      latestArticleUpdatedAt: pickDate(updatedAtCandidates, 'latest'),
+      earliestArticlePublishedAt: pickDate(publishedAtCandidates, 'earliest'),
     }
   } catch {
     console.warn('Network error while fetching Dev.to user data.')

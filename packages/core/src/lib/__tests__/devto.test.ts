@@ -45,6 +45,8 @@ describe('fetchDevToUser', () => {
         articleCount: 3,
         totalViews: 0,
         totalReactions: 225,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -60,6 +62,8 @@ describe('fetchDevToUser', () => {
         articleCount: 0,
         totalViews: 0,
         totalReactions: 0,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -83,6 +87,8 @@ describe('fetchDevToUser', () => {
         articleCount: 1,
         totalViews: 0,
         totalReactions: 200,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -162,6 +168,8 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 0,
         totalReactions: 80,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -184,6 +192,8 @@ describe('fetchDevToUser', () => {
         articleCount: 1,
         totalViews: 0,
         totalReactions: 0,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -448,6 +458,8 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 85,
         totalReactions: 5,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
       expect(mockFetch).toHaveBeenNthCalledWith(
         2,
@@ -494,6 +506,8 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 0,
         totalReactions: 5,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -518,6 +532,8 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 0,
         totalReactions: 5,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
       expect(warnSpy).toHaveBeenCalledWith('Dev.to /me endpoint returned error status: 401')
 
@@ -543,6 +559,8 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 0,
         totalReactions: 5,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
     })
 
@@ -564,10 +582,93 @@ describe('fetchDevToUser', () => {
         articleCount: 2,
         totalViews: 0,
         totalReactions: 5,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
       })
       expect(warnSpy).toHaveBeenCalledWith('Network error while fetching Dev.to user view counts.')
 
       warnSpy.mockRestore()
+    })
+  })
+
+  describe('article dates', () => {
+    it('should derive latestArticleUpdatedAt from the newest edited_at', async () => {
+      const mockArticles = [
+        { id: 1, title: 'Article 1', published_at: '2024-01-01T10:00:00Z', edited_at: '2024-02-01T10:00:00Z' },
+        { id: 2, title: 'Article 2', published_at: '2024-03-01T10:00:00Z', edited_at: '2024-06-15T10:00:00Z' },
+        { id: 3, title: 'Article 3', published_at: '2024-05-01T10:00:00Z', edited_at: '2024-04-01T10:00:00Z' },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.latestArticleUpdatedAt).toBe('2024-06-15T10:00:00Z')
+    })
+
+    it('should fall back to published_at for unedited articles when picking the latest update', async () => {
+      const mockArticles = [
+        { id: 1, title: 'Older edited', published_at: '2024-01-01T10:00:00Z', edited_at: '2024-02-01T10:00:00Z' },
+        { id: 2, title: 'Newer unedited', published_at: '2024-08-01T10:00:00Z', edited_at: null },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.latestArticleUpdatedAt).toBe('2024-08-01T10:00:00Z')
+    })
+
+    it('should derive earliestArticlePublishedAt from the oldest published_at', async () => {
+      const mockArticles = [
+        { id: 1, title: 'Article 1', published_at: '2024-03-01T10:00:00Z' },
+        { id: 2, title: 'Article 2', published_at: '2023-11-20T10:00:00Z' },
+        { id: 3, title: 'Article 3', published_at: '2024-01-05T10:00:00Z' },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.earliestArticlePublishedAt).toBe('2023-11-20T10:00:00Z')
+    })
+
+    it('should return null dates when articles carry no timestamps', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve([{ id: 1, title: 'Article 1' }]),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.latestArticleUpdatedAt).toBeNull()
+      expect(result?.earliestArticlePublishedAt).toBeNull()
+    })
+
+    it('should ignore unparseable date strings', async () => {
+      const mockArticles = [
+        { id: 1, title: 'Article 1', published_at: 'not-a-date', edited_at: 'also-not-a-date' },
+        { id: 2, title: 'Article 2', published_at: '2024-06-01T10:00:00Z' },
+      ]
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockArticles),
+      })
+
+      const result = await fetchDevToUser('testuser')
+
+      expect(result?.latestArticleUpdatedAt).toBe('2024-06-01T10:00:00Z')
+      expect(result?.earliestArticlePublishedAt).toBe('2024-06-01T10:00:00Z')
     })
   })
 

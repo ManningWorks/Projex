@@ -1,21 +1,24 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { normalise, normaliseStats } from '../normalise'
-import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput, YouTubeProjectInput } from '../../types'
+import type { ManualProjectInput, GitHubProjectInput, NpmProjectInput, ProductHuntProjectInput, YouTubeProjectInput, DevToProjectInput } from '../../types'
 import { fetchGitHubRepo, fetchGitHubCommits } from '../github'
 import { fetchNpmPackage } from '../npm'
 import { fetchProductHuntPost } from '../product-hunt'
 import { fetchYouTubeChannel } from '../youtube'
+import { fetchDevToUser } from '../devto'
 
 vi.mock('../github')
 vi.mock('../npm')
 vi.mock('../product-hunt')
 vi.mock('../youtube')
+vi.mock('../devto')
 
 const mockedFetchGitHubRepo = vi.mocked(fetchGitHubRepo)
 const mockedFetchGitHubCommits = vi.mocked(fetchGitHubCommits)
 const mockedFetchNpmPackage = vi.mocked(fetchNpmPackage)
 const mockedFetchProductHuntPost = vi.mocked(fetchProductHuntPost)
 const mockedFetchYouTubeChannel = vi.mocked(fetchYouTubeChannel)
+const mockedFetchDevToUser = vi.mocked(fetchDevToUser)
 
 describe('normalise', () => {
   beforeEach(() => {
@@ -1096,6 +1099,74 @@ describe('normalise', () => {
         channelId: 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
         status: 'active',
         name: 'My Channel',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBeNull()
+      expect(result.updatedAt).toBeNull()
+    })
+  })
+
+  describe('Dev.to project normalization', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('should use article dates as createdAt/updatedAt for devto projects', async () => {
+      mockedFetchDevToUser.mockResolvedValue({
+        articleCount: 42,
+        totalViews: 1000,
+        totalReactions: 300,
+        latestArticleUpdatedAt: '2024-07-10T09:00:00Z',
+        earliestArticlePublishedAt: '2021-03-04T08:00:00Z',
+      })
+
+      const input: DevToProjectInput = {
+        id: 'test-devto-dates',
+        type: 'devto',
+        username: 'lukemanning',
+        status: 'active',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2021-03-04T08:00:00Z')
+      expect(result.updatedAt).toBe('2024-07-10T09:00:00Z')
+    })
+
+    it('should fall back to input dates when articles carry no timestamps', async () => {
+      mockedFetchDevToUser.mockResolvedValue({
+        articleCount: 3,
+        totalViews: 50,
+        totalReactions: 10,
+        latestArticleUpdatedAt: null,
+        earliestArticlePublishedAt: null,
+      })
+
+      const input: DevToProjectInput = {
+        id: 'test-devto-fallback',
+        type: 'devto',
+        username: 'lukemanning',
+        status: 'active',
+        createdAt: '2022-01-01',
+        updatedAt: '2024-02-01',
+      }
+
+      const result = await normalise(input)
+
+      expect(result.createdAt).toBe('2022-01-01')
+      expect(result.updatedAt).toBe('2024-02-01')
+    })
+
+    it('should have no dates when fetch fails and no input dates', async () => {
+      mockedFetchDevToUser.mockResolvedValue(null)
+
+      const input: DevToProjectInput = {
+        id: 'test-devto-no-dates',
+        type: 'devto',
+        username: 'lukemanning',
+        status: 'active',
       }
 
       const result = await normalise(input)

@@ -345,6 +345,11 @@ export async function normalise(
     finalLanguageColor = null
     finalCreatedAt = inputCreatedAt || null
     finalUpdatedAt = youtubeData?.latestVideoPublishedAt || inputUpdatedAt || null
+  } else if (type === 'devto') {
+    finalLanguage = null
+    finalLanguageColor = null
+    finalCreatedAt = devtoData?.earliestArticlePublishedAt || inputCreatedAt || null
+    finalUpdatedAt = devtoData?.latestArticleUpdatedAt || inputUpdatedAt || null
   } else {
     finalLanguage = null
     finalLanguageColor = null

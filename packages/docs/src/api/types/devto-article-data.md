@@ -11,6 +11,8 @@ interface DevToArticleData {
   page_views_count?: number
   positive_reactions_count?: number
   public_reactions_count?: number
+  published_at?: string | null
+  edited_at?: string | null
 }
 ```
 
@@ -23,6 +25,8 @@ interface DevToArticleData {
 | `page_views_count` | `number?` | Total page views (only available with authenticated requests) |
 | `positive_reactions_count` | `number?` | Deprecated — use `public_reactions_count` |
 | `public_reactions_count` | `number?` | Total public reactions (likes, unicorns, reading list additions) |
+| `published_at` | `string? \| null` | ISO timestamp of first publication |
+| `edited_at` | `string? \| null` | ISO timestamp of last edit (null when the article was never edited) |
 
 ## Usage
 
@@ -47,9 +51,11 @@ The `fetchDevToUser` function fetches up to 1000 articles and aggregates them in
 
 ```tsx
 interface DevToUserData {
-  articleCount: number      // Count of articles returned
-  totalViews: number         // Sum of all page_views_count (0 if unavailable)
-  totalReactions: number  // Sum of public_reactions_count
+  articleCount: number             // Count of articles returned
+  totalViews: number               // Sum of all page_views_count (0 if unavailable)
+  totalReactions: number           // Sum of public_reactions_count
+  latestArticleUpdatedAt: string | null   // Latest edited_at (falling back to published_at)
+  earliestArticlePublishedAt: string | null // Earliest published_at
 }
 ```
 
@@ -58,6 +64,8 @@ interface DevToUserData {
 - **articleCount**: `data.length` — Number of articles returned by the API
 - **totalViews**: `sum of page_views_count` across all articles (falls back to `0` when unavailable for unauthenticated requests)
 - **totalReactions**: Sum of `public_reactions_count` across all articles (falls back to `positive_reactions_count`, then `0`)
+- **latestArticleUpdatedAt**: Latest `edited_at` across all articles, falling back to `published_at` for unedited articles (`null` when no articles carry timestamps)
+- **earliestArticlePublishedAt**: Earliest `published_at` across all articles (`null` when no articles carry timestamps)
 
 ## API Source
 
