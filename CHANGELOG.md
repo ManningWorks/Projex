@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`sortByDate` null-date handling** — Projects with no date (`updatedAt` and `createdAt` both null) previously sorted to the top in `desc` order, and flipped position with sort direction. Null dates are now treated as epoch-equivalent (oldest), so dateless projects sort last in newest-first and first in oldest-first, consistently in both directions. Matches the already-documented behavior. Fixes [#23].
+
 ## [1.5.0] - 2026-08-08
 
 ### Changed
@@ -434,6 +440,8 @@ The following are considered implementation details and may change in any versio
 
 [#6]: https://github.com/ManningWorks/Projex/issues/6
 [#8]: https://github.com/ManningWorks/Projex/issues/8
+[#23]: https://github.com/ManningWorks/Projex/issues/23
+[Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.5.0...HEAD
 [#10]: https://github.com/ManningWorks/Projex/issues/10
 [#11]: https://github.com/ManningWorks/Projex/issues/11
 [1.5.0]: https://github.com/ManningWorks/Projex/compare/v1.4.0...v1.5.0
