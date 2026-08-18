@@ -440,8 +440,8 @@ The following are considered implementation details and may change in any versio
 
 [#6]: https://github.com/ManningWorks/Projex/issues/6
 [#8]: https://github.com/ManningWorks/Projex/issues/8
-[#23]: https://github.com/ManningWorks/Projex/issues/23
-[Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.5.0...HEAD
 [#10]: https://github.com/ManningWorks/Projex/issues/10
 [#11]: https://github.com/ManningWorks/Projex/issues/11
+[#23]: https://github.com/ManningWorks/Projex/issues/23
+[Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.5.0...HEAD
 [1.5.0]: https://github.com/ManningWorks/Projex/compare/v1.4.0...v1.5.0
