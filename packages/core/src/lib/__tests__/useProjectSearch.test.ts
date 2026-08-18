@@ -141,9 +141,18 @@ describe('useProjectSearch', () => {
   })
 
   it('should use custom threshold option', () => {
-    const { result } = renderHook(() => useProjectSearch(projects, 'ract', { threshold: 0.4 }))
+    // 'ract' (one deletion from 'React') is within fuzzy tolerance at 0.4
+    // but not at 0.1, so the two thresholds must produce different sets.
+    const { result: strict } = renderHook(() =>
+      useProjectSearch(projects, 'ract', { threshold: 0.1 })
+    )
+    const { result: lenient } = renderHook(() =>
+      useProjectSearch(projects, 'ract', { threshold: 0.4 })
+    )
 
-    expect(result.current.length).toBeGreaterThan(0)
+    expect(strict.current).toHaveLength(0)
+    expect(lenient.current).toHaveLength(1)
+    expect(lenient.current[0].id).toBe('1')
   })
 
   it('should find projects by tagline by default', () => {

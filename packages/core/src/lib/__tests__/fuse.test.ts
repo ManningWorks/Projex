@@ -180,15 +180,21 @@ describe('createFuseSearch', () => {
   it('should respect custom threshold', () => {
     const projects = [
       createProject({ id: '1', name: 'React Dashboard' }),
+      createProject({ id: '2', name: 'Vue Todo' }),
     ]
 
+    // 'Ract' (one deletion from 'React') is within fuzzy tolerance at 0.5
+    // but not at 0.1, so the two thresholds must produce different sets.
     const fuseStrict = createFuseSearch(projects, 0.1)
     const fuseLoose = createFuseSearch(projects, 0.5)
 
     const strictResults = fuseStrict.search('Ract')
     const looseResults = fuseLoose.search('Ract')
 
-    expect(looseResults.length).toBeGreaterThanOrEqual(strictResults.length)
+    expect(strictResults).toHaveLength(0)
+    expect(looseResults).toHaveLength(1)
+    expect(looseResults[0].item.id).toBe('1')
+    expect(looseResults.length).toBeGreaterThan(strictResults.length)
   })
 
   it('should accept custom threshold via options object', () => {

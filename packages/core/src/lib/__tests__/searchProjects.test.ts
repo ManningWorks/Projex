@@ -29,9 +29,23 @@ function createProject(overrides: Partial<ProjexProject> = {}): ProjexProject {
 }
 
 describe('searchProjects', () => {
+  // Vocabulary is deliberately disjoint across name, tagline, description and
+  // stack so each field-specific assertion can only pass via its intended field.
   const projects = [
-    createProject({ id: '1', name: 'React Dashboard', tagline: 'Ship dashboards fast', description: 'A modern dashboard', stack: ['react', 'typescript'] }),
-    createProject({ id: '2', name: 'Vue Todo', tagline: 'Todos made simple', description: 'A simple Vue app', stack: ['vue', 'javascript'] }),
+    createProject({
+      id: '1',
+      name: 'Argon Grid',
+      tagline: 'Orchestrate your containers',
+      description: 'A control plane for batch scheduling',
+      stack: ['kafka', 'grpc'],
+    }),
+    createProject({
+      id: '2',
+      name: 'Beryl Slate',
+      tagline: 'Capture fleeting thoughts',
+      description: 'Markdown journal with backlinks',
+      stack: ['zig', 'sqlite'],
+    }),
   ]
 
   it('should return the input array unchanged for an empty query', () => {
@@ -48,46 +62,61 @@ describe('searchProjects', () => {
   })
 
   it('should find projects by name', () => {
-    const results = searchProjects(projects, 'vue todo')
+    const results = searchProjects(projects, 'argon')
 
     expect(results).toHaveLength(1)
-    expect(results[0].id).toBe('2')
+    expect(results[0].id).toBe('1')
   })
 
   it('should find projects by tagline', () => {
-    const results = searchProjects(projects, 'simple')
+    const results = searchProjects(projects, 'orchestrate')
 
     expect(results).toHaveLength(1)
-    expect(results[0].id).toBe('2')
+    expect(results[0].id).toBe('1')
   })
 
   it('should find projects by description', () => {
-    const results = searchProjects(projects, 'dashboard')
+    const results = searchProjects(projects, 'scheduling')
 
     expect(results).toHaveLength(1)
     expect(results[0].id).toBe('1')
   })
 
   it('should find projects by stack tag', () => {
-    const results = searchProjects(projects, 'typescript')
+    const results = searchProjects(projects, 'kafka')
 
     expect(results).toHaveLength(1)
     expect(results[0].id).toBe('1')
   })
 
   it('should restrict search to custom keys', () => {
-    const nameOnly = searchProjects(projects, 'modern', {
+    // 'orchestrate' lives only in the tagline, so name-only keys exclude it...
+    const nameOnly = searchProjects(projects, 'orchestrate', {
       keys: [{ name: 'name', weight: 1 }],
     })
+    expect(nameOnly).toEqual([])
 
-    expect(nameOnly).toHaveLength(0)
+    // ...and including the tagline key finds it.
+    const withTagline = searchProjects(projects, 'orchestrate', {
+      keys: [
+        { name: 'name', weight: 1 },
+        { name: 'tagline', weight: 1 },
+      ],
+    })
+    expect(withTagline).toHaveLength(1)
+    expect(withTagline[0].id).toBe('1')
   })
 
   it('should accept a custom threshold', () => {
-    const strict = searchProjects(projects, 'dashbord', { threshold: 0.1 })
-    const lenient = searchProjects(projects, 'dashbord', { threshold: 0.4 })
+    // 'schedulng' (one deletion from 'scheduling') is within fuzzy tolerance
+    // at 0.4 but not at 0.1, so the two thresholds must produce different sets.
+    const strict = searchProjects(projects, 'schedulng', { threshold: 0.1 })
+    const lenient = searchProjects(projects, 'schedulng', { threshold: 0.4 })
 
-    expect(lenient.length).toBeGreaterThanOrEqual(strict.length)
+    expect(strict).toEqual([])
+    expect(lenient).toHaveLength(1)
+    expect(lenient[0].id).toBe('1')
+    expect(lenient.length).toBeGreaterThan(strict.length)
   })
 
   it('should return empty array when no matches found', () => {
