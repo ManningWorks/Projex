@@ -7,14 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.6.0] - 2026-08-19
+
 ### Added
 
+- **`ProjectTypeFilterBar` and `ProjectStatusFilterBar` components** — Data-driven filter bars that derive their options from the projects passed in, so there is no hardcoded option list to keep in sync. Each renders only the types (or statuses) present in the project list, in canonical order, plus an "All" tag; both render `null` for an empty project list, accept `allLabel`/`ariaLabel` overrides, and pair with `filterByType`/`filterByStatus` to apply the selection. Fixes [#19].
+- **`getUniqueTypes` and `getUniqueStatuses` helpers** — Return the unique types (or statuses) present in a project list, ordered by the canonical-order constants `PROJECT_TYPES` and `PROJECT_STATUSES` (also exported) rather than first-seen order, so filter UIs render consistently regardless of input order. Fixes [#18].
 - **`name-desc` and `stars-asc` sort values** — `SortValue` now covers both directions for every field: `'name-desc'` sorts Z-A via `sortByName(projects, 'desc')`, and `'stars-asc'` sorts lowest-stars-first via `sortByStars(projects, 'asc')`. Every existing value keeps its meaning; `'stars'` remains descending, mirroring `'date'`. Fixes [#20].
 - **Opt-out flags for auto-generated GitHub links** — `github` and `hybrid` projects accept `useGithubLinkFromRepo` and `useLiveLinkFromRepo` (both default `true`) to suppress the repo-URL `github` link and the repo-homepage `live` link. Explicit `links` in config still win. For the pre-existing `linkOrder`-based `live` suppression, the docs now explain how the two mechanisms interact. Fixes [#24].
+- **Parameterised Fuse search via `FuseSearchOptions`** — `getFuseOptions`, `createFuseSearch`, `searchProjects`, and `useProjectSearch` now accept `{ keys, threshold }` overrides, and the default key set now includes `tagline`. Threshold defaults are unified across every entry point at `0.3` — a subtle behavior change for `createFuseSearch`, which previously defaulted to `0.2`; pass an explicit `threshold` if you relied on the stricter old default. `getFuseOptions` still accepts a bare threshold number for backwards compatibility with v1.3. Fixes [#21].
+- **Live dates for `devto` projects** — `normalise` now derives `updatedAt` from the newest article timestamp (latest `edited_at`, falling back to `published_at`) and `createdAt` from the oldest `published_at`, using data already being fetched; config values apply as fallback. The derived values are also exposed on the fetched dev.to user data as `latestArticleUpdatedAt` and `earliestArticlePublishedAt`. Fixes [#22].
 
 ### Fixed
 
 - **`sortByDate` null-date handling** — Projects with no date (`updatedAt` and `createdAt` both null) previously sorted to the top in `desc` order, and flipped position with sort direction. Null dates are now treated as epoch-equivalent (oldest), so dateless projects sort last in newest-first and first in oldest-first, consistently in both directions. Matches the already-documented behavior. Fixes [#23].
+- **`sortByDate` NaN poisoning** — Unparseable date strings produced `NaN` timestamps that poisoned the sort comparison. `NaN` times are now coerced to epoch-equivalent, so unparseable dates sort as oldest instead of yielding inconsistent orderings. Fixes [#29].
+- **Fuse index rebuilt on every render with inline custom keys** — Passing an inline `keys` array to `useProjectSearch` recreated the Fuse index on each render. Custom keys are now stabilised so the index is built once.
+- **dev.to page view counts** — Page views are now sourced from the authenticated `/me/published` endpoint (an earlier attempt via `/api/analytics/totals` returned inconsistent data), and the misleading `page_views_count` type extension was removed from the article type. Counts remain unavailable without `DEV_TO_API_KEY`. Fixes [#6].
 
 ---
 
@@ -449,7 +460,14 @@ The following are considered implementation details and may change in any versio
 [#8]: https://github.com/ManningWorks/Projex/issues/8
 [#10]: https://github.com/ManningWorks/Projex/issues/10
 [#11]: https://github.com/ManningWorks/Projex/issues/11
+[#18]: https://github.com/ManningWorks/Projex/issues/18
+[#19]: https://github.com/ManningWorks/Projex/issues/19
+[#20]: https://github.com/ManningWorks/Projex/issues/20
+[#21]: https://github.com/ManningWorks/Projex/issues/21
+[#22]: https://github.com/ManningWorks/Projex/issues/22
 [#23]: https://github.com/ManningWorks/Projex/issues/23
 [#24]: https://github.com/ManningWorks/Projex/issues/24
-[Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.5.0...HEAD
+[#29]: https://github.com/ManningWorks/Projex/issues/29
+[Unreleased]: https://github.com/ManningWorks/Projex/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/ManningWorks/Projex/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/ManningWorks/Projex/compare/v1.4.0...v1.5.0

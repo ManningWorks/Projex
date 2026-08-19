@@ -22,6 +22,8 @@ Projex provides compound components for building project showcase pages. All com
 | [SmartProjectGrid](./smart-project-grid) | Turnkey client component with built-in search, filters, and sort |
 | [ProjectList](./project-list) | Container for list layout of projects |
 | [FeaturedProject](./featured-project) | Featured project hero section |
+| [ProjectTypeFilterBar](./project-type-filter-bar) | Data-driven filter bar for project types |
+| [ProjectStatusFilterBar](./project-status-filter-bar) | Data-driven filter bar for project statuses |
 
 ## Design Principles
 

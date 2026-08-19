@@ -11,6 +11,8 @@ Projex provides utility functions for filtering, sorting, and normalizing projec
 | [filterByStatus](./filter-by-status) | Filter projects by status |
 | [filterByType](./filter-by-type) | Filter projects by type |
 | [filterByFeatured](./filter-by-featured) | Filter featured/non-featured projects |
+| [getUniqueTypes](./get-unique-types) | Unique project types present in a project list, in canonical order |
+| [getUniqueStatuses](./get-unique-statuses) | Unique project statuses present in a project list, in canonical order |
 
 ### Sorting
 
@@ -80,6 +82,10 @@ import {
   filterByStatus,
   filterByType,
   filterByFeatured,
+  getUniqueTypes,
+  getUniqueStatuses,
+  PROJECT_TYPES,
+  PROJECT_STATUSES,
   sortByDate,
   sortByName,
   sortByStars,
