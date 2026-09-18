@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { removeTimelineCommand } from '../remove-timeline.js'
 import * as configEditor from '../../lib/config-editor.js'
@@ -6,7 +7,10 @@ vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
 }))
 
-vi.mock('node:fs')
+vi.mock('node:fs', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:fs')>()),
+  existsSync: vi.fn(),
+}))
 
 vi.mock('../../lib/config-editor.js', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../lib/config-editor.js')>()
@@ -23,7 +27,7 @@ vi.mock('../../lib/config-editor.js', async (importOriginal) => {
 
 describe('removeTimelineCommand', () => {
   beforeEach(() => {
-    vi.restoreAllMocks()
+    vi.resetAllMocks()
     vi.mocked(configEditor.getProjectIds).mockReturnValue(['my-project'])
     vi.mocked(configEditor.getTimelineEntries).mockReturnValue([
       { index: 0, date: '2024-01-15', note: 'test note' },

@@ -1,8 +1,12 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { listProjectsCommand } from '../list-projects.js'
 import * as configEditor from '../../lib/config-editor.js'
 
-vi.mock('node:fs')
+vi.mock('node:fs', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:fs')>()),
+  existsSync: vi.fn(),
+}))
 
 vi.mock('../../lib/config-editor.js', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../lib/config-editor.js')>()
@@ -14,7 +18,7 @@ vi.mock('../../lib/config-editor.js', async (importOriginal) => {
 
 describe('listProjectsCommand', () => {
   beforeEach(() => {
-    vi.restoreAllMocks()
+    vi.resetAllMocks()
   })
 
   it('should display table with projects', async () => {
