@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { removeLearningCommand } from '../remove-learning.js'
 import * as configEditor from '../../lib/config-editor.js'
@@ -6,7 +7,10 @@ vi.mock('@inquirer/prompts', () => ({
   select: vi.fn(),
 }))
 
-vi.mock('node:fs')
+vi.mock('node:fs', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:fs')>()),
+  existsSync: vi.fn(),
+}))
 
 vi.mock('../../lib/config-editor.js', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../lib/config-editor.js')>()
@@ -24,7 +28,7 @@ vi.mock('../../lib/config-editor.js', async (importOriginal) => {
 
 describe('removeLearningCommand', () => {
   beforeEach(() => {
-    vi.restoreAllMocks()
+    vi.resetAllMocks()
     vi.mocked(configEditor.getProjectIds).mockReturnValue(['my-project'])
     vi.mocked(configEditor.getLearningEntries).mockReturnValue([
       { index: 0, type: 'challenge', text: 'test entry 1' },

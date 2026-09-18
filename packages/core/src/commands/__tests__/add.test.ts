@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { add } from '../add'
 import * as prompts from '@inquirer/prompts'
@@ -5,9 +6,23 @@ import * as prompts from '@inquirer/prompts'
 vi.mock('@inquirer/prompts', async () => ({
   confirm: vi.fn()
 }))
-vi.mock('node:fs/promises')
-vi.mock('node:fs')
-vi.mock('node:child_process')
+vi.mock('node:fs/promises', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:fs/promises')>()),
+  mkdir: vi.fn(),
+  access: vi.fn(),
+  copyFile: vi.fn(),
+  readdir: vi.fn(),
+  readFile: vi.fn(),
+  writeFile: vi.fn(),
+}))
+vi.mock('node:fs', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:fs')>()),
+  existsSync: vi.fn(),
+}))
+vi.mock('node:child_process', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('node:child_process')>()),
+  execSync: vi.fn(),
+}))
 
 describe('add command', () => {
   beforeEach(() => {
