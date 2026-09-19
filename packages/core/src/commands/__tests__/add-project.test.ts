@@ -2,11 +2,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { addProjectCommand } from '../add-project.js'
 import * as configEditor from '../../lib/config-editor.js'
+import confirm from '@inquirer/confirm'
+import input from '@inquirer/input'
+import select from '@inquirer/select'
 
-vi.mock('@inquirer/prompts', () => ({
-  input: vi.fn(),
-  select: vi.fn(),
-  confirm: vi.fn(),
+vi.mock('@inquirer/confirm', () => ({
+  default: vi.fn(),
+}))
+vi.mock('@inquirer/input', () => ({
+  default: vi.fn(),
+}))
+vi.mock('@inquirer/select', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -187,27 +194,26 @@ describe('addProjectCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for all fields when no flags provided', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('github')
-      vi.mocked(prompts.input)
+      vi.mocked(select).mockResolvedValue('github')
+      vi.mocked(input)
         .mockResolvedValueOnce('My Project')
         .mockResolvedValueOnce('user/repo')
         .mockResolvedValueOnce('React,TypeScript')
-      vi.mocked(prompts.confirm).mockResolvedValue(true)
+      vi.mocked(confirm).mockResolvedValue(true)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await addProjectCommand()
 
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Project type:' }),
       )
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Project name:' }),
       )
-      expect(prompts.confirm).toHaveBeenCalledWith(
+      expect(confirm).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Featured project?' }),
       )
       expect(configEditor.addProject).toHaveBeenCalled()
@@ -220,11 +226,10 @@ describe('addProjectCommand', () => {
 
     it('should prompt only for missing fields with partial flags', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.input).mockResolvedValue('user/repo')
-      vi.mocked(prompts.confirm).mockResolvedValue(false)
+      vi.mocked(input).mockResolvedValue('user/repo')
+      vi.mocked(confirm).mockResolvedValue(false)
 
       await addProjectCommand({
         type: 'github',
@@ -233,9 +238,9 @@ describe('addProjectCommand', () => {
         stack: 'React',
       })
 
-      expect(prompts.select).not.toHaveBeenCalled()
-      expect(prompts.input).toHaveBeenCalledTimes(1)
-      expect(prompts.confirm).toHaveBeenCalledTimes(1)
+      expect(select).not.toHaveBeenCalled()
+      expect(input).toHaveBeenCalledTimes(1)
+      expect(confirm).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -258,12 +263,11 @@ describe('addProjectCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.select).mockRejectedValue(cancelError)
+      vi.mocked(select).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

@@ -2,9 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { addTimelineCommand } from '../add-timeline.js'
 import * as configEditor from '../../lib/config-editor.js'
+import input from '@inquirer/input'
 
-vi.mock('@inquirer/prompts', () => ({
-  input: vi.fn(),
+vi.mock('@inquirer/input', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -57,8 +58,7 @@ describe('addTimelineCommand', () => {
       const today = new Date()
       const expectedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
-      const prompts = await import('@inquirer/prompts')
-      vi.mocked(prompts.input).mockResolvedValue(expectedDate)
+      vi.mocked(input).mockResolvedValue(expectedDate)
 
       vi.spyOn(console, 'log').mockImplementation(() => {})
 
@@ -75,10 +75,9 @@ describe('addTimelineCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for date and note when no flags provided', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.input)
+      vi.mocked(input)
         .mockResolvedValueOnce('2025-06-01')
         .mockResolvedValueOnce('Milestone reached')
 
@@ -86,10 +85,10 @@ describe('addTimelineCommand', () => {
 
       await addTimelineCommand('my-project')
 
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Date (YYYY-MM-DD):' }),
       )
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Milestone note:' }),
       )
       expect(configEditor.addTimelineEntry).toHaveBeenCalled()
@@ -136,12 +135,11 @@ describe('addTimelineCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.input).mockRejectedValue(cancelError)
+      vi.mocked(input).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

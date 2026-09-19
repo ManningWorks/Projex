@@ -2,9 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { removeLearningCommand } from '../remove-learning.js'
 import * as configEditor from '../../lib/config-editor.js'
+import select from '@inquirer/select'
 
-vi.mock('@inquirer/prompts', () => ({
-  select: vi.fn(),
+vi.mock('@inquirer/select', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -78,16 +79,15 @@ describe('removeLearningCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for selection when no index given', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue(1)
+      vi.mocked(select).mockResolvedValue(1)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await removeLearningCommand('my-project')
 
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({ message: expect.stringContaining('learning') }),
       )
       expect(configEditor.removeLearning).toHaveBeenCalledWith(
@@ -135,12 +135,11 @@ describe('removeLearningCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.select).mockRejectedValue(cancelError)
+      vi.mocked(select).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

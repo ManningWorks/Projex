@@ -2,9 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { addPostCommand } from '../add-post.js'
 import * as configEditor from '../../lib/config-editor.js'
+import input from '@inquirer/input'
 
-vi.mock('@inquirer/prompts', () => ({
-  input: vi.fn(),
+vi.mock('@inquirer/input', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -71,10 +72,9 @@ describe('addPostCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for title, date, and url when no flags provided', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.input)
+      vi.mocked(input)
         .mockResolvedValueOnce('My Blog Post')
         .mockResolvedValueOnce('2025-06-01')
         .mockResolvedValueOnce('https://example.com')
@@ -83,13 +83,13 @@ describe('addPostCommand', () => {
 
       await addPostCommand('my-project')
 
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Post title:' }),
       )
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Date (YYYY-MM-DD):' }),
       )
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'URL (optional - press Enter to skip):' }),
       )
       expect(configEditor.addPost).toHaveBeenCalled()
@@ -102,10 +102,9 @@ describe('addPostCommand', () => {
 
     it('should pass undefined url when user skips in interactive mode', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.input)
+      vi.mocked(input)
         .mockResolvedValueOnce('A Post')
         .mockResolvedValueOnce('2025-06-01')
         .mockResolvedValueOnce('')
@@ -157,12 +156,11 @@ describe('addPostCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.input).mockRejectedValue(cancelError)
+      vi.mocked(input).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

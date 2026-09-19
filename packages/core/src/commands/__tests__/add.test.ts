@@ -1,10 +1,10 @@
 // @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { add } from '../add'
-import * as prompts from '@inquirer/prompts'
+import confirm from '@inquirer/confirm'
 
-vi.mock('@inquirer/prompts', async () => ({
-  confirm: vi.fn()
+vi.mock('@inquirer/confirm', () => ({
+  default: vi.fn(),
 }))
 vi.mock('node:fs/promises', async (importOriginal) => ({
   ...(await importOriginal<typeof import('node:fs/promises')>()),
@@ -180,8 +180,7 @@ describe('add command', () => {
 
       await add('github-card', { force: true })
 
-      const prompts = await import('@inquirer/prompts')
-      expect(prompts.confirm).not.toHaveBeenCalled()
+      expect(confirm).not.toHaveBeenCalled()
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Overwriting')
       )
@@ -190,7 +189,7 @@ describe('add command', () => {
     })
 
     it('should prompt when --force is false and files exist', async () => {
-      vi.mocked(prompts.confirm).mockResolvedValue(true)
+      vi.mocked(confirm).mockResolvedValue(true)
 
       const { access } = await import('node:fs/promises')
       const { existsSync } = await import('node:fs')
@@ -200,7 +199,7 @@ describe('add command', () => {
 
       await add('github-card', { force: false })
 
-      expect(prompts.confirm).toHaveBeenCalled()
+      expect(confirm).toHaveBeenCalled()
     })
   })
 })

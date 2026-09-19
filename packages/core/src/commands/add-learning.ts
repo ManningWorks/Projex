@@ -1,4 +1,5 @@
-import { input, select } from '@inquirer/prompts'
+import input from '@inquirer/input'
+import select from '@inquirer/select'
 import chalk from 'chalk'
 import { addLearning, getProjectIds, ConfigEditorError } from '../lib/config-editor.js'
 import { resolve } from 'node:path'

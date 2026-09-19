@@ -2,10 +2,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { addLearningCommand } from '../add-learning.js'
 import * as configEditor from '../../lib/config-editor.js'
+import input from '@inquirer/input'
+import select from '@inquirer/select'
 
-vi.mock('@inquirer/prompts', () => ({
-  input: vi.fn(),
-  select: vi.fn(),
+vi.mock('@inquirer/input', () => ({
+  default: vi.fn(),
+}))
+vi.mock('@inquirer/select', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -79,20 +83,19 @@ describe('addLearningCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for type and text when no flags provided', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('challenge')
-      vi.mocked(prompts.input).mockResolvedValue('Overcame a tough bug')
+      vi.mocked(select).mockResolvedValue('challenge')
+      vi.mocked(input).mockResolvedValue('Overcame a tough bug')
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await addLearningCommand('my-project')
 
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Entry type:' }),
       )
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Challenge:' }),
       )
       expect(configEditor.addLearning).toHaveBeenCalled()
@@ -105,17 +108,16 @@ describe('addLearningCommand', () => {
 
     it('should prompt with "Learning:" label when type is learning', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('learning')
-      vi.mocked(prompts.input).mockResolvedValue('Something learned')
+      vi.mocked(select).mockResolvedValue('learning')
+      vi.mocked(input).mockResolvedValue('Something learned')
 
       vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await addLearningCommand('my-project')
 
-      expect(prompts.input).toHaveBeenCalledWith(
+      expect(input).toHaveBeenCalledWith(
         expect.objectContaining({ message: 'Learning:' }),
       )
     })
@@ -157,12 +159,11 @@ describe('addLearningCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.select).mockRejectedValue(cancelError)
+      vi.mocked(select).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

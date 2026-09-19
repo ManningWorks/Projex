@@ -2,9 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { removeProjectCommand } from '../remove-project.js'
 import * as configEditor from '../../lib/config-editor.js'
+import confirm from '@inquirer/confirm'
 
-vi.mock('@inquirer/prompts', () => ({
-  confirm: vi.fn(),
+vi.mock('@inquirer/confirm', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -51,16 +52,15 @@ describe('removeProjectCommand', () => {
   describe('interactive confirmation', () => {
     it('should prompt for confirmation and remove when confirmed', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.confirm).mockResolvedValue(true)
+      vi.mocked(confirm).mockResolvedValue(true)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await removeProjectCommand('my-project')
 
-      expect(prompts.confirm).toHaveBeenCalledWith(
+      expect(confirm).toHaveBeenCalledWith(
         expect.objectContaining({ message: expect.stringContaining('my-project') }),
       )
       expect(configEditor.removeProject).toHaveBeenCalled()
@@ -73,10 +73,9 @@ describe('removeProjectCommand', () => {
 
     it('should cancel when user declines', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.confirm).mockResolvedValue(false)
+      vi.mocked(confirm).mockResolvedValue(false)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
@@ -124,12 +123,11 @@ describe('removeProjectCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.confirm).mockRejectedValue(cancelError)
+      vi.mocked(confirm).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
