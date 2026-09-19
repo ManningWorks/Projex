@@ -1,7 +1,7 @@
 import { mkdir, access, copyFile, readdir, readFile } from 'node:fs/promises'
 import { resolve, dirname } from 'node:path'
 import { existsSync } from 'node:fs'
-import { confirm } from '@inquirer/prompts'
+import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'

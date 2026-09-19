@@ -1,4 +1,4 @@
-import { select } from '@inquirer/prompts'
+import select from '@inquirer/select'
 import chalk from 'chalk'
 import {
   removeTimelineEntry,

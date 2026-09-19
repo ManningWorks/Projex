@@ -2,11 +2,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { editProjectCommand } from '../edit-project.js'
 import * as configEditor from '../../lib/config-editor.js'
+import confirm from '@inquirer/confirm'
+import input from '@inquirer/input'
+import select from '@inquirer/select'
 
-vi.mock('@inquirer/prompts', () => ({
-  input: vi.fn(),
-  select: vi.fn(),
-  confirm: vi.fn(),
+vi.mock('@inquirer/confirm', () => ({
+  default: vi.fn(),
+}))
+vi.mock('@inquirer/input', () => ({
+  default: vi.fn(),
+}))
+vi.mock('@inquirer/select', () => ({
+  default: vi.fn(),
 }))
 
 vi.mock('node:fs', async (importOriginal) => ({
@@ -173,17 +180,16 @@ describe('editProjectCommand', () => {
   describe('interactive mode', () => {
     it('should prompt for field selection and value when no flags given', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('name')
-      vi.mocked(prompts.input).mockResolvedValue('New Interactive Name')
+      vi.mocked(select).mockResolvedValue('name')
+      vi.mocked(input).mockResolvedValue('New Interactive Name')
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await editProjectCommand('my-project')
 
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({
           choices: expect.arrayContaining([
             expect.objectContaining({ value: 'name' }),
@@ -191,7 +197,7 @@ describe('editProjectCommand', () => {
           ]),
         }),
       )
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({
           choices: expect.not.arrayContaining([
             expect.objectContaining({ value: 'channelId' }),
@@ -213,24 +219,23 @@ describe('editProjectCommand', () => {
 
     it('should show type-specific fields for product-hunt project', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('slug')
-      vi.mocked(prompts.input).mockResolvedValue('my-slug')
+      vi.mocked(select).mockResolvedValue('slug')
+      vi.mocked(input).mockResolvedValue('my-slug')
 
       vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await editProjectCommand('other-project')
 
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({
           choices: expect.arrayContaining([
             expect.objectContaining({ value: 'slug' }),
           ]),
         }),
       )
-      expect(prompts.select).toHaveBeenCalledWith(
+      expect(select).toHaveBeenCalledWith(
         expect.objectContaining({
           choices: expect.not.arrayContaining([
             expect.objectContaining({ value: 'repo' }),
@@ -241,17 +246,16 @@ describe('editProjectCommand', () => {
 
     it('should use confirm prompt for featured field', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select).mockResolvedValue('featured')
-      vi.mocked(prompts.confirm).mockResolvedValue(true)
+      vi.mocked(select).mockResolvedValue('featured')
+      vi.mocked(confirm).mockResolvedValue(true)
 
       vi.spyOn(console, 'log').mockImplementation(() => {})
 
       await editProjectCommand('my-project')
 
-      expect(prompts.confirm).toHaveBeenCalledWith(
+      expect(confirm).toHaveBeenCalledWith(
         expect.objectContaining({ message: expect.stringContaining('Featured') }),
       )
       expect(configEditor.setProjectField).toHaveBeenCalledWith(
@@ -264,10 +268,9 @@ describe('editProjectCommand', () => {
 
     it('should use select prompt for status field', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
-      vi.mocked(prompts.select)
+      vi.mocked(select)
         .mockResolvedValueOnce('status')
         .mockResolvedValueOnce('shipped')
 
@@ -411,12 +414,11 @@ describe('editProjectCommand', () => {
 
     it('should handle prompt cancellation', async () => {
       const { existsSync } = await import('node:fs')
-      const prompts = await import('@inquirer/prompts')
 
       vi.mocked(existsSync).mockReturnValue(true)
       const cancelError = new Error('User cancelled')
       cancelError.name = 'ExitPromptError'
-      vi.mocked(prompts.select).mockRejectedValue(cancelError)
+      vi.mocked(select).mockRejectedValue(cancelError)
 
       const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 

@@ -1,4 +1,4 @@
-import { confirm } from '@inquirer/prompts'
+import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
 import { removeProject, getProjectIds, ConfigEditorError } from '../lib/config-editor.js'
 import { resolve } from 'node:path'
