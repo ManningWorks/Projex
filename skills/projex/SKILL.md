@@ -280,7 +280,10 @@ npx @manningworks/projex list
 # table: (index) | ID | Type | Status | Featured (★) | Name
 ```
 
-No flags. Use it to discover ids before edit/remove.
+No flags. Use it to discover ids before edit/remove. The table is rendered
+with Node's `console.table`, which auto-prepends the leading `(index)` column
+and single-quotes string cell values (`'manual-demo'`, `'★'`, `'-'`) — strip
+the quotes when parsing.
 
 ## 4. `projex.config.ts` field reference
 
