@@ -50,12 +50,6 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "fuse.js": "^7.5.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "zod": "^3.25.76"
-  },
-  "peerDependencies": {
     "@inquirer/confirm": "^6.3.2",
     "@inquirer/input": "^5.1.6",
     "@inquirer/number": "^4.2.3",
@@ -63,32 +57,10 @@
     "@inquirer/select": "^5.2.5",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
-    "ts-morph": "^28.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@inquirer/confirm": {
-      "optional": true
-    },
-    "@inquirer/input": {
-      "optional": true
-    },
-    "@inquirer/number": {
-      "optional": true
-    },
-    "@inquirer/search": {
-      "optional": true
-    },
-    "@inquirer/select": {
-      "optional": true
-    },
-    "chalk": {
-      "optional": true
-    },
-    "commander": {
-      "optional": true
-    },
-    "ts-morph": {
-      "optional": true
-    }
+    "fuse.js": "^7.5.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "ts-morph": "^28.0.0",
+    "zod": "^3.25.76"
   }
 }
