@@ -7,9 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.6.1] - 2026-10-14
+
 ### Added
 
-- **`skills/projex/` agent skill** — A new end-user agent skill (`SKILL.md` + `references/cli-help.md` drift baseline) that teaches any coding agent to drive Projex end-to-end: `init`, components and themes, non-interactive content operations, the `projex.config.ts` field reference, provider environment variables, and troubleshooting. Every CLI example is verified against the live `--help` output and run non-interactively.
+- **`skills/projex/` agent skill** — A new end-user agent skill (`SKILL.md` + `references/cli-help.md` drift baseline) that teaches any coding agent to drive Projex end-to-end: `init`, components and themes, non-interactive content operations, the `projex.config.ts` field reference, provider environment variables, and troubleshooting. Every CLI example is verified against the live `--help` output and run non-interactively. _(carried over from `[Unreleased]`)_
+
+### Fixed
+
+- **Published CLI startup regression** — Since 1.5.0, the CLI runtime dependencies (`@inquirer/prompts`, `chalk`, `commander`, `ts-morph`) were declared as *optional* `peerDependencies`, which npm/npx does not install — so the published 1.6.0 CLI could not start. They are now hard `dependencies` (`@inquirer/prompts` replaced by the five granular `@inquirer/*` prompt packages — see Internal). Backward-compatibility note: this restores the pre-1.5.0 install behavior; all consumers, including component-only imports, install the CLI runtime dependencies again. The public API is unchanged. Fixes [#42].
+- **`init` overwrite guard no longer swallows prompt cancellation** — The guard's catch block swallowed every error, so `ExitPromptError` (Ctrl+C / forced prompt exit, e.g. non-TTY) fell through to silently overwriting an existing config. The existence check now handles only `ENOENT` (any other access error surfaces instead of writing); non-interactive sessions (stdin not a TTY) refuse to overwrite with a clear message; `ExitPromptError` prints "Cancelled" and returns cleanly, matching the sibling remove/edit commands. Fixes [#41].
+- **`add` overwrite prompts handled explicitly in non-TTY sessions** — Extends the #41 fix to the `add` command's component and theme paths: non-interactive sessions refuse to overwrite (theme overwrite via `--force` still works), and prompt cancellation (`ExitPromptError`) exits cleanly as "Cancelled" instead of leaving the prompt pending until the process drains out or surfacing a generic error. Fixes [#49].
+
+### Security
+
+- **All dependabot alerts cleared (40 advisories → 0)** — Lockfile refresh (`pnpm update -r`) so version ranges resolve past the vulnerable ranges, plus pnpm overrides for dependencies whose parent ranges cannot reach a patched version (`tmp` ^0.2.6 — pinned to `^0.0.33` by external-editor; `vite` ^7.3.6 — vitepress 1.x pins vite 5); `vitepress` bumped to ^1.6.4. Docs site builds clean on vite 7.
+
+### Internal
+
+- **`@inquirer/prompts` umbrella swapped for granular packages** — The CLI now imports only the five `@inquirer` prompt packages it uses, dropping the 2016-era `external-editor`/`tmp` transitive dependency (published advisories); the `tmp` override from the Security section is no longer needed and was removed. Prompts shown to users are unchanged.
+- **Test infrastructure updated for vitest 4** — Command tests migrated to vitest 4 mocking; `vite` and `@vitest/coverage-v8` aligned to vitest 4; dev-dependency vitest bumped.
+- **37 untracked pnpm symlink artifacts under `node_modules` removed** — repo-hygiene chore.
+
+### Documentation
+
+- `skills/projex` is linked from the README and CLI reference; the release workflow gained a skill drift-check line; the skill's list-output section now documents `console.table`'s leading index column (issue-43); the skill link points at `main`.
 
 ---
 
