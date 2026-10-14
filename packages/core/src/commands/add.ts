@@ -122,14 +122,24 @@ export async function add(componentName: string, options: AddOptions = {}): Prom
       })
       console.log()
 
-      const overwrite = await confirm({
-        message: 'Overwrite existing files?',
-        default: false,
-      })
+      try {
+        const overwrite = await confirm({
+          message: 'Overwrite existing files?',
+          default: false,
+        })
 
-      if (!overwrite) {
-        console.log(chalk.yellow('✖ Add cancelled.'))
-        return
+        if (!overwrite) {
+          console.log(chalk.yellow('✖ Add cancelled.'))
+          return
+        }
+      } catch (error) {
+        // Explicit cancellation (Ctrl+C / forced prompt exit, e.g. non-TTY
+        // stdin draining): a handled outcome, never the generic failure below.
+        if (error instanceof Error && error.name === 'ExitPromptError') {
+          console.log(chalk.yellow('✖ Add cancelled.'))
+          return
+        }
+        throw error
       }
     } else if (existingFiles.length > 0 && options.force) {
       console.log(chalk.yellow(`⚠ Overwriting ${existingFiles.length} existing file(s) (--force)`))
@@ -262,6 +272,14 @@ async function copyFiles(sourceFiles: string[], destDir: string): Promise<void> 
   }
 }
 
+function isNotFoundError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    'code' in error &&
+    (error as NodeJS.ErrnoException).code === 'ENOENT'
+  )
+}
+
 async function addTheme(
   theme: { sourcePath: string; destName: string },
   workingDir: string,
@@ -284,13 +302,35 @@ async function addTheme(
     process.exit(1)
   }
 
+  // Existence check: only the not-found case (ENOENT) is handled here —
+  // any other error must surface instead of falling through to a write.
+  let hasExistingTheme = true
   try {
     await access(destPath)
-    if (!options.force) {
-      console.log(chalk.yellow(`⚠ Found existing file:`))
-      console.log(chalk.gray(`  - styles/projex-${theme.destName}`))
-      console.log()
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      hasExistingTheme = false
+    } else {
+      throw error
+    }
+  }
 
+  if (hasExistingTheme && !options.force) {
+    // Non-interactive session (e.g. stdin from /dev/null): @inquirer/confirm
+    // would leave the prompt promise pending and the process would drain out.
+    // Refuse to overwrite without a confirmation we cannot ask.
+    if (!process.stdin.isTTY) {
+      console.log(chalk.yellow(`✖ styles/projex-${theme.destName} already exists.`))
+      console.log(chalk.yellow('  Refusing to overwrite in a non-interactive session.'))
+      console.log(chalk.gray('  Run in a TTY to confirm, or pass --force to overwrite.'))
+      return
+    }
+
+    console.log(chalk.yellow(`⚠ Found existing file:`))
+    console.log(chalk.gray(`  - styles/projex-${theme.destName}`))
+    console.log()
+
+    try {
       const overwrite = await confirm({
         message: 'Overwrite existing file?',
         default: false,
@@ -300,10 +340,17 @@ async function addTheme(
         console.log(chalk.yellow('✖ Add cancelled.'))
         return
       }
-    } else {
-      console.log(chalk.yellow(`⚠ Overwriting existing file (--force)`))
+    } catch (error) {
+      // Explicit cancellation (Ctrl+C / forced prompt exit): a handled outcome,
+      // never a fall-through into the overwrite path.
+      if (error instanceof Error && error.name === 'ExitPromptError') {
+        console.log(chalk.yellow('✖ Add cancelled.'))
+        return
+      }
+      throw error
     }
-  } catch {
+  } else if (hasExistingTheme && options.force) {
+    console.log(chalk.yellow(`⚠ Overwriting existing file (--force)`))
   }
 
   await createDirectory(destDir)
