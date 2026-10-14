@@ -50,10 +50,31 @@ async function runInit(options: InitOptions, workingDir: string, setTempPath: (p
   console.log(chalk.bold('🚀 Initializing Projex project...'))
   console.log()
 
+  // Existence check: only the not-found case (ENOENT) is handled here —
+  // any other error must surface instead of falling through to a write.
+  let hasExistingConfig = true
   try {
     await access(CONFIG_FILE, constants.F_OK)
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      hasExistingConfig = false
+    } else {
+      throw error
+    }
+  }
 
-    if (!options.yes) {
+  if (hasExistingConfig && !options.yes) {
+    // Non-interactive session (e.g. stdin from /dev/null): @inquirer/confirm
+    // would leave the prompt promise pending and the process would drain out.
+    // Refuse to overwrite without a confirmation we cannot ask.
+    if (!process.stdin.isTTY) {
+      console.log(chalk.yellow(`✖ ${CONFIG_FILE} already exists.`))
+      console.log(chalk.yellow('  Refusing to overwrite in a non-interactive session.'))
+      console.log(chalk.gray('  Run in a TTY to confirm, or pass --yes to overwrite.'))
+      return
+    }
+
+    try {
       const overwrite = await confirm({
         message: `${CONFIG_FILE} already exists. Overwrite?`,
         default: false,
@@ -63,8 +84,15 @@ async function runInit(options: InitOptions, workingDir: string, setTempPath: (p
         console.log(chalk.yellow('✖ Init cancelled.'))
         return
       }
+    } catch (error) {
+      // Explicit cancellation (Ctrl+C / forced prompt exit): a handled outcome,
+      // never a fall-through into the overwrite path.
+      if (error instanceof Error && error.name === 'ExitPromptError') {
+        console.log(chalk.yellow('\n✖ Cancelled.'))
+        return
+      }
+      throw error
     }
-  } catch {
   }
 
   const isNextJs = await detectNextJs(workingDir)
@@ -327,4 +355,12 @@ async function ensureProjexInstalled(): Promise<void> {
   console.log(chalk.gray(`  Installing @manningworks/projex...`))
   execSync(`${installCmd} @manningworks/projex`, { stdio: 'inherit' })
   console.log(chalk.gray(`  ✓ @manningworks/projex installed`))
+}
+
+function isNotFoundError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    'code' in error &&
+    (error as NodeJS.ErrnoException).code === 'ENOENT'
+  )
 }
