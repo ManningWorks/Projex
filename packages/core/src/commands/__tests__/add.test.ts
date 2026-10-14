@@ -393,5 +393,34 @@ describe('add command', () => {
       logSpy.mockRestore()
       exitSpy.mockRestore()
     })
+
+    it('surfaces a non-ENOENT existence-check error instead of writing', async () => {
+      const exitSpy = failOnExit()
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+
+      const { access, copyFile } = await import('node:fs/promises')
+      const eacces = new Error(
+        `EACCES: permission denied, access 'styles/projex-theme-minimal.css'`,
+      ) as NodeJS.ErrnoException
+      eacces.code = 'EACCES'
+      // The source check must pass; only the destination existence check
+      // rejects, with a non-ENOENT (EACCES) code, to drive the
+      // existence-check's `else { throw error }` branch (add.ts).
+      vi.mocked(access).mockImplementation(async (path: string | Buffer) => {
+        if (path.toString().includes('styles/projex-theme-minimal.css')) {
+          throw eacces
+        }
+      })
+
+      await expect(add('theme-minimal', { force: false })).rejects.toMatchObject({
+        code: 'EACCES',
+      })
+
+      expect(vi.mocked(copyFile)).not.toHaveBeenCalled()
+      expect(exitSpy).not.toHaveBeenCalled()
+
+      logSpy.mockRestore()
+      exitSpy.mockRestore()
+    })
   })
 })
