@@ -32,7 +32,7 @@ export default [
     }
   },
   {
-    files: ['src/commands/**/*.ts'],
+    files: ['src/commands/**/*.ts', 'src/cli.ts'],
     rules: {
       'no-console': 'off'
     }

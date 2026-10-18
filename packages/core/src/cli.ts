@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import { readFileSync } from 'node:fs'
+import chalk from 'chalk'
+import { readFileSync, realpathSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { init } from './commands/init.js'
@@ -96,4 +97,42 @@ program
   .description('List all projects')
   .action(listProjectsCommand)
 
-program.parse()
+// Single top-level error boundary for every command. Commander's `.parse()`
+// does not await async action handlers, so a handler rejection used to escape
+// as an unhandled rejection (raw stack trace, exit 1). Awaiting parseAsync()
+// and catching here formats every command's rejection the same way the rest
+// of the codebase does. Commander usage errors (e.g. an unknown option) never
+// reach this catch — commander prints its own message and calls
+// process.exit(1) internally.
+export async function main(argv: string[] = process.argv): Promise<void> {
+  try {
+    await program.parseAsync(argv)
+  } catch (error) {
+    console.error(chalk.red('✖ Command failed'))
+    console.error(chalk.gray(`  ${error instanceof Error ? error.message : 'Unknown error'}`))
+    // exitCode (not process.exit): console.error is async when piped on POSIX,
+    // and an immediate process.exit() can truncate the message.
+    process.exitCode = 1
+  }
+}
+
+// Run the CLI only when this file is the entry point (`projex`,
+// `node dist/cli.js`), not when it is imported (e.g. by the test suite).
+const isMainModule = (() => {
+  const entry = process.argv[1]
+  if (!entry) {
+    return false
+  }
+  const resolveReal = (p: string): string => {
+    try {
+      return realpathSync(p)
+    } catch {
+      return p
+    }
+  }
+  return resolveReal(fileURLToPath(import.meta.url)) === resolveReal(entry)
+})()
+
+if (isMainModule) {
+  await main()
+}
